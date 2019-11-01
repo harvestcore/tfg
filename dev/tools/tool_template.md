@@ -1,9 +1,5 @@
 # Tool template
 
-- Nombre:
-
-
-
 - ¿Qué hace?
 
 
