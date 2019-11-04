@@ -10,15 +10,13 @@ Herramienta de gestión de orquestación de servicios que permite desplegar, con
   - Los modelos se describen en un archivo YAML, el cual puede contener tambien detalles concretos del despliegue de cada servicio (instancias, config, etc).
   - Tiene CLI/UI.
   - Fácil actualización de la configuración.
-  - Buena integración de actualizaciones de software. 
+  - Buena integración de actualizaciones de software.
   - Buena integración con sistemas cloud (AWS, Microsoft Azure, Google Cloud, OpenStack, Oracle Cloud, Joyent).
   - Soporta contenedores (LXD, Kubernetes)
   - Soporta bare metal (MAAS)
   - Soporta máquinas virtuales.
   - Automatización de tareas (despliegue, escalado, etc).
   - Es Open Source.
-
-
 
 - ¿Lenguaje de programación?
 
@@ -38,4 +36,4 @@ En parte podría ser útil pues soluciona los problemas que propone el proyecto,
 
 - Links:
 
-https://jaas.ai/how-it-works
+[https://jaas.ai/how-it-works](https://jaas.ai/how-it-works)

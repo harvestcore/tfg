@@ -18,8 +18,6 @@ No es un PAAS ni tampoco un sistema de orquestación.
 
 Tiene un modelo de red plano.
 
-
-
 - ¿Lenguaje de programación?
 
 Existen clientes en multitud de lenguajes de programación, ademas de un CLI.
@@ -42,4 +40,4 @@ Puede ser bastante útil.
 
 - Links:
 
-https://kubernetes.io/es/docs/concepts/overview/what-is-kubernetes/
+[https://kubernetes.io/es/docs/concepts/overview/what-is-kubernetes/](https://kubernetes.io/es/docs/concepts/overview/what-is-kubernetes/)
