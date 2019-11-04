@@ -22,7 +22,7 @@ Herramienta de gestión de orquestación de servicios que permite desplegar, con
 
 - ¿Lenguaje de programación?
 
-Juju no tiene una API definida en ningún lenguaje de programación.
+Juju tiene clientes para diferentes lenguajes de programación (como Go), pero está orientado a usarse con su CLI.
 
 - ¿Es útil para el proyecto?
 
@@ -34,8 +34,7 @@ En parte podría ser útil pues soluciona los problemas que propone el proyecto,
   - Fácil configuración.
 
 - Cons:
-  - No posee API.
-  - Para este proyecto no se puede usar para desarrollar una infraestructura como código.
+  - Por ahora ninguno
 
 - Links:
 
