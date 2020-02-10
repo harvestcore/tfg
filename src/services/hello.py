@@ -6,15 +6,23 @@ from src.classes.customer import Customer
 test = Blueprint(name='test', url_prefix='/test', import_name='test')
 
 
-@bp(blueprint=test, class_name=Customer.__name__, path='/', methods=['get'])
+@bp(blueprint=test, bp_class=Customer, path='/', methods=['get', 'post'])
 class Testt:
     @staticmethod
-    def get(a):
-        return {'get': 'get', 'a': a}
+    def get():
+        return {'get': 'get', 'a': 1}
 
     @staticmethod
-    def post(a):
-        return {'post': 'post', 'a': a}
+    def post():
+        return {'post': 'post', 'a': 1}
+
+    @staticmethod
+    def put():
+        return {'put': 'put', 'a': 1}
+
+    @staticmethod
+    def delete():
+        return {'delete': 'delete', 'a': 1}
 
 
 @test.route(rule='/', methods=['GET'])
