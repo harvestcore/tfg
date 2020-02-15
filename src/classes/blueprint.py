@@ -1,4 +1,4 @@
-from flask import Blueprint
+from flask import request
 
 method_names = ['get', 'post', 'put', 'delete']
 
@@ -17,23 +17,22 @@ def bp(blueprint, bp_class, path, methods=[], **options):
                 if method in method_names:
                     item_method = ''
                     if method is 'get':
-                        @blueprint.route()
-                        def xd():
-                            pass
+                        @blueprint.route(rule='/', methods=['get'])
+                        def get():
+                            return {'get': 'get', 'a': 1}
                     if method is 'post':
-                        @blueprint.route()
-                        def xd():
-                            pass
+                        @blueprint.route(rule='/', methods=['post'])
+                        def post():
+                            return {'post': 'post', 'a': request['test']}
                     if method is 'put':
-                        @blueprint.route()
-                        def xd():
-                            pass
+                        @blueprint.route(rule='/', methods=['put'])
+                        def put():
+                            return {'put': 'put', 'a': 1}
                     if method is 'delete':
-                        @blueprint.route()
-                        def xd():
-                            pass
+                        @blueprint.route(rule='/', methods=['delete'])
+                        def delete():
+                            return {'delete': 'delete', 'a': 1}
 
-                    register_method(blueprint=blueprint, bp_class=bp_class, path=path, method=method, **options)
         else:
             overwritten_methods = [a for a in dir(c) if not a.startswith('_')]
             # If we want to overwrite some methods
