@@ -18,10 +18,10 @@ jobs:
     - name: Python Style Checker
       uses: andymckay/pycodestyle-action@0.1.3
 
-    - name: Start MongoDB
-      uses: superchargejs/mongodb-github-action@v1
+    - name: MongoDB as docker
+      uses: wbari/start-mongoDB@v0.2
       with:
-        mongodb-version: 4.2.3
+        mongoDBVersion: 4.2.3
         
     - name: Pytest
       uses: cclauss/GitHub-Action-for-pytest@0.5.0
