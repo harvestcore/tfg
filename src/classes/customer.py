@@ -1,6 +1,4 @@
-from datetime import datetime
-
-from config.server_environment import DEFAULT_CUSTOMER
+from config.server_environment import BASE_COLLECTION
 
 from src.classes.mongo_engine import MongoEngine
 from src.classes.item import Item
@@ -31,10 +29,16 @@ class Customer(Item):
 
     def insert(self, item=None):
         if item is None:
-            item = DEFAULT_CUSTOMER
-            item['creation_time'] = datetime.now()
-        # Item exists (find all items with '_id' == item['_id']
-        elif item['_id'] in super().find(criteria={'_id': item['_id']}):
             return False
+        elif MongoEngine().get_client() is not None:
+            if item['domain'] in super().find(
+                    criteria={'domain': item['domain']}).data:
+                return False
 
-        return super().insert(data=item)
+        self.set_customer(BASE_COLLECTION)
+        insertion = super().insert(data=item)
+        if insertion:
+            self.set_customer(customer=item['db_name'])
+
+        return insertion
+
