@@ -5,8 +5,9 @@ method_names = ['get', 'post', 'put', 'delete']
 
 def register_method(blueprint, bp_class, path, method, **options):
     endpoint = options.pop('endpoint', getattr(bp_class, method).__name__)
-    blueprint.add_url_rule(rule=path, endpoint=endpoint, view_func=getattr(bp_class, method), methods=[method],
-                           **options)
+    blueprint.add_url_rule(rule=path, endpoint=endpoint,
+                           view_func=getattr(bp_class, method),
+                           methods=[method], **options)
 
 
 def bp(blueprint, bp_class, path, methods=[], **options):
@@ -40,5 +41,9 @@ def bp(blueprint, bp_class, path, methods=[], **options):
                 for method in overwritten_methods:
                     # Check if the method is allowed
                     if method in method_names:
-                        register_method(blueprint=blueprint, bp_class=c, path=path, method=method, **options)
+                        register_method(blueprint=blueprint,
+                                        bp_class=c,
+                                        path=path,
+                                        method=method,
+                                        **options)
     return decorator

@@ -10,7 +10,11 @@ from src.services.provision_config import api as provision_config
 from src.services.user import api as user
 
 app = Flask(__name__)
-api = Api(app, prefix='/api', title='IPManager', description='Manage your deploys')
+api = Api(app,
+          prefix='/api',
+          title='IPManager',
+          description='Manage your deploys')
+
 ma = Marshmallow(app)
 
 api.add_namespace(client)

@@ -1,7 +1,8 @@
 from flask_restplus import Namespace, Resource
 
 # GET, POST, DELETE
-api = Namespace(name='provision-config', description='Provision-config management')
+api = Namespace(name='provision-config',
+                description='Provision-config management')
 
 
 @api.route('/')

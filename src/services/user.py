@@ -1,19 +1,46 @@
 from flask_restplus import Namespace, Resource
+from src.classes.user import User
+from src.classes.customer import Customer
 
 # GET, POST, DELETE
 api = Namespace(name='user', description='User management')
 
 
+@api.route('/<string:username>')
+class UserServiceGet(Resource):
+    @staticmethod
+    def get(username):
+        Customer().set_customer('angel')
+        user = User()
+        data = user.find(criteria={'username': username})
+        return {'payload': username, 'user': data}
+
+
 @api.route('/')
 class UserService(Resource):
     def get(self):
-        return {'get': 'get', 'a': 1}
+        Customer().set_customer('angel')
+        user = User()
+        data = user.find()
+        return {'post': 'get', 'result': data}
 
     def post(self):
-        return {'post': 'post', 'a': 1}
+        Customer().set_customer('angel')
+        user = User()
+        data = user.insert(data=api.payload)
+        return {'post': 'post', 'result': data}
 
     def put(self):
-        return {'put': 'put', 'a': 1}
+        Customer().set_customer('angel')
+        data = User().update(item=api.payload['username'],
+                             data=api.payload['data'])
+        return {'put': 'put', 'result': data}
 
     def delete(self):
-        return {'delete': 'delete', 'a': 1}, 204
+        Customer().set_customer('angel')
+        user = User()
+
+        payload = api.payload
+
+        data = user.remove(payload)
+        return {'delete': 'delete', 'data': data}, 204

@@ -1,19 +1,30 @@
 from flask_restplus import Namespace, Resource
+from marshmallow import fields, Schema
+
+from src.classes.customer import Customer
 
 # GET, POST, DELETE
 api = Namespace(name='client', description='Client management')
 
 
+class ClientSchema:
+    name = fields.String()
+    id = fields.String()
+
+
+@api.route('/<int:id>')
+class ClientService(Resource):
+    def get(self, id):
+        return {'payload': id}
+
+
 @api.route('/')
 class ClientService(Resource):
-    def get(self):
-        return {'get': 'get', 'a': 1}
-
     def post(self):
-        return {'post': 'post', 'a': 1}
+        return {'payload': api.payload}
 
     def put(self):
-        return {'put': 'put', 'a': 1}
+        return {'payload': api.payload}
 
     def delete(self):
-        return {'delete': 'delete', 'a': 1}, 204
+        return {'payload': api.payload}

@@ -16,6 +16,7 @@ class Item:
     """
         Return the cursor to the table
     """
+
     def cursor(self):
         if self.table_name is not '':
             return MongoEngine().get_client()[self.table_name]
@@ -24,10 +25,13 @@ class Item:
     """
         Find all the elements by the given criteria
     """
+
     def find(self, operation=Operation.FIND, criteria={}, projection={}):
         _projection = projection if projection else self.table_schema
-        _operation = operation.value if operation is Operation.FIND else Operation.FIND.value + operation.value
-        data = json.loads(dumps(getattr(self.cursor(), _operation)(criteria, _projection)))
+        _operation = operation.value if operation is Operation.FIND else \
+            Operation.FIND.value + operation.value
+        data = json.loads(
+            dumps(getattr(self.cursor(), _operation)(criteria, _projection)))
         data_length = len(data)
         if data_length is 0:
             self.data = {}
@@ -41,6 +45,7 @@ class Item:
     """
         Insert an item
     """
+
     def insert(self, data=None):
         info = {
             'enabled': True,
@@ -65,12 +70,14 @@ class Item:
         try:
             a = getattr(self.cursor(), _operation)(data)
             return True
-        except:
+        except a:
             return False
 
     """
-        'Remove' an item by the given criteria. It does not removes the item, only marks it as deleted
+        'Remove' an item by the given criteria. It does not removes the item,
+        only marks it as deleted
     """
+
     def remove(self, criteria={}):
         info = {
             'enabled': False,
@@ -83,8 +90,10 @@ class Item:
     """
         Update the item that fits the criteria with the new data
     """
+
     def update(self, criteria, data):
         try:
-            self.cursor().update_one(filter=criteria, update={'$set': data})
-        except:
+            a = self.cursor().update_one(filter=criteria,
+                                         update={'$set': data})
+        except a:
             return False
