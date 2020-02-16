@@ -12,7 +12,8 @@ jobs:
     
     - name: Setup Python environment
       uses: actions/setup-python@v1.1.1
-    
+
+    - run: ll
     - run: pip3 install requirements.txt
     
     - name: Python Style Checker
