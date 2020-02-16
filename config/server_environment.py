@@ -1,7 +1,7 @@
 # Environment variables
 
 # Mongo hostname
-MONGO_HOSTNAME = 'localhost'
+MONGO_HOSTNAME = '172.17.0.2'
 # Mongo port
 MONGO_PORT = 27017
 
