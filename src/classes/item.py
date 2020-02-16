@@ -1,3 +1,6 @@
+import json
+from datetime import datetime
+from bson.json_util import dumps
 from src.classes.mongo_engine import MongoEngine
 from src.classes.operation import Operation
 
@@ -23,49 +26,65 @@ class Item:
     """
     def find(self, operation=Operation.FIND, criteria={}, projection={}):
         _projection = projection if projection else self.table_schema
-        _operation = operation.value if operation is Operation.FIND else Operation.FIND + operation.value
-        self.data = getattr(self.cursor(), _operation)(criteria, _projection)
-        return self.data
+        _operation = operation.value if operation is Operation.FIND else Operation.FIND.value + operation.value
+        data = json.loads(dumps(getattr(self.cursor(), _operation)(criteria, _projection)))
+        data_length = len(data)
+        if data_length is 0:
+            self.data = {}
+        elif data_length is 1:
+            self.data = data[0]
+        else:
+            self.data = data
+
+        return self
 
     """
         Insert an item
     """
     def insert(self, data=None):
+        info = {
+            'enabled': True,
+            'deleted': False,
+            'creation_time': datetime.now(),
+            'last_modified': datetime.now(),
+            'delete_time': 0
+        }
+
         if data is None:
             return False
         elif type(data) is dict:
-            _operation = Operation.INSERT + Operation.ONE
+            _operation = Operation.INSERT.value + Operation.ONE.value
+            data.update(info)
         elif type(data) is list:
-            _operation = Operation.INSERT + Operation.MANY
+            _operation = Operation.INSERT.value + Operation.MANY.value
+            for item in data:
+                item.update(info)
         else:
             return False
 
         try:
-            getattr(self.cursor(), _operation)(data)
+            a = getattr(self.cursor(), _operation)(data)
             return True
         except:
             return False
 
     """
-        Remove an item by the given criteria
+        'Remove' an item by the given criteria. It does not removes the item, only marks it as deleted
     """
-    def remove(self, criteria=None):
-        if criteria is None:
-            criteria = {}
-        try:
-            self.cursor().delete_one(criteria)
-            return True
-        except:
-            return False
+    def remove(self, criteria={}):
+        info = {
+            'enabled': False,
+            'deleted': True,
+            'delete_time': datetime.now()
+        }
+
+        return self.update(item=criteria, data=info)
 
     """
-        Update the data of the given item
+        Update the item that fits the criteria with the new data
     """
-    def update(self, item, data=None):
-        if data is None:
-            data = item
+    def update(self, criteria, data):
         try:
-            self.cursor().update_one(item, data)
-            return True
+            self.cursor().update_one(filter=criteria, update={'$set': data})
         except:
             return False

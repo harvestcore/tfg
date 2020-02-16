@@ -38,19 +38,3 @@ class Customer(Item):
             return False
 
         return super().insert(data=item)
-
-    @staticmethod
-    def get():
-        return {'get': '#####', 'a': 1}
-
-    @staticmethod
-    def post():
-        return {'post': '#####', 'a': 1}
-
-    @staticmethod
-    def put():
-        return {'put': '#####', 'a': 1}
-
-    @staticmethod
-    def delete():
-        return {'delete': '#####', 'a': 1}
