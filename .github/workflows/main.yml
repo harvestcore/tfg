@@ -26,4 +26,4 @@ jobs:
 
     - run: docker ps
     - run: docker inspect $(docker ps -q)
-    - run: sleep 60
+    - run: python -m pytest
