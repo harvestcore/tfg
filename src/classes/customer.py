@@ -30,15 +30,19 @@ class Customer(Item):
     def insert(self, item=None):
         if item is None:
             return False
-        elif MongoEngine().get_client() is not None:
-            if item['domain'] in super().find(
-                    criteria={'domain': item['domain']}).data:
-                return False
 
         self.set_customer(BASE_COLLECTION)
+
+        if MongoEngine().get_client() is not None:
+            found = self.find(
+                    criteria={'domain': item['domain']},
+                    projection={'domain': 1}).data
+
+            if found and item['domain'] == found['domain']:
+                return False
+
         insertion = super().insert(data=item)
         if insertion:
             self.set_customer(customer=item['db_name'])
 
         return insertion
-

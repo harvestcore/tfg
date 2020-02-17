@@ -10,37 +10,28 @@ api = Namespace(name='user', description='User management')
 class UserServiceGet(Resource):
     @staticmethod
     def get(username):
-        Customer().set_customer('angel')
-        user = User()
-        data = user.find(criteria={'username': username})
-        return {'payload': username, 'user': data}
+        user = User().find(criteria={'username': username})
+        return {'payload': username, 'user': user.data}
 
 
 @api.route('/')
 class UserService(Resource):
     def get(self):
-        Customer().set_customer('angel')
-        user = User()
-        data = user.find()
-        return {'post': 'get', 'result': data}
+        user = User().find()
+        return {'post': 'get', 'result': user.data}
 
     def post(self):
-        Customer().set_customer('angel')
         user = User()
         data = user.insert(data=api.payload)
         return {'post': 'post', 'result': data}
 
     def put(self):
-        Customer().set_customer('angel')
         data = User().update(item=api.payload['username'],
                              data=api.payload['data'])
         return {'put': 'put', 'result': data}
 
     def delete(self):
-        Customer().set_customer('angel')
         user = User()
-
         payload = api.payload
-
         data = user.remove(payload)
         return {'delete': 'delete', 'data': data}, 204

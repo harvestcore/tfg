@@ -5,12 +5,12 @@ from src.classes.operation import Operation
 class User(Item):
     table_name = 'users'
     table_schema = {
-        'type': 'str',
-        'first_name': 'str',
-        'last_name': 'str',
-        'username': 'str',
-        'email': 'str',
-        'password': 1,
+        'type': 1,
+        'first_name': 1,
+        'last_name': 1,
+        'username': 1,
+        'email': 1,
+        # 'password': 0,
         'enabled': 1,
         'deleted': 1,
         'creation_time': 1,
