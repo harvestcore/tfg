@@ -16,7 +16,7 @@ class MongoEngine:
         Get the customers customers client
     """
     def get_client(self):
-        if self.collection is not '':
+        if self.collection != '':
             return self.client[self.collection]
 
         return None
