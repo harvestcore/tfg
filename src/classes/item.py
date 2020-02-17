@@ -17,7 +17,7 @@ class Item:
         Return the cursor to the table
     """
     def cursor(self):
-        if self.table_name is not '':
+        if self.table_name != '':
             return MongoEngine().get_client()[self.table_name]
         return None
 
@@ -29,9 +29,9 @@ class Item:
         data = json.loads(
             dumps(self.cursor().find(criteria, _projection)))
         data_length = len(data)
-        if data_length is 0:
+        if data_length == 0:
             self.data = {}
-        elif data_length is 1:
+        elif data_length == 1:
             self.data = data[0]
         else:
             self.data = data
