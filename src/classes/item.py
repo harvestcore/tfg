@@ -17,21 +17,21 @@ class Item:
         Return the cursor to the table
     """
     def cursor(self):
-        if self.table_name is not '':
+        if self.table_name != '':
             return MongoEngine().get_client()[self.table_name]
         return None
 
     """
         Find all the elements by the given criteria
     """
-    def find(self, operation=Operation.FIND, criteria={}, projection={}):
+    def find(self, criteria={}, projection={}):
         _projection = projection if projection else self.table_schema
-        _operation = operation.value if operation is Operation.FIND else Operation.FIND.value + operation.value
-        data = json.loads(dumps(getattr(self.cursor(), _operation)(criteria, _projection)))
+        data = json.loads(
+            dumps(self.cursor().find(criteria, _projection)))
         data_length = len(data)
-        if data_length is 0:
+        if data_length == 0:
             self.data = {}
-        elif data_length is 1:
+        elif data_length == 1:
             self.data = data[0]
         else:
             self.data = data
@@ -63,13 +63,14 @@ class Item:
             return False
 
         try:
-            a = getattr(self.cursor(), _operation)(data)
+            getattr(self.cursor(), _operation)(data)
             return True
-        except:
+        except Exception:
             return False
 
     """
-        'Remove' an item by the given criteria. It does not removes the item, only marks it as deleted
+        'Remove' an item by the given criteria. It does not removes the item,
+        only marks it as deleted
     """
     def remove(self, criteria={}):
         info = {
@@ -78,7 +79,7 @@ class Item:
             'delete_time': datetime.now()
         }
 
-        return self.update(item=criteria, data=info)
+        return self.update(criteria=criteria, data=info)
 
     """
         Update the item that fits the criteria with the new data
@@ -86,5 +87,5 @@ class Item:
     def update(self, criteria, data):
         try:
             self.cursor().update_one(filter=criteria, update={'$set': data})
-        except:
+        except Exception:
             return False
