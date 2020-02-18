@@ -38,3 +38,9 @@ class MongoEngine:
     """
     def get_collection_names(self):
         return self.get_client().list_database_names()
+
+    """
+        Drop a database
+    """
+    def drop(self, dbname):
+        self.client.drop_database(dbname)
