@@ -79,7 +79,7 @@ class Item:
             'delete_time': datetime.now()
         }
 
-        return self.update(item=criteria, data=info)
+        return self.update(criteria=criteria, data=info)
 
     """
         Update the item that fits the criteria with the new data
