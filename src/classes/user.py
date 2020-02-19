@@ -1,5 +1,4 @@
 from src.classes.item import Item
-from src.classes.operation import Operation
 
 
 class User(Item):
@@ -27,7 +26,7 @@ class User(Item):
                 .find(criteria={'username': data['username'],
                                 'email': data['email']})
 
-            if current is []:
+            if current.data == {}:
                 return super(User, self).insert(data)
 
         return False
