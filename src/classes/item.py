@@ -1,8 +1,12 @@
 import json
 from datetime import datetime
 from bson.json_util import dumps
+from cryptography.fernet import Fernet
+
 from src.classes.mongo_engine import MongoEngine
 from src.classes.operation import Operation
+
+from config.server_environment import ENC_KEY
 
 
 class Item:
@@ -55,6 +59,10 @@ class Item:
         elif type(data) is dict:
             _operation = Operation.INSERT.value + Operation.ONE.value
             data.update(info)
+            if 'password' in data.keys():
+                password = Fernet(ENC_KEY).encrypt(data['password'].encode())\
+                    .decode('utf-8')
+                data.update({'password': password})
         elif type(data) is list:
             _operation = Operation.INSERT.value + Operation.MANY.value
             for item in data:
@@ -69,7 +77,7 @@ class Item:
             return False
 
     """
-        'Remove' an item by the given criteria. It does not removes the item,
+        'Remove' an item by the given criteria. It doesn't removes the item,
         only marks it as deleted
     """
     def remove(self, criteria={}):
@@ -87,5 +95,6 @@ class Item:
     def update(self, criteria, data):
         try:
             self.cursor().update_one(filter=criteria, update={'$set': data})
+            return True
         except Exception:
             return False
