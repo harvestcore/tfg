@@ -1,10 +1,12 @@
-import base64
 import json
 from datetime import datetime
 from bson.json_util import dumps
+from cryptography.fernet import Fernet
 
 from src.classes.mongo_engine import MongoEngine
 from src.classes.operation import Operation
+
+from config.server_environment import ENC_KEY
 
 
 class Item:
@@ -58,7 +60,8 @@ class Item:
             _operation = Operation.INSERT.value + Operation.ONE.value
             data.update(info)
             if 'password' in data.keys():
-                password = base64.b64encode(bytes(data['password'], 'utf-8'))
+                password = Fernet(ENC_KEY).encrypt(data['password'].encode())\
+                    .decode('utf-8')
                 data.update({'password': password})
         elif type(data) is list:
             _operation = Operation.INSERT.value + Operation.MANY.value

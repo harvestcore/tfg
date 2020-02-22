@@ -9,7 +9,7 @@ class User(Item):
         'last_name': 1,
         'username': 1,
         'email': 1,
-        # 'password': 0,
+        'password': 1,
         'enabled': 1,
         'deleted': 1,
         'creation_time': 1,
@@ -22,6 +22,9 @@ class User(Item):
 
     def insert(self, data=None):
         if data is not None:
+            if data['type'] not in ['admin', 'regular']:
+                return False
+
             current = super(User, self)\
                 .find(criteria={'username': data['username'],
                                 'email': data['email']})

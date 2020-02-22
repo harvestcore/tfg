@@ -27,7 +27,7 @@ api.add_namespace(provision)
 api.add_namespace(provision_config)
 api.add_namespace(user)
 
-Customer().set_customer(BASE_COLLECTION)
+Customer().set_customer('angel')
 
 if __name__ == '__main__':
     app.run(debug=True)

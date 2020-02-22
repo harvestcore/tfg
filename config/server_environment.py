@@ -1,3 +1,5 @@
+import os
+
 # Environment variables
 
 # Server environment
@@ -13,3 +15,7 @@ MONGO_PORT = 27017
 
 # IPManager base collection
 BASE_COLLECTION = 'ipm_root' if ENVIRONMENT == 'P' else 'ipm_root_testing'
+
+# Encryption key (testing)
+ENC_KEY = 'KM1tL17icOwO7QkzOy4wrTVUSUfr10CEFIFDvAZpI40='.encode() \
+    if os.environ.get('ENC_KEY', None) is None else os.environ.get('ENC_KEY')

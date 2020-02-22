@@ -45,7 +45,7 @@ class UserServiceGet(Resource):
     @staticmethod
     def get(username):
         user = User().find(criteria={'username': username})
-        return {'payload': username, 'user': user.data}
+        return parse_data(UserSchema, user.data)
 
 
 @api.route('/query')
