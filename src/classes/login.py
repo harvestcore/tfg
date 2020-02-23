@@ -86,5 +86,5 @@ class Login(Item):
         return self.remove({'username': username}, force=True)
 
     def token_access(self, token):
-        data = jwt.decode(token, JWT_ENC_KEY)
+        data = jwt.decode(token, JWT_ENC_KEY, algorithms=['HS256'])
         return self.find({'public_id': data['public_id']})

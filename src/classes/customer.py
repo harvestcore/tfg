@@ -23,8 +23,11 @@ class Customer(Item):
         Set the current customer
         @param Customer's name
     """
-    @classmethod
-    def set_customer(cls, customer):
+    def set_customer(self, customer):
+        if customer != BASE_COLLECTION:
+            c = self.find({'domain': customer})
+            if c.data is not None:
+                return MongoEngine().set_collection_name(c.data['db_name'])
         MongoEngine().set_collection_name(customer)
 
     def insert(self, item=None):
@@ -42,7 +45,5 @@ class Customer(Item):
                 return False
 
         insertion = super().insert(data=item)
-        if insertion:
-            self.set_customer(customer=item['db_name'])
 
         return insertion

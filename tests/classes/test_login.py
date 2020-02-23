@@ -111,7 +111,7 @@ class UserTests(unittest.TestCase):
                              "Keys are not equal")
 
         token = logged_user.data['token']
-        data = jwt.decode(token, JWT_ENC_KEY)
+        data = jwt.decode(token, JWT_ENC_KEY, algorithms=['HS256'])
 
         self.assertEqual(logged_user.data['public_id'],
                          data['public_id'], "Public id from token not equal")
