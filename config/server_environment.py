@@ -16,6 +16,11 @@ MONGO_PORT = 27017
 # IPManager base collection
 BASE_COLLECTION = 'ipm_root' if ENVIRONMENT == 'P' else 'ipm_root_testing'
 
-# Encryption key (testing)
+# Password encryption key (testing)
 ENC_KEY = 'KM1tL17icOwO7QkzOy4wrTVUSUfr10CEFIFDvAZpI40='.encode() \
     if os.environ.get('ENC_KEY', None) is None else os.environ.get('ENC_KEY')
+
+# JWT encryption key (testing)
+JWT_ENC_KEY = 'G-yEgpe9MNBzRC14UQ_3lHtNkiY6z2enG1KzY33Vcvw=' \
+    if os.environ.get('JWT_ENC_KEY', None) is None \
+    else os.environ.get('JWT_ENC_KEY')

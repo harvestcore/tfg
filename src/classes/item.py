@@ -1,4 +1,5 @@
 import json
+import uuid
 from datetime import datetime
 from bson.json_util import dumps
 from cryptography.fernet import Fernet
@@ -34,7 +35,7 @@ class Item:
             dumps(self.cursor().find(criteria, _projection)))
         data_length = len(data)
         if data_length == 0:
-            self.data = {}
+            self.data = None
         elif data_length == 1:
             self.data = data[0]
         else:
@@ -63,6 +64,10 @@ class Item:
                 password = Fernet(ENC_KEY).encrypt(data['password'].encode())\
                     .decode('utf-8')
                 data.update({'password': password})
+
+            if 'public_id' in self.table_schema.keys()\
+                    and 'public_id' not in data.keys():
+                data.update({'public_id': str(uuid.uuid4())})
         elif type(data) is list:
             _operation = Operation.INSERT.value + Operation.MANY.value
             for item in data:
@@ -80,14 +85,21 @@ class Item:
         'Remove' an item by the given criteria. It doesn't removes the item,
         only marks it as deleted
     """
-    def remove(self, criteria={}):
+    def remove(self, criteria={}, force=False):
         info = {
             'enabled': False,
             'deleted': True,
             'delete_time': datetime.now()
         }
 
-        return self.update(criteria=criteria, data=info)
+        if not force:
+            return self.update(criteria=criteria, data=info)
+
+        try:
+            self.cursor().delete_one(filter=criteria)
+            return True
+        except Exception:
+            return False
 
     """
         Update the item that fits the criteria with the new data
