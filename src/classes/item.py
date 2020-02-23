@@ -65,7 +65,8 @@ class Item:
                     .decode('utf-8')
                 data.update({'password': password})
 
-            if 'public_id' in self.table_schema.keys():
+            if 'public_id' in self.table_schema.keys()\
+                    and 'public_id' not in data.keys():
                 data.update({'public_id': str(uuid.uuid4())})
         elif type(data) is list:
             _operation = Operation.INSERT.value + Operation.MANY.value
@@ -94,7 +95,11 @@ class Item:
         if not force:
             return self.update(criteria=criteria, data=info)
 
-        return self.cursor().delete_one(filter=criteria)
+        try:
+            self.cursor().delete_one(filter=criteria)
+            return True
+        except Exception:
+            return False
 
     """
         Update the item that fits the criteria with the new data

@@ -18,7 +18,8 @@ class Login(Item):
         'token': 1,
         'username': 1,
         'exp': 1,
-        'login_time': 1
+        'login_time': 1,
+        'public_id': 1
     }
 
     def __init__(self):
@@ -59,7 +60,7 @@ class Login(Item):
             if existing.data is None:
                 self.insert(data={
                     'public_id': user.data['public_id'],
-                    'token': token,
+                    'token': token.decode('UTF-8'),
                     'username': auth.username,
                     'exp': exp,
                     'login_time': login_time
@@ -67,16 +68,13 @@ class Login(Item):
             else:
                 self.update(criteria={'username': auth.username}, data={
                     'public_id': user.data['public_id'],
-                    'token': token,
+                    'token': token.decode('UTF-8'),
                     'username': auth.username,
                     'exp': exp,
                     'login_time': login_time
                 })
 
-            self.data = {'token': token.decode('UTF-8')}
-
-            return self
-
+            return self.find({'public_id': user.data['public_id']})
         return False
 
     def logout(self, username):
