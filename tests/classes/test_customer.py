@@ -56,7 +56,7 @@ class CustomerTests(unittest.TestCase):
         Customer().set_customer(BASE_COLLECTION)
         not_found_customer = Customer().find({'domain': 'rip'})
 
-        self.assertEqual(not_found_customer.data, {},
+        self.assertEqual(not_found_customer.data, None,
                          "Non existing customer found")
 
         found_customer = Customer().find({'domain': 'test'})
