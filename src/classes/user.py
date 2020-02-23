@@ -10,6 +10,7 @@ class User(Item):
         'username': 1,
         'email': 1,
         'password': 1,
+        'public_id': 1,
         'enabled': 1,
         'deleted': 1,
         'creation_time': 1,
@@ -29,7 +30,7 @@ class User(Item):
                 .find(criteria={'username': data['username'],
                                 'email': data['email']})
 
-            if current.data == {}:
+            if not current.data:
                 return super(User, self).insert(data)
 
         return False

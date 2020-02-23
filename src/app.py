@@ -10,6 +10,8 @@ from src.services.deploy_config import api as deploy_config
 from src.services.provision import api as provision
 from src.services.provision_config import api as provision_config
 from src.services.user import api as user
+from src.services.login import api as login
+
 from src.classes.customer import Customer
 
 app = Flask(__name__)
@@ -26,6 +28,7 @@ api.add_namespace(deploy_config)
 api.add_namespace(provision)
 api.add_namespace(provision_config)
 api.add_namespace(user)
+api.add_namespace(login)
 
 Customer().set_customer('angel')
 

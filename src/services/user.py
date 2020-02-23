@@ -19,6 +19,7 @@ class UserSchema(Schema):
     username = fields.Str(required=True)
     email = fields.Email(required=True)
     password = fields.Str(load_only=True)
+    public_id = fields.Str(dump_only=True)
     enabled = fields.Bool(dump_only=True)
     deleted = fields.Bool(dump_only=True)
     # creation_time = fields.DateTime(dump_only=True)
