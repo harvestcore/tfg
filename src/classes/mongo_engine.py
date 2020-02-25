@@ -13,7 +13,7 @@ class MongoEngine:
         return cls.engine
 
     """
-        Get the customers customers client
+        Get the customers client
     """
     def get_client(self):
         if self.collection != '':

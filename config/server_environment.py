@@ -24,3 +24,5 @@ ENC_KEY = 'KM1tL17icOwO7QkzOy4wrTVUSUfr10CEFIFDvAZpI40='.encode() \
 JWT_ENC_KEY = 'G-yEgpe9MNBzRC14UQ_3lHtNkiY6z2enG1KzY33Vcvw=' \
     if os.environ.get('JWT_ENC_KEY', None) is None \
     else os.environ.get('JWT_ENC_KEY')
+
+DOCKER_BASE_URL = 'unix://var/run/docker.sock'
