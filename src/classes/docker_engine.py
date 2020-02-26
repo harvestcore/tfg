@@ -33,9 +33,16 @@ class DockerEngine:
         except docker.errors.APIError:
             return False
 
+    # `thing`: Can be a container or an image
     @staticmethod
-    def run_operation_in_container(container, operation, data):
+    def run_operation_in_object(thing, operation, data):
         try:
-            return getattr(container, operation)(**data)
+            return getattr(thing, operation)(**data)
+        except docker.errors.APIError:
+            return False
+
+    def get_image_by_name(self, name):
+        try:
+            return self.get_client().images.get(name=name)
         except docker.errors.APIError:
             return False

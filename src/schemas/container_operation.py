@@ -5,7 +5,7 @@ class BaseSingleContainerProps(Schema):
     container_id = fields.Str(required=True)
     operation = fields.Str(required=True, validate=validate.OneOf([
         "kill", "logs", "pause", "reload", "remove", "rename", "restart",
-        "start", "stats", "stop", "unpause"
+        "start", "stop", "unpause"
     ]))
     data = fields.Dict(required=True)
 

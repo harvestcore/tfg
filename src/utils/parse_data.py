@@ -2,6 +2,11 @@ from marshmallow import fields, Schema
 
 
 def parse_data(model, data):
+    try:
+        data = data.decode()
+    except (UnicodeDecodeError, AttributeError):
+        pass
+
     if model:
         class AuxSchema(Schema):
             items = fields.List(fields.Nested(model))
