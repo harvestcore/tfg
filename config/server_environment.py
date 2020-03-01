@@ -26,3 +26,5 @@ JWT_ENC_KEY = 'G-yEgpe9MNBzRC14UQ_3lHtNkiY6z2enG1KzY33Vcvw=' \
     else os.environ.get('JWT_ENC_KEY')
 
 DOCKER_BASE_URL = 'unix://var/run/docker.sock'
+
+ANSIBLE_PATH = './'
