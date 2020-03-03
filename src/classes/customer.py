@@ -38,8 +38,9 @@ class Customer(Item):
 
         if MongoEngine().get_client() is not None:
             found = self.find(
-                    criteria={'domain': item['domain']},
-                    projection={'domain': 1}).data
+                criteria={'domain': item['domain']},
+                projection={'domain': 1}
+            ).data
 
             if found and item['domain'] == found['domain']:
                 return False

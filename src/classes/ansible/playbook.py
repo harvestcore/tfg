@@ -23,7 +23,10 @@ class Playbook(Item):
         if item.data is not None:
             item.data = {
                 'name': item.data['name'],
-                'playbook': yaml.dump(item.data['playbook'])
+                'playbook': yaml.dump(
+                        item.data['playbook'],
+                        sort_keys=False
+                )
             }
             return item
         return None
@@ -32,6 +35,6 @@ class Playbook(Item):
         if data is not None:
             return super().insert(data={
                 'name': data['name'],
-                'playbook': yaml.load(data['playbook'])
+                'playbook': [yaml.load(data['playbook'])]
             })
         return False

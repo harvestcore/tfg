@@ -4,9 +4,9 @@ from datetime import datetime as dt
 from config.server_environment import ANSIBLE_PATH
 
 
-def create_path_if_not_exists(domain):
+def create_path_if_not_exists(domain, subpath):
     ansible_path = ANSIBLE_PATH + 'ansible/'
-    hosts_path = ansible_path + 'hosts/'
+    hosts_path = ansible_path + subpath + '/'
     domain_path = hosts_path + domain + '/'
 
     if not os.path.exists(ansible_path):
@@ -26,15 +26,17 @@ def hosts_to_file(hosts, domain, filename=None):
     if not filename:
         filename = dt.isoformat(dt.utcnow())
 
-    path = create_path_if_not_exists(domain)
+    path = create_path_if_not_exists(domain, 'hosts')
 
     file_path = path + filename
-    os.remove(file_path)
-    file = open(filename, 'w')
+    if os.path.exists(file_path):
+        os.remove(file_path)
+    file = open(file_path, 'w+')
 
     if type(hosts) is list:
         for host in hosts:
             file.write('[' + host['name'] + ']')
+            file.write('\n')
             for ip in host['ips']:
                 file.write(ip)
 
@@ -45,3 +47,18 @@ def hosts_to_file(hosts, domain, filename=None):
     return file_path
 
 
+def yaml_to_file(data, domain, filename=None):
+    if not filename:
+        filename = dt.isoformat(dt.utcnow())
+
+    path = create_path_if_not_exists(domain, 'playbooks')
+    file_path = path + filename + '.yaml'
+
+    if os.path.exists(file_path):
+        os.remove(file_path)
+    file = open(file_path, 'w+')
+    file.write('---\n')
+    file.write(data)
+    file.close()
+
+    return file_path

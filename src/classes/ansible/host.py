@@ -5,7 +5,7 @@ class Host(Item):
     table_name = 'hosts'
     table_schema = {
         'name': 1,
-        'ip': 1,
+        'ips': 1,
         'creation_time': 1,
         'last_modified': 1,
         'enabled': 1,
