@@ -1,11 +1,9 @@
 import os
 from datetime import datetime as dt
 
-from config.server_environment import ANSIBLE_PATH
 
-
-def create_path_if_not_exists(domain, subpath):
-    ansible_path = ANSIBLE_PATH + 'ansible/'
+def create_path_if_not_exists(domain, root, base_path, subpath):
+    ansible_path = base_path + root + '/'
     hosts_path = ansible_path + subpath + '/'
     domain_path = hosts_path + domain + '/'
 
@@ -19,14 +17,19 @@ def create_path_if_not_exists(domain, subpath):
     return domain_path
 
 
-def hosts_to_file(hosts, domain, filename=None):
-    if not hosts or not domain:
+def hosts_to_file(hosts, domain, root, base_path, subpath, filename=None):
+    if not hosts or not domain or not base_path:
         return False
 
     if not filename:
         filename = dt.isoformat(dt.utcnow())
 
-    path = create_path_if_not_exists(domain, 'hosts')
+    path = create_path_if_not_exists(
+        domain=domain,
+        root=root,
+        subpath=subpath,
+        base_path=base_path
+    )
 
     file_path = path + filename
     if os.path.exists(file_path):
@@ -47,11 +50,16 @@ def hosts_to_file(hosts, domain, filename=None):
     return file_path
 
 
-def yaml_to_file(data, domain, filename=None):
+def yaml_to_file(data, domain, root, base_path, subpath, filename=None):
     if not filename:
         filename = dt.isoformat(dt.utcnow())
 
-    path = create_path_if_not_exists(domain, 'playbooks')
+    path = create_path_if_not_exists(
+        domain=domain,
+        root=root,
+        subpath=subpath,
+        base_path=base_path
+    )
     file_path = path + filename + '.yaml'
 
     if os.path.exists(file_path):

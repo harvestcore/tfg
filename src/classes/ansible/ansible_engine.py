@@ -1,16 +1,19 @@
 from ansible import context
 from ansible.cli import CLI
-from ansible.executor.playbook_executor import PlaybookExecutor
 from ansible.parsing.dataloader import DataLoader
 from ansible.inventory.manager import InventoryManager
 from ansible.vars.manager import VariableManager
 from ansible.module_utils.common.collections import ImmutableDict
-
+from ansible.playbook.play import Play
+from ansible.executor.task_queue_manager import TaskQueueManager
 from src.classes.ansible.host import Host
 from src.classes.ansible.playbook import Playbook
 from src.classes.mongo_engine import MongoEngine
 
-from src.utils.dump_to_file import hosts_to_file, yaml_to_file
+from io import TextIOWrapper, BytesIO
+import sys
+
+from src.utils.dump_to_file import hosts_to_file
 
 from config.server_environment import ANSIBLE_PATH
 
@@ -41,15 +44,17 @@ class AnsibleEngine:
 
         hosts_file = hosts_to_file(
             hosts=hosts,
-            domain=domain
+            domain=domain,
+            root='ansible',
+            base_path=self.path,
+            subpath='hosts'
         )
 
         # Check if playbook exists
         playbook = None
         current = Playbook().find(criteria={'name': pb})
         if current.data:
-            playbook = current.data['playbook']
-            playbook = yaml_to_file(data=playbook, domain=domain)
+            playbook = current.data['playbook'][0]
 
         if not playbook:
             return False
@@ -89,13 +94,33 @@ class AnsibleEngine:
             version_info=CLI.version_info(gitinfo=False)
         )
 
-        pbex = PlaybookExecutor(
-            playbooks=[playbook],
-            inventory=inventory,
+        play = Play().load(
+            playbook,
             variable_manager=variable_manager,
-            loader=loader,
-            passwords=passwords
+            loader=loader
         )
 
-        results = pbex.run()
-        return results
+        tqm = None
+        try:
+            tqm = TaskQueueManager(
+                inventory=inventory,
+                variable_manager=variable_manager,
+                loader=loader,
+                passwords=passwords
+            )
+
+            sys.stdout = TextIOWrapper(BytesIO(), sys.stdout.encoding)
+
+            tqm.run(play)
+
+            sys.stdout.seek(0)
+            result = sys.stdout.read()
+
+            sys.stdout.close()
+            sys.stdout = sys.__stdout__
+
+        finally:
+            if tqm is not None:
+                tqm.cleanup()
+
+        return result

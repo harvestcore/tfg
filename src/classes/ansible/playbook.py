@@ -18,19 +18,6 @@ class Playbook(Item):
     def __init__(self):
         super(Playbook, self).__init__()
 
-    def find(self, criteria={}, projection={}):
-        item = super().find(criteria=criteria, projection=projection)
-        if item.data is not None:
-            item.data = {
-                'name': item.data['name'],
-                'playbook': yaml.dump(
-                        item.data['playbook'],
-                        sort_keys=False
-                )
-            }
-            return item
-        return None
-
     def insert(self, data=None):
         if data is not None:
             return super().insert(data={
