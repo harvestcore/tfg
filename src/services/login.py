@@ -1,12 +1,13 @@
 from flask import request, make_response
 from flask_restplus import Resource, Namespace
-from marshmallow import fields, Schema
 from functools import wraps
 
 from src.classes.login import Login
 from src.utils.parse_data import parse_data
 from src.utils.response_by_success import response_by_success
 from src.utils.response_with_message import response_with_message
+
+from src.schemas.login import LoginSchema
 
 # GET, POST, DELETE
 api = Namespace(name='login', description='Login')
@@ -31,10 +32,6 @@ def token_required(f):
         return f(*args, **kwargs)
 
     return decorated
-
-
-class LoginSchema(Schema):
-    token = fields.Str(dump_only=True)
 
 
 @api.route('/')
