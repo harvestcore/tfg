@@ -23,7 +23,7 @@ class DeployService(Resource):
         container = DockerEngine().get_container_by_id(payload['container_id'])
         if container:
             response = DockerEngine().run_operation_in_object(
-                container=container,
+                thing=container,
                 operation=payload['operation'],
                 data=payload['data']
             )
