@@ -56,7 +56,8 @@ class DockerEngineTests(unittest.TestCase):
         response = DockerEngine().run_image_operation(
             operation='remove',
             data={
-                'image': 'alpine'
+                'image': 'alpine',
+                'force': True
             }
         )
-        self.assertNotEqual(response, None, 'Pull image failed')
+        self.assertEqual(response, None, 'Remove image failed')
