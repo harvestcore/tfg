@@ -32,7 +32,7 @@ api.add_namespace(login)
 
 Customer().set_customer(BASE_COLLECTION)
 Customer().insert({'domain': 'test', 'db_name': 'test'})
-Customer().set_customer('test')
+Customer().set_customer('ipm_root')
 
 if __name__ == '__main__':
     app.run(debug=True)
