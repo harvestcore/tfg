@@ -21,7 +21,7 @@ class DockerEngineTests(unittest.TestCase):
         self.assertNotEqual(response.decode().find('Hello from Docker!'), -1,
                             'Hello world run failed')
 
-    def test_run_and_stop_background_image(self):
+    def test_run_and_stop_background_container(self):
         response = DockerEngine().run_container_operation(
             operation='run',
             data={
@@ -42,3 +42,21 @@ class DockerEngineTests(unittest.TestCase):
         )
 
         self.assertEqual(response, None, 'Image not stopped')
+
+    def test_pull_image(self):
+        response = DockerEngine().run_image_operation(
+            operation='pull',
+            data={
+                'repository': 'alpine:latest'
+            }
+        )
+        self.assertNotEqual(response, None, 'Pull image failed')
+
+    def test_remove_image(self):
+        response = DockerEngine().run_image_operation(
+            operation='remove',
+            data={
+                'image': 'alpine'
+            }
+        )
+        self.assertNotEqual(response, None, 'Pull image failed')

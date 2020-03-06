@@ -114,6 +114,7 @@ class DeployService(Resource):
 
         if payload['operation'] == 'remove':
             payload['data'] = validate_or_abort(ImageRemoveProps, data)
+            payload['data']['force'] = True
 
         if payload['operation'] == 'search':
             payload['data'] = validate_or_abort(ImageSearchProps, data)

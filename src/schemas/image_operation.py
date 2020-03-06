@@ -69,7 +69,7 @@ class ImagePushProps(Schema):
 
 class ImageRemoveProps(Schema):
     image = fields.Str(required=True)
-    force = fields.Bool()
+    force = fields.Bool(default=True)
     noprune = fields.Bool()
 
 
