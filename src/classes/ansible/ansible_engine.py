@@ -45,9 +45,9 @@ class AnsibleEngine:
         hosts_file = hosts_to_file(
             hosts=hosts,
             domain=domain,
-            root='ansible',
-            base_path=self.path,
-            subpath='hosts'
+            root=self.path,
+            base_path='ansible',
+            sub_path='hosts'
         )
 
         # Check if playbook exists
