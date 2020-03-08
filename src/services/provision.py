@@ -120,8 +120,8 @@ class ProvisionService(Resource):
     def post():
         data = validate_or_abort(ProvisionRunSchema, request.get_json())
         results = AnsibleEngine().run_playbook(
-            host=data['hosts'],
-            pb=data['playbook'],
+            hosts=data['hosts'],
+            playbook=data['playbook'],
             passwords=data['passwords']
         )
 

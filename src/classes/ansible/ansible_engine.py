@@ -22,28 +22,28 @@ class AnsibleEngine:
     def __init__(self):
         self.path = ANSIBLE_PATH
 
-    def run_playbook(self, host, pb, passwords={}):
-        if not host or not pb:
+    def run_playbook(self, hosts, playbook, passwords={}):
+        if not hosts or not playbook:
             return False
 
         domain = MongoEngine().get_collection_name()
 
         # Check if hosts exists
-        hosts = []
-        if type(host) is list:
-            for h in host:
-                current = Host().find(criteria={'name': h})
+        h = []
+        if type(hosts) is list:
+            for host in hosts:
+                current = Host().find(criteria={'name': host})
                 if current.data:
-                    hosts.append({
+                    h.append({
                         'name': current.data['name'],
                         'ips': current.data['ips']
                     })
 
-        if len(hosts) == 0:
+        if len(h) == 0:
             return False
 
         hosts_file = hosts_to_file(
-            hosts=hosts,
+            hosts=h,
             domain=domain,
             root=self.path,
             base_path='ansible',
@@ -51,12 +51,12 @@ class AnsibleEngine:
         )
 
         # Check if playbook exists
-        playbook = None
-        current = Playbook().find(criteria={'name': pb})
+        pb = None
+        current = Playbook().find(criteria={'name': playbook})
         if current.data:
-            playbook = current.data['playbook'][0]
+            pb = current.data['playbook'][0]
 
-        if not playbook:
+        if not pb:
             return False
 
         # Ansible stuff
@@ -95,7 +95,7 @@ class AnsibleEngine:
         )
 
         play = Play().load(
-            playbook,
+            pb,
             variable_manager=variable_manager,
             loader=loader
         )
