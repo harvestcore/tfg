@@ -15,6 +15,7 @@ jobs:
 
     - run: ls -l
     - run: python --version
+    - run: cd ./backend
     - run: pip3 install -r requirements.txt
     
     - name: Python Style Checker
