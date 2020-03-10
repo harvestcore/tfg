@@ -1,7 +1,5 @@
 from flask_restplus import Namespace, Resource
-from marshmallow import fields, Schema
-
-from src.classes.customer import Customer
+from marshmallow import fields
 
 # GET, POST, DELETE
 api = Namespace(name='client', description='Client management')
