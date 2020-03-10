@@ -1,6 +1,9 @@
-name: CI
+name: Backend tests
 
-on: [push]
+on:
+  push:
+    paths:
+      - 'backend/*'
 
 jobs:
   build:
