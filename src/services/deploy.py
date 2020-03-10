@@ -23,7 +23,7 @@ class DeployService(Resource):
         container = DockerEngine().get_container_by_id(payload['container_id'])
         if container:
             response = DockerEngine().run_operation_in_object(
-                container=container,
+                thing=container,
                 operation=payload['operation'],
                 data=payload['data']
             )
@@ -114,6 +114,7 @@ class DeployService(Resource):
 
         if payload['operation'] == 'remove':
             payload['data'] = validate_or_abort(ImageRemoveProps, data)
+            payload['data']['force'] = True
 
         if payload['operation'] == 'search':
             payload['data'] = validate_or_abort(ImageSearchProps, data)

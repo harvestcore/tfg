@@ -2,9 +2,9 @@ import os
 from datetime import datetime as dt
 
 
-def create_path_if_not_exists(domain, root, base_path, subpath):
-    ansible_path = base_path + root + '/'
-    hosts_path = ansible_path + subpath + '/'
+def create_path_if_not_exists(domain, root, base_path, sub_path):
+    ansible_path = root + base_path + '/'
+    hosts_path = ansible_path + sub_path + '/'
     domain_path = hosts_path + domain + '/'
 
     if not os.path.exists(ansible_path):
@@ -17,8 +17,8 @@ def create_path_if_not_exists(domain, root, base_path, subpath):
     return domain_path
 
 
-def hosts_to_file(hosts, domain, root, base_path, subpath, filename=None):
-    if not hosts or not domain or not base_path:
+def hosts_to_file(hosts, domain, root, base_path, sub_path, filename=None):
+    if not hosts or not domain or not base_path or not root or not sub_path:
         return False
 
     if not filename:
@@ -27,7 +27,7 @@ def hosts_to_file(hosts, domain, root, base_path, subpath, filename=None):
     path = create_path_if_not_exists(
         domain=domain,
         root=root,
-        subpath=subpath,
+        sub_path=sub_path,
         base_path=base_path
     )
 
@@ -42,22 +42,24 @@ def hosts_to_file(hosts, domain, root, base_path, subpath, filename=None):
             file.write('\n')
             for ip in host['ips']:
                 file.write(ip)
-
-            file.write('\n')
+                file.write('\n')
 
     file.close()
 
     return file_path
 
 
-def yaml_to_file(data, domain, root, base_path, subpath, filename=None):
+def yaml_to_file(data, domain, root, base_path, sub_path, filename=None):
+    if not data or not domain or not base_path or not root or not sub_path:
+        return False
+
     if not filename:
         filename = dt.isoformat(dt.utcnow())
 
     path = create_path_if_not_exists(
         domain=domain,
         root=root,
-        subpath=subpath,
+        sub_path=sub_path,
         base_path=base_path
     )
     file_path = path + filename + '.yaml'

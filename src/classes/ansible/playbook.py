@@ -20,8 +20,14 @@ class Playbook(Item):
 
     def insert(self, data=None):
         if data is not None:
-            return super().insert(data={
-                'name': data['name'],
-                'playbook': [yaml.load(data['playbook'])]
-            })
+            current = super(Playbook, self) \
+                .find(criteria={'name': data['name']})
+
+            if not current.data:
+                return super(Playbook, self).insert(data)
+
         return False
+
+    def parse_yaml(self):
+        if self.data:
+            return yaml.dump(self.data['playbook'])
