@@ -1,5 +1,4 @@
 from src.classes.item import Item
-from src.classes.docker_engine import DockerEngine
 
 
 class Deploy(Item):
