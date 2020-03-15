@@ -35,17 +35,17 @@ class DumpTests(unittest.TestCase):
             sub_path='type-of-file'
         )
 
-        self.assertEqual(os.path.exists(path), True, "Path non existing")
+        self.assertEqual(os.path.exists(path), True, 'Path non existing')
         shutil.rmtree('./files-generated', ignore_errors=False, onerror=None)
 
     def test_dump_hosts_to_file_without_name(self):
         Host().insert({
-            "name": "host1",
-            "ips": ['192.168.1.5', '192.168.2.5']
+            'name': 'host1',
+            'ips': ['192.168.1.5', '192.168.2.5']
         })
 
         host = Host().find()
-        self.assertNotEqual(host, None, "Host obj not found")
+        self.assertNotEqual(host, None, 'Host obj not found')
 
         path = hosts_to_file(
             hosts=[host.data],
@@ -55,20 +55,20 @@ class DumpTests(unittest.TestCase):
             sub_path=self.sub_path_hosts
         )
 
-        self.assertEqual(os.path.exists(path), True, "File does not exists")
+        self.assertEqual(os.path.exists(path), True, 'File does not exists')
         file = open(path, 'r')
-        content = "[host1]\n192.168.1.5\n192.168.2.5\n"
-        self.assertEqual(file.read(), content, "File content is not correct")
+        content = '[host1]\n192.168.1.5\n192.168.2.5\n'
+        self.assertEqual(file.read(), content, 'File content is not correct')
         shutil.rmtree('./files-generated', ignore_errors=False, onerror=None)
 
     def test_dump_hosts_to_file_with_name(self):
         Host().insert({
-            "name": "host1",
-            "ips": ['192.168.1.5', '192.168.2.5']
+            'name': 'host1',
+            'ips': ['192.168.1.5', '192.168.2.5']
         })
 
         host = Host().find()
-        self.assertNotEqual(host, None, "Host obj not found")
+        self.assertNotEqual(host, None, 'Host obj not found')
 
         path = hosts_to_file(
             hosts=[host.data],
@@ -79,33 +79,31 @@ class DumpTests(unittest.TestCase):
             filename='cool-name'
         )
 
-        self.assertEqual(os.path.exists(path), True, "File does not exists")
+        self.assertEqual(os.path.exists(path), True, 'File does not exists')
         file = open(path, 'r')
-        content = "[host1]\n192.168.1.5\n192.168.2.5\n"
-        self.assertEqual(file.read(), content, "File content is not correct")
+        content = '[host1]\n192.168.1.5\n192.168.2.5\n'
+        self.assertEqual(file.read(), content, 'File content is not correct')
         shutil.rmtree('./files-generated', ignore_errors=False, onerror=None)
 
     def test_dump_yaml_to_file_without_name(self):
         Playbook().insert({
-            "name": "cool-playbook",
-            "playbook": [
-                {
-                    "hosts": "test",
-                    "remote_user": "test1",
-                    "tasks": [
-                        {
-                            "name": "test debug",
-                            "debug": {
-                                "msg": "Debug msg"
-                            }
+            'name': 'cool-playbook',
+            'playbook': {
+                'hosts': 'test',
+                'remote_user': 'test1',
+                'tasks': [
+                    {
+                        'name': 'test debug',
+                        'debug': {
+                            'msg': 'Debug msg'
                         }
-                    ]
-                }
-            ]
+                    }
+                ]
+            }
         })
 
         playbook = Playbook().find()
-        self.assertNotEqual(playbook, None, "Playbook obj not found")
+        self.assertNotEqual(playbook, None, 'Playbook obj not found')
         yaml_playbook = playbook.parse_yaml()
 
         path = yaml_to_file(
@@ -116,36 +114,34 @@ class DumpTests(unittest.TestCase):
             sub_path=self.sub_path_playbooks
         )
 
-        self.assertEqual(os.path.exists(path), True, "File does not exists")
+        self.assertEqual(os.path.exists(path), True, 'File does not exists')
         file = open(path, 'r')
 
-        content = "---\n- hosts: test\n  remote_user: test1\n  tasks:" \
-                  "\n  - debug:\n      msg: Debug msg\n    name: test debug\n"
+        content = '---\n- hosts: test\n  remote_user: test1\n  tasks:' \
+                  '\n  - debug:\n      msg: Debug msg\n    name: test debug\n'
 
-        self.assertEqual(file.read(), content, "File content is not correct")
+        self.assertEqual(file.read(), content, 'File content is not correct')
         shutil.rmtree('./files-generated', ignore_errors=False, onerror=None)
 
     def test_dump_yaml_to_file_without_name(self):
         Playbook().insert({
-            "name": "cool-playbook",
-            "playbook": [
-                {
-                    "hosts": "test",
-                    "remote_user": "test1",
-                    "tasks": [
-                        {
-                            "name": "test debug",
-                            "debug": {
-                                "msg": "Debug msg"
-                            }
+            'name': 'cool-playbook',
+            'playbook': {
+                'hosts': 'test',
+                'remote_user': 'test1',
+                'tasks': [
+                    {
+                        'name': 'test debug',
+                        'debug': {
+                            'msg': 'Debug msg'
                         }
-                    ]
-                }
-            ]
+                    }
+                ]
+            }
         })
 
         playbook = Playbook().find()
-        self.assertNotEqual(playbook, None, "Playbook obj not found")
+        self.assertNotEqual(playbook, None, 'Playbook obj not found')
         yaml_playbook = playbook.parse_yaml()
 
         path = yaml_to_file(
@@ -157,11 +153,11 @@ class DumpTests(unittest.TestCase):
             filename='cool-name'
         )
 
-        self.assertEqual(os.path.exists(path), True, "File does not exists")
+        self.assertEqual(os.path.exists(path), True, 'File does not exists')
         file = open(path, 'r')
 
-        content = "---\n- hosts: test\n  remote_user: test1\n  tasks:" \
-                  "\n  - debug:\n      msg: Debug msg\n    name: test debug\n"
+        content = '---\n- hosts: test\n  remote_user: test1\n  tasks:' \
+                  '\n  - debug:\n      msg: Debug msg\n    name: test debug\n'
 
-        self.assertEqual(file.read(), content, "File content is not correct")
+        self.assertEqual(file.read(), content, 'File content is not correct')
         shutil.rmtree('./files-generated', ignore_errors=False, onerror=None)

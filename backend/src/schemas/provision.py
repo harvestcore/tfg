@@ -10,12 +10,17 @@ class BaseHost(BaseSchema):
 
 class BasePlaybook(BaseSchema):
     name = fields.Str(required=True)
-    playbook = fields.List(fields.Dict(), required=True)
+    playbook = fields.Dict(required=True)
 
 
 class ProvisionSchemaPut(Schema):
     name = fields.Str(required=True)
     data = fields.Nested(BaseHost, required=True)
+
+
+class ProvisionPlaybookPut(Schema):
+    name = fields.Str(required=True)
+    data = fields.Dict(required=True)
 
 
 class ProvisionSchemaDelete(Schema):

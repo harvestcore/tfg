@@ -23,6 +23,8 @@ class Playbook(Item):
             current = super(Playbook, self) \
                 .find(criteria={'name': data['name']})
 
+            data['playbook'] = [data['playbook']]
+
             if not current.data:
                 return super(Playbook, self).insert(data)
 

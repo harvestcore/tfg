@@ -9,8 +9,8 @@ from src.utils.response_with_message import response_with_message
 
 from src.schemas.login import LoginSchema
 
-# GET, POST, DELETE
-api = Namespace(name='login', description='Login')
+api_login = Namespace(name='login', description='Login')
+api_logout = Namespace(name='logout', description='Logout')
 
 
 def token_required(f):
@@ -34,7 +34,7 @@ def token_required(f):
     return decorated
 
 
-@api.route('/')
+@api_login.route('')
 class LoginService(Resource):
     @staticmethod
     def get():
@@ -55,7 +55,7 @@ class LoginService(Resource):
         return parse_data(LoginSchema, login.data)
 
 
-@api.route('/logout')
+@api_logout.route('')
 class LogoutService(Resource):
 
     @staticmethod

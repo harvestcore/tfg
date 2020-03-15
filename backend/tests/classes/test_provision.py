@@ -28,27 +28,25 @@ class AnsibleEngineTests(unittest.TestCase):
             'ips': self.ips
         })
 
-        self.assertEqual(h, True, "Host not added")
+        self.assertEqual(h, True, 'Host not added')
 
         p = Playbook().insert({
-            "name": self.playbook,
-            "playbook": [
-                {
-                    "hosts": self.hosts[0],
-                    "remote_user": "root",
-                    "tasks": [
-                        {
-                            "name": "Test debug msg",
-                            "debug": {
-                                "msg": "This works!"
-                            }
+            'name': self.playbook,
+            'playbook': {
+                'hosts': self.hosts[0],
+                'remote_user': 'root',
+                'tasks': [
+                    {
+                        'name': 'Test debug msg',
+                        'debug': {
+                            'msg': 'This works!'
                         }
-                    ]
-                }
-            ]
+                    }
+                ]
+            }
         })
 
-        self.assertEqual(p, True, "Playbook not added")
+        self.assertEqual(p, True, 'Playbook not added')
 
         container = DockerEngine().run_container_operation(
             operation='run',
@@ -58,7 +56,7 @@ class AnsibleEngineTests(unittest.TestCase):
             }
         )
 
-        self.assertNotEqual(container, None, "Cointainer not running")
+        self.assertNotEqual(container, None, 'Cointainer not running')
         self.container_id = container.short_id
 
         response = AnsibleEngine().run_playbook(
@@ -70,7 +68,7 @@ class AnsibleEngineTests(unittest.TestCase):
             }
         )
 
-        self.assertNotEqual(response, False, "Playbook did not run")
+        self.assertNotEqual(response, False, 'Playbook did not run')
         self.assertNotEqual(response.find('PLAY [alpine]'), -1)
         self.assertNotEqual(response.find('[172.17.0.2]'), -1)
 

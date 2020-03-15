@@ -17,29 +17,29 @@ class HostTests(unittest.TestCase):
 
     def test_create_host(self):
         status = Host().insert({
-            "name": "host1",
-            "ips": ['192.168.1.5', '192.168.2.5']
+            'name': 'host1',
+            'ips': ['192.168.1.5', '192.168.2.5']
         })
 
-        self.assertEqual(status, True, "Host not added")
+        self.assertEqual(status, True, 'Host not added')
 
     def test_create_duplicated_host(self):
         Host().insert({
-            "name": "host1",
-            "ips": ['192.168.1.5', '192.168.2.5']
+            'name': 'host1',
+            'ips': ['192.168.1.5', '192.168.2.5']
         })
 
         status = Host().insert({
-            "name": "host1",
-            "ips": ['192.168.1.5', '192.168.2.5']
+            'name': 'host1',
+            'ips': ['192.168.1.5', '192.168.2.5']
         })
 
-        self.assertEqual(status, False, "Added duplicated host")
+        self.assertEqual(status, False, 'Added duplicated host')
 
     def test_find_host(self):
         h = {
-            "name": "host1",
-            "ips": ['192.168.1.5', '192.168.2.5']
+            'name': 'host1',
+            'ips': ['192.168.1.5', '192.168.2.5']
         }
         keys = ['_id', 'name', 'ips', 'enabled', 'deleted', 'creation_time',
                 'last_modified', 'delete_time']
@@ -47,27 +47,27 @@ class HostTests(unittest.TestCase):
         Host().insert(h)
         host = Host().find()
 
-        self.assertNotEqual(host, None, "Host obj not found")
+        self.assertNotEqual(host, None, 'Host obj not found')
         self.assertIsInstance(host.data, dict,
-                              "Host data is not a dict")
+                              'Host data is not a dict')
         self.assertListEqual(list(host.data.keys()), keys,
-                             "Keys are not equal")
-        self.assertEqual(host.data['name'], h['name'], "name not equal")
-        self.assertEqual(host.data['ips'], h['ips'], "ips not equal")
+                             'Keys are not equal')
+        self.assertEqual(host.data['name'], h['name'], 'name not equal')
+        self.assertEqual(host.data['ips'], h['ips'], 'ips not equal')
 
     def test_find_all_hosts(self):
         Host().insert({
-            "name": "host1",
-            "ips": ['192.168.1.2', '192.168.2.3']
+            'name': 'host1',
+            'ips': ['192.168.1.2', '192.168.2.3']
         })
 
         Host().insert({
-            "name": "host2",
-            "ips": ['192.168.1.4', '192.168.2.5']
+            'name': 'host2',
+            'ips': ['192.168.1.4', '192.168.2.5']
         })
 
         hosts = Host().find()
 
         self.assertIsInstance(hosts.data, list,
-                              "Hosts data is not a list")
-        self.assertEqual(len(hosts.data), 2, "There are more than 2 hosts")
+                              'Hosts data is not a list')
+        self.assertEqual(len(hosts.data), 2, 'There are more than 2 hosts')
