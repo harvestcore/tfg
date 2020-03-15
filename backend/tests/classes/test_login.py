@@ -6,7 +6,7 @@ from src.classes.user import User
 from src.classes.customer import Customer
 from src.classes.mongo_engine import MongoEngine
 
-from config.server_environment import BASE_COLLECTION, JWT_ENC_KEY
+from config.server_environment import TESTING_COLLECTION, JWT_ENC_KEY
 
 
 class Auth:
@@ -20,8 +20,8 @@ class UserTests(unittest.TestCase):
         super(UserTests, self).__init__(*args, **kwargs)
 
         # Drop previous database
-        MongoEngine().drop(BASE_COLLECTION)
-        Customer().set_customer(BASE_COLLECTION)
+        MongoEngine().drop(TESTING_COLLECTION)
+        Customer().set_customer(TESTING_COLLECTION)
 
     def test_login_existing_user(self):
         User().insert({

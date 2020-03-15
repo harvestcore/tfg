@@ -4,12 +4,17 @@ on:
   push:
     paths:
       - 'backend/*'
+    pull_request:
+      branches:
+        - master
+        - develop
 
 jobs:
   build:
     runs-on: ubuntu-latest
     env:
       working-directory: ./backend
+      MONGO_HOSTNAME: ${{ secrets.MONGO_HOSTNAME }}
 
     steps:
     - name: Git checkout

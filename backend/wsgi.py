@@ -1,8 +1,5 @@
-from flask import Flask
+from flask import Flask, request, abort
 from flask_restplus import Api
-from flask_marshmallow import Marshmallow
-
-from config.server_environment import BASE_COLLECTION
 
 from src.services.client import api as client
 from src.services.deploy import api as deploy
@@ -15,13 +12,11 @@ from src.services.login import api as login
 from src.classes.customer import Customer
 
 app = Flask(__name__)
+
 api = Api(app,
           prefix='/api',
           title='IPManager',
           description='Manage your deploys')
-
-ma = Marshmallow(app)
-
 api.add_namespace(client)
 api.add_namespace(deploy)
 api.add_namespace(deploy_config)
@@ -30,9 +25,15 @@ api.add_namespace(provision_config)
 api.add_namespace(user)
 api.add_namespace(login)
 
-Customer().set_customer(BASE_COLLECTION)
-Customer().insert({'domain': 'test', 'db_name': 'test'})
-Customer().set_customer('ipm_root')
 
-if __name__ == '__main__':
-    app.run(debug=True)
+@app.before_request
+def before_request():
+    subdomain = request.host[:-len('localhost:5000')].rstrip('.')
+    if Customer().is_customer(subdomain):
+        Customer().set_customer(subdomain)
+    else:
+        abort(404, "Not found")
+
+
+if __name__ == "__main__":
+    app.run()

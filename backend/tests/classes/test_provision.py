@@ -4,11 +4,19 @@ from src.classes.docker_engine import DockerEngine
 from src.classes.ansible.ansible_engine import AnsibleEngine
 from src.classes.ansible.playbook import Playbook
 from src.classes.ansible.host import Host
+from src.classes.customer import Customer
+from src.classes.mongo_engine import MongoEngine
+
+from config.server_environment import TESTING_COLLECTION
 
 
 class AnsibleEngineTests(unittest.TestCase):
     def __init__(self, *args, **kwargs):
         super(AnsibleEngineTests, self).__init__(*args, **kwargs)
+
+        # Drop previous database
+        MongoEngine().drop(TESTING_COLLECTION)
+        Customer().set_customer(TESTING_COLLECTION)
 
     def test_run_playbook(self):
         self.ips = ['172.17.0.2']

@@ -4,7 +4,7 @@ from src.classes.ansible.playbook import Playbook
 from src.classes.customer import Customer
 from src.classes.mongo_engine import MongoEngine
 
-from config.server_environment import BASE_COLLECTION
+from config.server_environment import TESTING_COLLECTION
 
 
 class PlaybookTests(unittest.TestCase):
@@ -12,8 +12,8 @@ class PlaybookTests(unittest.TestCase):
         super(PlaybookTests, self).__init__(*args, **kwargs)
 
         # Drop previous database
-        MongoEngine().drop(BASE_COLLECTION)
-        Customer().set_customer(BASE_COLLECTION)
+        MongoEngine().drop(TESTING_COLLECTION)
+        Customer().set_customer(TESTING_COLLECTION)
 
     def test_create_playbook(self):
         status = Playbook().insert({
