@@ -36,7 +36,7 @@ class UserServiceGetWithQuery(Resource):
         return parse_data(UserSchema, user.data)
 
 
-@api.route('/')
+@api.route('')
 class UserService(Resource):
     @staticmethod
     @token_required

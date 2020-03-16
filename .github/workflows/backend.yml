@@ -40,5 +40,5 @@ jobs:
     - run: docker ps
     - run: docker inspect $(docker ps -q)
     - name: Tests
-      run: pytest
+      run: pytest --disable-warnings
       working-directory: ${{env.working-directory}}

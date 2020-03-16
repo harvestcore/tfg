@@ -17,16 +17,16 @@ class PlaybookTests(unittest.TestCase):
 
     def test_create_playbook(self):
         status = Playbook().insert({
-            "name": "cool-playbook",
-            "playbook": [
+            'name': 'cool-playbook',
+            'playbook': [
                 {
-                    "hosts": "test",
-                    "remote_user": "test1",
-                    "tasks": [
+                    'hosts': 'test',
+                    'remote_user': 'test1',
+                    'tasks': [
                         {
-                            "name": "test debug",
-                            "debug": {
-                                "msg": "Debug msg"
+                            'name': 'test debug',
+                            'debug': {
+                                'msg': 'Debug msg'
                             }
                         }
                     ]
@@ -34,20 +34,20 @@ class PlaybookTests(unittest.TestCase):
             ]
         })
 
-        self.assertEqual(status, True, "Playbook not added")
+        self.assertEqual(status, True, 'Playbook not added')
 
     def test_create_duplicated_host(self):
         pb = {
-            "name": "cool-playbook",
-            "playbook": [
+            'name': 'cool-playbook',
+            'playbook': [
                 {
-                    "hosts": "test",
-                    "remote_user": "test1",
-                    "tasks": [
+                    'hosts': 'test',
+                    'remote_user': 'test1',
+                    'tasks': [
                         {
-                            "name": "test debug",
-                            "debug": {
-                                "msg": "Debug msg"
+                            'name': 'test debug',
+                            'debug': {
+                                'msg': 'Debug msg'
                             }
                         }
                     ]
@@ -58,20 +58,20 @@ class PlaybookTests(unittest.TestCase):
         Playbook().insert(pb)
         status = Playbook().insert(pb)
 
-        self.assertEqual(status, False, "Added duplicated playbook")
+        self.assertEqual(status, False, 'Added duplicated playbook')
 
     def test_find_playbook(self):
         h = {
-            "name": "cool-playbook",
-            "playbook": [
+            'name': 'cool-playbook',
+            'playbook': [
                 {
-                    "hosts": "test",
-                    "remote_user": "test1",
-                    "tasks": [
+                    'hosts': 'test',
+                    'remote_user': 'test1',
+                    'tasks': [
                         {
-                            "name": "test debug",
-                            "debug": {
-                                "msg": "Debug msg"
+                            'name': 'test debug',
+                            'debug': {
+                                'msg': 'Debug msg'
                             }
                         }
                     ]
@@ -84,27 +84,27 @@ class PlaybookTests(unittest.TestCase):
         Playbook().insert(h)
         playbook = Playbook().find()
 
-        self.assertNotEqual(playbook, None, "Playbook obj not found")
+        self.assertNotEqual(playbook, None, 'Playbook obj not found')
         self.assertIsInstance(playbook.data, dict,
-                              "Playbook data is not a dict")
+                              'Playbook data is not a dict')
         self.assertListEqual(list(playbook.data.keys()), keys,
-                             "Keys are not equal")
-        self.assertEqual(playbook.data['name'], h['name'], "name not equal")
+                             'Keys are not equal')
+        self.assertEqual(playbook.data['name'], h['name'], 'name not equal')
         self.assertEqual(playbook.data['playbook'], h['playbook'],
-                         "playbook not equal")
+                         'playbook not equal')
 
     def test_find_all_hosts(self):
         Playbook().insert({
-            "name": "cool-playbook-1",
-            "playbook": [
+            'name': 'cool-playbook-1',
+            'playbook': [
                 {
-                    "hosts": "test",
-                    "remote_user": "test1",
-                    "tasks": [
+                    'hosts': 'test',
+                    'remote_user': 'test1',
+                    'tasks': [
                         {
-                            "name": "test debug",
-                            "debug": {
-                                "msg": "Debug msg"
+                            'name': 'test debug',
+                            'debug': {
+                                'msg': 'Debug msg'
                             }
                         }
                     ]
@@ -113,16 +113,16 @@ class PlaybookTests(unittest.TestCase):
         })
 
         Playbook().insert({
-            "name": "cool-playbook-2",
-            "playbook": [
+            'name': 'cool-playbook-2',
+            'playbook': [
                 {
-                    "hosts": "test",
-                    "remote_user": "test1",
-                    "tasks": [
+                    'hosts': 'test',
+                    'remote_user': 'test1',
+                    'tasks': [
                         {
-                            "name": "test debug",
-                            "debug": {
-                                "msg": "Debug msg"
+                            'name': 'test debug',
+                            'debug': {
+                                'msg': 'Debug msg'
                             }
                         }
                     ]
@@ -133,6 +133,6 @@ class PlaybookTests(unittest.TestCase):
         playbooks = Playbook().find()
 
         self.assertIsInstance(playbooks.data, list,
-                              "Hosts data is not a list")
+                              'Hosts data is not a list')
         self.assertEqual(len(playbooks.data), 2,
-                         "There are more than 2 playbooks")
+                         'There are more than 2 playbooks')

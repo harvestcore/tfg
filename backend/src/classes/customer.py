@@ -25,12 +25,12 @@ class Customer(Item):
     """
     def is_customer(self, customer):
         MongoEngine().set_collection_name(BASE_COLLECTION)
-        if customer != BASE_COLLECTION:
+        if customer == '':
+            return True
+        elif customer != BASE_COLLECTION:
             c = self.find({'domain': customer})
             if c.data is not None:
                 return True
-        elif customer == '':
-            return True
         return False
 
     """

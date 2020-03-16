@@ -9,7 +9,7 @@ class DockerEngineTests(unittest.TestCase):
 
     def test_get_client(self):
         client = DockerEngine().get_client()
-        self.assertNotEqual(client, None, "Engine does not exist")
+        self.assertNotEqual(client, None, 'Engine does not exist')
 
     def test_run_hello_world_image(self):
         response = DockerEngine().run_container_operation(
