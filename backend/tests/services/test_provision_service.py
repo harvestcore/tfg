@@ -5,6 +5,9 @@ from src.app import app
 from src.classes.user import User
 from src.classes.customer import Customer
 from src.classes.mongo_engine import MongoEngine
+from src.classes.docker_engine import DockerEngine
+from src.classes.ansible.host import Host
+from src.classes.ansible.playbook import Playbook
 
 from config.server_environment import TESTING_COLLECTION
 
@@ -12,7 +15,7 @@ from config.server_environment import TESTING_COLLECTION
 class ProvisionHostServiceTests(LiveServerTestCase):
     def create_app(self):
         app.config['TESTING'] = True
-        app.config['LIVESERVER_PORT'] = 8080
+        app.config['LIVESERVER_PORT'] = 8081
         self.path = '/api/provision/hosts'
 
         return app
@@ -171,7 +174,7 @@ class ProvisionHostServiceTests(LiveServerTestCase):
 class ProvisionPlaybookServiceTests(LiveServerTestCase):
     def create_app(self):
         app.config['TESTING'] = True
-        app.config['LIVESERVER_PORT'] = 8080
+        app.config['LIVESERVER_PORT'] = 8082
         self.path = '/api/provision/playbook'
 
         return app
@@ -394,3 +397,93 @@ class ProvisionPlaybookServiceTests(LiveServerTestCase):
         for user in response.json()['items']:
             self.assertEqual(list(user.keys()), ['playbook'], 'Wrong keys')
 
+
+class ProvisionRunPlaybooksServiceTests(LiveServerTestCase):
+    def create_app(self):
+        app.config['TESTING'] = True
+        app.config['LIVESERVER_PORT'] = 8083
+        self.path = '/api/provision'
+        self.ips = ['172.17.0.2']
+        self.playbook = 'test-alpine-ssh'
+        self.hosts = ['alpine']
+
+        return app
+
+    def setUp(self):
+        Customer().set_customer(TESTING_COLLECTION)
+        MongoEngine().drop(TESTING_COLLECTION)
+        User().insert({
+            'type': 'admin',
+            'first_name': 'admin',
+            'last_name': 'admin',
+            'username': 'admin',
+            'email': 'admin@domain.com',
+            'password': 'admin'
+        })
+        response = requests.get(self.get_server_url() + '/api/login',
+                                auth=('admin', 'admin'))
+        self.headers = {'x-access-token': response.json()['token']}
+
+    def test_run_playbook(self):
+        h = Host().insert({
+            'name': self.hosts[0],
+            'ips': self.ips
+        })
+
+        self.assertEqual(h, True, 'Host not added')
+
+        p = Playbook().insert({
+            'name': self.playbook,
+            'playbook': {
+                'hosts': self.hosts[0],
+                'remote_user': 'root',
+                'tasks': [
+                    {
+                        'name': 'Test debug msg',
+                        'debug': {
+                            'msg': 'This works!'
+                        }
+                    }
+                ]
+            }
+        })
+
+        self.assertEqual(p, True, 'Playbook not added')
+
+        container = DockerEngine().run_container_operation(
+            operation='run',
+            data={
+                'image': 'sickp/alpine-sshd',
+                'detach': True
+            }
+        )
+
+        self.assertNotEqual(container, False, 'Cointainer not running')
+        self.container_id = container.short_id
+
+        # Run the playbook
+        response = requests.post(
+            self.get_server_url() + self.path,
+            headers=self.headers,
+            json={
+                'hosts': self.hosts,
+                'playbook': self.playbook,
+                'passwords': {
+                    'conn_pass': 'root',
+                    'become_pass': 'root'
+                }
+            }
+        )
+
+        self.assertEqual(response.status_code, 200, 'Playbook failed running')
+        self.assertNotEqual(response.json()['result']
+                            .find('PLAY [alpine]'), -1)
+        self.assertNotEqual(response.json()['result'].find('[172.17.0.2]'), -1)
+
+        # Stop the container
+        c = DockerEngine().get_container_by_id(self.container_id)
+        DockerEngine().run_operation_in_object(
+            thing=c,
+            operation='stop',
+            data={}
+        )

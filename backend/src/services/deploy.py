@@ -93,7 +93,6 @@ class ImageService(Resource):
 @api.route('/image')
 class DeployService(Resource):
     @staticmethod
-    @token_required
     def post():
         payload = validate_or_abort(BaseImageProps, request.get_json())
         data = payload['data']
@@ -126,6 +125,9 @@ class DeployService(Resource):
             operation=payload['operation'],
             data=payload['data']
         )
+
+        if not response and payload['operation'] == 'remove':
+            response = True
 
         schema = ImageObj if response else None
         return parse_data(schema, response) if response \
