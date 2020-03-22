@@ -31,6 +31,9 @@ jobs:
     - name: Tag & release code
       run: . ./tag.sh
 
+    - name: TAG
+      run: echo $TAG
+
     - name: Docker login
       run: docker login -u $DOCKER_USER -p $DOCKER_PASS
 
