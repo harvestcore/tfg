@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     working-directory: ./backend
     env:
-      PROJECT_NAME: ipmanager
+      PROJECT_NAME: ipm-backend
       DOCKER_USER: ${{ secrets.DOCKER_USER }}
       DOCKER_PASS: ${{ secrets.DOCKER_PASS }}
       GITHUB_KEY: ${{ secrets.GITHUB_KEY }}
