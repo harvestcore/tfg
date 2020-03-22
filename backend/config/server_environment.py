@@ -1,5 +1,7 @@
 import os
 
+from src.utils.docker_check import running_in_docker
+
 # Environment variables
 
 # Mongo hostname
@@ -22,5 +24,9 @@ JWT_ENC_KEY = os.environ.get(
 
 DOCKER_BASE_URL = os.environ.get(
     'DOCKER_BASE_URL', 'unix://var/run/docker.sock')
+
+DOCKER_ENABLED = False if \
+    running_in_docker() and DOCKER_BASE_URL == 'unix://var/run/docker.sock' \
+    else True
 
 ANSIBLE_PATH = os.environ.get('ANSIBLE_PATH', './')

@@ -9,17 +9,21 @@ from src.services.login import api_logout as logout
 
 from src.classes.customer import Customer
 
+from config.server_environment import DOCKER_ENABLED
+
 app = Flask(__name__)
 
 api = Api(app,
           prefix='/api',
           title='IPManager',
           description='Manage your deploys')
-api.add_namespace(deploy)
 api.add_namespace(provision)
 api.add_namespace(user)
 api.add_namespace(login)
 api.add_namespace(logout)
+
+if DOCKER_ENABLED:
+    api.add_namespace(deploy)
 
 
 @app.before_request

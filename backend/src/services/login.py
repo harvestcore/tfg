@@ -49,7 +49,7 @@ class LoginService(Resource):
 
         login = Login().login(auth)
 
-        if not login.data:
+        if not login or not login.data:
             return response_by_success(False)
 
         return parse_data(LoginSchema, login.data)
