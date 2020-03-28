@@ -8,13 +8,15 @@ Repositorio para el TFG del Grado en Ingeniería Informática.
 
 
 
-## ¿Qué es?
+## Proyecto
 
-Proyecto que permite a una empresa desplegar puestos de trabajo en los cuales haya una serie de herramientras preinstaladas, y se puedan registrar desde un puesto de administración y usar de forma inmediata. Por otro lado permite desplegar servicios
+Sistema que permite a una empresa desplegar puestos de trabajo en los cuales haya una serie de herramientras preinstaladas, y se puedan registrar desde un puesto de administración y usar de forma inmediata. Por otro lado también permite desplegar servicios.
 
 
 
 ## Documentación
+
+Puedes consultar la documentación completa [aquí](dev/doc.md).
 
 - [**Instalación**](dev/install.md)
 
