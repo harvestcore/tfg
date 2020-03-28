@@ -1,0 +1,144 @@
+# Glosario de términos
+
+[TOC]
+
+## A
+
+### Angular
+
+### Ansible Tower
+
+### API Rest
+
+
+
+## B
+
+### Backend
+
+
+
+## C
+
+### Cliente
+
+### Contenedor
+
+### CSS
+
+
+
+## D
+
+### Docker
+
+
+
+## E
+
+### Endpoint
+
+
+
+## F
+
+### Flask
+
+### Framework
+
+### Frontend
+
+
+
+## G
+
+### Gateway
+
+### Gecos
+
+### GitHub Actions
+
+### Go
+
+### Gunicorn
+
+
+
+## H
+
+### Historia de usuario
+
+### HTML
+
+
+
+## I
+
+### Integración contínua
+
+
+
+## J
+
+### JavaScript
+
+### JWT
+
+
+
+## M
+
+### Microservicio
+
+### MongoDB
+
+
+
+## N
+
+### Node.js
+
+
+
+## P
+
+### Proxy
+
+### Python
+
+
+
+## R
+
+### React
+
+
+
+## S
+
+### Servicio
+
+### SSL
+
+### Subsistema
+
+
+
+## T
+
+### Tests unitarios
+
+### TypeScript
+
+
+
+## V
+
+### Variable de entorno
+
+### Vue.js
+
+
+
+
+

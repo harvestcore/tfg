@@ -1,42 +1,38 @@
 # Endpoints
 
 ## Autenticación
-### /auth
-- POST
+- POST /api/login
+- POST /api/logout
 
-## Clientes
-### /client
-- GET: Info del cliente
-- POST: Nuevo cliente
-- DELETE: Eliminar cliente
 
-## Usuarios comunes
-### /user
-- GET: Info del usuario
-- POST: Nuevo usuario
-- PUT: Modificar usuario
-- DELETE: Eliminar usuario
+
+## Usuarios
+- GET /api/user/`username`
+- POST /api/user
+- POST /api/user/query
+- PUT /api/user
+- DELETE /api/user
+
+
 
 ## Aprovisionamiento
-### /provision
-- GET: Info de un aprovisionamiento
-- POST: Modificar aprovisionamiento
-- DELETE: Cancelar o eliminar aprovisionamiento
 
-### /provision/config
-- GET: Info de una config
-- POST: Nueva config
-- PUT: Modificar config
-- DELETE: Eliminar una config
+- GET /api/provision
+- GET /api/provision/hosts/`name`
+- POST /api/provision/hosts/query
+- PUT /api/provision/hosts
+- POST /api/provision/hosts
+- DELETE /api/provision/hosts
+- GET /api/provision/playbook/`name`
+- POST /api/provision/playbook/query
+- PUT /api/provision/playbook
+- POST /api/provision/playbook
+- DELETE /api/provision/playbook
+
+
 
 ## Despliegue
-### /deploy
-- GET: Info de despliegue
-- POST: Modificar despliegue
-- DELETE: Cancelar o eliminar un despliegue
-
-### /deploy/config
-- GET: Info de una config
-- POST: Nueva config
-- PUT: Modificar config
-- DELETE: Eliminar una config
+- POST /api/deploy/container
+- POST /api/deploy/container/single
+- POST /api/deploy/image
+- POST /api/deploy/image/single
