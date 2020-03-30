@@ -10,7 +10,7 @@ Repositorio para el TFG del Grado en Ingeniería Informática.
 
 ## Proyecto
 
-Sistema que permite a una empresa desplegar puestos de trabajo en los cuales haya una serie de herramientras preinstaladas, y se puedan registrar desde un puesto de administración y usar de forma inmediata. Por otro lado también permite desplegar servicios.
+Sistema que permite a una empresa desplegar puestos de trabajo en los cuales haya una serie de herramientas preinstaladas, y se puedan registrar desde un puesto de administración y usar de forma inmediata. Por otro lado también permite desplegar servicios en contenedores Docker.
 
 
 
@@ -18,12 +18,15 @@ Sistema que permite a una empresa desplegar puestos de trabajo en los cuales hay
 
 Puedes consultar la documentación completa [aquí](dev/doc.md).
 
-- [**Instalación**](dev/install.md)
 
-- [**ERS**](dev/notes/ers.md)
-- [**Idea**](dev/notes/idea.md)
-- [**Requisitos**](dev/notes/requirements.md)
-- [**Proyectos similares**](dev/notes/similar_projects.md)
-- [**Herramientas para el desarrollo**](dev/notes/tools.md)
-- [**Otras herramientas**](dev/tools)
+
+## Endpoints
+
+Puedes consultar los endpoints disponibles en el backend [aquí](dev/endpoints.md).
+
+
+
+## Instalación
+
+La instalación del backend y del frontend puede consultarse [aquí](dev/install.md).
 
