@@ -86,6 +86,12 @@
 
 
 
+## K
+
+### Kanban
+
+
+
 ## M
 
 ### Microservicio
@@ -115,6 +121,8 @@
 
 
 ## S
+
+### Scrum
 
 ### Servicio
 

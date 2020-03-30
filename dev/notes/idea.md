@@ -10,7 +10,7 @@ La principal motivación a la hora de desarrollar este sistema es encontrar la m
 ## Extension
 Se pretende que el sistema pueda realizar las siguientes tareas:
 
-- Despliegue de servicios on-premise y en la nube.
+- Despliegue de servicios on-premise.
 - Aprovisionamiento de sistemas.
 - Guardar configuraciones.
 
