@@ -9,7 +9,7 @@ from src.classes.mongo_engine import MongoEngine
 from config.server_environment import TESTING_COLLECTION
 
 
-class DeployServiceTests(LiveServerTestCase):
+class DeployContainerServiceTests(LiveServerTestCase):
     def create_app(self):
         app.config['TESTING'] = True
         app.config['LIVESERVER_PORT'] = 5000
@@ -168,7 +168,8 @@ class DeployServiceTests(LiveServerTestCase):
 
         self.assertEqual(response.status_code, 200,
                          'Container list not fetched')
-        self.assertEqual(response.json()['total'], 2, 'Wrong container number')
+        self.assertGreaterEqual(response.json()['total'], 2,
+                                'Wrong container number')
 
         response1 = requests.post(
             self.get_server_url() + self.path + '/container/single',

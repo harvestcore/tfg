@@ -9,7 +9,7 @@ from src.classes.mongo_engine import MongoEngine
 from config.server_environment import TESTING_COLLECTION
 
 
-class DeployServiceTests(LiveServerTestCase):
+class DeployImageServiceTests(LiveServerTestCase):
     def create_app(self):
         app.config['TESTING'] = True
         app.config['LIVESERVER_PORT'] = 5000

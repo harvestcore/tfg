@@ -84,7 +84,8 @@ class DeployContainerTests(unittest.TestCase):
             }
         )
 
-        self.assertEqual(len(response_list), 2, 'Not all containers listed')
+        self.assertGreaterEqual(len(response_list), 2,
+                                'Not all containers listed')
 
         response_list = DockerEngine().run_container_operation(
             operation='list',
