@@ -33,11 +33,10 @@ class DockerEngine:
         except docker.errors.APIError:
             return False
 
-    # `thing`: Can be a container or an image
     @staticmethod
-    def run_operation_in_object(thing, operation, data):
+    def run_operation_in_object(object, operation, data):
         try:
-            return getattr(thing, operation)(**data)
+            return getattr(object, operation)(**data)
         except docker.errors.APIError:
             return False
 

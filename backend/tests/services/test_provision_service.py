@@ -15,7 +15,7 @@ from config.server_environment import TESTING_COLLECTION
 class ProvisionHostServiceTests(LiveServerTestCase):
     def create_app(self):
         app.config['TESTING'] = True
-        app.config['LIVESERVER_PORT'] = 8081
+        app.config['LIVESERVER_PORT'] = 5000
         self.path = '/api/provision/hosts'
 
         return app
@@ -483,7 +483,7 @@ class ProvisionRunPlaybooksServiceTests(LiveServerTestCase):
         # Stop the container
         c = DockerEngine().get_container_by_id(self.container_id)
         DockerEngine().run_operation_in_object(
-            thing=c,
+            object=c,
             operation='stop',
             data={}
         )

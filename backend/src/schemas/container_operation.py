@@ -4,8 +4,8 @@ from marshmallow import fields, Schema, validate
 class BaseSingleContainerProps(Schema):
     container_id = fields.Str(required=True)
     operation = fields.Str(required=True, validate=validate.OneOf([
-        "kill", "logs", "pause", "reload", "remove", "rename", "restart",
-        "start", "stop", "unpause"
+        "kill", "logs", "pause", "reload", "rename", "restart",
+        "stop", "unpause"
     ]))
     data = fields.Dict(required=True)
 
@@ -64,4 +64,4 @@ class ContainersListProps(Schema):
 
 
 class ContainersPruneProps(Schema):
-    filters = fields.Nested(ContainersListProps)
+    filters = fields.Nested(ContainersFilterProps)
