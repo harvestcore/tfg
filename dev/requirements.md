@@ -32,9 +32,6 @@ En este documento se encuentran registrados todos los requisitos del sistema.
 
   
 
-- 
-
-  
 
 ## Requisitos no funcionales
 
@@ -61,7 +58,7 @@ En este documento se encuentran registrados todos los requisitos del sistema.
 - El sistema almacenará configuraciones relacionadas con los despliegues (dockerfiles, docker-compose).
 
 - El sistema almacenará de los clientes un identificador único, un dominio y el nombre de la base de datos correspondiente a ese cliente.
-- El sistema almacenará para todo cliente y usuario si está activo o no, si ha sido borrado y la fecha y hora de creación, modificación y borrado.
+- El sistema almacenará para todo cliente y usuario si ha sido eliminado, no borrando sus datos tras eliminarlo.
 - El sistema almacenará para todo usuario registrado un identificador único, el tipo de usuario (admin o regular), el nombre y apellido del usuario, un email, un nombre de usuario y una contraseña almacenada en un formato seguro.
-- El sistema almacenará para cada máquina un identificador único, un nombre de la máquina, una descripción de la máquina, sus direcciones IP (tanto IPv4 como IPv6), el tipo de máquina (local o remota) y un conjunto de identificadores de scripts asociados a esa máquina.
-- El sistema almacenará para cada script de aprovisionamiento un ideantificador único, un nombre, una descripción y el script en sí.
+- El sistema almacenará para cada máquina un identificador único, un nombre de la máquina, una descripción de la máquina, su dirección IPv4 y un conjunto de identificadores de scripts asociados a esa máquina.
+- El sistema almacenará para cada script de aprovisionamiento un identificador único, un nombre, una descripción y el script en sí.
