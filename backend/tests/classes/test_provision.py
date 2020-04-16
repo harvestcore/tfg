@@ -74,7 +74,7 @@ class AnsibleEngineTests(unittest.TestCase):
 
         c = DockerEngine().get_container_by_id(self.container_id)
         DockerEngine().run_operation_in_object(
-            thing=c,
+            object=c,
             operation='stop',
             data={}
         )
