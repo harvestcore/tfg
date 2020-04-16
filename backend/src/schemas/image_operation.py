@@ -16,7 +16,7 @@ class RegistryDataObj(Schema):
 class BaseSingleImageProps(Schema):
     name = fields.Str(required=True)
     operation = fields.Str(required=True, validate=validate.OneOf([
-        "history", "reload", "tag"
+        "history", "reload"
     ]))
     data = fields.Dict(required=True)
 
@@ -29,24 +29,9 @@ class SingleImageTagProps(Schema):
 
 class BaseImageProps(Schema):
     operation = fields.Str(required=True, validate=validate.OneOf([
-        "build", "get", "prune", "pull", "push", "remove", "search"
+        "get", "prune", "pull", "remove", "search"
     ]))
     data = fields.Dict(required=True)
-
-
-class ImageBuildProps(Schema):
-    path = fields.Str(required=True)
-    tag = fields.Str()
-    quiet = fields.Bool(default=True)
-    nocache = fields.Bool()
-    rm = fields.Bool()
-    pull = fields.Bool()
-    forcerm = fields.Bool()
-    dockerfile = fields.Str()
-    buildargs = fields.Dict()
-    container_limits = fields.Dict()
-    shmsize = fields.Int()
-    labels = fields.Dict()
 
 
 class ImageGetProps(Schema):
@@ -58,13 +43,6 @@ class ImagePullProps(Schema):
     tag = fields.Str()
     auth_config = fields.Dict()
     platform = fields.Str()
-
-
-class ImagePushProps(Schema):
-    repository = fields.Str(required=True)
-    tag = fields.Str()
-    stream = fields.Bool(default=False)
-    auth_config = fields.Dict()
 
 
 class ImageRemoveProps(Schema):

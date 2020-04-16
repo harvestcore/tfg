@@ -12,7 +12,7 @@ from config.server_environment import TESTING_COLLECTION
 class UserServiceTests(LiveServerTestCase):
     def create_app(self):
         app.config['TESTING'] = True
-        app.config['LIVESERVER_PORT'] = 8080
+        app.config['LIVESERVER_PORT'] = 5000
         self.path = '/api/user'
 
         return app

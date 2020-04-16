@@ -12,7 +12,7 @@ from config.server_environment import TESTING_COLLECTION
 class LoginServiceTests(LiveServerTestCase):
     def create_app(self):
         app.config['TESTING'] = True
-        app.config['LIVESERVER_PORT'] = 8080
+        app.config['LIVESERVER_PORT'] = 5000
 
         Customer().set_customer(TESTING_COLLECTION)
         MongoEngine().drop(TESTING_COLLECTION)

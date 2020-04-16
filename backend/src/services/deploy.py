@@ -23,7 +23,7 @@ class DeployService(Resource):
         container = DockerEngine().get_container_by_id(payload['container_id'])
         if container:
             response = DockerEngine().run_operation_in_object(
-                thing=container,
+                object=container,
                 operation=payload['operation'],
                 data=payload['data']
             )
@@ -73,13 +73,8 @@ class ImageService(Resource):
         image = DockerEngine().get_image_by_name(payload['name'])
 
         if image:
-            data = payload['data']
-
-            if payload['operation'] == 'tag':
-                payload['data'] = validate_or_abort(SingleImageTagProps, data)
-
             response = DockerEngine().run_operation_in_object(
-                thing=image,
+                object=image,
                 operation=payload['operation'],
                 data=payload['data']
             )
@@ -97,19 +92,11 @@ class DeployService(Resource):
         payload = validate_or_abort(BaseImageProps, request.get_json())
         data = payload['data']
 
-        if payload['operation'] == 'build':
-            payload['data'] = validate_or_abort(ImageBuildProps, data)
-            payload['data']['quiet'] = True
-
         if payload['operation'] == 'get':
             payload['data'] = validate_or_abort(ImageGetProps, data)
 
         if payload['operation'] == 'pull':
             payload['data'] = validate_or_abort(ImagePullProps, data)
-
-        if payload['operation'] == 'push':
-            payload['data'] = validate_or_abort(ImagePushProps, data)
-            payload['data']['stream'] = False
 
         if payload['operation'] == 'remove':
             payload['data'] = validate_or_abort(ImageRemoveProps, data)
