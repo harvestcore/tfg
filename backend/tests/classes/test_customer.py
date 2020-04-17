@@ -1,7 +1,8 @@
 import unittest
 from src.classes.customer import Customer
 from src.classes.mongo_engine import MongoEngine
-from config.server_environment import BASE_COLLECTION
+
+from config.server_environment import TESTING_DATABASE
 
 
 class CustomerTests(unittest.TestCase):
@@ -9,8 +10,8 @@ class CustomerTests(unittest.TestCase):
         super(CustomerTests, self).__init__(*args, **kwargs)
 
         # Drop previous database
-        MongoEngine().drop(BASE_COLLECTION)
-        Customer().set_customer(BASE_COLLECTION)
+        Customer().set_customer(TESTING_DATABASE)
+        MongoEngine().drop_collection(TESTING_DATABASE, 'customers')
 
     def test_create_customer(self):
         status = Customer().insert({'domain': 'test', 'db_name': 'test'})

@@ -11,8 +11,8 @@ MONGO_HOSTNAME = os.environ.get('MONGO_HOSTNAME', 'localhost')
 MONGO_PORT = os.environ.get('MONGO_PORT', 27017)
 
 # IPManager base collection
-TESTING_COLLECTION = os.environ.get('TESTING_COLLECTION', 'ipm_root_testing')
-BASE_COLLECTION = os.environ.get('BASE_COLLECTION', TESTING_COLLECTION)
+TESTING_DATABASE = os.environ.get('TESTING_DATABASE', 'ipm_root_testing')
+BASE_DATABASE = os.environ.get('BASE_COLLECTION', TESTING_DATABASE)
 
 # Password encryption key (testing)
 ENC_KEY = os.environ.get(
