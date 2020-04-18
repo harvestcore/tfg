@@ -403,7 +403,6 @@ class ProvisionRunPlaybooksServiceTests(unittest.TestCase):
             }
         )
 
-
         if len(response_list) > 0:
             ips = ips + str(2 + len(response_list))
         else:
