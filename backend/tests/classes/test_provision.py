@@ -22,6 +22,7 @@ class AnsibleEngineTests(unittest.TestCase):
     def test_run_playbook(self):
         self.playbook = 'test-alpine-ssh'
         self.hosts = ['alpine']
+        ips = '172.17.0.'
 
         response_list = DockerEngine().run_container_operation(
             operation='list',
@@ -29,8 +30,6 @@ class AnsibleEngineTests(unittest.TestCase):
                 'all': False
             }
         )
-
-        ips = '172.17.0.'
 
         if len(response_list) > 0:
             ips = ips + str(2 + len(response_list))

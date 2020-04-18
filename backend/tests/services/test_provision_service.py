@@ -385,7 +385,6 @@ class ProvisionRunPlaybooksServiceTests(unittest.TestCase):
     app = app.test_client()
     headers = TestingLogin().headers
     path = '/api/provision'
-    ips = ['172.17.0.2']
     playbook = 'test-alpine-ssh'
     hosts = ['alpine']
 
@@ -395,6 +394,8 @@ class ProvisionRunPlaybooksServiceTests(unittest.TestCase):
         MongoEngine().drop_collection(TESTING_DATABASE, 'playbooks')
 
     def test_run_playbook(self):
+        ips = '172.17.0.'
+
         response_list = DockerEngine().run_container_operation(
             operation='list',
             data={
@@ -402,7 +403,6 @@ class ProvisionRunPlaybooksServiceTests(unittest.TestCase):
             }
         )
 
-        ips = '172.17.0.'
 
         if len(response_list) > 0:
             ips = ips + str(2 + len(response_list))
