@@ -195,7 +195,7 @@ class DeployContainerTests(unittest.TestCase):
             data={}
         )
 
-        self.assertEqual(response.decode(), '', 'Container with logs')
+        self.assertIsInstance(response.decode(), str, 'Wrong container logs')
 
         response = DockerEngine().run_operation_in_object(
             object=container,

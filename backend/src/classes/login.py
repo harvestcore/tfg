@@ -36,7 +36,7 @@ class Login(Item):
                     })
             elif type(current_logged_in.data) is list:
                 for user in current_logged_in.data:
-                    date_now = convert_to_datetime(user.data['exp'])
+                    date_now = convert_to_datetime(user['exp'])
                     if date_now < dt.datetime.utcnow():
                         self.remove(
                             {'username': user['username']})

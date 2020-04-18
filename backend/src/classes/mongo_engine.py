@@ -44,3 +44,10 @@ class MongoEngine:
     """
     def drop(self, dbname):
         self.client.drop_database(dbname)
+
+    """
+        Drop a collection
+    """
+    def drop_collection(self, dbname, dbcollection):
+        if dbname is not None and dbcollection is not None:
+            self.client[dbname][dbcollection].drop()

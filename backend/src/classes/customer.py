@@ -1,4 +1,4 @@
-from config.server_environment import BASE_COLLECTION
+from config.server_environment import BASE_DATABASE
 
 from src.classes.mongo_engine import MongoEngine
 from src.classes.item import Item
@@ -24,10 +24,10 @@ class Customer(Item):
         @param Customer's name
     """
     def is_customer(self, customer):
-        MongoEngine().set_collection_name(BASE_COLLECTION)
+        MongoEngine().set_collection_name(BASE_DATABASE)
         if customer == '':
             return True
-        elif customer != BASE_COLLECTION:
+        elif customer != BASE_DATABASE:
             c = self.find({'domain': customer})
             if c.data is not None:
                 return True
@@ -38,8 +38,8 @@ class Customer(Item):
         @param Customer's name
     """
     def set_customer(self, customer):
-        MongoEngine().set_collection_name(BASE_COLLECTION)
-        if customer != BASE_COLLECTION:
+        MongoEngine().set_collection_name(BASE_DATABASE)
+        if customer != BASE_DATABASE:
             c = self.find({'domain': customer})
             if c.data is not None:
                 return MongoEngine().set_collection_name(c.data['db_name'])
@@ -48,7 +48,7 @@ class Customer(Item):
         if item is None:
             return False
 
-        self.set_customer(BASE_COLLECTION)
+        self.set_customer(BASE_DATABASE)
 
         if MongoEngine().get_client() is not None:
             found = self.find(
