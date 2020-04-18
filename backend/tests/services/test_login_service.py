@@ -1,40 +1,47 @@
-import requests
-from flask_testing import LiveServerTestCase
+import unittest
+import json
 
+from config.server_environment import TESTING_DATABASE
 from src.app import app
-from src.classes.user import User
 from src.classes.customer import Customer
-from src.classes.mongo_engine import MongoEngine
+from src.classes.user import User
 
-from config.server_environment import TESTING_COLLECTION
+from tests.utils.login import TestingLogin
 
 
-class LoginServiceTests(LiveServerTestCase):
-    def create_app(self):
-        app.config['TESTING'] = True
-        app.config['LIVESERVER_PORT'] = 5000
+class LoginServiceTests(unittest.TestCase):
+    def setUp(self):
+        self.app = app.test_client()
+        self.headers = TestingLogin().headers
 
-        Customer().set_customer(TESTING_COLLECTION)
-        MongoEngine().drop(TESTING_COLLECTION)
-        User().insert({
-            'type': 'admin',
-            'first_name': 'admin',
-            'last_name': 'admin',
-            'username': 'admin',
-            'email': 'admin@domain.com',
-            'password': 'admin'
-        })
-
-        return app
+    def tearDown(self):
+        TestingLogin().reset()
 
     def test_login_and_logout(self):
-        response = requests.get(self.get_server_url() + '/api/login',
-                                auth=('admin', 'admin'))
-        self.assertEqual(response.status_code, 200)
-        self.assertEqual(list(response.json().keys()), ['token'],
-                         'There is no token')
-        headers = {'x-access-token': response.json()['token']}
+        Customer().set_customer(TESTING_DATABASE)
+        User().insert({
+            'type': 'admin',
+            'first_name': 'usertest',
+            'last_name': 'usertest',
+            'username': 'usertest',
+            'email': 'usertest@domain.com',
+            'password': 'usertest'
+        })
 
-        response = requests.get(self.get_server_url() + '/api/logout',
-                                headers=headers)
+        response = self.app.get(
+            '/api/login',
+            headers={"Authorization": "Basic dXNlcnRlc3Q6dXNlcnRlc3Q="}
+        )
+        self.assertEqual(response.status_code, 200)
+        data = json.loads(response.data)
+        self.assertNotEqual(data, "", 'There is no token')
+        headers = {
+            'Content-Type': 'application/json',
+            'x-access-token': data['token']
+        }
+
+        response = self.app.get(
+            '/api/logout',
+            headers=headers
+        )
         self.assertEqual(response.status_code, 200, 'Logout failed')

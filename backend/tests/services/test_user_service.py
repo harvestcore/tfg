@@ -1,36 +1,23 @@
-import requests
-from flask_testing import LiveServerTestCase
+import json
+import unittest
 
 from src.app import app
-from src.classes.user import User
 from src.classes.customer import Customer
 from src.classes.mongo_engine import MongoEngine
 
-from config.server_environment import TESTING_COLLECTION
+from tests.utils.login import TestingLogin
+
+from config.server_environment import TESTING_DATABASE
 
 
-class UserServiceTests(LiveServerTestCase):
-    def create_app(self):
-        app.config['TESTING'] = True
-        app.config['LIVESERVER_PORT'] = 5000
-        self.path = '/api/user'
-
-        return app
+class UserServiceTests(unittest.TestCase):
+    app = app.test_client()
+    headers = TestingLogin().headers
+    path = '/api/user'
 
     def setUp(self):
-        Customer().set_customer(TESTING_COLLECTION)
-        MongoEngine().drop(TESTING_COLLECTION)
-        User().insert({
-            'type': 'admin',
-            'first_name': 'admin',
-            'last_name': 'admin',
-            'username': 'admin',
-            'email': 'admin@domain.com',
-            'password': 'admin'
-        })
-        response = requests.get(self.get_server_url() + '/api/login',
-                                auth=('admin', 'admin'))
-        self.headers = {'x-access-token': response.json()['token']}
+        Customer().set_customer(TESTING_DATABASE)
+        MongoEngine().drop_collection(TESTING_DATABASE, 'users')
 
     def test_create_user(self):
         user = {
@@ -41,17 +28,17 @@ class UserServiceTests(LiveServerTestCase):
             'email': 'william@domain.com',
             'password': 'william'
         }
-        response = requests.post(
-            self.get_server_url() + self.path,
+        response = self.app.post(
+            self.path,
             headers=self.headers,
-            json=user
+            data=json.dumps(user)
         )
         self.assertEqual(response.status_code, 200, 'User not created')
 
-        response = requests.delete(
-            self.get_server_url() + self.path,
+        response = self.app.delete(
+            self.path,
             headers=self.headers,
-            json={'email': 'william@domain.com'}
+            data=json.dumps({'email': 'william@domain.com'})
         )
         self.assertEqual(response.status_code, 204, 'User not deleted')
 
@@ -64,10 +51,10 @@ class UserServiceTests(LiveServerTestCase):
             'email': 'andrew@domain.com',
             'password': 'andrew'
         }
-        response = requests.post(
-            self.get_server_url() + self.path,
+        response = self.app.post(
+            self.path,
             headers=self.headers,
-            json=user
+            data=json.dumps(user)
         )
         self.assertEqual(response.status_code, 200, 'User not created')
 
@@ -79,25 +66,25 @@ class UserServiceTests(LiveServerTestCase):
             'email': 'andrew@domain.com',
             'password': 'andrew'
         }
-        response = requests.put(
-            self.get_server_url() + self.path,
+        response = self.app.put(
+            self.path,
             headers=self.headers,
-            json={'email': 'andrew@domain.com', 'data': user}
+            data=json.dumps({'email': 'andrew@domain.com', 'data': user})
         )
         self.assertEqual(response.status_code, 200, 'User not updated')
 
-        response = requests.delete(
-            self.get_server_url() + self.path,
+        response = self.app.delete(
+            self.path,
             headers=self.headers,
-            json={'email': 'andrew@domain.com'}
+            data=json.dumps({'email': 'andrew@domain.com'})
         )
         self.assertEqual(response.status_code, 204, 'User not deleted')
 
     def test_delete_non_existent_user(self):
-        response = requests.delete(
-            self.get_server_url() + self.path,
+        response = self.app.delete(
+            self.path,
             headers=self.headers,
-            json={'email': 'ray@domain.com'}
+            data=json.dumps({'email': 'ray@domain.com'})
         )
         self.assertEqual(response.status_code, 204, 'User not deleted')
 
@@ -110,30 +97,33 @@ class UserServiceTests(LiveServerTestCase):
             'email': 'sam@domain.com',
             'password': 'sam'
         }
-        response = requests.post(
-            self.get_server_url() + self.path,
+        response = self.app.post(
+            self.path,
             headers=self.headers,
-            json=user
+            data=json.dumps(user)
         )
         self.assertEqual(response.status_code, 200, 'User not created')
 
-        response = requests.get(
-            self.get_server_url() + self.path + '/' + user['username'],
+        response = self.app.get(
+            self.path + '/' + user['username'],
             headers=self.headers
         )
 
         self.assertEqual(response.status_code, 200, 'User not fetched')
-        self.assertEqual(response.json()['username'], user['username'],
-                         'Wrong username')
-        self.assertEqual(response.json()['email'], user['email'],
+        self.assertEqual(
+            json.loads(response.data)['username'],
+            user['username'],
+            'Wrong username'
+        )
+        self.assertEqual(json.loads(response.data)['email'], user['email'],
                          'Wrong email')
-        self.assertIsInstance(response.json()['public_id'], str,
+        self.assertIsInstance(json.loads(response.data)['public_id'], str,
                               'Wrong public_id')
 
-        response = requests.delete(
-            self.get_server_url() + self.path,
+        response = self.app.delete(
+            self.path,
             headers=self.headers,
-            json={'email': 'sam@domain.com'}
+            data=json.dumps({'email': 'sam@domain.com'})
         )
         self.assertEqual(response.status_code, 204, 'User not deleted')
 
@@ -156,43 +146,43 @@ class UserServiceTests(LiveServerTestCase):
             'password': 'julia'
         }
 
-        response = requests.post(
-            self.get_server_url() + self.path,
+        response = self.app.post(
+            self.path,
             headers=self.headers,
-            json=user1
+            data=json.dumps(user1)
         )
         self.assertEqual(response.status_code, 200, 'User1 not created')
 
-        response = requests.post(
-            self.get_server_url() + self.path,
+        response = self.app.post(
+            self.path,
             headers=self.headers,
-            json=user2
+            data=json.dumps(user2)
         )
         self.assertEqual(response.status_code, 200, 'User2 not created')
 
-        response = requests.post(
-            self.get_server_url() + self.path + '/query',
+        response = self.app.post(
+            self.path + '/query',
             headers=self.headers,
-            json={
+            data=json.dumps({
                 'query': {
                     'type': 'admin'
                 }
-            }
+            })
         )
         self.assertEqual(response.status_code, 200, 'Users not found')
-        self.assertGreaterEqual(response.json()['total'], 2)
+        self.assertGreaterEqual(json.loads(response.data)['total'], 2)
 
-        response = requests.post(
-            self.get_server_url() + self.path + '/query',
+        response = self.app.post(
+            self.path + '/query',
             headers=self.headers,
-            json={
+            data=json.dumps({
                 'query': {},
                 'filter': {
                     'username': 1
                 }
-            }
+            })
         )
         self.assertEqual(response.status_code, 200, 'Users not found')
-        self.assertGreaterEqual(response.json()['total'], 2)
-        for user in response.json()['items']:
+        self.assertGreaterEqual(json.loads(response.data)['total'], 2)
+        for user in json.loads(response.data)['items']:
             self.assertEqual(list(user.keys()), ['username'], 'Wrong keys')

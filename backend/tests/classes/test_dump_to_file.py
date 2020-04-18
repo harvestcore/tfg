@@ -10,7 +10,7 @@ from src.classes.mongo_engine import MongoEngine
 from src.utils.dump_to_file import hosts_to_file, yaml_to_file,\
     create_path_if_not_exists
 
-from config.server_environment import TESTING_COLLECTION
+from config.server_environment import TESTING_DATABASE
 
 
 class DumpTests(unittest.TestCase):
@@ -18,8 +18,9 @@ class DumpTests(unittest.TestCase):
         super(DumpTests, self).__init__(*args, **kwargs)
 
         # Drop previous database
-        MongoEngine().drop(TESTING_COLLECTION)
-        Customer().set_customer(TESTING_COLLECTION)
+        Customer().set_customer(TESTING_DATABASE)
+        MongoEngine().drop_collection(TESTING_DATABASE, 'hosts')
+        MongoEngine().drop_collection(TESTING_DATABASE, 'playbooks')
 
         self.root = './'
         self.base_path = 'files-generated'

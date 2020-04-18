@@ -43,21 +43,21 @@ class DeployService(Resource):
         data = payload['data']
 
         if payload['operation'] == 'run':
-            payload['data'] = validate_or_abort(ContainersRunProps, data)
-            payload['data']['detach'] = True
+            data = validate_or_abort(ContainersRunProps, data)
+            data['detach'] = True
 
         if payload['operation'] == 'get':
-            payload['data'] = validate_or_abort(ContainersGetProps, data)
+            data = validate_or_abort(ContainersGetProps, data)
 
         if payload['operation'] == 'list':
-            payload['data'] = validate_or_abort(ContainersListProps, data)
+            data = validate_or_abort(ContainersListProps, data)
 
         if payload['operation'] == 'prune':
-            payload['data'] = validate_or_abort(ContainersPruneProps, data)
+            data = validate_or_abort(ContainersPruneProps, data)
 
         response = DockerEngine().run_container_operation(
             operation=payload['operation'],
-            data=payload['data']
+            data=data
         )
         schema = ContainerObj if response else None
         return parse_data(schema, response) if response \
@@ -93,24 +93,24 @@ class DeployService(Resource):
         data = payload['data']
 
         if payload['operation'] == 'get':
-            payload['data'] = validate_or_abort(ImageGetProps, data)
+            data = validate_or_abort(ImageGetProps, data)
 
         if payload['operation'] == 'pull':
-            payload['data'] = validate_or_abort(ImagePullProps, data)
+            data = validate_or_abort(ImagePullProps, data)
 
         if payload['operation'] == 'remove':
-            payload['data'] = validate_or_abort(ImageRemoveProps, data)
-            payload['data']['force'] = True
+            data = validate_or_abort(ImageRemoveProps, data)
+            data['force'] = True
 
         if payload['operation'] == 'search':
-            payload['data'] = validate_or_abort(ImageSearchProps, data)
+            data = validate_or_abort(ImageSearchProps, data)
 
         if payload['operation'] == 'prune':
-            payload['data'] = {}
+            data = {}
 
         response = DockerEngine().run_image_operation(
             operation=payload['operation'],
-            data=payload['data']
+            data=data
         )
 
         if not response and payload['operation'] == 'remove':

@@ -4,7 +4,7 @@ from src.classes.ansible.host import Host
 from src.classes.customer import Customer
 from src.classes.mongo_engine import MongoEngine
 
-from config.server_environment import TESTING_COLLECTION
+from config.server_environment import TESTING_DATABASE
 
 
 class HostTests(unittest.TestCase):
@@ -12,8 +12,8 @@ class HostTests(unittest.TestCase):
         super(HostTests, self).__init__(*args, **kwargs)
 
         # Drop previous database
-        MongoEngine().drop(TESTING_COLLECTION)
-        Customer().set_customer(TESTING_COLLECTION)
+        Customer().set_customer(TESTING_DATABASE)
+        MongoEngine().drop_collection(TESTING_DATABASE, 'hosts')
 
     def test_create_host(self):
         status = Host().insert({
