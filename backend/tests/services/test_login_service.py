@@ -6,7 +6,7 @@ from src.app import app
 from src.classes.customer import Customer
 from src.classes.user import User
 
-from tests.services.login import TestingLogin
+from tests.utils.login import TestingLogin
 
 
 class LoginServiceTests(unittest.TestCase):

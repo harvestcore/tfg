@@ -5,14 +5,8 @@ from src.classes.login import Login
 from src.classes.user import User
 from src.classes.customer import Customer
 from src.classes.mongo_engine import MongoEngine
-
+from tests.utils.auth import Auth
 from config.server_environment import TESTING_DATABASE, JWT_ENC_KEY
-
-
-class Auth:
-    def __init__(self, u, p):
-        self.username = u
-        self.password = p
 
 
 class UserTests(unittest.TestCase):

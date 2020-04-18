@@ -5,7 +5,7 @@ from src.app import app
 from src.classes.customer import Customer
 from src.classes.mongo_engine import MongoEngine
 
-from tests.services.login import TestingLogin
+from tests.utils.login import TestingLogin
 
 from config.server_environment import TESTING_DATABASE
 

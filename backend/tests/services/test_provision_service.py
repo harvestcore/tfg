@@ -1,5 +1,4 @@
 import json
-import time
 import unittest
 
 from src.app import app
@@ -9,7 +8,7 @@ from src.classes.docker_engine import DockerEngine
 from src.classes.ansible.host import Host
 from src.classes.ansible.playbook import Playbook
 
-from tests.services.login import TestingLogin
+from tests.utils.login import TestingLogin
 
 from config.server_environment import TESTING_DATABASE
 
