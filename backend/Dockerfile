@@ -1,6 +1,12 @@
 FROM python:3.6-alpine
 
-COPY . ./app
+COPY ./config ./app/config
+COPY ./src ./app/src
+COPY ./wsgi.py ./app
+COPY ./Makefile ./app
+COPY ./requirements.txt ./app
+COPY ./LICENSE ./app
+
 RUN apk update && \
     apk add make
 

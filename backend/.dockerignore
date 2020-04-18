@@ -3,12 +3,4 @@
 .cache
 .pytest_cache
 .vscode
-ansible
-samples
-tests
-venv
 __pycache__
-Dockerfile
-.dockerignore
-tag.sh
-tag
