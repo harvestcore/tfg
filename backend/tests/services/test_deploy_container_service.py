@@ -253,8 +253,8 @@ class DeployContainerServiceTests(unittest.TestCase):
         )
 
         self.assertEqual(response.status_code, 200, 'Container not stopped')
-        self.assertEqual(json.loads(response.data)['data'], '',
-                         'Container with logs')
+        self.assertIsInstance(json.loads(response.data)['data'], str,
+                              'Wrong container logs')
 
         response = self.app.post(
             self.path + '/container/single',
