@@ -9,7 +9,7 @@ from config.server_environment import ENC_KEY, JWT_ENC_KEY
 
 
 def convert_to_datetime(dtime):
-    return dt.datetime.strptime(str(dtime['$date']), '%y%d%m%H%M%S%f')
+    return dt.datetime.strptime(dtime, '%y%d%m%H%M%S%f')
 
 
 class Login(Item):
@@ -51,10 +51,13 @@ class Login(Item):
         if f.decrypt(user.data['password'].encode()).decode() == auth.password:
             login_time = dt.datetime.utcnow()
             exp = dt.datetime.utcnow() + dt.timedelta(hours=12)
+            exp = dt.datetime.strftime(exp, '%y%d%m%H%M%S%f')
             token = jwt.encode({
                 'public_id': user.data['public_id'],
                 'exp': exp
             }, JWT_ENC_KEY)
+
+            print("EXPPP", exp)
 
             existing = self.find({'username': auth.username})
             if existing.data is None:
