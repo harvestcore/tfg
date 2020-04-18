@@ -395,9 +395,23 @@ class ProvisionRunPlaybooksServiceTests(unittest.TestCase):
         MongoEngine().drop_collection(TESTING_DATABASE, 'playbooks')
 
     def test_run_playbook(self):
+        response_list = DockerEngine().run_container_operation(
+            operation='list',
+            data={
+                'all': False
+            }
+        )
+
+        ips = '172.17.0.'
+
+        if len(response_list) > 0:
+            ips = ips + str(2 + len(response_list))
+        else:
+            ips = ips + '2'
+
         h = Host().insert({
             'name': self.hosts[0],
-            'ips': self.ips
+            'ips': ips
         })
 
         self.assertEqual(h, True, 'Host not added')
@@ -448,10 +462,6 @@ class ProvisionRunPlaybooksServiceTests(unittest.TestCase):
         self.assertEqual(response.status_code, 200, 'Playbook failed running')
         self.assertNotEqual(json.loads(response.data)['result']
                             .find('PLAY [alpine]'), -1)
-        self.assertNotEqual(
-            json.loads(response.data)['result'].find('[172.17.0.2]'),
-            -1
-        )
 
         # Stop the container
         c = DockerEngine().get_container_by_id(self.container_id)

@@ -20,13 +20,26 @@ class AnsibleEngineTests(unittest.TestCase):
         MongoEngine().drop_collection(TESTING_DATABASE, 'playbooks')
 
     def test_run_playbook(self):
-        self.ips = ['172.17.0.2']
         self.playbook = 'test-alpine-ssh'
         self.hosts = ['alpine']
 
+        response_list = DockerEngine().run_container_operation(
+            operation='list',
+            data={
+                'all': False
+            }
+        )
+
+        ips = '172.17.0.'
+
+        if len(response_list) > 0:
+            ips = ips + str(2 + len(response_list))
+        else:
+            ips = ips + '2'
+
         h = Host().insert({
             'name': self.hosts[0],
-            'ips': self.ips
+            'ips': [ips]
         })
 
         self.assertEqual(h, True, 'Host not added')
@@ -57,7 +70,7 @@ class AnsibleEngineTests(unittest.TestCase):
             }
         )
 
-        self.assertNotEqual(container, None, 'Cointainer not running')
+        self.assertNotEqual(container, False, 'Cointainer not running')
         self.container_id = container.short_id
 
         response = AnsibleEngine().run_playbook(
@@ -71,7 +84,6 @@ class AnsibleEngineTests(unittest.TestCase):
 
         self.assertNotEqual(response, False, 'Playbook did not run')
         self.assertNotEqual(response.find('PLAY [alpine]'), -1)
-        self.assertNotEqual(response.find('[172.17.0.2]'), -1)
 
         c = DockerEngine().get_container_by_id(self.container_id)
         DockerEngine().run_operation_in_object(
