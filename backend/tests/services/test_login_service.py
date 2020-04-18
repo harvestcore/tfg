@@ -1,12 +1,13 @@
-import unittest
 import json
+import unittest
 
-from config.server_environment import TESTING_DATABASE
 from src.app import app
 from src.classes.customer import Customer
 from src.classes.user import User
 
 from tests.utils.login import TestingLogin
+
+from config.server_environment import TESTING_DATABASE
 
 
 class LoginServiceTests(unittest.TestCase):

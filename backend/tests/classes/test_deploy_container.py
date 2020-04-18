@@ -12,7 +12,6 @@ class DeployContainerTests(unittest.TestCase):
         self.assertNotEqual(client, None, 'Engine does not exist')
 
     # Container tests
-
     def test_run_hello_world_container(self):
         response = DockerEngine().run_container_operation(
             operation='run',
