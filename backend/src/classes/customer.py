@@ -25,11 +25,11 @@ class Customer(Item):
     """
     def is_customer(self, customer):
         MongoEngine().set_collection_name(BASE_DATABASE)
-        if customer == '':
+        if customer == '' or customer == 'localhost':
             return True
         elif customer != BASE_DATABASE:
             c = self.find({'domain': customer})
-            if c.data is not None:
+            if c.data is not None and c.data['enabled']:
                 return True
         return False
 
@@ -67,3 +67,15 @@ class Customer(Item):
         insertion = super().insert(data=item)
 
         return insertion
+
+    def find(self, criteria={}, projection={}):
+        self.set_customer(BASE_DATABASE)
+        return super().find(criteria, projection)
+
+    def update(self, criteria, data):
+        self.set_customer(BASE_DATABASE)
+        return super().update(criteria, data)
+
+    def remove(self, criteria={}, force=False):
+        self.set_customer(BASE_DATABASE)
+        return super().remove(criteria, force)
