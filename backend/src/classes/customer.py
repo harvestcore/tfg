@@ -38,14 +38,16 @@ class Customer(Item):
         @param Customer's name
     """
     def set_customer(self, customer):
-        MongoEngine().set_collection_name(BASE_DATABASE)
         if customer != BASE_DATABASE:
             c = self.find({'domain': customer})
             if c.data is not None:
                 return MongoEngine().set_collection_name(c.data['db_name'])
+        else:
+            MongoEngine().set_collection_name(BASE_DATABASE)
 
     def insert(self, item=None):
-        if item is None:
+        if item is None or not item or \
+                'domain' not in item or 'db_name' not in item:
             return False
 
         self.set_customer(BASE_DATABASE)
