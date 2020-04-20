@@ -91,3 +91,9 @@ class Login(Item):
     def token_access(self, token):
         data = jwt.decode(token, JWT_ENC_KEY, algorithms=['HS256'])
         return self.find({'public_id': data['public_id']})
+
+    def get_username(self, token):
+        user = self.token_access(token)
+        if user and user.data:
+            user.data['username']
+        return None

@@ -4,6 +4,7 @@ from flask_restplus import Api
 from src.services.deploy import api as deploy
 from src.services.provision import api as provision
 from src.services.user import api as user
+from src.services.customer import api as customer
 from src.services.login import api_login as login
 from src.services.login import api_logout as logout
 
@@ -19,6 +20,7 @@ api = Api(app,
           description='Manage your deploys')
 api.add_namespace(provision)
 api.add_namespace(user)
+api.add_namespace(customer)
 api.add_namespace(login)
 api.add_namespace(logout)
 
