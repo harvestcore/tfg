@@ -23,6 +23,9 @@ class UserServiceTests(unittest.TestCase):
             'domain': 'test-customer',
             'db_name': 'test-customer'
         }
+
+        Customer().remove(customer)
+
         response = self.app.post(
             self.path,
             headers=self.headers,
@@ -42,6 +45,9 @@ class UserServiceTests(unittest.TestCase):
             'domain': 'test-customer2',
             'db_name': 'test-customer2'
         }
+
+        Customer().remove(customer)
+
         response = self.app.post(
             self.path,
             headers=self.headers,
@@ -86,6 +92,9 @@ class UserServiceTests(unittest.TestCase):
             'domain': 'test-customer4',
             'db_name': 'test-customer4'
         }
+
+        Customer().remove(c1)
+        Customer().remove(c2)
 
         response = self.app.post(
             self.path,
