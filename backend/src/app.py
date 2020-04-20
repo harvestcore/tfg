@@ -1,3 +1,5 @@
+import tldextract
+
 from flask import Flask, request, abort
 from flask_restplus import Api
 
@@ -30,8 +32,8 @@ if DOCKER_ENABLED:
 
 @app.before_request
 def before_request():
-    subdomain = request.host.rsplit('.')[0].rsplit(':')[0]
-    if Customer().is_customer(subdomain):
-        Customer().set_customer(subdomain)
+    data = tldextract.extract(request.host)
+    if Customer().is_customer(data.subdomain):
+        Customer().set_customer(data.subdomain)
     else:
         abort(404, "Not found")
