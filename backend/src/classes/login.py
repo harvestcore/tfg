@@ -57,8 +57,6 @@ class Login(Item):
                 'exp': exp
             }, JWT_ENC_KEY)
 
-            print("EXPPP", exp)
-
             existing = self.find({'username': auth.username})
             if existing.data is None:
                 self.insert(data={
@@ -95,5 +93,5 @@ class Login(Item):
     def get_username(self, token):
         user = self.token_access(token)
         if user and user.data:
-            user.data['username']
+            return user.data['username']
         return None

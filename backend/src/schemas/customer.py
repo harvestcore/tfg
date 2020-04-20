@@ -10,10 +10,15 @@ class CustomerSchema(BaseSchema):
     deleted = fields.Str(dump_only=True)
 
 
-class CustomerSchemaPut(Schema):
+class CustomerBaseSchemaPut(BaseSchema):
     domain = fields.Str(required=True)
     db_name = fields.Str(required=True)
-    enabled = fields.Str()
+    enabled = fields.Boolean()
+
+
+class CustomerSchemaPut(Schema):
+    domain = fields.Str(required=True)
+    data = fields.Nested(CustomerBaseSchemaPut, required=True)
 
 
 class CustomerSchemaDelete(Schema):

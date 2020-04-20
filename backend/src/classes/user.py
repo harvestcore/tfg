@@ -36,6 +36,6 @@ class User(Item):
         return False
 
     def is_admin(self, username):
-        user = User().find({'username': username})
+        user = self.find({'username': username})
         if user and user.data:
             return user.data['type'] == 'admin'
