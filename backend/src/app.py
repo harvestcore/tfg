@@ -28,7 +28,7 @@ if DOCKER_ENABLED:
 
 @app.before_request
 def before_request():
-    subdomain = request.host[:-len('localhost:5000')].rstrip('.')
+    subdomain = request.host.rsplit('.')[0].rsplit(':')[0]
     if Customer().is_customer(subdomain):
         Customer().set_customer(subdomain)
     else:
