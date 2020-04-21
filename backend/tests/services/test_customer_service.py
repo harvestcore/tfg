@@ -4,27 +4,44 @@ import unittest
 from src.app import app
 from src.classes.customer import Customer
 from src.classes.mongo_engine import MongoEngine
+from src.classes.login import Login
+from src.classes.user import User
 
-from tests.utils.login import TestingLogin
+from tests.utils.auth import Auth
 
 from config.server_environment import TESTING_DATABASE
 
 
-class UserServiceTests(unittest.TestCase):
+class CustomerServiceTests(unittest.TestCase):
     app = app.test_client()
-    headers = TestingLogin().headers
     path = '/api/customer'
 
     def setUp(self):
         Customer().set_customer(TESTING_DATABASE)
+        MongoEngine().drop_collection(TESTING_DATABASE, 'customers')
+        User().insert({
+            'type': 'admin',
+            'first_name': 'admin-user',
+            'last_name': 'admin-user',
+            'username': 'admin-user',
+            'email': 'admin-user',
+            'password': 'admin-user'
+        })
 
-    def test_create_customer(self):
+        logged_user = Login().login(Auth('admin-user', 'admin-user'))
+        self.headers = {
+            'Content-Type': 'application/json',
+            'x-access-token': logged_user.data['token']
+        }
+
+    def test_create_and_delete_customer(self):
         customer = {
             'domain': 'test-customer',
             'db_name': 'test-customer'
         }
 
         Customer().remove(customer)
+        print(self.headers)
 
         response = self.app.post(
             self.path,
@@ -46,14 +63,7 @@ class UserServiceTests(unittest.TestCase):
             'db_name': 'test-customer2'
         }
 
-        Customer().remove(customer)
-
-        response = self.app.post(
-            self.path,
-            headers=self.headers,
-            data=json.dumps(customer)
-        )
-        self.assertEqual(response.status_code, 200, 'Customer not created')
+        Customer().insert(customer)
 
         customer = {
             'domain': 'test-c2',
@@ -66,13 +76,6 @@ class UserServiceTests(unittest.TestCase):
             data=json.dumps({'domain': 'test-customer2', 'data': customer})
         )
         self.assertEqual(response.status_code, 200, 'Customer not updated')
-
-        response = self.app.delete(
-            self.path,
-            headers=self.headers,
-            data=json.dumps({'domain': 'test-customer2'})
-        )
-        self.assertEqual(response.status_code, 204, 'Customer not deleted')
 
     def test_delete_non_existent_customer(self):
         response = self.app.delete(
@@ -93,22 +96,8 @@ class UserServiceTests(unittest.TestCase):
             'db_name': 'test-customer4'
         }
 
-        Customer().remove(c1)
-        Customer().remove(c2)
-
-        response = self.app.post(
-            self.path,
-            headers=self.headers,
-            data=json.dumps(c1)
-        )
-        self.assertEqual(response.status_code, 200, 'C1 not created')
-
-        response = self.app.post(
-            self.path,
-            headers=self.headers,
-            data=json.dumps(c2)
-        )
-        self.assertEqual(response.status_code, 200, 'C2 not created')
+        Customer().insert(c1)
+        Customer().insert(c2)
 
         response = self.app.post(
             self.path + '/query',
@@ -136,17 +125,3 @@ class UserServiceTests(unittest.TestCase):
         self.assertGreaterEqual(json.loads(response.data)['total'], 2)
         for user in json.loads(response.data)['items']:
             self.assertEqual(list(user.keys()), ['domain'], 'Wrong keys')
-
-        response = self.app.delete(
-            self.path,
-            headers=self.headers,
-            data=json.dumps(c1)
-        )
-        self.assertEqual(response.status_code, 204, 'C1 not deleted')
-
-        response = self.app.delete(
-            self.path,
-            headers=self.headers,
-            data=json.dumps(c2)
-        )
-        self.assertEqual(response.status_code, 204, 'C2 not deleted')

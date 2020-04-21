@@ -37,5 +37,5 @@ class User(Item):
 
     def is_admin(self, username):
         user = self.find({'username': username})
-        if user and user.data:
+        if user is not None and user.data is not None:
             return user.data['type'] == 'admin'
