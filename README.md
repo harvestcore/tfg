@@ -30,3 +30,9 @@ Puedes consultar los endpoints disponibles en el backend [aquí](dev/endpoints.m
 
 La instalación del backend y del frontend puede consultarse [aquí](dev/install.md).
 
+
+
+## Otros
+
+- [Criterio de aceptación de pull request](dev/pr-acceptance.md)
+
