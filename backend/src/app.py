@@ -1,9 +1,12 @@
+import tldextract
+
 from flask import Flask, request, abort
 from flask_restplus import Api
 
 from src.services.deploy import api as deploy
 from src.services.provision import api as provision
 from src.services.user import api as user
+from src.services.customer import api as customer
 from src.services.login import api_login as login
 from src.services.login import api_logout as logout
 
@@ -19,6 +22,7 @@ api = Api(app,
           description='Manage your deploys')
 api.add_namespace(provision)
 api.add_namespace(user)
+api.add_namespace(customer)
 api.add_namespace(login)
 api.add_namespace(logout)
 
@@ -28,8 +32,8 @@ if DOCKER_ENABLED:
 
 @app.before_request
 def before_request():
-    subdomain = request.host.rsplit('.')[0].rsplit(':')[0]
-    if Customer().is_customer(subdomain):
-        Customer().set_customer(subdomain)
+    data = tldextract.extract(request.host)
+    if Customer().is_customer(data.subdomain):
+        Customer().set_customer(data.subdomain)
     else:
         abort(404, "Not found")

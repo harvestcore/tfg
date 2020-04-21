@@ -25,7 +25,7 @@ class Customer(Item):
     """
     def is_customer(self, customer):
         MongoEngine().set_collection_name(BASE_DATABASE)
-        if customer == '' or customer == 'localhost':
+        if customer == '':
             return True
         elif customer != BASE_DATABASE:
             c = self.find({'domain': customer})
