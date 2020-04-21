@@ -45,3 +45,10 @@ class DockerEngine:
             return self.get_client().images.get(name=name)
         except docker.errors.APIError:
             return False
+
+    def status(self):
+        return {
+            'is_up': self.get_client().ping(),
+            'data_usage': self.get_client().df(),
+            'info': self.get_client().info()
+        }

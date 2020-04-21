@@ -3,12 +3,13 @@ import tldextract
 from flask import Flask, request, abort
 from flask_restplus import Api
 
-from src.services.deploy import api as deploy
-from src.services.provision import api as provision
-from src.services.user import api as user
 from src.services.customer import api as customer
+from src.services.deploy import api as deploy
 from src.services.login import api_login as login
 from src.services.login import api_logout as logout
+from src.services.provision import api as provision
+from src.services.status import api as status
+from src.services.user import api as user
 
 from src.classes.customer import Customer
 
@@ -20,11 +21,12 @@ api = Api(app,
           prefix='/api',
           title='IPManager',
           description='Manage your deploys')
-api.add_namespace(provision)
-api.add_namespace(user)
 api.add_namespace(customer)
 api.add_namespace(login)
 api.add_namespace(logout)
+api.add_namespace(provision)
+api.add_namespace(status)
+api.add_namespace(user)
 
 if DOCKER_ENABLED:
     api.add_namespace(deploy)

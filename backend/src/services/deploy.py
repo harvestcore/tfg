@@ -88,6 +88,7 @@ class ImageService(Resource):
 @api.route('/image')
 class DeployService(Resource):
     @staticmethod
+    @token_required
     def post():
         payload = validate_or_abort(BaseImageProps, request.get_json())
         data = payload['data']
