@@ -15,9 +15,6 @@ class LoginServiceTests(unittest.TestCase):
         self.app = app.test_client()
         self.headers = TestingLogin().headers
 
-    def tearDown(self):
-        TestingLogin().reset()
-
     def test_login_and_logout(self):
         Customer().set_customer(TESTING_DATABASE)
         User().insert({

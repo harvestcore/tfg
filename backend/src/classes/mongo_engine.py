@@ -51,3 +51,11 @@ class MongoEngine:
     def drop_collection(self, dbname, dbcollection):
         if dbname is not None and dbcollection is not None:
             self.client[dbname][dbcollection].drop()
+
+    def status(self):
+        info = self.client.server_info()
+        return {
+            'is_up': info['ok'] == 1.0,
+            'data_usage': [db for db in self.client.list_databases()],
+            'info': info
+        }

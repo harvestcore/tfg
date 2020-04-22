@@ -126,6 +126,7 @@ class PlaybookService(Resource):
 @api.route('')
 class ProvisionService(Resource):
     @staticmethod
+    @token_required
     def post():
         data = validate_or_abort(ProvisionRunSchema, request.get_json())
         results = AnsibleEngine().run_playbook(
