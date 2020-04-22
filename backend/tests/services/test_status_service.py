@@ -3,19 +3,33 @@ import unittest
 
 from src.app import app
 from src.classes.customer import Customer
+from src.classes.user import User
+from src.classes.login import Login
 
-from tests.utils.login import TestingLogin
+from tests.utils.auth import Auth
 
 from config.server_environment import TESTING_DATABASE
 
 
 class StatusServiceTests(unittest.TestCase):
-    def setUp(self):
-        self.app = app.test_client()
-        self.headers = TestingLogin().headers
+    app = app.test_client()
 
     def test_status(self):
         Customer().set_customer(TESTING_DATABASE)
+        User().insert({
+            'type': 'admin',
+            'first_name': 'status',
+            'last_name': 'status',
+            'username': 'status',
+            'email': 'status',
+            'password': 'status'
+        })
+
+        logged_user = Login().login(Auth('status', 'status'))
+        self.headers = {
+            'Content-Type': 'application/json',
+            'x-access-token': logged_user.data['token']
+        }
 
         response = self.app.get(
             '/api/status',
