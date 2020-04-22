@@ -6,6 +6,7 @@ from cryptography.fernet import Fernet
 
 from src.classes.mongo_engine import MongoEngine
 from src.classes.operation import Operation
+from src.utils.time import convert_to_string
 
 from config.server_environment import ENC_KEY
 
@@ -50,8 +51,8 @@ class Item:
         info = {
             'enabled': True,
             'deleted': False,
-            'creation_time': datetime.now(),
-            'last_modified': datetime.now(),
+            'creation_time': convert_to_string(datetime.now()),
+            'last_modified': convert_to_string(datetime.now()),
             'delete_time': 0
         }
 
@@ -89,7 +90,7 @@ class Item:
         info = {
             'enabled': False,
             'deleted': True,
-            'delete_time': datetime.now()
+            'delete_time': convert_to_string(datetime.now())
         }
 
         if not force:
