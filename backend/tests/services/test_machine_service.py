@@ -196,7 +196,6 @@ class UserTests(unittest.TestCase):
         self.assertEqual(m['gateway'], data['gateway'], 'Wrong gateway')
         self.assertEqual(m['mac'], data['mac'], 'Wrong mac')
 
-
     def test_find_all_machines(self):
         Machine().insert({
             'name': 'machine10',
