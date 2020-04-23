@@ -5,11 +5,9 @@ from cryptography.fernet import Fernet
 from src.classes.item import Item
 from src.classes.user import User
 
+from src.utils.time import convert_to_datetime, convert_to_string
+
 from config.server_environment import ENC_KEY, JWT_ENC_KEY
-
-
-def convert_to_datetime(dtime):
-    return dt.datetime.strptime(dtime, '%y%d%m%H%M%S%f')
 
 
 class Login(Item):
@@ -49,9 +47,9 @@ class Login(Item):
 
         f = Fernet(ENC_KEY)
         if f.decrypt(user.data['password'].encode()).decode() == auth.password:
-            login_time = dt.datetime.utcnow()
+            login_time = convert_to_string(dt.datetime.utcnow())
             exp = dt.datetime.utcnow() + dt.timedelta(hours=12)
-            exp = dt.datetime.strftime(exp, '%y%d%m%H%M%S%f')
+            exp = convert_to_string(exp)
             token = jwt.encode({
                 'public_id': user.data['public_id'],
                 'exp': exp

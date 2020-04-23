@@ -7,6 +7,7 @@ from src.services.customer import api as customer
 from src.services.deploy import api as deploy
 from src.services.login import api_login as login
 from src.services.login import api_logout as logout
+from src.services.machine import api as machine
 from src.services.provision import api as provision
 from src.services.status import api as status
 from src.services.user import api as user
@@ -24,6 +25,7 @@ api = Api(app,
 api.add_namespace(customer)
 api.add_namespace(login)
 api.add_namespace(logout)
+api.add_namespace(machine)
 api.add_namespace(provision)
 api.add_namespace(status)
 api.add_namespace(user)
