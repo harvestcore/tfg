@@ -67,8 +67,13 @@ Puedes encontrarlos [aquí](requirements.md).
 Una vez analizados los requisitos del sistema se proponen una serie de módulos que se desarrollan [aquí](modules.md).
 
 
+## Descripción de los subsistemas propuestos
 
 
 
 ## Herramientas a usar en el desarrollo
 
+
+## Requisitos del sistema
+
+Puedes encontrarlos [aquí](requirements.md).
