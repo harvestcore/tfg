@@ -10,7 +10,6 @@ from src.utils.parse_data import parse_data
 from src.utils.response_by_success import response_by_success
 
 
-
 api = Namespace(name='user', description='User management')
 
 

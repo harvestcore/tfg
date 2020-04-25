@@ -54,7 +54,7 @@ class MongoEngine:
             self.client[dbname][dbcollection].drop()
 
     """
-        Returns the current status of the Mongo client. 
+        Returns the current status of the Mongo client.
     """
     def status(self):
         info = self.client.server_info()

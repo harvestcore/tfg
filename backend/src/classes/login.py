@@ -38,7 +38,7 @@ class Login(Item):
                             {'username': user['username']})
 
     """
-        Performs the login of the user. 
+        Performs the login of the user.
     """
     def login(self, auth):
         user = User().find({'username': auth.username})
@@ -78,7 +78,7 @@ class Login(Item):
         return False
 
     """
-        Performs the logout of the user. 
+        Performs the logout of the user.
     """
     def logout(self, username):
         user = User().find({'username': username})
@@ -89,14 +89,14 @@ class Login(Item):
         return self.remove({'username': username}, force=True)
 
     """
-        Decodes the given token and returns the 'session' stored. 
+        Decodes the given token and returns the 'session' stored.
     """
     def token_access(self, token):
         data = jwt.decode(token, JWT_ENC_KEY, algorithms=['HS256'])
         return self.find({'public_id': data['public_id']})
 
     """
-        Returns the username that it is stored in the given token. 
+        Returns the username that it is stored in the given token.
     """
     def get_username(self, token):
         user = self.token_access(token)
