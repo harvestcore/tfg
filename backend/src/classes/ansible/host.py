@@ -16,6 +16,9 @@ class Host(Item):
     def __init__(self):
         super(Host, self).__init__()
 
+    """
+        Inserts a new host.
+    """
     def insert(self, data=None):
         if data is not None:
             current = super(Host, self) \

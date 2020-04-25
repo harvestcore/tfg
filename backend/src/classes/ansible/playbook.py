@@ -18,6 +18,9 @@ class Playbook(Item):
     def __init__(self):
         super(Playbook, self).__init__()
 
+    """
+        Inserts a new playbook.
+    """
     def insert(self, data=None):
         if data is not None:
             current = super(Playbook, self) \
@@ -30,6 +33,9 @@ class Playbook(Item):
 
         return False
 
+    """
+        Parses the current playbook to YAML format.
+    """
     def parse_yaml(self):
         if self.data:
             return yaml.dump(self.data['playbook'])

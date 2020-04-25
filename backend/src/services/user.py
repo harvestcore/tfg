@@ -1,16 +1,16 @@
 from flask import request
 from flask_restplus import Resource, Namespace
 
-from src.services.login import token_required
 from src.classes.user import User
+from src.services.login import token_required
+from src.schemas.common import QuerySchema
+from src.schemas.user import UserSchema, UserSchemaDelete, UserSchemaPut
 from src.utils.validate_or_abort import validate_or_abort
 from src.utils.parse_data import parse_data
 from src.utils.response_by_success import response_by_success
 
-from src.schemas.common import QuerySchema
-from src.schemas.user import UserSchema, UserSchemaDelete, UserSchemaPut
 
-# GET, POST, DELETE
+
 api = Namespace(name='user', description='User management')
 
 

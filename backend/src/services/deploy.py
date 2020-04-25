@@ -3,13 +3,13 @@ from flask_restplus import Namespace, Resource
 
 from src.classes.docker_engine import DockerEngine
 from src.services.login import token_required
-from src.utils.response_by_success import response_by_success
-from src.utils.validate_or_abort import validate_or_abort
 from src.schemas.container_operation import *
 from src.schemas.image_operation import *
 from src.utils.parse_data import parse_data
+from src.utils.response_by_success import response_by_success
+from src.utils.validate_or_abort import validate_or_abort
 
-# GET, POST, DELETE
+
 api = Namespace(name='deploy', description='Deploy management')
 
 

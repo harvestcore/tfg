@@ -1,20 +1,19 @@
 from flask import request
 from flask_restplus import Namespace, Resource
 
+from src.classes.ansible.ansible_engine import AnsibleEngine
 from src.classes.ansible.host import Host
 from src.classes.ansible.playbook import Playbook
-from src.classes.ansible.ansible_engine import AnsibleEngine
+from src.schemas.common import QuerySchema
+from src.schemas.provision import BaseHost, BasePlaybook, \
+    ProvisionSchemaDelete, ProvisionSchemaPut, ProvisionRunResponseSchema,\
+    ProvisionRunSchema, ProvisionPlaybookPut
 from src.services.login import token_required
 from src.utils.response_by_success import response_by_success
 from src.utils.validate_or_abort import validate_or_abort
 from src.utils.parse_data import parse_data
 
-from src.schemas.common import QuerySchema
-from src.schemas.provision import BaseHost, BasePlaybook, \
-    ProvisionSchemaDelete, ProvisionSchemaPut, ProvisionRunResponseSchema,\
-    ProvisionRunSchema, ProvisionPlaybookPut
 
-# GET, POST, DELETE
 api = Namespace(name='provision', description='Provision management')
 
 

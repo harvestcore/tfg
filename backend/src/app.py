@@ -1,8 +1,9 @@
-import tldextract
-
 from flask import Flask, request, abort
 from flask_restplus import Api
+import tldextract
 
+from config.server_environment import DOCKER_ENABLED
+from src.classes.customer import Customer
 from src.services.customer import api as customer
 from src.services.deploy import api as deploy
 from src.services.login import api_login as login
@@ -12,12 +13,8 @@ from src.services.provision import api as provision
 from src.services.status import api as status
 from src.services.user import api as user
 
-from src.classes.customer import Customer
-
-from config.server_environment import DOCKER_ENABLED
 
 app = Flask(__name__)
-
 api = Api(app,
           prefix='/api',
           title='IPManager',
