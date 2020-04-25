@@ -45,7 +45,7 @@ class Machine(Item):
         return False
 
     """
-        Updates a machine. 
+        Updates a machine.
     """
     def update(self, criteria, data):
         if data is not None:
@@ -56,7 +56,7 @@ class Machine(Item):
 
     """
         Validates all the available (and optional) parameters that a machine
-        can have. 
+        can have.
     """
     @staticmethod
     def validate_data(data):

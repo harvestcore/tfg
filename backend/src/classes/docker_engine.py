@@ -37,7 +37,7 @@ class DockerEngine:
             return False
 
     """
-        Returns the container that has the given id. 
+        Returns the container that has the given id.
     """
     def get_container_by_id(self, container_id):
         try:

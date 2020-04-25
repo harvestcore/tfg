@@ -22,7 +22,7 @@ class User(Item):
         super(User, self).__init__()
 
     """
-        Inserts a new user. 
+        Inserts a new user.
     """
     def insert(self, data=None):
         if data is not None:
