@@ -3,11 +3,11 @@ from flask_restplus import Resource, Namespace
 from functools import wraps
 
 from src.classes.login import Login
+from src.schemas.login import LoginSchema
 from src.utils.parse_data import parse_data
 from src.utils.response_by_success import response_by_success
 from src.utils.response_with_message import response_with_message
 
-from src.schemas.login import LoginSchema
 
 api_login = Namespace(name='login', description='Login')
 api_logout = Namespace(name='logout', description='Logout')

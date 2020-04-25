@@ -30,6 +30,9 @@ class Machine(Item):
     def __init__(self):
         super(Machine, self).__init__()
 
+    """
+        Inserts a new machine.
+    """
     def insert(self, data=None):
         if data is not None:
             current = super(Machine, self) \
@@ -41,6 +44,9 @@ class Machine(Item):
 
         return False
 
+    """
+        Updates a machine. 
+    """
     def update(self, criteria, data):
         if data is not None:
             if self.validate_data(data):
@@ -48,6 +54,10 @@ class Machine(Item):
 
         return False
 
+    """
+        Validates all the available (and optional) parameters that a machine
+        can have. 
+    """
     @staticmethod
     def validate_data(data):
         if 'type' in data and data['type'] not in ['local', 'remote']:
