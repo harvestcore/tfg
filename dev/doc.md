@@ -56,15 +56,19 @@ Puedes consultar más información acerca de estas metodologías [aquí](dev-met
 
 
 
-## Descripción de los subsistemas propuestos
+## Requisitos del sistema
+
+Puedes encontrarlos [aquí](requirements.md).
+
+
+
+## Descripción de los módulos implementados
+
+Una vez analizados los requisitos del sistema se proponen una serie de módulos que se desarrollan [aquí](modules.md).
+
+
 
 
 
 ## Herramientas a usar en el desarrollo
-
-
-
-## Requisitos del sistema
-
-Puedes encontrarlos [aquí](requirements.md).
 

@@ -6,6 +6,8 @@
 
 ### Angular
 
+Framework de Google desarrollado en Typescript para aplicaciones web. Se basa en el modelo vista controlador y se usa para crear aplicaciones de página única (SPA).
+
 ### Ansible Tower
 
 ### API Rest
