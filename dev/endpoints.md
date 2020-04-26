@@ -36,3 +36,19 @@
 - POST /api/deploy/container/single
 - POST /api/deploy/image
 - POST /api/deploy/image/single
+
+
+
+## Status
+
+- GET /api/status
+
+
+
+## Máquinas
+
+- GET /api/machine/`name`
+- POST /api/machine
+- POST /api/machine/query
+- PUT /api/machine
+- DELETE /api/user

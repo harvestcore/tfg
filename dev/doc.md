@@ -42,7 +42,7 @@ En el glosario de términos encontrarás una descripción de todos aquellos conc
 
 ## Estado del arte
 
-linkar [proyectos similares](notes/similar-projects.md)
+[TODO] Linkar [proyectos similares](notes/similar-projects.md)
 
 
 
@@ -67,11 +67,30 @@ Puedes encontrarlos [aquí](requirements.md).
 Una vez analizados los requisitos del sistema se proponen una serie de módulos que se desarrollan [aquí](modules.md).
 
 
+
 ## Descripción de los subsistemas propuestos
+
+Puedes encontrar una documentación más detallada de los subsistemas propuestos [aquí](modules.md).
 
 
 
 ## Herramientas a usar en el desarrollo
+
+[TODO] Completar
+
+- Backend
+  - Python, como lenguaje de programación principal.
+  - Flask, como microframework.
+  - Docker SDK, para el manejo de imágenes y contenedores Docker.
+  - Ansible SDK, para el aprovisionamiento de sistemas.
+  - MongoDB, como SGBD.
+  - JWT, para la autenticación de usuarios.
+- Frontend
+  - Angular, como framework principal basado en Typescript.
+- Otros
+  - Docker, para encapsular tanto frontend como backend en contenedores.
+
+
 
 
 ## Requisitos del sistema
