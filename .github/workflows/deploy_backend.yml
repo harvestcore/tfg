@@ -1,0 +1,34 @@
+name: Deploy backend
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      PROJECT_NAME: ipm-backend
+      DOCKER_USER: ${{ secrets.DOCKER_USER }}
+      DOCKER_PASS: ${{ secrets.DOCKER_PASS }}
+      GITHUB_KEY: ${{ secrets.GITHUB_KEY }}
+      GITHUB_USER: harvestcore
+
+    steps:
+    - name: Git checkout
+      uses: actions/checkout@v1
+
+    - run: ls -l
+
+    - name: Tag & release code
+      run: . ./utils/tag.sh
+
+    - name: Docker login
+      run: docker login -u $DOCKER_USER -p $DOCKER_PASS
+
+    - name: Docker build
+      run: docker build ./backend --tag harvestcore/$PROJECT_NAME:$TAG
+
+    - name: Docker push
+      run: docker push harvestcore/$PROJECT_NAME:$TAG

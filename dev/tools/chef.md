@@ -6,7 +6,7 @@ Herramienta de gestión de configuraciones, la cual utiliza un lenguaje propio p
 
 - ¿Lenguaje de programación?
 
-No tiene clientes en ningún lenguaje de programación, si no que se usa mediante su CLI.
+Tiene cliente en Python y Ruby
 
 - ¿Es útil para el proyecto?
 
