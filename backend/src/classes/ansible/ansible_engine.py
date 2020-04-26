@@ -6,22 +6,25 @@ from ansible.vars.manager import VariableManager
 from ansible.module_utils.common.collections import ImmutableDict
 from ansible.playbook.play import Play
 from ansible.executor.task_queue_manager import TaskQueueManager
-from src.classes.ansible.host import Host
-from src.classes.ansible.playbook import Playbook
-from src.classes.mongo_engine import MongoEngine
 
 from io import TextIOWrapper, BytesIO
 import sys
 
-from src.utils.dump_to_file import hosts_to_file
 
 from config.server_environment import ANSIBLE_PATH
+from src.classes.ansible.host import Host
+from src.classes.ansible.playbook import Playbook
+from src.classes.mongo_engine import MongoEngine
+from src.utils.dump_to_file import hosts_to_file
 
 
 class AnsibleEngine:
     def __init__(self):
         self.path = ANSIBLE_PATH
 
+    """
+        Runs a playbook in the given hosts.
+    """
     def run_playbook(self, hosts, playbook, passwords={}):
         if not hosts or not playbook:
             return False
@@ -38,6 +41,8 @@ class AnsibleEngine:
                         'name': current.data['name'],
                         'ips': current.data['ips']
                     })
+        else:
+            return False
 
         if len(h) == 0:
             return False

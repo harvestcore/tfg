@@ -1,17 +1,16 @@
 from flask import request
 from flask_restplus import Resource, Namespace
 
-from src.services.login import token_required
 from src.classes.customer import Customer
 from src.classes.user import User
 from src.classes.login import Login
-from src.utils.validate_or_abort import validate_or_abort
-from src.utils.parse_data import parse_data
-from src.utils.response_by_success import response_by_success
-
 from src.schemas.common import QuerySchema
 from src.schemas.customer import CustomerSchema, CustomerSchemaDelete, \
     CustomerSchemaPut
+from src.services.login import token_required
+from src.utils.parse_data import parse_data
+from src.utils.response_by_success import response_by_success
+from src.utils.validate_or_abort import validate_or_abort
 
 
 api = Namespace(name='customer', description='Customer management')

@@ -1,14 +1,12 @@
-import json
-import uuid
-from datetime import datetime
 from bson.json_util import dumps
 from cryptography.fernet import Fernet
-
-from src.classes.mongo_engine import MongoEngine
-from src.classes.operation import Operation
-from src.utils.time import convert_to_string
+from datetime import datetime
+import json
+import uuid
 
 from config.server_environment import ENC_KEY
+from src.classes.mongo_engine import MongoEngine
+from src.utils.time import convert_to_string
 
 
 class Item:
@@ -20,7 +18,7 @@ class Item:
         pass
 
     """
-        Return the cursor to the table
+        Returns the cursor to the table.
     """
     def cursor(self):
         if self.table_name != '':
@@ -28,7 +26,8 @@ class Item:
         return None
 
     """
-        Find all the elements by the given criteria
+        Finds all the elements by the given criteria. Only returns the
+        parameters specified in the projection.
     """
     def find(self, criteria={}, projection={}):
         _projection = projection if projection else self.table_schema
@@ -45,7 +44,7 @@ class Item:
         return self
 
     """
-        Insert an item
+        Inserts an item.
     """
     def insert(self, data=None):
         info = {
@@ -59,7 +58,7 @@ class Item:
         if data is None:
             return False
         elif type(data) is dict:
-            _operation = Operation.INSERT.value + Operation.ONE.value
+            _operation = 'insert_one'
             data.update(info)
             if 'password' in data.keys():
                 password = Fernet(ENC_KEY).encrypt(data['password'].encode())\
@@ -70,7 +69,7 @@ class Item:
                     and 'public_id' not in data.keys():
                 data.update({'public_id': str(uuid.uuid4())})
         elif type(data) is list:
-            _operation = Operation.INSERT.value + Operation.MANY.value
+            _operation = 'insert_many'
             for item in data:
                 item.update(info)
         else:
@@ -83,8 +82,8 @@ class Item:
             return False
 
     """
-        'Remove' an item by the given criteria. It doesn't removes the item,
-        only marks it as deleted
+        'Removes' an item by the given criteria. It doesn't removes the item,
+        only marks it as deleted. If 'force' is enabled it removes the item.
     """
     def remove(self, criteria={}, force=False):
         info = {
@@ -103,7 +102,7 @@ class Item:
             return False
 
     """
-        Update the item that fits the criteria with the new data
+        Updates the item that fits the criteria with the new data.
     """
     def update(self, criteria, data):
         try:

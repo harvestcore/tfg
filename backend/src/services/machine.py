@@ -1,17 +1,16 @@
 from flask import request
 from flask_restplus import Resource, Namespace
 
-from src.services.login import token_required
 from src.classes.machine import Machine
 from src.utils.validate_or_abort import validate_or_abort
-from src.utils.parse_data import parse_data
-from src.utils.response_by_success import response_by_success
-
 from src.schemas.common import QuerySchema
 from src.schemas.machine import MachineSchema, MachineSchemaDelete,\
     MachineSchemaPut
+from src.services.login import token_required
+from src.utils.parse_data import parse_data
+from src.utils.response_by_success import response_by_success
 
-# GET, POST, DELETE
+
 api = Namespace(name='machine', description='Machines management')
 
 
