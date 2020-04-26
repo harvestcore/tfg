@@ -1,6 +1,6 @@
 import docker
 
-from config.server_environment import DOCKER_BASE_URL
+from config.server_environment import DOCKER_BASE_URL, DOCKER_ENABLED
 
 
 class DockerEngine:
@@ -69,8 +69,20 @@ class DockerEngine:
         Returns the current status of the Docker client.
     """
     def status(self):
-        return {
-            'is_up': self.get_client().ping(),
-            'data_usage': self.get_client().df(),
-            'info': self.get_client().info()
-        }
+        if DOCKER_ENABLED:
+            try:
+                return {
+                    'is_up': self.get_client().ping(),
+                    'data_usage': self.get_client().df(),
+                    'info': self.get_client().info()
+                }
+            except docker.errors.APIError:
+                return {
+                    'status': False,
+                    'msg': 'Docker is not working properly'
+                }
+        else:
+            return {
+                'status': False,
+                'msg': 'Docker is not enabled'
+            }

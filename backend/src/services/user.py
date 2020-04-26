@@ -28,9 +28,10 @@ class UserServiceGetWithQuery(Resource):
     @token_required
     def post():
         data = validate_or_abort(QuerySchema, request.get_json())
-        user = User().find(criteria=data['query'],
-                           projection=data['filter'] if 'filter' in data.keys()
-                           else {})
+        user = User().find(
+            criteria=data['query'],
+            projection=data['filter'] if 'filter' in data.keys() else {}
+        )
 
         return parse_data(UserSchema, user.data)
 
