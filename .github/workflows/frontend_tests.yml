@@ -26,8 +26,8 @@ jobs:
     - run: ls -l
     - run: npm -v
 
-    - name:
-      run: npm i -g @angular/cli@9.0.3
+    - name: Install Angular
+      run: echo y | npm i @angular/cli@9.1.3
 
     - name: Install packages
       run: npm i
