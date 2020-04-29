@@ -3,6 +3,7 @@ name: Front tests
 on:
   push:
     paths:
+      - '.github/**'
       - 'frontend/**'
     pull_request:
       branches:
