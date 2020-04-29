@@ -12,6 +12,8 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      working-directory: ./frontend
     strategy:
       matrix:
         node-version: [12.x]
@@ -25,7 +27,9 @@ jobs:
 
     - name: Install packages
       run: npm i
+      working-directory: ${{env.working-directory}}
 
     - name: Run tests
       run: ng test --watch=false --browsers=ChromeHeadless
+      working-directory: ${{env.working-directory}}
 
