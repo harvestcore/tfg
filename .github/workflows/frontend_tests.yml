@@ -25,6 +25,9 @@ jobs:
     - run: ls -l
     - run: npm -v
 
+    - name:
+      run: npm i -g @angular/cli@9.0.3
+
     - name: Install packages
       run: npm i
       working-directory: ${{env.working-directory}}
