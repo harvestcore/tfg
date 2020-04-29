@@ -1,0 +1,31 @@
+name: Front tests
+
+on:
+  push:
+    paths:
+      - 'frontend/**'
+    pull_request:
+      branches:
+        - master
+        - develop
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [12.x]
+
+    steps:
+    - name: Git checkout
+      uses: actions/checkout@v1
+    
+    - run: ls -l
+    - run: npm -v
+
+    - name: Install packages
+      run: npm i
+
+    - name: Run tests
+      run: ng test --watch=false --browsers=ChromeHeadless
+
