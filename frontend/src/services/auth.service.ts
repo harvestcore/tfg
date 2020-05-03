@@ -1,10 +1,10 @@
-import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
+import { Injectable } from '@angular/core';
 import {Observable} from 'rxjs';
 
+import {AccessToken} from '../interfaces/access-token';
 import {BasicAuth} from '../interfaces/basic-auth';
 import {environment} from '../environments/environment';
-import {AccessToken} from '../interfaces/access-token';
 
 @Injectable({
   providedIn: 'root'

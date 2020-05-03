@@ -1,9 +1,8 @@
 import { TestBed } from '@angular/core/testing';
 
-import { ProvisionService } from '../provision.service';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {AuthService} from '../auth.service';
-import {MachineService} from '../machine.service';
+import {HttpClientTestingModule} from '@angular/common/http/testing';
+import { ProvisionService } from '../provision.service';
 
 describe('ProvisionService', () => {
   let service: ProvisionService;

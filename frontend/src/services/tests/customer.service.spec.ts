@@ -1,8 +1,8 @@
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 
-import { CustomerService } from '../customer.service';
 import {AuthService} from '../auth.service';
+import { CustomerService } from '../customer.service';
 
 describe('CustomerService', () => {
   let service: CustomerService;

@@ -1,9 +1,9 @@
-import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {HttpClient} from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { environment } from '../environments/environment';
 import {Observable} from 'rxjs';
-import {StatusResponse} from '../interfaces/status';
+
 import {AuthService} from './auth.service';
+import { environment } from '../environments/environment';
 
 @Injectable({
   providedIn: 'root'

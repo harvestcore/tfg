@@ -1,10 +1,10 @@
-import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
+import { Injectable } from '@angular/core';
 import {Observable} from 'rxjs';
 
 import {AuthService} from './auth.service';
-import {environment} from '../environments/environment';
 import {ContainerOperation, SingleContainerOperation} from '../interfaces/container';
+import {environment} from '../environments/environment';
 import {ImageOperation, SingleImageOperation} from '../interfaces/image';
 
 @Injectable({

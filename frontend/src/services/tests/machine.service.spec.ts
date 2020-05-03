@@ -1,9 +1,8 @@
 import { TestBed } from '@angular/core/testing';
 
-import { MachineService } from '../machine.service';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {AuthService} from '../auth.service';
-import {CustomerService} from '../customer.service';
+import {HttpClientTestingModule} from '@angular/common/http/testing';
+import { MachineService } from '../machine.service';
 
 describe('MachineService', () => {
   let service: MachineService;
