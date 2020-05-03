@@ -4,6 +4,7 @@ import {Observable} from 'rxjs';
 
 import {BasicAuth} from '../interfaces/basic-auth';
 import {environment} from '../environments/environment';
+import {AccessToken} from '../interfaces/access-token';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,7 @@ import {environment} from '../environments/environment';
 export class AuthService {
   loginPath = '/api/login';
   logoutPath = '/api/login';
-  token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwdWJsaWNfaWQiOiJiM2NmM2E2MS1iNTdiLTQ4MzctODY4Ni1jY2M3YTBjYzMzN2YiLCJleHAiOiIyMDAzMDUyMDE3NDMwNTg0MjIifQ.jAu6m4KLeuEu4F7zSDKOd6UfOwf4krCkSuqjLLeihIk';
+  token: AccessToken;
 
   constructor(
     private httpClient: HttpClient
@@ -19,7 +20,7 @@ export class AuthService {
 
   getXAccessTokenHeader(): any {
     return {
-      'x-access-token': this.token
+      ...this.token
     };
   }
 
@@ -34,18 +35,19 @@ export class AuthService {
   login(auth: BasicAuth): any {
     this.loginAPICall(auth).subscribe(data => {
       if ('token' in data) {
-        this.token = data.token;
-        return {
-          'x-access-token': this.token
+        this.token = {
+          'x-access-token': data.token
         };
+
+        return this.token;
       }
 
       return false;
     });
   }
 
-  logout() {
-    this.httpClient.get(environment.backendUrl + this.logoutPath, {
+  logout(): Observable<any> {
+    return this.httpClient.get(environment.backendUrl + this.logoutPath, {
       headers: this.getXAccessTokenHeader()
     });
   }
