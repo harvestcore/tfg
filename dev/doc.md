@@ -96,3 +96,10 @@ Puedes encontrar una documentación más detallada de los subsistemas propuestos
 ## Requisitos del sistema
 
 Puedes encontrarlos [aquí](requirements.md).
+
+
+
+## Diseño
+
+Puedes encontrarlo [aquí](./design/design.md).
+
