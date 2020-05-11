@@ -8,11 +8,8 @@ class Customer(Item):
     table_schema = {
         'domain': 1,
         'db_name': 1,
-        'creation_time': 1,
-        'last_modified': 1,
         'enabled': 1,
-        'deleted': 1,
-        'delete_time': 1
+        'deleted': 1
     }
 
     def __init__(self):

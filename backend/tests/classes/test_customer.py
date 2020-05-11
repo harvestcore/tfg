@@ -43,8 +43,7 @@ class CustomerTests(unittest.TestCase):
 
     def test_find_customer(self):
         c = {'domain': 'test', 'db_name': 'test'}
-        keys = ['_id', 'domain', 'db_name', 'enabled', 'deleted',
-                'creation_time', 'last_modified', 'delete_time']
+        keys = ['_id', 'domain', 'db_name', 'enabled', 'deleted']
         Customer().insert(c)
         customer = Customer().find({'domain': 'test'})
 
@@ -96,10 +95,6 @@ class CustomerTests(unittest.TestCase):
         remove = Customer().remove(c)
         self.assertEqual(remove, True, 'Customer not removed')
         deleted_customer = Customer().find({'domain': 'test'})
-
-        self.assertEqual(customer.data['creation_time'],
-                         deleted_customer.data['creation_time'],
-                         'Deleted item with weird creation time')
         self.assertNotEqual(customer.data['enabled'],
                             deleted_customer.data['enabled'],
                             'Deleted item enabled')

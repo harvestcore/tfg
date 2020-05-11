@@ -49,10 +49,7 @@ class Item:
     def insert(self, data=None):
         info = {
             'enabled': True,
-            'deleted': False,
-            'creation_time': convert_to_string(datetime.now()),
-            'last_modified': convert_to_string(datetime.now()),
-            'delete_time': 0
+            'deleted': False
         }
 
         if data is None:
@@ -88,8 +85,7 @@ class Item:
     def remove(self, criteria={}, force=False):
         info = {
             'enabled': False,
-            'deleted': True,
-            'delete_time': convert_to_string(datetime.now())
+            'deleted': True
         }
 
         if not force:

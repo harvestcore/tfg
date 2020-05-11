@@ -122,8 +122,7 @@ class UserTests(unittest.TestCase):
         }
 
         keys = ['_id', 'name', 'description', 'type', 'ipv4', 'ipv6', 'mac',
-                'broadcast', 'gateway', 'netmask', 'network', 'enabled',
-                'deleted', 'creation_time', 'last_modified', 'delete_time']
+                'broadcast', 'gateway', 'netmask', 'network', 'deleted']
 
         Machine().insert(m)
         machine = Machine().find({'name': m['name']})

@@ -20,11 +20,7 @@ class Machine(Item):
         'gateway': 1,
         'netmask': 1,
         'network': 1,
-        'creation_time': 1,
-        'last_modified': 1,
-        'enabled': 1,
-        'deleted': 1,
-        'delete_time': 1
+        'deleted': 1
     }
 
     def __init__(self):
