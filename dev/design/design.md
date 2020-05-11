@@ -72,3 +72,40 @@ Los iconos son de Font Awesome.
 
 
 ![Section 2](./img/data2.png)
+
+
+
+## Uso de colores y tipografías
+
+### Menú superior
+
+- Color: #2D4B97 (YinMin Blue)
+- Texto: #FFFFFF (Blanco)
+- Iconos: #FFFFFF (Blanco)
+- Botones: #2D4B97 (YinMin Blue)
+- Botones (hover): #489FB5
+
+
+
+### Fondo
+
+- Color: #82C0CC
+
+
+
+### Botones
+
+- Primario: #FFA62B
+- Secundario: #489FB5
+
+
+
+### Cabeceras y popover
+
+- Primario: #489FB5
+
+- Secundario: #82C0CC
+
+- Fondo: #EDE7E3
+
+  
