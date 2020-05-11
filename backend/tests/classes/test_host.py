@@ -41,8 +41,7 @@ class HostTests(unittest.TestCase):
             'name': 'host1',
             'ips': ['192.168.1.5', '192.168.2.5']
         }
-        keys = ['_id', 'name', 'ips', 'enabled', 'deleted', 'creation_time',
-                'last_modified', 'delete_time']
+        keys = ['_id', 'name', 'ips', 'deleted']
 
         Host().insert(h)
         host = Host().find()

@@ -78,8 +78,7 @@ class PlaybookTests(unittest.TestCase):
                 }
             ]
         }
-        keys = ['_id', 'name', 'playbook', 'enabled', 'deleted',
-                'creation_time', 'last_modified', 'delete_time']
+        keys = ['_id', 'name', 'playbook', 'deleted']
 
         Playbook().insert(h)
         playbook = Playbook().find()
