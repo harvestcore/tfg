@@ -1,0 +1,38 @@
+<mat-toolbar color="primary">
+  <div fxLayout="row" fxLayoutGap="0.25em">
+    <fa-icon class="logoIcon" icon="laptop"></fa-icon>
+    <button routerLink="/" mat-button class="logo">IPManager</button>
+
+    <div fxLayout="row" fxFlexAlign="space-between center">
+      <button routerLink="/deploy" mat-button>Deploy</button>
+      <button mat-button [matMenuTriggerFor]="provision">Provision</button>
+      <mat-menu #provision="matMenu">
+        <button routerLink="/provision" mat-menu-item>Run</button>
+        <button routerLink="/playbooks" mat-menu-item>Playbooks</button>
+        <button routerLink="/hosts" mat-menu-item>Hosts</button>
+      </mat-menu>
+      <button routerLink="/machines" mat-button>Machines</button>
+      <button routerLink="/status" mat-button>Status</button>
+    </div>
+  </div>
+
+  <div fxFlex="1 1 auto"></div>
+
+  <div fxLayout="row" fxLayoutGap="0.5em">
+    <button mat-button [matMenuTriggerFor]="admin" fxLayout="row" fxFlexAlign="space-between center">
+      <fa-icon icon="user-shield"></fa-icon>
+      <span>Admin</span>
+    </button>
+    <mat-menu #admin="matMenu">
+      <button routerLink="/users" mat-menu-item>User management</button>
+    </mat-menu>
+
+    <button mat-button [matMenuTriggerFor]="user" fxLayout="row" fxFlexAlign="space-between center">
+      <fa-icon icon="user"></fa-icon>
+      <span>Username</span>
+    </button>
+    <mat-menu #user="matMenu">
+      <button mat-menu-item>Logout</button>
+    </mat-menu>
+  </div>
+</mat-toolbar>
