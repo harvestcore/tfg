@@ -5,7 +5,8 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { HttpClientModule } from '@angular/common/http';
 import { MatButtonModule } from '@angular/material/button';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
-import { MatCardModule } from '@angular/material/card';
+import { MatCardModule} from '@angular/material/card';
+import { MatGridListModule } from '@angular/material/grid-list';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -25,11 +26,7 @@ import { UserService } from '../services/user.service';
 import { MainContainerComponent } from './main-container/main-container.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { TopNavigatorComponent } from './top-navigator/top-navigator.component';
-
-import { FontAwesomeModule, FaIconLibrary } from '@fortawesome/angular-fontawesome';
-import { faLaptop, faCogs, faHdd, faServer, faChartPie, faUserShield, faUser, faChevronDown } from '@fortawesome/free-solid-svg-icons';
-import { faDocker } from '@fortawesome/free-brands-svg-icons';
-import {MatGridListModule} from '@angular/material/grid-list';
+import { FontAwesomeIconsModule } from '../icons/FontAwesomeIconsModule';
 
 const providers = [
   AuthService,
@@ -43,14 +40,19 @@ const providers = [
   UserService
 ];
 
-const imports = [
+export const imports = [
   AppRoutingModule,
   BrowserAnimationsModule,
   BrowserModule,
   FlexLayoutModule,
-  FontAwesomeModule,
+  FontAwesomeIconsModule,
   HttpClientModule,
+  MatButtonModule,
+  MatButtonToggleModule,
+  MatCardModule,
+  MatGridListModule,
   MatMenuModule,
+  MatSlideToggleModule,
   MatToolbarModule
 ];
 
@@ -61,30 +63,11 @@ const imports = [
     TopNavigatorComponent,
     MainContainerComponent
   ],
-  imports: [
-    imports,
-    MatSlideToggleModule,
-    MatButtonToggleModule,
-    MatButtonModule,
-    MatMenuModule,
-    MatCardModule,
-    MatGridListModule
-  ],
+  imports,
   providers,
   bootstrap: [AppComponent]
 })
 export class AppModule {
-  constructor(private iconLibrary: FaIconLibrary) {
-    iconLibrary.addIcons(
-      faDocker,
-      faLaptop,
-      faCogs,
-      faHdd,
-      faServer,
-      faChartPie,
-      faUserShield,
-      faUser,
-      faChevronDown
-    );
+  constructor() {
   }
 }
