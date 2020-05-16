@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 
 import { FontAwesomeModule, FaIconLibrary } from '@fortawesome/angular-fontawesome';
-import { faLaptop, faCogs, faHdd, faServer, faChartPie, faUserShield, faUser, faChevronDown } from '@fortawesome/free-solid-svg-icons';
+import { faLaptop, faCogs, faHdd, faServer, faChartPie, faUserShield, faUser, faHeartBroken, faChevronDown, faFrown } from '@fortawesome/free-solid-svg-icons';
 import { faDocker } from '@fortawesome/free-brands-svg-icons';
 
 const icons = [
@@ -13,7 +13,9 @@ const icons = [
   faChartPie,
   faUserShield,
   faUser,
-  faChevronDown
+  faChevronDown,
+  faHeartBroken,
+  faFrown
 ];
 
 @NgModule({
