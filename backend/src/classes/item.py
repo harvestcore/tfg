@@ -1,12 +1,10 @@
 from bson.json_util import dumps
 from cryptography.fernet import Fernet
-from datetime import datetime
 import json
 import uuid
 
 from config.server_environment import ENC_KEY
 from src.classes.mongo_engine import MongoEngine
-from src.utils.time import convert_to_string
 
 
 class Item:

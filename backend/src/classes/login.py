@@ -5,7 +5,6 @@ import jwt
 from config.server_environment import ENC_KEY, JWT_ENC_KEY
 from src.classes.item import Item
 from src.classes.user import User
-from src.utils.time import convert_to_datetime, convert_to_string
 
 
 class Login(Item):
@@ -25,15 +24,15 @@ class Login(Item):
         current_logged_in = self.find()
         if current_logged_in.data is not None:
             if type(current_logged_in.data) is dict:
-                date_now = convert_to_datetime(current_logged_in.data['exp'])
-                if date_now < dt.datetime.utcnow():
+                date_now = current_logged_in.data['exp']
+                if date_now < dt.datetime.utcnow().timestamp():
                     self.remove({
                         'username': current_logged_in.data['username']
                     })
             elif type(current_logged_in.data) is list:
                 for user in current_logged_in.data:
-                    date_now = convert_to_datetime(user['exp'])
-                    if date_now < dt.datetime.utcnow():
+                    date_now = user['exp']
+                    if date_now < dt.datetime.utcnow().timestamp():
                         self.remove(
                             {'username': user['username']})
 
@@ -48,9 +47,9 @@ class Login(Item):
 
         f = Fernet(ENC_KEY)
         if f.decrypt(user.data['password'].encode()).decode() == auth.password:
-            login_time = convert_to_string(dt.datetime.utcnow())
+            login_time = round(dt.datetime.utcnow().timestamp())
             exp = dt.datetime.utcnow() + dt.timedelta(hours=12)
-            exp = convert_to_string(exp)
+            exp = round(exp.timestamp())
             token = jwt.encode({
                 'public_id': user.data['public_id'],
                 'exp': exp
