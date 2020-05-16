@@ -11,12 +11,28 @@ import {Query} from '../interfaces/query';
   providedIn: 'root'
 })
 export class UserService {
-  path = '/api/user';
+  private path = '/api/user';
+
+  private currentUser: User;
 
   constructor(
     private httpClient: HttpClient,
     private authService: AuthService
   ) { }
+
+  setCurrentUser(username: string) {
+    this.getUser(username).subscribe(user => {
+      this.currentUser = user;
+    });
+  }
+
+  getCurrentUser(): User {
+    return this.currentUser;
+  }
+
+  userLoggedIn(): boolean {
+    return !!this.currentUser;
+  }
 
   updateUser(email: string, userData: User): Observable<any> {
     return this.httpClient.put(environment.backendUrl + this.path, {
