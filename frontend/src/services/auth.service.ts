@@ -4,6 +4,7 @@ import { map } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
 
 import { JwtHelperService } from '@auth0/angular-jwt';
+import * as Cookies from 'js-cookie';
 
 import { AccessToken } from '../interfaces/access-token';
 import { BasicAuth } from '../interfaces/basic-auth';
@@ -46,7 +47,7 @@ export class AuthService {
   }
 
   login(auth?: BasicAuth): any {
-    const localToken = localStorage.getItem('ipm-token');
+    const localToken = Cookies.get('ipm-token');
     if (localToken) {
       const jwtHelper = new JwtHelperService();
       const decodedToken = jwtHelper.decodeToken(localToken);
@@ -71,7 +72,7 @@ export class AuthService {
             this.token = {
               'x-access-token': data.token
             };
-            localStorage.setItem('ipm-token', data.token);
+            Cookies.set('ipm-token', data.token, { expires: 0.5 });
           }
 
           return {
