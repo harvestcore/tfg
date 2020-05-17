@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {AuthService} from '../../services/auth.service';
-import {BasicAuth} from '../../interfaces/basic-auth';
-import {UserService} from '../../services/user.service';
 import {Router} from '@angular/router';
+
+import { AuthService } from '../../services/auth.service';
+import { UserService } from '../../services/user.service';
+
+import { BasicAuth } from '../../interfaces/basic-auth';
 
 @Component({
   selector: 'app-login',
@@ -47,6 +49,7 @@ export class LoginComponent implements OnInit {
       if (response.ok) {
         this.userService.setCurrentUser(data.username).subscribe(() => {
             this.showFeedback = false;
+            this.authService.loginStateChangedNotifier.emit();
             this.router.navigateByUrl('/');
         });
       } else {

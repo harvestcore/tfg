@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { EventEmitter, Injectable, Output } from '@angular/core';
 import { map, catchError } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
 
@@ -19,6 +19,7 @@ export class AuthService {
   logoutPath = '/api/logout';
 
   private token: AccessToken;
+  @Output() loginStateChangedNotifier: EventEmitter<any> = new EventEmitter();
 
   constructor(
     private router: Router,
