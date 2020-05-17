@@ -3,9 +3,10 @@ import { Injectable } from '@angular/core';
 import {Observable} from 'rxjs';
 
 import {AuthService} from './auth.service';
-import {environment} from '../environments/environment';
+
 import {Machine} from '../interfaces/machine';
 import {Query} from '../interfaces/query';
+import {UrlService} from './url.service';
 
 @Injectable({
   providedIn: 'root'
@@ -15,11 +16,12 @@ export class MachineService {
 
   constructor(
     private httpClient: HttpClient,
-    private authService: AuthService
+    private authService: AuthService,
+    private urlService: UrlService
   ) { }
 
   updateMachine(name: string, machineData: Machine): Observable<any> {
-    return this.httpClient.put(environment.backendUrl + this.path, {
+    return this.httpClient.put(this.urlService.getBackendUrl() + this.path, {
         name,
         data: machineData
       }, {
@@ -29,7 +31,7 @@ export class MachineService {
   }
 
   removeMachine(name: string): Observable<any> {
-    const url = environment.backendUrl + this.path;
+    const url = this.urlService.getBackendUrl() + this.path;
     return this.httpClient.request('delete', url, {
         body: {
           name
@@ -40,7 +42,7 @@ export class MachineService {
   }
 
   getMachine(name: string): Observable<any> {
-    const url = environment.backendUrl + this.path + '/' + name;
+    const url = this.urlService.getBackendUrl() + this.path + '/' + name;
     return this.httpClient.get(url, {
         headers: this.authService.getXAccessTokenHeader()
       }
@@ -48,7 +50,7 @@ export class MachineService {
   }
 
   queryMachine(query: Query): Observable<any> {
-    return this.httpClient.post(environment.backendUrl + this.path + '/query', {
+    return this.httpClient.post(this.urlService.getBackendUrl() + this.path + '/query', {
         ...query
       }, {
         headers: this.authService.getXAccessTokenHeader()
@@ -57,7 +59,7 @@ export class MachineService {
   }
 
   addMachine(machine: Machine): Observable<any> {
-    return this.httpClient.post(environment.backendUrl + this.path, {
+    return this.httpClient.post(this.urlService.getBackendUrl() + this.path, {
         ...machine
       }, {
         headers: this.authService.getXAccessTokenHeader()

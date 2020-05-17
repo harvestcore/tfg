@@ -4,6 +4,7 @@ import {Observable} from 'rxjs';
 
 import {AuthService} from './auth.service';
 import { environment } from '../environments/environment';
+import {UrlService} from './url.service';
 
 @Injectable({
   providedIn: 'root'
@@ -14,12 +15,13 @@ export class StatusService {
 
   constructor(
     private httpClient: HttpClient,
-    private authService: AuthService
+    private authService: AuthService,
+    private urlService: UrlService
   ) {}
 
   getStatus(): Observable<any> {
     return this.httpClient.get(
-      environment.backendUrl + this.path,
+      this.urlService.getBackendUrl() + this.path,
       {
         headers: this.authService.getXAccessTokenHeader()
       }

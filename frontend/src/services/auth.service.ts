@@ -1,54 +1,105 @@
-import {HttpClient} from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import {Observable} from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { EventEmitter, Injectable, Output } from '@angular/core';
+import { map, catchError } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
 
-import {AccessToken} from '../interfaces/access-token';
-import {BasicAuth} from '../interfaces/basic-auth';
-import {environment} from '../environments/environment';
+import { JwtHelperService } from '@auth0/angular-jwt';
+import * as Cookies from 'js-cookie';
+
+import { AccessToken } from '../interfaces/access-token';
+import { BasicAuth } from '../interfaces/basic-auth';
+import { UrlService } from './url.service';
+import {Router} from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
   loginPath = '/api/login';
-  logoutPath = '/api/login';
-  token: AccessToken;
+  logoutPath = '/api/logout';
+
+  private token: AccessToken;
+  @Output() loginStateChangedNotifier: EventEmitter<any> = new EventEmitter();
 
   constructor(
-    private httpClient: HttpClient
+    private router: Router,
+    private httpClient: HttpClient,
+    private urlService: UrlService
   ) { }
 
   getXAccessTokenHeader(): any {
-    return {
-      ...this.token
-    };
+    return this.token;
   }
 
   private loginAPICall(auth: BasicAuth): Observable<any> {
-    return this.httpClient.get(environment.backendUrl + this.loginPath, {
+    return this.httpClient.get(this.urlService.getBackendUrl() + this.loginPath, {
       headers: {
-        Authorization: 'Basic ' + auth.username + ':' + auth.password
+        Authorization: 'Basic ' + btoa(auth.username + ':' + auth.password)
       }
     });
   }
 
-  login(auth: BasicAuth): any {
-    this.loginAPICall(auth).subscribe(data => {
-      if ('token' in data) {
+  login(auth?: BasicAuth): Observable<any> {
+    const localToken = Cookies.get('ipm-token');
+    if (localToken) {
+      const jwtHelper = new JwtHelperService();
+      const decodedToken = jwtHelper.decodeToken(localToken);
+
+      if ((decodedToken.exp * 1000) > Date.now()) {
         this.token = {
-          'x-access-token': data.token
+          'x-access-token': localToken
         };
 
-        return this.token;
+        return of({
+          ok: !!this.token,
+          token: this.token,
+          fromLocal: true
+        });
       }
+    }
 
-      return false;
+    if (auth) {
+      this.urlService.setClient(auth.client);
+      return this.loginAPICall(auth).pipe(
+        map(data => {
+          if ('token' in data) {
+            this.token = {
+              'x-access-token': data.token
+            };
+
+            // Set token that lasts half a day
+            Cookies.set('ipm-token', data.token, { expires: 0.5 });
+          }
+
+          return {
+            ok: !!this.token,
+            token: this.token,
+            fromLocal: false
+          };
+        }),
+        catchError(error => {
+          return of({
+            ok: false,
+            token: this.token,
+            fromLocal: false,
+            error
+          });
+        })
+      );
+    }
+
+    return of({
+      ok: false,
+      token: null,
+      fromLocal: false
     });
   }
 
   logout(): Observable<any> {
-    return this.httpClient.get(environment.backendUrl + this.logoutPath, {
+    return this.httpClient.get(this.urlService.getBackendUrl() + this.logoutPath, {
       headers: this.getXAccessTokenHeader()
-    });
+    }).pipe(map(() => {
+      Cookies.remove('ipm-token', { path: '' });
+    }));
   }
 }

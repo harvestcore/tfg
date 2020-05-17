@@ -4,8 +4,9 @@ import {Observable} from 'rxjs';
 
 import {AuthService} from './auth.service';
 import {ContainerOperation, SingleContainerOperation} from '../interfaces/container';
-import {environment} from '../environments/environment';
+
 import {ImageOperation, SingleImageOperation} from '../interfaces/image';
+import {UrlService} from './url.service';
 
 @Injectable({
   providedIn: 'root'
@@ -15,11 +16,12 @@ export class DeployService {
 
   constructor(
     private httpClient: HttpClient,
-    private authService: AuthService
+    private authService: AuthService,
+    private urlService: UrlService
   ) { }
 
   containerOperation(containerOperation: ContainerOperation): Observable<any> {
-    return this.httpClient.post(environment.backendUrl + this.path + '/container', {
+    return this.httpClient.post(this.urlService.getBackendUrl() + this.path + '/container', {
         ...containerOperation
       }, {
         headers: this.authService.getXAccessTokenHeader()
@@ -28,7 +30,7 @@ export class DeployService {
   }
 
   singleContainerOperation(singleContainerOperation: SingleContainerOperation): Observable<any> {
-    return this.httpClient.post(environment.backendUrl + this.path + '/container/single', {
+    return this.httpClient.post(this.urlService.getBackendUrl() + this.path + '/container/single', {
         ...singleContainerOperation
       }, {
         headers: this.authService.getXAccessTokenHeader()
@@ -37,7 +39,7 @@ export class DeployService {
   }
 
   imageOperation(imageOperation: ImageOperation): Observable<any> {
-    return this.httpClient.post(environment.backendUrl + this.path + '/image', {
+    return this.httpClient.post(this.urlService.getBackendUrl() + this.path + '/image', {
         ...imageOperation
       }, {
         headers: this.authService.getXAccessTokenHeader()
@@ -46,7 +48,7 @@ export class DeployService {
   }
 
   singleImageOperation(singleImageOperation: SingleImageOperation): Observable<any> {
-    return this.httpClient.post(environment.backendUrl + this.path + '/image/single', {
+    return this.httpClient.post(this.urlService.getBackendUrl() + this.path + '/image/single', {
         ...singleImageOperation
       }, {
         headers: this.authService.getXAccessTokenHeader()
