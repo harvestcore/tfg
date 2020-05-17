@@ -9,6 +9,7 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatCardModule} from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatGridListModule } from '@angular/material/grid-list';
+import { MatInputModule } from '@angular/material/input';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -58,6 +59,7 @@ export const imports = [
   MatCardModule,
   MatFormFieldModule,
   MatGridListModule,
+  MatInputModule,
   MatMenuModule,
   MatSlideToggleModule,
   MatToolbarModule,
@@ -72,9 +74,9 @@ export const imports = [
     MainContainerComponent,
     TopNavigatorComponent,
   ],
-  imports: [
-    imports
-  ],
+    imports: [
+        imports
+    ],
   providers,
   bootstrap: [AppComponent]
 })

@@ -20,9 +20,9 @@ export class TopNavigatorComponent implements OnInit {
   }
 
   handleLogout() {
-    this.authService.logout().subscribe(() => {
+    this.authService.logout().subscribe(data => {
       this.userService.clearCurrentUser();
-      this.router.navigateByUrl('/');
+      this.router.navigateByUrl('/login');
     });
   }
 }

@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { map } from 'rxjs/operators';
+import { map, catchError } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
 
 import { JwtHelperService } from '@auth0/angular-jwt';
@@ -26,7 +26,7 @@ export class AuthService {
     private urlService: UrlService
   ) { }
 
-  getXAccessTokenHeader(): AccessToken {
+  getXAccessTokenHeader(): any {
     return this.token;
   }
 
@@ -50,7 +50,7 @@ export class AuthService {
         };
 
         return of({
-          ok: this.token !== null,
+          ok: !!this.token,
           token: this.token,
           fromLocal: true
         });
@@ -58,10 +58,7 @@ export class AuthService {
     }
 
     if (auth) {
-      if (auth.client) {
-        this.urlService.setClient(auth.client);
-      }
-
+      this.urlService.setClient(auth.client);
       return this.loginAPICall(auth).pipe(
         map(data => {
           if ('token' in data) {
@@ -74,10 +71,18 @@ export class AuthService {
           }
 
           return {
-            ok: this.token !== null,
+            ok: !!this.token,
             token: this.token,
             fromLocal: false
           };
+        }),
+        catchError(error => {
+          return of({
+            ok: false,
+            token: this.token,
+            fromLocal: false,
+            error
+          });
         })
       );
     }

@@ -1,29 +1,33 @@
 <div class="notFound">
   <mat-card fxLayout="column" fxLayoutAlign="center center">
-    <mat-card-title>
-      Login
+    <mat-card-title fxLayout="row" fxLayoutGap="0.5em" fxLayoutAlign="center center">
+      <fa-icon icon="laptop"></fa-icon>
+      <span class="logo">IPManager</span>
     </mat-card-title>
 
-
-
     <mat-card-content>
-      <form [formGroup]="loginForm" (ngSubmit)="onSubmit(loginForm.value)" >
-        <div>
-          <label for="client">Client</label>
-          <input id="client" type="text" formControlName="client">
-        </div>
+      <form fxLayout="column" [formGroup]="loginForm" (ngSubmit)="onSubmit(loginForm.value)" >
+        <mat-form-field>
+          <mat-label for="client">Client</mat-label>
+          <input matInput id="client" type="text" formControlName="client" (ngModelChange)="resetFeedback()">
+        </mat-form-field>
 
-        <div>
-          <label for="username">Username</label>
-          <input id="username" type="text" formControlName="username" required>
-        </div>
+        <mat-form-field>
+          <mat-label for="username">Username</mat-label>
+          <input matInput id="username" type="text" formControlName="username" required (ngModelChange)="resetFeedback()">
+        </mat-form-field>
 
-        <div>
-          <label for="password">Password</label>
-          <input id="password" type="password" formControlName="password" required>
-        </div>
-        <button mat-button class="button" type="submit">Login</button>
+        <mat-form-field>
+          <mat-label for="password">Password</mat-label>
+          <input matInput id="password" type="password" formControlName="password" required (ngModelChange)="resetFeedback()">
+        </mat-form-field>
+        <button mat-raised-button color="accent" class="button" type="submit">Login</button>
       </form>
     </mat-card-content>
+
+    <mat-card-footer *ngIf="showFeedback" fxLayout="row" fxLayoutGap="0.25em">
+      <fa-icon icon="exclamation-triangle"></fa-icon>
+      <span>Login failed, please try again</span>
+    </mat-card-footer>
   </mat-card>
 </div>

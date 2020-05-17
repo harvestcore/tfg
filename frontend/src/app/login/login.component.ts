@@ -16,6 +16,8 @@ export class LoginComponent implements OnInit {
   username: string;
   password: string;
 
+  showFeedback = false;
+
   constructor(
     private authService: AuthService,
     private userService: UserService,
@@ -36,12 +38,19 @@ export class LoginComponent implements OnInit {
     });
   }
 
+  resetFeedback() {
+    this.showFeedback = false;
+  }
+
   onSubmit(data: BasicAuth) {
     this.authService.login(data).subscribe(response => {
       if (response.ok) {
         this.userService.setCurrentUser(data.username).subscribe(() => {
+            this.showFeedback = false;
             this.router.navigateByUrl('/');
         });
+      } else {
+        this.showFeedback = true;
       }
     });
   }
