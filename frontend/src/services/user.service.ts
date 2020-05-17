@@ -1,6 +1,7 @@
 import {HttpClient} from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import {Observable} from 'rxjs';
+import { map } from 'rxjs/operators';
 
 import {AuthService} from './auth.service';
 import {environment} from '../environments/environment';
@@ -21,9 +22,9 @@ export class UserService {
   ) { }
 
   setCurrentUser(username: string) {
-    this.getUser(username).subscribe(user => {
+    return this.getUser(username).pipe(map(user => {
       this.currentUser = user;
-    });
+    }));
   }
 
   getCurrentUser(): User {

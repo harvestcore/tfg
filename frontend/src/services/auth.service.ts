@@ -1,12 +1,13 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
+
+import { JwtHelperService } from '@auth0/angular-jwt';
 
 import { AccessToken } from '../interfaces/access-token';
 import { BasicAuth } from '../interfaces/basic-auth';
 import { environment } from '../environments/environment';
-import { JwtHelperService } from '@auth0/angular-jwt';
 
 @Injectable({
   providedIn: 'root'
@@ -44,7 +45,7 @@ export class AuthService {
     });
   }
 
-  login(auth: BasicAuth): any {
+  login(auth?: BasicAuth): any {
     const localToken = localStorage.getItem('ipm-token');
     if (localToken) {
       const jwtHelper = new JwtHelperService();
@@ -63,22 +64,30 @@ export class AuthService {
       }
     }
 
+    if (auth) {
+      return this.loginAPICall(auth).pipe(
+        map(data => {
+          if ('token' in data) {
+            this.token = {
+              'x-access-token': data.token
+            };
+            localStorage.setItem('ipm-token', data.token);
+          }
 
-    return this.loginAPICall(auth).pipe(
-      map(data => {
-        if ('token' in data) {
-          this.token = {
-            'x-access-token': data.token
+          return {
+            ok: this.token !== null,
+            token: this.token,
+            fromLocal: false
           };
-          localStorage.setItem('ipm-token', data.token);
-        }
+        })
+      );
+    }
 
-        return {
-          ok: this.token !== null,
-          token: this.token
-        };
-      })
-    );
+    return of({
+      ok: false,
+      token: null,
+      fromLocal: false
+    });
   }
 
   logout(): Observable<any> {

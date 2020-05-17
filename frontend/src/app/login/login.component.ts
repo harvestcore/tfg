@@ -37,13 +37,14 @@ export class LoginComponent implements OnInit {
   onSubmit(data: BasicAuth) {
     this.authService.login(data).subscribe(token => {
       if (token.ok) {
-        this.userService.setCurrentUser(data.username);
-        const urlToRedirect = this.authService.getUrlToRedirect();
-        if (urlToRedirect) {
-          this.router.navigate([urlToRedirect]);
-        } else {
-          this.router.navigate(['/']);
-        }
+        this.userService.setCurrentUser(data.username).subscribe(() => {
+          const urlToRedirect = this.authService.getUrlToRedirect();
+          if (urlToRedirect) {
+            this.router.navigateByUrl(urlToRedirect);
+          } else {
+            this.router.navigateByUrl('/');
+          }
+        });
       }
     });
   }
