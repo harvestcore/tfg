@@ -32,7 +32,7 @@
       <span>Username</span>
     </button>
     <mat-menu #user="matMenu">
-      <button mat-menu-item>Logout</button>
+      <button (click)="handleLogout()" mat-menu-item>Logout</button>
     </mat-menu>
   </div>
 </mat-toolbar>

@@ -23,6 +23,7 @@ import { MachineService } from '../services/machine.service';
 import { PlaybookService } from '../services/playbook.service';
 import { ProvisionService } from '../services/provision.service';
 import { StatusService } from '../services/status.service';
+import { UrlService } from '../services/url.service';
 import { UserService } from '../services/user.service';
 
 
@@ -41,6 +42,7 @@ const providers = [
   PlaybookService,
   ProvisionService,
   StatusService,
+  UrlService,
   UserService
 ];
 

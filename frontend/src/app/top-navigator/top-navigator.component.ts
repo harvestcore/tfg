@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import {AuthService} from '../../services/auth.service';
+import {Router} from '@angular/router';
+import {UserService} from '../../services/user.service';
 
 @Component({
   selector: 'app-top-navigator',
@@ -7,9 +10,19 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TopNavigatorComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private router: Router,
+    private authService: AuthService,
+    private userService: UserService
+  ) { }
 
   ngOnInit(): void {
   }
 
+  handleLogout() {
+    this.authService.logout().subscribe(() => {
+      this.userService.clearCurrentUser();
+      this.router.navigateByUrl('/');
+    });
+  }
 }

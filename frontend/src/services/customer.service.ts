@@ -4,8 +4,9 @@ import {Observable} from 'rxjs';
 
 import {AuthService} from './auth.service';
 import {Customer} from '../interfaces/customer';
-import {environment} from '../environments/environment';
+
 import {Query} from '../interfaces/query';
+import {UrlService} from './url.service';
 
 @Injectable({
   providedIn: 'root'
@@ -16,11 +17,12 @@ export class CustomerService {
 
   constructor(
     private httpClient: HttpClient,
-    private authService: AuthService
+    private authService: AuthService,
+    private urlService: UrlService
   ) { }
 
   updateCustomer(domain: string, customerData: Customer): Observable<any> {
-    return this.httpClient.put(environment.backendUrl + this.path, {
+    return this.httpClient.put(this.urlService.getBackendUrl() + this.path, {
       domain,
       data: customerData
     }, {
@@ -30,7 +32,7 @@ export class CustomerService {
   }
 
   removeCustomer(domain: string): Observable<any> {
-    const url = environment.backendUrl + this.path;
+    const url = this.urlService.getBackendUrl() + this.path;
     return this.httpClient.request('delete', url, {
         body: {
           domain
@@ -41,7 +43,7 @@ export class CustomerService {
   }
 
   queryCustomer(query: Query): Observable<any> {
-    return this.httpClient.post(environment.backendUrl + this.path + '/query', {
+    return this.httpClient.post(this.urlService.getBackendUrl() + this.path + '/query', {
         ...query
       }, {
         headers: this.authService.getXAccessTokenHeader()
@@ -50,7 +52,7 @@ export class CustomerService {
   }
 
   addCustomer(customer: Customer): Observable<any> {
-    return this.httpClient.post(environment.backendUrl + this.path, {
+    return this.httpClient.post(this.urlService.getBackendUrl() + this.path, {
         domain: customer.domain,
         db_name: customer.db_name
       }, {

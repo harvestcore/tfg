@@ -3,9 +3,10 @@ import { Injectable } from '@angular/core';
 import {Observable} from 'rxjs';
 
 import {AuthService} from './auth.service';
-import {environment} from '../environments/environment';
+
 import {Host} from '../interfaces/host';
 import {Query} from '../interfaces/query';
+import {UrlService} from './url.service';
 
 @Injectable({
   providedIn: 'root'
@@ -15,11 +16,12 @@ export class HostService {
 
   constructor(
     private httpClient: HttpClient,
-    private authService: AuthService
+    private authService: AuthService,
+    private urlService: UrlService
   ) { }
 
   updateHost(name: string, hostData: Host): Observable<any> {
-    return this.httpClient.put(environment.backendUrl + this.path, {
+    return this.httpClient.put(this.urlService.getBackendUrl() + this.path, {
         name,
         data: hostData
       }, {
@@ -29,7 +31,7 @@ export class HostService {
   }
 
   removeHost(name: string): Observable<any> {
-    const url = environment.backendUrl + this.path;
+    const url = this.urlService.getBackendUrl() + this.path;
     return this.httpClient.request('delete', url, {
         body: {
           name
@@ -40,7 +42,7 @@ export class HostService {
   }
 
   getHost(name: string): Observable<any> {
-    const url = environment.backendUrl + this.path + '/' + name;
+    const url = this.urlService.getBackendUrl() + this.path + '/' + name;
     return this.httpClient.get(url, {
         headers: this.authService.getXAccessTokenHeader()
       }
@@ -48,7 +50,7 @@ export class HostService {
   }
 
   queryHost(query: Query): Observable<any> {
-    return this.httpClient.post(environment.backendUrl + this.path + '/query', {
+    return this.httpClient.post(this.urlService.getBackendUrl() + this.path + '/query', {
         ...query
       }, {
         headers: this.authService.getXAccessTokenHeader()
@@ -57,7 +59,7 @@ export class HostService {
   }
 
   addHost(host: Host): Observable<any> {
-    return this.httpClient.post(environment.backendUrl + this.path, {
+    return this.httpClient.post(this.urlService.getBackendUrl() + this.path, {
         ...host
       }, {
         headers: this.authService.getXAccessTokenHeader()

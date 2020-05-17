@@ -12,6 +12,7 @@ import {Router} from '@angular/router';
 })
 export class LoginComponent implements OnInit {
   loginForm: any;
+  client: string;
   username: string;
   password: string;
 
@@ -23,6 +24,7 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     this.loginForm = new FormGroup({
+      client: new FormControl(this.client, []),
       username: new FormControl(this.username, [
         Validators.required,
         Validators.minLength(1)
@@ -35,15 +37,10 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit(data: BasicAuth) {
-    this.authService.login(data).subscribe(token => {
-      if (token.ok) {
+    this.authService.login(data).subscribe(response => {
+      if (response.ok) {
         this.userService.setCurrentUser(data.username).subscribe(() => {
-          const urlToRedirect = this.authService.getUrlToRedirect();
-          if (urlToRedirect) {
-            this.router.navigateByUrl(urlToRedirect);
-          } else {
             this.router.navigateByUrl('/');
-          }
         });
       }
     });

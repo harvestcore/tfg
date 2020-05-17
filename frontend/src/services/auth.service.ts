@@ -8,45 +8,37 @@ import * as Cookies from 'js-cookie';
 
 import { AccessToken } from '../interfaces/access-token';
 import { BasicAuth } from '../interfaces/basic-auth';
-import { environment } from '../environments/environment';
+import { UrlService } from './url.service';
+import {Router} from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
   loginPath = '/api/login';
-  logoutPath = '/api/login';
+  logoutPath = '/api/logout';
 
   private token: AccessToken;
-  private urlToRedirect: string;
 
   constructor(
-    private httpClient: HttpClient
+    private router: Router,
+    private httpClient: HttpClient,
+    private urlService: UrlService
   ) { }
 
-  setUrlToRedirect(url: string) {
-    this.urlToRedirect = url;
-  }
-
-  getUrlToRedirect() {
-    return this.urlToRedirect;
-  }
-
-  getXAccessTokenHeader(): any {
-    return {
-      ...this.token
-    };
+  getXAccessTokenHeader(): AccessToken {
+    return this.token;
   }
 
   private loginAPICall(auth: BasicAuth): Observable<any> {
-    return this.httpClient.get(environment.backendUrl + this.loginPath, {
+    return this.httpClient.get(this.urlService.getBackendUrl() + this.loginPath, {
       headers: {
         Authorization: 'Basic ' + btoa(auth.username + ':' + auth.password)
       }
     });
   }
 
-  login(auth?: BasicAuth): any {
+  login(auth?: BasicAuth): Observable<any> {
     const localToken = Cookies.get('ipm-token');
     if (localToken) {
       const jwtHelper = new JwtHelperService();
@@ -66,12 +58,18 @@ export class AuthService {
     }
 
     if (auth) {
+      if (auth.client) {
+        this.urlService.setClient(auth.client);
+      }
+
       return this.loginAPICall(auth).pipe(
         map(data => {
           if ('token' in data) {
             this.token = {
               'x-access-token': data.token
             };
+
+            // Set token that lasts half a day
             Cookies.set('ipm-token', data.token, { expires: 0.5 });
           }
 
@@ -92,12 +90,10 @@ export class AuthService {
   }
 
   logout(): Observable<any> {
-    return this.httpClient.get(environment.backendUrl + this.logoutPath, {
+    return this.httpClient.get(this.urlService.getBackendUrl() + this.logoutPath, {
       headers: this.getXAccessTokenHeader()
-    });
-  }
-
-  getToken(): AccessToken {
-    return this.token;
+    }).pipe(map(() => {
+      Cookies.remove('ipm-token', { path: '' });
+    }));
   }
 }

@@ -3,7 +3,8 @@ import { Injectable } from '@angular/core';
 import {Observable} from 'rxjs';
 
 import {AuthService} from './auth.service';
-import {environment} from '../environments/environment';
+
+import {UrlService} from './url.service';
 
 @Injectable({
   providedIn: 'root'
@@ -13,11 +14,12 @@ export class ProvisionService {
 
   constructor(
     private httpClient: HttpClient,
-    private authService: AuthService
+    private authService: AuthService,
+    private urlService: UrlService
   ) { }
 
   runPlaybook(hosts: [string], playbook: string, passwords: any): Observable<any> {
-    return this.httpClient.post(environment.backendUrl + this.path, {
+    return this.httpClient.post(this.urlService.getBackendUrl() + this.path, {
         hosts,
         playbook,
         passwords

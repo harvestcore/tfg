@@ -4,9 +4,10 @@ import {Observable} from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import {AuthService} from './auth.service';
-import {environment} from '../environments/environment';
+
 import {User} from '../interfaces/user';
 import {Query} from '../interfaces/query';
+import {UrlService} from './url.service';
 
 @Injectable({
   providedIn: 'root'
@@ -18,13 +19,18 @@ export class UserService {
 
   constructor(
     private httpClient: HttpClient,
-    private authService: AuthService
+    private authService: AuthService,
+    private urlService: UrlService
   ) { }
 
   setCurrentUser(username: string) {
     return this.getUser(username).pipe(map(user => {
       this.currentUser = user;
     }));
+  }
+
+  clearCurrentUser() {
+    this.currentUser = null;
   }
 
   getCurrentUser(): User {
@@ -36,7 +42,7 @@ export class UserService {
   }
 
   updateUser(email: string, userData: User): Observable<any> {
-    return this.httpClient.put(environment.backendUrl + this.path, {
+    return this.httpClient.put(this.urlService.getBackendUrl() + this.path, {
         email,
         data: userData
       }, {
@@ -46,7 +52,7 @@ export class UserService {
   }
 
   removeUser(email: string): Observable<any> {
-    const url = environment.backendUrl + this.path;
+    const url = this.urlService.getBackendUrl() + this.path;
     return this.httpClient.request('delete', url, {
         body: {
           email
@@ -57,7 +63,7 @@ export class UserService {
   }
 
   getUser(username: string): Observable<any> {
-    const url = environment.backendUrl + this.path + '/' + username;
+    const url = this.urlService.getBackendUrl() + this.path + '/' + username;
     return this.httpClient.get(url, {
         headers: this.authService.getXAccessTokenHeader()
       }
@@ -65,7 +71,7 @@ export class UserService {
   }
 
   queryUser(query: Query): Observable<any> {
-    return this.httpClient.post(environment.backendUrl + this.path + '/query', {
+    return this.httpClient.post(this.urlService.getBackendUrl() + this.path + '/query', {
         ...query
       }, {
         headers: this.authService.getXAccessTokenHeader()
@@ -74,7 +80,7 @@ export class UserService {
   }
 
   addUser(user: User): Observable<any> {
-    return this.httpClient.post(environment.backendUrl + this.path, {
+    return this.httpClient.post(this.urlService.getBackendUrl() + this.path, {
         ...user
       }, {
         headers: this.authService.getXAccessTokenHeader()
