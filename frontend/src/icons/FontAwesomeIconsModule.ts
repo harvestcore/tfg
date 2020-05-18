@@ -12,7 +12,11 @@ import {
   faHeartBroken,
   faChevronDown,
   faFrown,
-  faExclamationTriangle
+  faExclamationTriangle,
+  faTimes,
+  faEye,
+  faEdit,
+  faTrash
 } from '@fortawesome/free-solid-svg-icons';
 
 import { faDocker } from '@fortawesome/free-brands-svg-icons';
@@ -29,7 +33,11 @@ const icons = [
   faChevronDown,
   faHeartBroken,
   faFrown,
-  faExclamationTriangle
+  faExclamationTriangle,
+  faTimes,
+  faEye,
+  faEdit,
+  faTrash
 ];
 
 @NgModule({

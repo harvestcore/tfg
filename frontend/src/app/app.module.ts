@@ -11,9 +11,13 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatInputModule } from '@angular/material/input';
 import { MatMenuModule } from '@angular/material/menu';
+import { MatPaginatorModule} from '@angular/material/paginator';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatSortModule } from '@angular/material/sort';
+import { MatTableModule} from '@angular/material/table';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { ReactiveFormsModule } from '@angular/forms';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
 import { AuthService } from '../services/auth.service';
@@ -27,12 +31,12 @@ import { StatusService } from '../services/status.service';
 import { UrlService } from '../services/url.service';
 import { UserService } from '../services/user.service';
 
-
 import { MainContainerComponent } from './main-container/main-container.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { TopNavigatorComponent } from './top-navigator/top-navigator.component';
 import { FontAwesomeIconsModule } from '../icons/FontAwesomeIconsModule';
 import { LoginComponent } from './login/login.component';
+import { IpmtableComponent } from './ipmtable/ipmtable.component';
 
 const providers = [
   AuthService,
@@ -53,6 +57,7 @@ export const imports = [
   BrowserModule,
   FlexLayoutModule,
   FontAwesomeIconsModule,
+  FormsModule,
   HttpClientModule,
   MatButtonModule,
   MatButtonToggleModule,
@@ -61,8 +66,12 @@ export const imports = [
   MatGridListModule,
   MatInputModule,
   MatMenuModule,
+  MatPaginatorModule,
   MatSlideToggleModule,
+  MatSortModule,
+  MatTableModule,
   MatToolbarModule,
+  MatTooltipModule,
   ReactiveFormsModule
 ];
 
@@ -73,10 +82,11 @@ export const imports = [
     NotFoundComponent,
     MainContainerComponent,
     TopNavigatorComponent,
+    IpmtableComponent,
   ],
-    imports: [
-        imports
-    ],
+  imports: [
+    imports
+  ],
   providers,
   bootstrap: [AppComponent]
 })
