@@ -1,8 +1,10 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import {Component, Input, OnInit, ViewChild} from '@angular/core';
 
+import { FormControl } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import {MatSelectChange} from '@angular/material/select';
 
 @Component({
   selector: 'app-ipmtable',
@@ -12,6 +14,8 @@ import { MatTableDataSource } from '@angular/material/table';
 export class IpmtableComponent implements OnInit {
   filter: string;
   dataSource: MatTableDataSource<any>;
+  displayedColumnsCopy: string[];
+  selectedDisplayedRows: FormControl;
 
   @Input() title: string;
   @Input() displayedColumns: string[];
@@ -24,16 +28,22 @@ export class IpmtableComponent implements OnInit {
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   @ViewChild(MatSort, {static: true}) sort: MatSort;
 
-  constructor() { }
+  constructor() {}
 
   ngOnInit(): void {
     if (this.detailCallback || this.editCallback || this.removeCallback) {
       this.displayedColumns.push('actions');
     }
 
+    this.displayedColumnsCopy = this.displayedColumns;
+    this.selectedDisplayedRows = new FormControl(this.displayedColumnsCopy);
     this.dataSource = new MatTableDataSource<any>(this.data);
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
+  }
+
+  handleColumnSelection(event: MatSelectChange): void {
+    this.displayedColumns = event.value;
   }
 
   clearFilter() {
@@ -49,5 +59,4 @@ export class IpmtableComponent implements OnInit {
       }
     }
   }
-
 }

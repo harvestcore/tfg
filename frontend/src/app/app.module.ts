@@ -12,6 +12,7 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { MatInputModule } from '@angular/material/input';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatPaginatorModule} from '@angular/material/paginator';
+import { MatSelectModule } from '@angular/material/select';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule} from '@angular/material/table';
@@ -67,6 +68,7 @@ export const imports = [
   MatInputModule,
   MatMenuModule,
   MatPaginatorModule,
+  MatSelectModule,
   MatSlideToggleModule,
   MatSortModule,
   MatTableModule,
