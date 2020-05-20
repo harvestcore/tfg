@@ -13,7 +13,7 @@ import { BasicAuth } from '../../interfaces/basic-auth';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
-  loginForm: any;
+  loginForm: FormGroup;
   client: string;
   username: string;
   password: string;

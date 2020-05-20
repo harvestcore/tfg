@@ -1,12 +1,13 @@
-import {HttpClient} from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import {Observable} from 'rxjs';
+import {Observable, of} from 'rxjs';
 
-import {AuthService} from './auth.service';
+import { AuthService } from './auth.service';
+import { UrlService } from './url.service';
 
-import {Machine} from '../interfaces/machine';
-import {Query} from '../interfaces/query';
-import {UrlService} from './url.service';
+import { Machine } from '../interfaces/machine';
+import { Query } from '../interfaces/query';
+import {catchError, map} from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -27,6 +28,16 @@ export class MachineService {
       }, {
         headers: this.authService.getXAccessTokenHeader()
       }
+    ).pipe(
+      map(data => {
+        return data;
+      }),
+      catchError(error => {
+        return of({
+          ok: false,
+          error
+        });
+      })
     );
   }
 

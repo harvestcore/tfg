@@ -7,6 +7,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { MatButtonModule } from '@angular/material/button';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatCardModule} from '@angular/material/card';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatDividerModule } from '@angular/material/divider';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatInputModule } from '@angular/material/input';
@@ -14,11 +16,14 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatPaginatorModule} from '@angular/material/paginator';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule} from '@angular/material/table';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
+import { FontAwesomeIconsModule } from '../icons/FontAwesomeIconsModule';
 
 import { AppComponent } from './app.component';
 import { AuthService } from '../services/auth.service';
@@ -32,12 +37,14 @@ import { StatusService } from '../services/status.service';
 import { UrlService } from '../services/url.service';
 import { UserService } from '../services/user.service';
 
+import { IpmtableComponent } from './ipmtable/ipmtable.component';
+import { LoginComponent } from './login/login.component';
+import { MachinesComponent } from './machines/machines.component';
 import { MainContainerComponent } from './main-container/main-container.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { TopNavigatorComponent } from './top-navigator/top-navigator.component';
-import { FontAwesomeIconsModule } from '../icons/FontAwesomeIconsModule';
-import { LoginComponent } from './login/login.component';
-import { IpmtableComponent } from './ipmtable/ipmtable.component';
+import { MachinesdialogComponent } from './machines/machinesdialog/machinesdialog.component';
+import { AreyousuredialogComponent } from './areyousuredialog/areyousuredialog.component';
 
 const providers = [
   AuthService,
@@ -63,6 +70,8 @@ export const imports = [
   MatButtonModule,
   MatButtonToggleModule,
   MatCardModule,
+  MatDialogModule,
+  MatDividerModule,
   MatFormFieldModule,
   MatGridListModule,
   MatInputModule,
@@ -70,6 +79,7 @@ export const imports = [
   MatPaginatorModule,
   MatSelectModule,
   MatSlideToggleModule,
+  MatSnackBarModule,
   MatSortModule,
   MatTableModule,
   MatToolbarModule,
@@ -80,11 +90,14 @@ export const imports = [
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent,
-    NotFoundComponent,
-    MainContainerComponent,
-    TopNavigatorComponent,
     IpmtableComponent,
+    LoginComponent,
+    MachinesComponent,
+    MainContainerComponent,
+    NotFoundComponent,
+    TopNavigatorComponent,
+    MachinesdialogComponent,
+    AreyousuredialogComponent,
   ],
   imports: [
     imports

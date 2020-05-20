@@ -1,4 +1,4 @@
-import {Component, Input, OnInit, ViewChild} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 
 import { FormControl } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
@@ -19,11 +19,13 @@ export class IpmtableComponent implements OnInit {
 
   @Input() title: string;
   @Input() displayedColumns: string[];
+  @Input() deselectedColumns: string[] = [];
   @Input() data: any;
 
-  @Input() detailCallback: any;
-  @Input() editCallback: any;
-  @Input() removeCallback: any;
+  @Input() actions: string[] = [];
+  @Output() detailCallback = new EventEmitter<any>();
+  @Output() editCallback = new EventEmitter<any>();
+  @Output() removeCallback = new EventEmitter<any>();
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   @ViewChild(MatSort, {static: true}) sort: MatSort;
@@ -32,15 +34,18 @@ export class IpmtableComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.detailCallback || this.editCallback || this.removeCallback) {
-      this.displayedColumns.push('actions');
+      if (!this.displayedColumns.includes('actions')) {
+        this.displayedColumns.push('actions');
+      }
     }
-
     this.displayedColumnsCopy = this.displayedColumns;
-    this.selectedDisplayedRows = new FormControl(this.displayedColumnsCopy);
+    const filteredColumns = this.displayedColumnsCopy.filter(col => !this.deselectedColumns.includes(col));
+    this.displayedColumns = filteredColumns;
+    this.selectedDisplayedRows = new FormControl(filteredColumns);
     this.dataSource = new MatTableDataSource<any>(this.data);
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
-  }
+}
 
   handleColumnSelection(event: MatSelectChange): void {
     this.displayedColumns = event.value;
@@ -51,6 +56,10 @@ export class IpmtableComponent implements OnInit {
     this.applyFilter();
   }
 
+  actionEnabled(action: string) {
+    return this.actions.includes(action);
+  }
+
   applyFilter() {
     if (this.filter || this.filter === '') {
       this.dataSource.filter = this.filter.trim().toLowerCase();
@@ -58,5 +67,17 @@ export class IpmtableComponent implements OnInit {
         this.dataSource.paginator.firstPage();
       }
     }
+  }
+
+  emitDetailCallback(data: any) {
+    this.detailCallback.emit(data);
+  }
+
+  emitRemoveCallback(data: any) {
+    this.removeCallback.emit(data);
+  }
+
+  emitEditCallback(data: any) {
+    this.editCallback.emit(data);
   }
 }

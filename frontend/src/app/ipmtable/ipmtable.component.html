@@ -23,13 +23,13 @@
     <td mat-cell *matCellDef="let row">
       <div *ngIf="tableKey !== 'actions'">{{ row[tableKey] || '-' }}</div>
       <div *ngIf="tableKey === 'actions'">
-        <button *ngIf="this.detailCallback" mat-icon-button matTooltip="Details" (click)="detailCallback(row)">
+        <button *ngIf="actionEnabled('D')" mat-icon-button matTooltip="Details" (click)="emitDetailCallback(row)">
           <fa-icon icon="eye"></fa-icon>
         </button>
-        <button *ngIf="this.editCallback" mat-icon-button matTooltip="Edit" (click)="editCallback(row)">
+        <button *ngIf="actionEnabled('E')" mat-icon-button matTooltip="Edit" (click)="emitEditCallback(row)">
           <fa-icon icon="edit"></fa-icon>
         </button>
-        <button *ngIf="this.removeCallback" mat-icon-button matTooltip="Remove" (click)="removeCallback(row)">
+        <button *ngIf="actionEnabled('R')" mat-icon-button matTooltip="Remove" (click)="emitRemoveCallback(row)">
           <fa-icon icon="trash"></fa-icon>
         </button>
       </div>
@@ -40,5 +40,5 @@
   <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 </table>
 
-<mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+<mat-paginator [pageSizeOptions]="[10, 25, 50, 100, 250]"></mat-paginator>
 
