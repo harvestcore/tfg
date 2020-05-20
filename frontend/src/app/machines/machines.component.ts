@@ -51,7 +51,7 @@ export class MachinesComponent implements OnInit {
   createMachine(machine: Machine) {
     this.machineService.addMachine(machine).subscribe(response => {
       if (response.ok) {
-        this.snack('The machine created successfully.');
+        this.snack('Machine created successfully.');
         this.fetchData();
       } else {
         this.snack('The machine could not be created.');
@@ -63,7 +63,7 @@ export class MachinesComponent implements OnInit {
     this.machineService.updateMachine(machine.name, machine).subscribe(response => {
       if (response.ok) {
         this.fetchData();
-        this.snack('The machine updated successfully.');
+        this.snack('Machine updated successfully.');
       } else {
         this.snack('The machine could not be updated.');
       }
@@ -75,9 +75,13 @@ export class MachinesComponent implements OnInit {
 
     ref.afterClosed().subscribe(result => {
       if (result) {
-        this.machineService.removeMachine(machine.name).subscribe(() => {
-          this.snack('The machine deleted successfully.');
-          this.fetchData();
+        this.machineService.removeMachine(machine.name).subscribe(response => {
+          if (response.ok) {
+            this.snack('Machine deleted successfully.');
+            this.fetchData();
+          } else {
+            this.snack('The machine could not be deleted.');
+          }
         });
       }
     });
