@@ -5,6 +5,7 @@ import { AuthService } from '../../services/auth.service';
 import { UserService } from '../../services/user.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
+import {CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
@@ -14,7 +15,8 @@ describe('LoginComponent', () => {
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule, RouterTestingModule],
       providers: [AuthService, UserService],
-      declarations: [ LoginComponent ]
+      declarations: [ LoginComponent ],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA]
     })
     .compileComponents();
   }));
