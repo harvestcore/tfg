@@ -32,7 +32,7 @@ class Login(Item):
             elif type(current_logged_in.data) is list:
                 for user in current_logged_in.data:
                     date_now = user['exp']
-                    if date_now < dt.datetime.utcnow().timestamp():
+                    if int(date_now) < round(dt.datetime.utcnow().timestamp()):
                         self.remove(
                             {'username': user['username']})
 
