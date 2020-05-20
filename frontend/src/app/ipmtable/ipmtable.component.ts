@@ -18,7 +18,7 @@ export class IpmtableComponent implements OnInit {
   selectedDisplayedRows: FormControl;
 
   @Input() title: string;
-  @Input() displayedColumns: string[];
+  @Input() displayedColumns: string[] = [];
   @Input() deselectedColumns: string[] = [];
   @Input() data: any;
 
