@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { IpmtableComponent } from './ipmtable.component';
+import {CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
 
 describe('IpmtableComponent', () => {
   let component: IpmtableComponent;
@@ -8,7 +9,8 @@ describe('IpmtableComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ IpmtableComponent ]
+      declarations: [ IpmtableComponent ],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA]
     })
     .compileComponents();
   }));

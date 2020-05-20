@@ -4,6 +4,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { AuthGuard } from './auth.guard';
 import { UserService } from '../services/user.service';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
 
 describe('AuthGuard', () => {
   let guard: AuthGuard;
@@ -11,7 +12,8 @@ describe('AuthGuard', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule, RouterTestingModule],
-      providers: [UserService, AuthGuard]
+      providers: [UserService, AuthGuard],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA]
     });
     guard = TestBed.inject(AuthGuard);
   });

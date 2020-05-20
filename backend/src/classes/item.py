@@ -28,9 +28,10 @@ class Item:
         parameters specified in the projection.
     """
     def find(self, criteria={}, projection={}):
+        _criteria = criteria if criteria else {'deleted': False}
         _projection = projection if projection else self.table_schema
         data = json.loads(
-            dumps(self.cursor().find(criteria, _projection)))
+            dumps(self.cursor().find(_criteria, _projection)))
         data_length = len(data)
         if data_length == 0:
             self.data = None
@@ -77,16 +78,15 @@ class Item:
             return False
 
     """
-        'Removes' an item by the given criteria. It doesn't removes the item,
-        only marks it as deleted. If 'force' is enabled it removes the item.
+        Completely removes an item by default. If force is false it marks the
+        item as removed.
     """
-    def remove(self, criteria={}, force=False):
-        info = {
-            'enabled': False,
-            'deleted': True
-        }
-
+    def remove(self, criteria={}, force=True):
         if not force:
+            info = {
+                'enabled': False,
+                'deleted': True
+            }
             return self.update(criteria=criteria, data=info)
 
         try:

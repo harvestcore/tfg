@@ -98,7 +98,7 @@ class UserTests(unittest.TestCase):
             })
         )
 
-        self.assertEqual(response.status_code, 500,
+        self.assertEqual(response.status_code, 422,
                          'Duplicated machine added')
 
     def create_machine_with_missing_info(self):
@@ -129,7 +129,7 @@ class UserTests(unittest.TestCase):
                 'network': '192.168.1.0'
             })
         )
-        self.assertEqual(response.status_code, 500,
+        self.assertEqual(response.status_code, 422,
                          'Machine with wrong ipv4 added')
 
         response = self.app.post(
@@ -144,7 +144,7 @@ class UserTests(unittest.TestCase):
                 'network': '192.168.1.0'
             })
         )
-        self.assertEqual(response.status_code, 500,
+        self.assertEqual(response.status_code, 422,
                          'Machine with wrong ipv6 added')
 
     def create_machine_with_wrong_mac(self):
@@ -161,7 +161,7 @@ class UserTests(unittest.TestCase):
                 'network': '192.168.1.0'
             })
         )
-        self.assertEqual(response.status_code, 500,
+        self.assertEqual(response.status_code, 422,
                          'Machine with wrong ipv4 added')
 
     def test_find_full_machine(self):
