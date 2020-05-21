@@ -44,7 +44,7 @@ export class MachinesComponent implements OnInit {
   fetchData(): void {
     this.data = null;
     this.machineService.queryMachine({query: {}, filter: {}}).subscribe(items => {
-      this.data = 'total' in items ? items.items : [items];
+      this.data = 'total' in items ? items.items : (!Object.keys(items).length ? [] : [items]);
     });
   }
 

@@ -10,7 +10,6 @@ import {Machine} from '../../../interfaces/machine';
 })
 export class MachinesdialogComponent implements OnInit {
   machineForm: FormGroup;
-  feedback = false;
 
   types: string[] = ['local', 'remote'];
   item: any = {};

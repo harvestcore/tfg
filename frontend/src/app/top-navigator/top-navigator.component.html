@@ -5,12 +5,7 @@
 
     <div fxLayout="row" fxFlexAlign="space-between center">
       <button routerLink="/deploy" mat-button>Deploy</button>
-      <button mat-button [matMenuTriggerFor]="provision">Provision</button>
-      <mat-menu #provision="matMenu">
-        <button routerLink="/provision" mat-menu-item>Run</button>
-        <button routerLink="/playbooks" mat-menu-item>Playbooks</button>
-        <button routerLink="/hosts" mat-menu-item>Hosts</button>
-      </mat-menu>
+      <button routerLink="/provision" mat-button>Provision</button>
       <button routerLink="/machines" mat-button>Machines</button>
       <button routerLink="/status" mat-button>Status</button>
     </div>

@@ -1,7 +1,4 @@
 <mat-card>
-  <mat-card-title>
-    <h3>Machines</h3>
-  </mat-card-title>
   <mat-card-content>
     <div class="addButton" fxLayoutGap="1em">
       <div fxFlex="1 1 auto"></div>
@@ -10,7 +7,7 @@
         fxLayoutAlign="center"
         mat-raised-button
         color="accent"
-        matTooltip="Create new machine"
+        matTooltip="Create new target host"
         (click)="openDialog()">
         <fa-icon icon="plus"></fa-icon>
       </button>
@@ -28,10 +25,9 @@
     <app-ipmtable
       *ngIf="data"
       [displayedColumns]="displayedColumns"
-      [deselectedColumns]="deselectedColumns"
       [actions]="['E', 'R']"
       (editCallback)="openDialog($event)"
-      (removeCallback)="removeMachine($event)"
+      (removeCallback)="removeHost($event)"
       [data]="data"
     >
     </app-ipmtable>

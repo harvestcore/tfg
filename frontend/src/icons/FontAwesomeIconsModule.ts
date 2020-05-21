@@ -18,7 +18,10 @@ import {
   faEdit,
   faTrash,
   faPlus,
-  faSync
+  faSync,
+  faPlay,
+  faSave,
+  faInfo
 } from '@fortawesome/free-solid-svg-icons';
 
 import { faDocker } from '@fortawesome/free-brands-svg-icons';
@@ -41,7 +44,10 @@ const icons = [
   faEdit,
   faTrash,
   faPlus,
-  faSync
+  faSync,
+  faPlay,
+  faSave,
+  faInfo
 ];
 
 @NgModule({

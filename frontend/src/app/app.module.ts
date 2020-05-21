@@ -9,21 +9,26 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatCardModule} from '@angular/material/card';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatDividerModule } from '@angular/material/divider';
+import { MatExpansionModule } from '@angular/material/expansion';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatInputModule } from '@angular/material/input';
+import { MatListModule } from '@angular/material/list';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatPaginatorModule} from '@angular/material/paginator';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule} from '@angular/material/table';
+import { MatTabsModule } from '@angular/material/tabs';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { FontAwesomeIconsModule } from '../icons/FontAwesomeIconsModule';
+import { MonacoEditorModule } from 'ngx-monaco-editor';
 
 import { AppComponent } from './app.component';
 import { AuthService } from '../services/auth.service';
@@ -37,14 +42,21 @@ import { StatusService } from '../services/status.service';
 import { UrlService } from '../services/url.service';
 import { UserService } from '../services/user.service';
 
+import { AreyousuredialogComponent } from './areyousuredialog/areyousuredialog.component';
+import { EditorComponent } from './provision/editor/editor.component';
+import { HostsComponent } from './provision/hosts/hosts.component';
+import { HostsdialogComponent } from './provision/hosts/hostsdialog/hostsdialog.component';
 import { IpmtableComponent } from './ipmtable/ipmtable.component';
 import { LoginComponent } from './login/login.component';
 import { MachinesComponent } from './machines/machines.component';
+import { MachinesdialogComponent } from './machines/machinesdialog/machinesdialog.component';
 import { MainContainerComponent } from './main-container/main-container.component';
 import { NotFoundComponent } from './not-found/not-found.component';
+import { PlaybooksComponent } from './provision/playbooks/playbooks.component';
+import { PlaybooksdialogComponent } from './provision/playbooksdialog/playbooksdialog.component';
+import { ProvisionComponent } from './provision/provision.component';
+import { RunplaybookdialogComponent } from './provision/runplaybookdialog/runplaybookdialog.component';
 import { TopNavigatorComponent } from './top-navigator/top-navigator.component';
-import { MachinesdialogComponent } from './machines/machinesdialog/machinesdialog.component';
-import { AreyousuredialogComponent } from './areyousuredialog/areyousuredialog.component';
 
 const providers = [
   AuthService,
@@ -72,32 +84,45 @@ export const imports = [
   MatCardModule,
   MatDialogModule,
   MatDividerModule,
+  MatExpansionModule,
   MatFormFieldModule,
   MatGridListModule,
   MatInputModule,
+  MatListModule,
   MatMenuModule,
   MatPaginatorModule,
+  MatProgressBarModule,
   MatSelectModule,
   MatSlideToggleModule,
   MatSnackBarModule,
   MatSortModule,
   MatTableModule,
+  MatTabsModule,
   MatToolbarModule,
   MatTooltipModule,
-  ReactiveFormsModule
+  ReactiveFormsModule,
+
+  MonacoEditorModule.forRoot()
 ];
 
 @NgModule({
   declarations: [
     AppComponent,
+    AreyousuredialogComponent,
     IpmtableComponent,
     LoginComponent,
     MachinesComponent,
+    MachinesdialogComponent,
     MainContainerComponent,
     NotFoundComponent,
+    ProvisionComponent,
     TopNavigatorComponent,
-    MachinesdialogComponent,
-    AreyousuredialogComponent,
+    HostsComponent,
+    PlaybooksComponent,
+    HostsdialogComponent,
+    EditorComponent,
+    PlaybooksdialogComponent,
+    RunplaybookdialogComponent,
   ],
   imports: [
     imports

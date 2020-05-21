@@ -1,3 +1,7 @@
+h4 {
+  margin: 0;
+}
+
 span {
   margin-left: 0.25em;
   font-weight: bold;
@@ -5,8 +9,4 @@ span {
 
 .addButton {
   margin-bottom: 1em;
-}
-
-h3 {
-  margin: 0;
 }

@@ -15,3 +15,7 @@ button {
 h3 {
   font-weight: bold;
 }
+
+textarea, mat-progress-bar {
+  margin-top: 1em
+}
