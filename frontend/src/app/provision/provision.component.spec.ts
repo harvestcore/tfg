@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
+import { imports } from '../app.module';
 import { ProvisionComponent } from './provision.component';
-import {imports} from '../app.module';
 
 describe('ProvisionComponent', () => {
   let component: ProvisionComponent;

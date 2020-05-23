@@ -1,12 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-import {AreyousuredialogComponent} from '../../areyousuredialog/areyousuredialog.component';
-import {MatDialog} from '@angular/material/dialog';
-import {MatSnackBar} from '@angular/material/snack-bar';
-import {HostService} from '../../../services/host.service';
-import {PlaybooksdialogComponent} from '../playbooksdialog/playbooksdialog.component';
+import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
+
 import * as YAML2JSON from 'js-yaml';
 import * as JSON2YAML from 'json2yaml';
-import {PlaybookService} from '../../../services/playbook.service';
+
+import { AreyousuredialogComponent } from '../../areyousuredialog/areyousuredialog.component';
+import { PlaybooksdialogComponent } from '../playbooksdialog/playbooksdialog.component';
+
+import { PlaybookService } from '../../../services/playbook.service';
+import { HostService } from '../../../services/host.service';
+
 import provisionManager from '../../../managers/provisionManager';
 
 @Component({

@@ -1,11 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import {MatSnackBar} from '@angular/material/snack-bar';
-import {MatDialog} from '@angular/material/dialog';
-import {AreyousuredialogComponent} from '../../areyousuredialog/areyousuredialog.component';
-import {Playbook} from '../../../interfaces/playbook';
-import {PlaybookService} from '../../../services/playbook.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatDialog } from '@angular/material/dialog';
+
+import { Playbook } from '../../../interfaces/playbook';
+
+import { AreyousuredialogComponent } from '../../areyousuredialog/areyousuredialog.component';
+import { RunplaybookdialogComponent } from '../runplaybookdialog/runplaybookdialog.component';
+
+import { PlaybookService } from '../../../services/playbook.service';
 import provisionManager from '../../../managers/provisionManager';
-import {RunplaybookdialogComponent} from '../runplaybookdialog/runplaybookdialog.component';
 
 @Component({
   selector: 'app-playbooks',

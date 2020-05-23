@@ -2,9 +2,9 @@ import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angula
 
 import { FormControl } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
+import { MatSelectChange } from '@angular/material/select';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import {MatSelectChange} from '@angular/material/select';
 
 @Component({
   selector: 'app-ipmtable',

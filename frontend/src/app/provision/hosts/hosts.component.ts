@@ -1,11 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import {Host} from '../../../interfaces/host';
-import {MatSnackBar} from '@angular/material/snack-bar';
-import {MatDialog} from '@angular/material/dialog';
-import {HostService} from '../../../services/host.service';
-import {AreyousuredialogComponent} from '../../areyousuredialog/areyousuredialog.component';
-import {HostsdialogComponent} from './hostsdialog/hostsdialog.component';
-import {MachineService} from '../../../services/machine.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatDialog } from '@angular/material/dialog';
+
+import { Host } from '../../../interfaces/host';
+
+import { AreyousuredialogComponent } from '../../areyousuredialog/areyousuredialog.component';
+import { HostsdialogComponent } from './hostsdialog/hostsdialog.component';
+
+import { HostService } from '../../../services/host.service';
+import { MachineService } from '../../../services/machine.service';
 
 @Component({
   selector: 'app-hosts',

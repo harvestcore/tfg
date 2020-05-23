@@ -1,6 +1,7 @@
-import {Component, Inject, OnInit} from '@angular/core';
-import {MAT_DIALOG_DATA} from '@angular/material/dialog';
-import {ProvisionService} from '../../../services/provision.service';
+import { Component, Inject, OnInit } from '@angular/core';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+
+import { ProvisionService } from '../../../services/provision.service';
 
 @Component({
   selector: 'app-runplaybookdialog',

@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import {MachineService} from '../../services/machine.service';
-import {Machine} from '../../interfaces/machine';
-import {MatDialog} from '@angular/material/dialog';
-import {MachinesdialogComponent} from './machinesdialog/machinesdialog.component';
-import {AreyousuredialogComponent} from '../areyousuredialog/areyousuredialog.component';
-import {MatSnackBar} from '@angular/material/snack-bar';
+import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
+
+import { AreyousuredialogComponent } from '../areyousuredialog/areyousuredialog.component';
+import { Machine } from '../../interfaces/machine';
+import { MachinesdialogComponent } from './machinesdialog/machinesdialog.component';
+import { MachineService } from '../../services/machine.service';
 
 @Component({
   selector: 'app-machines',
