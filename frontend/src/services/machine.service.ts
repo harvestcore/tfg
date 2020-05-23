@@ -88,6 +88,19 @@ export class MachineService {
       }, {
         headers: this.authService.getXAccessTokenHeader()
       }
+    ).pipe(
+      map(data => {
+        return {
+          ok: true,
+          data
+        };
+      }),
+      catchError(error => {
+        return of({
+          ok: false,
+          error
+        });
+      })
     );
   }
 }

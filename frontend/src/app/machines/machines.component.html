@@ -1,6 +1,6 @@
 <mat-card>
   <mat-card-title>
-    <h2>Machines</h2>
+    <h3>Machines</h3>
   </mat-card-title>
   <mat-card-content>
     <div class="addButton" fxLayoutGap="1em">
@@ -10,15 +10,16 @@
         fxLayoutAlign="center"
         mat-raised-button
         color="accent"
+        matTooltip="Create new machine"
         (click)="openDialog()">
         <fa-icon icon="plus"></fa-icon>
-        <span>Add</span>
       </button>
       <button
         fxLayout="column"
         fxLayoutAlign="center"
         mat-raised-button
         color="accent"
+        matTooltip="Refresh data"
         (click)="fetchData()">
         <fa-icon icon="sync"></fa-icon>
       </button>

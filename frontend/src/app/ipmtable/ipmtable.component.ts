@@ -2,9 +2,9 @@ import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angula
 
 import { FormControl } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
+import { MatSelectChange } from '@angular/material/select';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import {MatSelectChange} from '@angular/material/select';
 
 @Component({
   selector: 'app-ipmtable',
@@ -23,6 +23,7 @@ export class IpmtableComponent implements OnInit {
   @Input() data: any;
 
   @Input() actions: string[] = [];
+  @Output() playCallback = new EventEmitter<any>();
   @Output() detailCallback = new EventEmitter<any>();
   @Output() editCallback = new EventEmitter<any>();
   @Output() removeCallback = new EventEmitter<any>();
@@ -67,6 +68,10 @@ export class IpmtableComponent implements OnInit {
         this.dataSource.paginator.firstPage();
       }
     }
+  }
+
+  emitPlayCallback(data: any) {
+    this.playCallback.emit(data);
   }
 
   emitDetailCallback(data: any) {

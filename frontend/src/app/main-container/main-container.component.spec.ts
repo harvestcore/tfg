@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 import { MainContainerComponent } from './main-container.component';
-import {CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
 
 describe('MainContainerComponent', () => {
   let component: MainContainerComponent;

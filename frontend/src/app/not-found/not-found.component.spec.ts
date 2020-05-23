@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 import { NotFoundComponent } from './not-found.component';
-import {CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
 
 describe('NotFoundComponent', () => {
   let component: NotFoundComponent;

@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import {MachineService} from '../../services/machine.service';
-import {Machine} from '../../interfaces/machine';
-import {MatDialog} from '@angular/material/dialog';
-import {MachinesdialogComponent} from './machinesdialog/machinesdialog.component';
-import {AreyousuredialogComponent} from '../areyousuredialog/areyousuredialog.component';
-import {MatSnackBar} from '@angular/material/snack-bar';
+import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
+
+import { AreyousuredialogComponent } from '../areyousuredialog/areyousuredialog.component';
+import { Machine } from '../../interfaces/machine';
+import { MachinesdialogComponent } from './machinesdialog/machinesdialog.component';
+import { MachineService } from '../../services/machine.service';
 
 @Component({
   selector: 'app-machines',
@@ -44,7 +45,7 @@ export class MachinesComponent implements OnInit {
   fetchData(): void {
     this.data = null;
     this.machineService.queryMachine({query: {}, filter: {}}).subscribe(items => {
-      this.data = 'total' in items ? items.items : [items];
+      this.data = 'total' in items ? items.items : (!Object.keys(items).length ? [] : [items]);
     });
   }
 

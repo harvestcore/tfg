@@ -3,7 +3,6 @@ import { Injectable } from '@angular/core';
 import {Observable} from 'rxjs';
 
 import {AuthService} from './auth.service';
-import { environment } from '../environments/environment';
 import {UrlService} from './url.service';
 
 @Injectable({

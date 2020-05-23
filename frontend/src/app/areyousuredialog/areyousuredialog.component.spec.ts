@@ -1,9 +1,9 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 
-import { AreyousuredialogComponent } from './areyousuredialog.component';
 import { imports } from '../app.module.js';
-import {MAT_DIALOG_DATA} from '@angular/material/dialog';
-import {CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
+import { AreyousuredialogComponent } from './areyousuredialog.component';
 
 describe('AreyousuredialogComponent', () => {
   let component: AreyousuredialogComponent;

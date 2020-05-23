@@ -1,7 +1,6 @@
-import {Component, Inject, OnInit} from '@angular/core';
-import {MAT_DIALOG_DATA} from '@angular/material/dialog';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {Machine} from '../../../interfaces/machine';
+import { Component, Inject, OnInit } from '@angular/core';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-machinesdialog',
@@ -10,7 +9,6 @@ import {Machine} from '../../../interfaces/machine';
 })
 export class MachinesdialogComponent implements OnInit {
   machineForm: FormGroup;
-  feedback = false;
 
   types: string[] = ['local', 'remote'];
   item: any = {};
