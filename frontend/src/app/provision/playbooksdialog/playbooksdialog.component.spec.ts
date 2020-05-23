@@ -1,6 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { PlaybooksdialogComponent } from './playbooksdialog.component';
+import {MAT_DIALOG_DATA} from '@angular/material/dialog';
+import {imports} from '../../app.module';
 
 describe('PlaybooksdialogComponent', () => {
   let component: PlaybooksdialogComponent;
@@ -8,7 +10,14 @@ describe('PlaybooksdialogComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ PlaybooksdialogComponent ]
+      imports,
+      declarations: [ PlaybooksdialogComponent ],
+      providers: [
+        {
+          provide: MAT_DIALOG_DATA,
+          useValue: {}
+        }
+      ]
     })
     .compileComponents();
   }));

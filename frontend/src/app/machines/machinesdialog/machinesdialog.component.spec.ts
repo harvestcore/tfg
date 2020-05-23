@@ -15,8 +15,7 @@ describe('MachinesdialogComponent', () => {
       declarations: [ MachinesdialogComponent ],
       providers: [
         {
-          provide: MAT_DIALOG_DATA,
-          useValue: {}
+          provide: MAT_DIALOG_DATA, useValue: {}
         }
       ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA]

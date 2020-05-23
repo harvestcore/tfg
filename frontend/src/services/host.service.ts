@@ -65,7 +65,7 @@ export class HostService {
           error
         });
       })
-    );;
+    );
   }
 
   getHost(name: string): Observable<any> {
@@ -104,6 +104,6 @@ export class HostService {
           error
         });
       })
-    );;
+    );
   }
 }

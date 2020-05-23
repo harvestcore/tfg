@@ -19,16 +19,18 @@ export class RunplaybookdialogComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.data.item) {
-      const hosts = this.data.item.playbook[0].hosts;
-      const name = this.data.item.name;
-      this.provisionService.runPlaybook(hosts, name, {}).subscribe(result => {
-        if (result.ok) {
-          this.text = result.data.result;
-        } else {
-          this.text = 'There was an error while trying to run the playbook';
-        }
-        this.running = false;
-      });
+      if (this.data.item.playbook) {
+        const hosts = this.data.item.playbook[0].hosts;
+        const name = this.data.item.name;
+        this.provisionService.runPlaybook(hosts, name, {}).subscribe(result => {
+          if (result.ok) {
+            this.text = result.data.result;
+          } else {
+            this.text = 'There was an error while trying to run the playbook';
+          }
+          this.running = false;
+        });
+      }
     }
   }
 }

@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import {AreyousuredialogComponent} from '../../areyousuredialog/areyousuredialog.component';
 import {MatDialog} from '@angular/material/dialog';
 import {MatSnackBar} from '@angular/material/snack-bar';
-import {Playbook} from '../../../interfaces/playbook';
 import {HostService} from '../../../services/host.service';
 import {PlaybooksdialogComponent} from '../playbooksdialog/playbooksdialog.component';
 import * as YAML2JSON from 'js-yaml';

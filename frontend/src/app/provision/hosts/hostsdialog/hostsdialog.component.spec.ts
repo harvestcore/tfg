@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { HostsdialogComponent } from './hostsdialog.component';
+import {MAT_DIALOG_DATA} from '@angular/material/dialog';
 
 describe('HostsdialogComponent', () => {
   let component: HostsdialogComponent;
@@ -8,7 +9,13 @@ describe('HostsdialogComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ HostsdialogComponent ]
+      declarations: [ HostsdialogComponent ],
+      providers: [
+        {
+          provide: MAT_DIALOG_DATA,
+          useValue: {}
+        }
+      ]
     })
     .compileComponents();
   }));
