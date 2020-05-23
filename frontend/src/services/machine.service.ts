@@ -101,6 +101,6 @@ export class MachineService {
           error
         });
       })
-    );;
+    );
   }
 }
