@@ -64,10 +64,10 @@ export class PlaybooksComponent implements OnInit {
       if (result) {
         this.playbookService.removePlaybook(playbook.name).subscribe(response => {
           if (response.ok) {
-            this.snack('Playbook deleted successfully.');
+            this.snack('Playbook deleted successfully');
             this.fetchData();
           } else {
-            this.snack('The playbook could not be deleted.');
+            this.snack('The playbook could not be deleted');
           }
         });
       }

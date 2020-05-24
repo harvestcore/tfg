@@ -1,12 +1,13 @@
 import {HttpClient} from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import {Observable} from 'rxjs';
+import {Observable, of} from 'rxjs';
 
 import {AuthService} from './auth.service';
 import {ContainerOperation, SingleContainerOperation} from '../interfaces/container';
 
 import {ImageOperation, SingleImageOperation} from '../interfaces/image';
 import {UrlService} from './url.service';
+import {catchError, map} from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -26,6 +27,19 @@ export class DeployService {
       }, {
         headers: this.authService.getXAccessTokenHeader()
       }
+    ).pipe(
+      map(data => {
+        return {
+          ok: true,
+          data
+        };
+      }),
+      catchError(error => {
+        return of({
+          ok: false,
+          error
+        });
+      })
     );
   }
 
@@ -35,6 +49,19 @@ export class DeployService {
       }, {
         headers: this.authService.getXAccessTokenHeader()
       }
+    ).pipe(
+      map(data => {
+        return {
+          ok: true,
+          data
+        };
+      }),
+      catchError(error => {
+        return of({
+          ok: false,
+          error
+        });
+      })
     );
   }
 
@@ -44,6 +71,19 @@ export class DeployService {
       }, {
         headers: this.authService.getXAccessTokenHeader()
       }
+    ).pipe(
+      map(data => {
+        return {
+          ok: true,
+          data
+        };
+      }),
+      catchError(error => {
+        return of({
+          ok: false,
+          error
+        });
+      })
     );
   }
 
@@ -53,6 +93,19 @@ export class DeployService {
       }, {
         headers: this.authService.getXAccessTokenHeader()
       }
+    ).pipe(
+      map(data => {
+        return {
+          ok: true,
+          data
+        };
+      }),
+      catchError(error => {
+        return of({
+          ok: false,
+          error
+        });
+      })
     );
   }
 }

@@ -3,7 +3,7 @@ mat-dialog-actions {
   margin-bottom: 0.1em;
 }
 
-mat-dialog-content, span  {
+mat-dialog-content, span {
   font-size: 13px;
 }
 
@@ -14,4 +14,12 @@ button {
 
 h3 {
   font-weight: bold;
+}
+
+.table {
+  margin: 1em 0;
+}
+
+.expansion-content {
+  margin: 1em 0;
 }

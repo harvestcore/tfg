@@ -57,6 +57,12 @@ import { PlaybooksdialogComponent } from './provision/playbooksdialog/playbooksd
 import { ProvisionComponent } from './provision/provision.component';
 import { RunplaybookdialogComponent } from './provision/runplaybookdialog/runplaybookdialog.component';
 import { TopNavigatorComponent } from './top-navigator/top-navigator.component';
+import { DeployComponent } from './deploy/deploy.component';
+import { ContainersComponent } from './deploy/containers/containers.component';
+import { ManageDialogComponent } from './deploy/containers/manage-dialog/manage-dialog.component';
+import { ImagesComponent } from './deploy/images/images.component';
+import { ManageImageDialogComponent } from './deploy/images/manage-image-dialog/manage-image-dialog.component';
+import { ListImageDialogComponent } from './deploy/images/list-image-dialog/list-image-dialog.component';
 
 const providers = [
   AuthService,
@@ -110,6 +116,7 @@ export const imports = [
     AppComponent,
     AreyousuredialogComponent,
     IpmtableComponent,
+    DeployComponent,
     LoginComponent,
     MachinesComponent,
     MachinesdialogComponent,
@@ -123,6 +130,11 @@ export const imports = [
     EditorComponent,
     PlaybooksdialogComponent,
     RunplaybookdialogComponent,
+    ContainersComponent,
+    ManageDialogComponent,
+    ImagesComponent,
+    ManageImageDialogComponent,
+    ListImageDialogComponent,
   ],
   imports: [
     imports
