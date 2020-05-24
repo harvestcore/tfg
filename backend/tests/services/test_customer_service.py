@@ -41,7 +41,6 @@ class CustomerServiceTests(unittest.TestCase):
         }
 
         Customer().remove(customer)
-        print(self.headers)
 
         response = self.app.post(
             self.path,

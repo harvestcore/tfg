@@ -96,6 +96,9 @@ class DeployService(Resource):
         if payload['operation'] == 'get':
             data = validate_or_abort(ImageGetProps, data)
 
+        if payload['operation'] == 'list':
+            data = validate_or_abort(ImageListProps, data)
+
         if payload['operation'] == 'pull':
             data = validate_or_abort(ImagePullProps, data)
 
@@ -107,16 +110,17 @@ class DeployService(Resource):
             data = validate_or_abort(ImageSearchProps, data)
 
         if payload['operation'] == 'prune':
-            data = {}
+            data = validate_or_abort(ImagePruneProps, data)
 
         response = DockerEngine().run_image_operation(
             operation=payload['operation'],
             data=data
         )
 
-        if not response and payload['operation'] == 'remove':
-            response = True
-
         schema = ImageObj if response else None
+
+        if response and payload['operation'] == 'search':
+            schema = DockerHubImage
+
         return parse_data(schema, response) if response \
             else response_by_success(False)
