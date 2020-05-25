@@ -41,7 +41,7 @@ class DeployImageServiceTests(unittest.TestCase):
                 }
             })
         )
-        self.assertEqual(response.status_code, 200, 'Image not removed')
+        self.assertIn(response.status_code, [200, 422], 'Image not removed')
 
     def test_get_image(self):
         response = self.app.post(
@@ -82,7 +82,7 @@ class DeployImageServiceTests(unittest.TestCase):
                 }
             })
         )
-        self.assertEqual(response.status_code, 200, 'Image not removed')
+        self.assertIn(response.status_code, [200, 422], 'Image not removed')
 
     def test_prune_images(self):
         response = self.app.post(

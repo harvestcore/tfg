@@ -21,12 +21,14 @@ export class IpmtableComponent implements OnInit {
   @Input() displayedColumns: string[] = [];
   @Input() deselectedColumns: string[] = [];
   @Input() data: any;
-
   @Input() actions: string[] = [];
   @Output() playCallback = new EventEmitter<any>();
   @Output() detailCallback = new EventEmitter<any>();
   @Output() editCallback = new EventEmitter<any>();
   @Output() removeCallback = new EventEmitter<any>();
+
+  @Input() customActionData: any = {};
+  @Output() customActionCallback = new EventEmitter<any>();
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   @ViewChild(MatSort, {static: true}) sort: MatSort;
@@ -84,5 +86,9 @@ export class IpmtableComponent implements OnInit {
 
   emitEditCallback(data: any) {
     this.editCallback.emit(data);
+  }
+
+  emitCustomActionCallback(data: any) {
+    this.customActionCallback.emit(data);
   }
 }

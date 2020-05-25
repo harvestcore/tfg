@@ -9,7 +9,7 @@
       </mat-form-field>
 
       <mat-form-field fxFlex="40">
-        <mat-label for="hosts">Hosts</mat-label>
+        <mat-label for="hosts">Host groups</mat-label>
         <mat-select id="hosts" formControlName="hosts" (selectionChange)="selectHost($event)" matTooltip="Select IPv4 directions">
           <mat-option *ngFor="let item of availableHosts" [value]="item">{{ item.name + ' (' + item.ips.length + ')' }}</mat-option>
         </mat-select>
@@ -19,7 +19,7 @@
 
   <mat-divider></mat-divider>
 
-  <h4>Selected hosts: {{selectedHosts.length}}</h4>
+  <h4>Selected host groups: {{selectedHosts.length}}</h4>
   <mat-list>
     <mat-list-item *ngFor="let item of selectedHosts">
       <span>{{ item.name + ' (' + item.ips.length + ')' }}</span>

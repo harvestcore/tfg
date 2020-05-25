@@ -1,8 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
-import { TopNavigatorComponent } from './top-navigator.component';
 import { imports } from '../app.module.js';
-import {CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
+import { TopNavigatorComponent } from './top-navigator.component';
 
 describe('TopNavigatorComponent', () => {
   let component: TopNavigatorComponent;

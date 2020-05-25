@@ -1,5 +1,7 @@
 from marshmallow import fields, Schema, validate
 
+from src.schemas.image_operation import ImageObj
+
 
 class BaseSingleContainerProps(Schema):
     container_id = fields.Str(required=True)
@@ -23,6 +25,7 @@ class ContainerObj(Schema):
     name = fields.Str()
     short_id = fields.Str()
     status = fields.Str()
+    image = fields.Nested(ImageObj)
 
 
 class ContainersRunProps(Schema):

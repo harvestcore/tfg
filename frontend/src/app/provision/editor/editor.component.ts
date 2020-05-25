@@ -78,9 +78,9 @@ export class EditorComponent implements OnInit {
               playbook
             }).subscribe(res => {
               if (res.ok) {
-                this.snack('Playbook created successfully.');
+                this.snack('Playbook created successfully');
               } else {
-                this.snack('The playbook could not be created.');
+                this.snack('The playbook could not be created');
               }
             });
           }
@@ -94,9 +94,9 @@ export class EditorComponent implements OnInit {
               playbook
             }).subscribe(res => {
               if (res.ok) {
-                this.snack('Playbook updated successfully.');
+                this.snack('Playbook updated successfully');
               } else {
-                this.snack('The playbook could not be updated.');
+                this.snack('The playbook could not be updated');
               }
             });
           }

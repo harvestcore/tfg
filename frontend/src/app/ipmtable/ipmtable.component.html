@@ -23,16 +23,19 @@
     <td mat-cell *matCellDef="let row">
       <div *ngIf="tableKey !== 'actions'">{{ row[tableKey] || '-' }}</div>
       <div *ngIf="tableKey === 'actions'">
-        <button *ngIf="actionEnabled('P')" mat-icon-button matTooltip="Execute" (click)="emitPlayCallback(row)">
+        <button *ngIf="actionEnabled('P')" mat-icon-button matTooltip="Execute" color="accent" (click)="emitPlayCallback(row)">
           <fa-icon icon="play"></fa-icon>
         </button>
-        <button *ngIf="actionEnabled('D')" mat-icon-button matTooltip="Details" (click)="emitDetailCallback(row)">
+        <button *ngIf="actionEnabled('D')" mat-icon-button matTooltip="Details" color="primary" (click)="emitDetailCallback(row)">
           <fa-icon icon="eye"></fa-icon>
         </button>
-        <button *ngIf="actionEnabled('E')" mat-icon-button matTooltip="Edit" (click)="emitEditCallback(row)">
+        <button *ngIf="actionEnabled('C')" mat-icon-button matTooltip="{{customActionData.tooltip}}" color="primary" (click)="emitCustomActionCallback(row)">
+          <fa-icon icon="{{customActionData.icon}}"></fa-icon>
+        </button>
+        <button *ngIf="actionEnabled('E')" mat-icon-button matTooltip="Edit" color="primary" (click)="emitEditCallback(row)">
           <fa-icon icon="edit"></fa-icon>
         </button>
-        <button *ngIf="actionEnabled('R')" mat-icon-button matTooltip="Remove" (click)="emitRemoveCallback(row)">
+        <button *ngIf="actionEnabled('R')" mat-icon-button matTooltip="Remove" color="warn" (click)="emitRemoveCallback(row)">
           <fa-icon icon="trash"></fa-icon>
         </button>
       </div>

@@ -44,10 +44,10 @@ export class HostsComponent implements OnInit {
   createHost(machine: Host) {
     this.hostService.addHost(machine).subscribe(response => {
       if (response.ok) {
-        this.snack('Host created successfully.');
+        this.snack('Host created successfully');
         this.fetchData();
       } else {
-        this.snack('The host could not be created.');
+        this.snack('The host could not be created');
       }
     });
   }
@@ -56,9 +56,9 @@ export class HostsComponent implements OnInit {
     this.hostService.updateHost(host.name, host).subscribe(response => {
       if (response.ok) {
         this.fetchData();
-        this.snack('Host updated successfully.');
+        this.snack('Host updated successfully');
       } else {
-        this.snack('The host could not be updated.');
+        this.snack('The host could not be updated');
       }
     });
   }
@@ -70,10 +70,10 @@ export class HostsComponent implements OnInit {
       if (result) {
         this.hostService.removeHost(machine.name).subscribe(response => {
           if (response.ok) {
-            this.snack('Host deleted successfully.');
+            this.snack('Host deleted successfully');
             this.fetchData();
           } else {
-            this.snack('The host could not be deleted.');
+            this.snack('The host could not be deleted');
           }
         });
       }
@@ -86,7 +86,7 @@ export class HostsComponent implements OnInit {
       const ref = this.dialog.open(HostsdialogComponent, {
         width: '600px',
         data: {
-          title: item ? 'Edit host' : 'Add new target host',
+          title: item ? 'Edit host' : 'Add new host group',
           buttonLabel: item ? 'Save' : 'Create',
           item: item ? item : null,
           availableIps: items.filter(machine => !!machine.ipv4)
