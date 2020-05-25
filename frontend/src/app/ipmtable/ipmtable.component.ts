@@ -22,7 +22,6 @@ export class IpmtableComponent implements OnInit {
   @Input() deselectedColumns: string[] = [];
   @Input() data: any;
   @Input() actions: string[] = [];
-  @Input() enableStatus = false;
   @Output() playCallback = new EventEmitter<any>();
   @Output() detailCallback = new EventEmitter<any>();
   @Output() editCallback = new EventEmitter<any>();
