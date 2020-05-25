@@ -1,9 +1,10 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {DeployService} from '../../../../services/deploy.service';
-import {MatSnackBar} from '@angular/material/snack-bar';
-import {Container} from '../../../../interfaces/container';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
+
+import { Container } from '../../../../interfaces/container';
+import { DeployService } from '../../../../services/deploy.service';
 
 @Component({
   selector: 'app-manage-dialog',
@@ -26,10 +27,10 @@ export class ManageDialogComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.item = this.data.item;
+    this.item = (this.data && this.data.item) || {};
 
     this.containerForm = new FormGroup({
-      name: new FormControl(this.data.item.name, [
+      name: new FormControl(this.item.name, [
         Validators.required,
         Validators.minLength(2)
       ])
@@ -47,7 +48,7 @@ export class ManageDialogComponent implements OnInit {
     this.deployService.containerOperation({
       operation: 'get',
       data: {
-        container_id: this.data.item.id
+        container_id: this.item.id
       }
     }).subscribe(response => {
       if (response.ok) {

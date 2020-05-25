@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatDialog } from '@angular/material/dialog';
 
-import {MatSnackBar} from '@angular/material/snack-bar';
-import {MatDialog} from '@angular/material/dialog';
-import {DeployService} from '../../../services/deploy.service';
-import {AreyousuredialogComponent} from '../../areyousuredialog/areyousuredialog.component';
-import {ManageImageDialogComponent} from './manage-image-dialog/manage-image-dialog.component';
-import {ListImageDialogComponent} from './list-image-dialog/list-image-dialog.component';
+import { AreyousuredialogComponent } from '../../areyousuredialog/areyousuredialog.component';
+import { ListImageDialogComponent } from './list-image-dialog/list-image-dialog.component';
+import { ManageImageDialogComponent } from './manage-image-dialog/manage-image-dialog.component';
+import { DeployService } from '../../../services/deploy.service';
 
 @Component({
   selector: 'app-images',
@@ -25,7 +25,6 @@ export class ImagesComponent implements OnInit {
     tooltip: 'Manage image'
   };
 
-
   data: any[];
 
   constructor(
@@ -42,8 +41,10 @@ export class ImagesComponent implements OnInit {
   fetchData(): void {
     this.data = null;
     this.deployService.imageOperation({ operation: 'list', data: { all: true } }).subscribe(response => {
-      const data = response.data && 'total' in response.data ? response.data.items : (!Object.keys(response.data).length ? [] : [response.data]);
-      this.data = data.filter(item => item.tags.length > 0);
+      if (response.data) {
+        const data = 'total' in response.data ? response.data.items : (!Object.keys(response.data).length ? [] : [response.data]);
+        this.data = data.filter(item => item.tags.length > 0);
+      }
     });
   }
 
@@ -114,18 +115,20 @@ export class ImagesComponent implements OnInit {
   }
 
   runImage(item: any) {
-    this.deployService.containerOperation({
-      operation: 'run',
-      data: {
-        image: item.tags[0]
-      }
-    }).subscribe(response => {
-      if (response.ok) {
-        this.snack('Image running');
-      } else {
-        this.snack('There was an error while trying to run the image');
-      }
-    });
+    if (item) {
+      this.deployService.containerOperation({
+        operation: 'run',
+        data: {
+          image: item && item.tags[0]
+        }
+      }).subscribe(response => {
+        if (response.ok) {
+          this.snack('Image running');
+        } else {
+          this.snack('There was an error while trying to run the image');
+        }
+      });
+    }
   }
 
   snack(msg: string) {

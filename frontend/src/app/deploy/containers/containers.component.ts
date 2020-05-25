@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatDialog } from '@angular/material/dialog';
 
-import {MatSnackBar} from '@angular/material/snack-bar';
-import {MatDialog} from '@angular/material/dialog';
-import {DeployService} from '../../../services/deploy.service';
-import {AreyousuredialogComponent} from '../../areyousuredialog/areyousuredialog.component';
-import {ManageDialogComponent} from './manage-dialog/manage-dialog.component';
 import deployManager from '../../../managers/deployManager';
+import { AreyousuredialogComponent } from '../../areyousuredialog/areyousuredialog.component';
+import { ManageDialogComponent } from './manage-dialog/manage-dialog.component';
+import { DeployService } from '../../../services/deploy.service';
 
 @Component({
   selector: 'app-containers',
@@ -44,8 +44,10 @@ export class ContainersComponent implements OnInit {
       if (!response || !response.data) {
         this.data = [];
       } else {
-        this.data = response.data && 'total' in response.data ? response.data.items : (!Object.keys(response.data).length ? [] : [response.data]);
-        this.data.forEach(container => container.image_tag = container.image.tags[0] || '-');
+        if (response.data) {
+          this.data = 'total' in response.data ? response.data.items : (!Object.keys(response.data).length ? [] : [response.data]);
+          this.data.forEach(container => container.image_tag = container.image.tags[0] || '-');
+        }
       }
     });
   }

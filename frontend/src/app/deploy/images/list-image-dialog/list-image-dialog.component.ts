@@ -1,9 +1,10 @@
-import {Component, Inject, OnInit} from '@angular/core';
-import {MAT_DIALOG_DATA} from '@angular/material/dialog';
-import {DeployService} from '../../../../services/deploy.service';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {MatSnackBar} from '@angular/material/snack-bar';
-import {DockerHubImage} from '../../../../interfaces/dockerhubimage';
+import { Component, Inject, OnInit } from '@angular/core';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
+
+import { DockerHubImage } from '../../../../interfaces/dockerhubimage';
+import { DeployService } from '../../../../services/deploy.service';
 
 @Component({
   selector: 'app-list-image-dialog',

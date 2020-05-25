@@ -1,9 +1,9 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
-
 import { MatSnackBar } from '@angular/material/snack-bar';
+
+import { Image } from '../../../../interfaces/image';
 import { DeployService } from '../../../../services/deploy.service';
-import {Image} from '../../../../interfaces/image';
 
 @Component({
   selector: 'app-manage-image-dialog',
@@ -37,18 +37,20 @@ export class ManageImageDialogComponent implements OnInit {
 
   history() {
     this.fetchingHistory = true;
-    this.deployService.singleImageOperation({
-      name: this.item.tags.length && this.item.tags[0],
-      operation: 'history',
-      data: {}
-    }).subscribe(response => {
-      if (response.ok) {
-        this.historyText = response.data.data;
-      } else {
-        this.snack('The history could not be fetched');
-      }
-      this.fetchingHistory = false;
-    });
+    if (this.item) {
+      this.deployService.singleImageOperation({
+        name: this.item.tags.length && this.item.tags[0],
+        operation: 'history',
+        data: {}
+      }).subscribe(response => {
+        if (response.ok) {
+          this.historyText = response.data.data;
+        } else {
+          this.snack('The history could not be fetched');
+        }
+        this.fetchingHistory = false;
+      });
+    }
   }
 
   reload() {
