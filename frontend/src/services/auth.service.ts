@@ -50,6 +50,8 @@ export class AuthService {
           'x-access-token': localToken
         };
 
+        this.loginStateChangedNotifier.emit();
+
         return of({
           ok: true,
           token: this.token,
@@ -70,6 +72,8 @@ export class AuthService {
             // Set token that lasts half a day
             Cookies.set('ipm-token', data.token, { expires: 0.5 });
           }
+
+          this.loginStateChangedNotifier.emit();
 
           return {
             ok: true,
@@ -100,6 +104,7 @@ export class AuthService {
       headers: this.getXAccessTokenHeader()
     }).pipe(map(() => {
       Cookies.remove('ipm-token', { path: '' });
+      this.loginStateChangedNotifier.emit({logout: true});
     }));
   }
 }

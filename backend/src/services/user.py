@@ -1,6 +1,7 @@
 from flask import request
 from flask_restplus import Resource, Namespace
 
+from src.classes.login import Login
 from src.classes.user import User
 from src.services.login import token_required
 from src.schemas.common import QuerySchema
@@ -38,6 +39,14 @@ class UserServiceGetWithQuery(Resource):
 
 @api.route('')
 class UserService(Resource):
+    @staticmethod
+    @token_required
+    def get():
+        username = Login().get_username(request.headers['x-access-token'])
+        user = User().find({'username': username})
+        return parse_data(UserSchema, user.data) if user and user.data \
+            else response_by_success(False)
+
     @staticmethod
     @token_required
     def post():
