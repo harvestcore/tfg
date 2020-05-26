@@ -24,7 +24,8 @@ import {
   faInfo,
   faCheck,
   faSearch,
-  faDownload
+  faDownload,
+  faCircle
 } from '@fortawesome/free-solid-svg-icons';
 
 import { faDocker } from '@fortawesome/free-brands-svg-icons';
@@ -53,7 +54,8 @@ const icons = [
   faInfo,
   faCheck,
   faSearch,
-  faDownload
+  faDownload,
+  faCircle
 ];
 
 @NgModule({
