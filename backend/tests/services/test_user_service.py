@@ -3,6 +3,7 @@ import unittest
 
 from src.app import app
 from src.classes.customer import Customer
+from src.classes.user import User
 from src.classes.mongo_engine import MongoEngine
 
 from tests.utils.login import TestingLogin
@@ -18,6 +19,24 @@ class UserServiceTests(unittest.TestCase):
     def setUp(self):
         Customer().set_customer(TESTING_DATABASE)
         MongoEngine().drop_collection(TESTING_DATABASE, 'users')
+
+    def test_get_current_user(self):
+        User().insert({
+            'type': 'admin',
+            'first_name': 'admin',
+            'last_name': 'admin',
+            'username': 'admin',
+            'email': 'admin@domain.com',
+            'password': 'admin'
+        })
+
+        response = self.app.get(
+            self.path,
+            headers=self.headers
+        )
+        self.assertEqual(response.status_code, 200, 'User not found')
+        self.assertEqual(json.loads(response.data)['username'], 'admin',
+                         'Wrong current user')
 
     def test_create_user(self):
         user = {

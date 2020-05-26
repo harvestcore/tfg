@@ -10,7 +10,7 @@ import { BasicAuth } from '../../interfaces/basic-auth';
 export class AuthMockService {
 
   private token: AccessToken;
-  @Output() loginStateChangedNotifier: EventEmitter<any> = new EventEmitter();
+  loginStateChangedNotifier = new EventEmitter();
 
   constructor() { }
 

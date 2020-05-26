@@ -24,7 +24,7 @@
 
     <button mat-button [matMenuTriggerFor]="user" fxLayout="row" fxFlexAlign="space-between center">
       <fa-icon icon="user"></fa-icon>
-      <span>Username</span>
+      <span>{{currentUser.username + ' (' + currentUser.first_name + ' ' + currentUser.last_name + ')'}}</span>
     </button>
     <mat-menu #user="matMenu">
       <button (click)="handleLogout()" mat-menu-item>Logout</button>

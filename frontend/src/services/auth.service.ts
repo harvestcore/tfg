@@ -19,7 +19,7 @@ export class AuthService {
   logoutPath = '/api/logout';
 
   private token: AccessToken;
-  @Output() loginStateChangedNotifier: EventEmitter<any> = new EventEmitter();
+  loginStateChangedNotifier = new EventEmitter();
 
   constructor(
     private router: Router,
@@ -50,8 +50,10 @@ export class AuthService {
           'x-access-token': localToken
         };
 
+        this.loginStateChangedNotifier.emit();
+
         return of({
-          ok: !!this.token,
+          ok: true,
           token: this.token,
           fromLocal: true
         });
@@ -71,8 +73,10 @@ export class AuthService {
             Cookies.set('ipm-token', data.token, { expires: 0.5 });
           }
 
+          this.loginStateChangedNotifier.emit();
+
           return {
-            ok: !!this.token,
+            ok: true,
             token: this.token,
             fromLocal: false
           };
@@ -100,6 +104,7 @@ export class AuthService {
       headers: this.getXAccessTokenHeader()
     }).pipe(map(() => {
       Cookies.remove('ipm-token', { path: '' });
+      this.loginStateChangedNotifier.emit({logout: true});
     }));
   }
 }

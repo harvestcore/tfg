@@ -49,7 +49,6 @@ export class LoginComponent implements OnInit {
       if (response.ok) {
         this.userService.setCurrentUser(data.username).subscribe(() => {
             this.showFeedback = false;
-            this.authService.loginStateChangedNotifier.emit();
             this.router.navigateByUrl('/');
         });
       } else {
