@@ -19,6 +19,15 @@ class UserServiceTests(unittest.TestCase):
         Customer().set_customer(TESTING_DATABASE)
         MongoEngine().drop_collection(TESTING_DATABASE, 'users')
 
+    def test_get_current_user(self):
+        response = self.app.get(
+            self.path,
+            headers=self.headers
+        )
+        self.assertEqual(response.status_code, 200, 'User not found')
+        self.assertEqual(json.loads(response.data)['username'], 'admin',
+                         'Wrong current user')
+
     def test_create_user(self):
         user = {
             'type': 'admin',
