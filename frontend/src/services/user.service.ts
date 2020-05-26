@@ -1,7 +1,7 @@
 import {HttpClient} from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import {Observable} from 'rxjs';
-import { map } from 'rxjs/operators';
+import {EventEmitter, Injectable} from '@angular/core';
+import {Observable, of} from 'rxjs';
+import {catchError, map} from 'rxjs/operators';
 
 import {AuthService} from './auth.service';
 
@@ -16,12 +16,21 @@ export class UserService {
   private path = '/api/user';
 
   private currentUser: User;
+  userStateChangedNotifier = new EventEmitter();
 
   constructor(
     private httpClient: HttpClient,
     private authService: AuthService,
     private urlService: UrlService
-  ) { }
+  ) {
+    this.authService.loginStateChangedNotifier.subscribe(data => {
+      if (data && data.logout) {
+        this.currentUser = null;
+      } else {
+        this.fetchAndSetCurrentUser();
+      }
+    });
+  }
 
   setCurrentUser(username: string) {
     return this.getUser(username).pipe(map(user => {
@@ -39,6 +48,18 @@ export class UserService {
 
   userLoggedIn(): boolean {
     return !!this.currentUser;
+  }
+
+  fetchAndSetCurrentUser(): void {
+    this.httpClient.get(this.urlService.getBackendUrl() + this.path, {
+        headers: this.authService.getXAccessTokenHeader()
+      }
+    ).subscribe(result => {
+      if (result) {
+        this.currentUser = result as User;
+        this.userStateChangedNotifier.emit();
+      }
+    });
   }
 
   updateUser(email: string, userData: User): Observable<any> {

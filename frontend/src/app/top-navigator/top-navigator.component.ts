@@ -19,7 +19,8 @@ export class TopNavigatorComponent implements OnInit {
     private authService: AuthService,
     private userService: UserService
   ) {
-    this.authService.loginStateChangedNotifier.subscribe(() => {
+    this.userService.userStateChangedNotifier.subscribe(() => {
+      this.currentUser = null;
       this.updateToolbarData();
     });
   }
