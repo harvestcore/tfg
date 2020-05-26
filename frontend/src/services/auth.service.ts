@@ -19,7 +19,7 @@ export class AuthService {
   logoutPath = '/api/logout';
 
   private token: AccessToken;
-  @Output() loginStateChangedNotifier: EventEmitter<any> = new EventEmitter();
+  loginStateChangedNotifier = new EventEmitter();
 
   constructor(
     private router: Router,
@@ -51,7 +51,7 @@ export class AuthService {
         };
 
         return of({
-          ok: !!this.token,
+          ok: true,
           token: this.token,
           fromLocal: true
         });
@@ -72,7 +72,7 @@ export class AuthService {
           }
 
           return {
-            ok: !!this.token,
+            ok: true,
             token: this.token,
             fromLocal: false
           };

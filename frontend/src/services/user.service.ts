@@ -1,7 +1,7 @@
 import {HttpClient} from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import {Observable} from 'rxjs';
-import { map } from 'rxjs/operators';
+import {Observable, of} from 'rxjs';
+import {catchError, map} from 'rxjs/operators';
 
 import {AuthService} from './auth.service';
 
@@ -48,6 +48,19 @@ export class UserService {
       }, {
         headers: this.authService.getXAccessTokenHeader()
       }
+    ).pipe(
+      map(data => {
+        return {
+          ok: true,
+          data
+        };
+      }),
+      catchError(error => {
+        return of({
+          ok: false,
+          error
+        });
+      })
     );
   }
 
@@ -59,6 +72,19 @@ export class UserService {
         },
         headers: this.authService.getXAccessTokenHeader()
       }
+    ).pipe(
+      map(data => {
+        return {
+          ok: true,
+          data
+        };
+      }),
+      catchError(error => {
+        return of({
+          ok: false,
+          error
+        });
+      })
     );
   }
 
@@ -76,6 +102,19 @@ export class UserService {
       }, {
         headers: this.authService.getXAccessTokenHeader()
       }
+    ).pipe(
+      map(data => {
+        return {
+          ok: true,
+          data
+        };
+      }),
+      catchError(error => {
+        return of({
+          ok: false,
+          error
+        });
+      })
     );
   }
 
@@ -85,6 +124,19 @@ export class UserService {
       }, {
         headers: this.authService.getXAccessTokenHeader()
       }
+    ).pipe(
+      map(data => {
+        return {
+          ok: true,
+          data
+        };
+      }),
+      catchError(error => {
+        return of({
+          ok: false,
+          error
+        });
+      })
     );
   }
 }
