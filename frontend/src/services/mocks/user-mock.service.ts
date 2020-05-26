@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {EventEmitter, Injectable} from '@angular/core';
 import { Observable, of } from 'rxjs';
 
 import { User } from '../../interfaces/user';
@@ -9,6 +9,7 @@ import { Query } from '../../interfaces/query';
 })
 export class UserMockService {
   private currentUser: User;
+  userStateChangedNotifier = new EventEmitter();
 
   constructor() { }
 
