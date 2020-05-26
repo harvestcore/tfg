@@ -31,12 +31,18 @@ export class AuthGuard implements CanActivate {
       canAccess = true;
     } else {
       if (this.userService.userLoggedIn()) {
-        canAccess = true;
+        const user = this.userService.getCurrentUser();
+        if (url === 'admin') {
+          canAccess = user.type === 'admin';
+        } else {
+          canAccess = true;
+        }
       } else {
         this.authService.login().subscribe(response => {
-          canAccess = response.ok;
-          if (!canAccess) {
+          if (!response.ok) {
             this.router.navigateByUrl('/login');
+          } else {
+            canAccess = true;
           }
         });
       }

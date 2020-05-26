@@ -81,25 +81,27 @@ export class MainContainerComponent implements OnInit {
         memory: Math.round(this.docker.info.MemTotal / 1073741824)
       };
 
-      this.customerService.queryCustomer({query: {}, filter: {}}).subscribe(res => {
-        if (res.ok) {
-          mongo = {
-            ...mongo,
-            customers: res.data.total
-          };
+      if (!this.mongo || (this.mongo && this.mongo.databases.length !== mongo.databases.length)) {
+        this.customerService.queryCustomer({query: {}, filter: {}}).subscribe(res => {
+          if (res.ok) {
+            mongo = {
+              ...mongo,
+              customers: res.data.total
+            };
 
-          this.userService.queryUser({query: {}, filter: {}}).subscribe(r => {
-            if (r.ok) {
-              mongo = {
-                ...mongo,
-                users: r.data.total
-              };
-              this.mongo = null;
-              this.mongo = mongo;
-            }
-          });
-        }
-      });
+            this.userService.queryUser({query: {}, filter: {}}).subscribe(r => {
+              if (r.ok) {
+                mongo = {
+                  ...mongo,
+                  users: r.data.total
+                };
+                this.mongo = null;
+                this.mongo = mongo;
+              }
+            });
+          }
+        });
+      }
     }
   }
 

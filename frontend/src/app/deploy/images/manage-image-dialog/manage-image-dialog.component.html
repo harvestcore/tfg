@@ -29,7 +29,7 @@
         <mat-progress-bar *ngIf="fetchingHistory" mode="indeterminate" color="accent"></mat-progress-bar>
         <textarea
           matInput
-          disabled
+          readonly
           [value]="historyText"
           cdkTextareaAutosize
           #autosize="cdkTextareaAutosize"

@@ -33,9 +33,9 @@ export class TopNavigatorComponent implements OnInit {
   }
 
   handleLogout() {
+    this.currentUser = null;
     this.authService.logout().subscribe(data => {
       this.userService.clearCurrentUser();
-      this.authService.loginStateChangedNotifier.emit();
       this.router.navigateByUrl('/login');
     });
   }

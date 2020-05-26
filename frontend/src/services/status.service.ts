@@ -1,40 +1,46 @@
-import {HttpClient} from '@angular/common/http';
-import {EventEmitter, Injectable} from '@angular/core';
-import {interval, Observable, of} from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { EventEmitter, Injectable } from '@angular/core';
+import { interval, Observable, of } from 'rxjs';
+import { catchError, map, distinctUntilChanged } from 'rxjs/operators';
 
-import {AuthService} from './auth.service';
-import {UrlService} from './url.service';
-import {catchError, flatMap, map} from 'rxjs/operators';
+import { AuthService } from './auth.service';
+import { UrlService } from './url.service';
+import { UserService } from './user.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class StatusService {
-  heartbeatInterval = 10000;
+  heartbeatInterval = 60000;
   notifier = new EventEmitter();
   path = '/api/status';
 
   constructor(
     private httpClient: HttpClient,
     private authService: AuthService,
-    private urlService: UrlService
+    private urlService: UrlService,
+    private userService: UserService
   ) {
     interval(this.heartbeatInterval).pipe(
-      flatMap(() => this.getStatus())
-    ).subscribe(response => {
-      this.getStatus().subscribe(hbResponse => {
-        this.notifier.emit({
-          online: true,
-          ...hbResponse
+      distinctUntilChanged()
+    ).subscribe(() => {
+        this.getStatus().subscribe(hbResponse => {
+          if (this.userService.userLoggedIn()) {
+            this.notifier.emit({
+              online: true,
+              ...hbResponse
+            });
+          }
         });
+      },
+      error => {
+        if (this.userService.userLoggedIn()) {
+          this.notifier.emit({
+            online: false,
+            error
+          });
+        }
       });
-    },
-    error => {
-      this.notifier.emit({
-        online: false,
-        error
-      });
-    });
   }
 
   getStatus(): Observable<any> {

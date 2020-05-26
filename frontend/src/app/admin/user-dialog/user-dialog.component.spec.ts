@@ -2,17 +2,17 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 
-import { imports } from '../../app.module.js';
-import { MachinesdialogComponent } from './machinesdialog.component';
+import { imports } from '../../app.module';
+import { UserDialogComponent } from './user-dialog.component';
 
-describe('MachinesdialogComponent', () => {
-  let component: MachinesdialogComponent;
-  let fixture: ComponentFixture<MachinesdialogComponent>;
+describe('UserDialogComponent', () => {
+  let component: UserDialogComponent;
+  let fixture: ComponentFixture<UserDialogComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports,
-      declarations: [ MachinesdialogComponent ],
+      declarations: [ UserDialogComponent ],
       providers: [
         { provide: MAT_DIALOG_DATA, useValue: {} }
       ],
@@ -22,7 +22,7 @@ describe('MachinesdialogComponent', () => {
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(MachinesdialogComponent);
+    fixture = TestBed.createComponent(UserDialogComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
