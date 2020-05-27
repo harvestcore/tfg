@@ -19,6 +19,14 @@ class UserServiceTests(unittest.TestCase):
     def setUp(self):
         Customer().set_customer(TESTING_DATABASE)
         MongoEngine().drop_collection(TESTING_DATABASE, 'users')
+        User().insert({
+            'type': 'admin',
+            'first_name': 'admin',
+            'last_name': 'admin',
+            'username': 'admin',
+            'email': 'admin@domain.com',
+            'password': 'admin'
+        })
 
     def test_get_current_user(self):
         User().insert({
