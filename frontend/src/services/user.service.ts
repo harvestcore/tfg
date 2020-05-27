@@ -56,8 +56,10 @@ export class UserService {
       }
     ).subscribe(result => {
       if (result) {
-        this.currentUser = result as User;
-        this.userStateChangedNotifier.emit();
+        if (result !== this.currentUser) {
+          this.currentUser = result as User;
+          this.userStateChangedNotifier.emit();
+        }
       }
     });
   }

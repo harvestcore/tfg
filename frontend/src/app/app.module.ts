@@ -63,6 +63,8 @@ import { ManageDialogComponent } from './deploy/containers/manage-dialog/manage-
 import { ImagesComponent } from './deploy/images/images.component';
 import { ManageImageDialogComponent } from './deploy/images/manage-image-dialog/manage-image-dialog.component';
 import { ListImageDialogComponent } from './deploy/images/list-image-dialog/list-image-dialog.component';
+import { AdminComponent } from './admin/admin.component';
+import { UserDialogComponent } from './admin/user-dialog/user-dialog.component';
 
 const providers = [
   AuthService,
@@ -135,6 +137,8 @@ export const imports = [
     ImagesComponent,
     ManageImageDialogComponent,
     ListImageDialogComponent,
+    AdminComponent,
+    UserDialogComponent,
   ],
   imports: [
     imports

@@ -13,13 +13,16 @@
   <div fxFlex="1 1 auto"></div>
 
   <div *ngIf="currentUser" fxLayout="row" fxLayoutGap="0.5em">
-    <button *ngIf="currentUser.type === 'admin'" mat-button [matMenuTriggerFor]="admin" fxLayout="row" fxFlexAlign="space-between center">
+    <button
+      mat-button
+      *ngIf="currentUser.type === 'admin'"
+      fxLayout="row"
+      fxFlexAlign="space-between center"
+      routerLink="/admin"
+    >
       <fa-icon icon="user-shield"></fa-icon>
       <span>Admin</span>
     </button>
-    <mat-menu #admin="matMenu">
-      <button routerLink="/users" mat-menu-item>User management</button>
-    </mat-menu>
 
     <button mat-button [matMenuTriggerFor]="user" fxLayout="row" fxFlexAlign="space-between center">
       <fa-icon icon="user"></fa-icon>

@@ -101,7 +101,7 @@
         <mat-progress-bar *ngIf="fetchingLogs" mode="indeterminate" color="accent"></mat-progress-bar>
         <textarea
           matInput
-          disabled
+          readonly
           [value]="logsText"
           cdkTextareaAutosize
           #autosize="cdkTextareaAutosize"
