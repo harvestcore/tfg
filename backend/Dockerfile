@@ -14,3 +14,5 @@ RUN apk update && \
 
 RUN make build
 CMD ["make", "run"]
+
+HEALTHCHECK CMD curl --fail http://localhost:5000/api/healthcheck || exit 1

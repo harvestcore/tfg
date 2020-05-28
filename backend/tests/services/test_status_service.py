@@ -49,3 +49,13 @@ class StatusServiceTests(unittest.TestCase):
                              key + ' missing in docker status')
             self.assertEqual(key in data['mongo'], True,
                              key + ' missing in mongo status')
+
+    def test_healthcheck(self):
+        Customer().set_customer(TESTING_DATABASE)
+        response = self.app.get('/api/healthcheck')
+
+        self.assertEqual(response.status_code, 200, 'Healthcheck not found')
+
+        data = json.loads(response.data)
+
+        self.assertEqual('ok' in data, True, 'Missing healthcheck')

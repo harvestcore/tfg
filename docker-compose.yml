@@ -8,6 +8,11 @@ services:
     environment:
       - MONGO_HOSTNAME=mongo
       - BASE_DATABASE=ipm_root
+    healthcheck:
+      test: curl --fail -s http:localhost:5000/api/healthcheck || exit 1
+      interval: 30s
+      timeout: 10s
+      retries: 3
     depends_on:
       - mongo
 
