@@ -5,7 +5,9 @@ import {environment} from '../environments/environment';
   providedIn: 'root'
 })
 export class UrlService {
-
+  private browserWindow = window || {};
+  // tslint:disable-next-line:no-string-literal
+  private env = this.browserWindow['__env'] || null;
   private client: string;
 
   constructor() { }
@@ -17,14 +19,24 @@ export class UrlService {
   getBackendUrl(): string {
     let protocol = 'http://';
     let client = '';
-    if (environment.httpsEnabled) {
-      protocol = 'https://';
+    let backendUrl: string;
+
+    if (this.env && this.env.backendUrl) {
+      backendUrl = this.env.backendUrl;
+      if (this.env.httpsEnabled) {
+        protocol = 'https://';
+      }
+    } else {
+      backendUrl = environment.backendUrl;
+      if (environment.httpsEnabled) {
+        protocol = 'https://';
+      }
     }
 
     if (this.client) {
       client = this.client + '.';
     }
 
-    return protocol + client + environment.backendUrl;
+    return protocol + client + backendUrl;
   }
 }
