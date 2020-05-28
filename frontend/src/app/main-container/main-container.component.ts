@@ -12,6 +12,8 @@ import {UserService} from '../../services/user.service';
 export class MainContainerComponent implements OnInit {
   nonUsefulDbs = ['system', 'config', 'local', 'admin'];
 
+  dockerDisabled = false;
+  dockerMalfunctioning = false;
   dockerIconStyle = {
     color: 'red'
   };
@@ -48,9 +50,11 @@ export class MainContainerComponent implements OnInit {
   updateStatus() {
     this.statusService.getStatus().subscribe(response => {
       if (response.ok) {
+        this.statusService.executeCallbacks(response);
         this.updateStatusByHeartbeat(response);
       }
     });
+
   }
 
   updateStatusByHeartbeat(heartbeat: any) {
@@ -61,8 +65,30 @@ export class MainContainerComponent implements OnInit {
       const serverUp = heartbeat.online || heartbeat.ok;
 
       this.docker = null;
-      this.docker = heartbeat.data.docker;
-      this.dockerIconStyle.color = (serverUp && heartbeat.data.docker.is_up) ? 'green' : 'red';
+      if ('status' in heartbeat.data.docker) {
+        if (heartbeat.data.docker.disabled) {
+          this.dockerDisabled = true;
+          this.dockerIconStyle.color = 'red';
+        } else {
+          this.dockerMalfunctioning = true;
+          this.dockerIconStyle.color = 'orange';
+        }
+      } else {
+        this.dockerDisabled = false;
+        this.dockerMalfunctioning = false;
+        this.docker = heartbeat.data.docker;
+        this.dockerIconStyle.color = (serverUp && heartbeat.data.docker.is_up) ? 'green' : 'red';
+
+        this.server = null;
+        this.serverIconStyle.color = (serverUp && heartbeat.data.docker.is_up) ? 'green' : 'red';
+        this.server = {
+          name: this.docker.info.Name,
+          os: this.docker.info.OperatingSystem,
+          time: this.docker.info.SystemTime,
+          cores: this.docker.info.NCPU,
+          memory: Math.round(this.docker.info.MemTotal / 1073741824)
+        };
+      }
 
       let mongo = heartbeat.data.mongo;
       mongo = {
@@ -70,16 +96,6 @@ export class MainContainerComponent implements OnInit {
         databases: mongo.data_usage.filter(item => !this.nonUsefulDbs.includes(item.name))
       };
       this.mongoIconStyle.color = (serverUp && heartbeat.data.mongo.is_up) ? 'green' : 'red';
-
-      this.server = null;
-      this.serverIconStyle.color = (serverUp && heartbeat.data.docker.is_up) ? 'green' : 'red';
-      this.server = {
-        name: this.docker.info.Name,
-        os: this.docker.info.OperatingSystem,
-        time: this.docker.info.SystemTime,
-        cores: this.docker.info.NCPU,
-        memory: Math.round(this.docker.info.MemTotal / 1073741824)
-      };
 
       if (!this.mongo || (this.mongo && this.mongo.databases.length !== mongo.databases.length)) {
         this.customerService.queryCustomer({query: {}, filter: {}}).subscribe(res => {

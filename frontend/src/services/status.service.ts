@@ -11,7 +11,7 @@ import { UserService } from './user.service';
   providedIn: 'root'
 })
 export class StatusService {
-  heartbeatInterval = 60000;
+  heartbeatInterval = 30000;
   notifier = new EventEmitter();
   path = '/api/status';
 
@@ -41,6 +41,10 @@ export class StatusService {
           });
         }
       });
+  }
+
+  executeCallbacks(data?: any) {
+      this.notifier.emit(data);
   }
 
   getStatus(): Observable<any> {

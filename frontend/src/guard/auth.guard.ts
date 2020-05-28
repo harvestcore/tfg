@@ -3,16 +3,26 @@ import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from
 
 import { AuthService } from '../services/auth.service';
 import { UserService } from '../services/user.service';
+import {StatusService} from '../services/status.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthGuard implements CanActivate {
+  dockerDisabled = false;
+
   constructor(
     private userService: UserService,
     private authService: AuthService,
+    private statusService: StatusService,
     private router: Router
-  ) {}
+  ) {
+    this.statusService.notifier.subscribe(response => {
+      if (response.ok) {
+        this.dockerDisabled = response.data.docker.disabled;
+      }
+    });
+  }
 
   canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
     return this.checkAccess(state.url);
@@ -35,14 +45,24 @@ export class AuthGuard implements CanActivate {
         if (url === 'admin') {
           canAccess = user.type === 'admin';
         } else {
-          canAccess = true;
+          if (url === 'deploy') {
+            this.checkDocker();
+            canAccess = !this.dockerDisabled;
+          } else {
+            canAccess = true;
+          }
         }
       } else {
         this.authService.login().subscribe(response => {
           if (!response.ok) {
             this.router.navigateByUrl('/login');
           } else {
-            canAccess = true;
+            if (url === 'deploy') {
+              this.checkDocker();
+              canAccess = !this.dockerDisabled;
+            } else {
+              canAccess = true;
+            }
           }
         });
       }
@@ -51,4 +71,11 @@ export class AuthGuard implements CanActivate {
     return canAccess;
   }
 
+  checkDocker() {
+    this.statusService.getStatus().subscribe(response => {
+      if (response.ok) {
+        this.dockerDisabled = response.data.docker.disabled;
+      }
+    });
+  }
 }

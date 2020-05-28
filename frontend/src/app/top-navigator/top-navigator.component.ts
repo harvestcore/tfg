@@ -5,6 +5,7 @@ import { AuthService } from '../../services/auth.service';
 import { UserService } from '../../services/user.service';
 
 import { User } from '../../interfaces/user';
+import {StatusService} from '../../services/status.service';
 
 @Component({
   selector: 'app-top-navigator',
@@ -13,16 +14,27 @@ import { User } from '../../interfaces/user';
 })
 export class TopNavigatorComponent implements OnInit {
   currentUser: User;
+  dockerDisabled = false;
+  currentStatus: any;
 
   constructor(
     private router: Router,
     private authService: AuthService,
-    private userService: UserService
+    private userService: UserService,
+    private statusService: StatusService
   ) {
     this.userService.userStateChangedNotifier.subscribe(() => {
       this.currentUser = null;
       this.updateToolbarData();
     });
+
+    this.statusService.notifier.subscribe(response => {
+      if (response.ok) {
+        this.dockerDisabled = response.data.docker.disabled;
+      }
+    });
+
+    this.updateStatus();
   }
 
   ngOnInit(): void {
@@ -38,5 +50,15 @@ export class TopNavigatorComponent implements OnInit {
       this.userService.clearCurrentUser();
       this.router.navigateByUrl('/login');
     });
+  }
+
+  updateStatus() {
+    if (this.userService.userLoggedIn()) {
+      this.statusService.getStatus().subscribe(response => {
+        if (response.ok) {
+          this.dockerDisabled = response.data.docker.disabled;
+        }
+      });
+    }
   }
 }

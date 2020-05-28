@@ -1,5 +1,5 @@
 <div fxLayout="row" fxFlexAlign="space-between" fxLayoutGap="2em">
-  <mat-card fxFlex="33" *ngIf="docker">
+  <mat-card fxFlex="33" *ngIf="docker || dockerDisabled || dockerMalfunctioning">
     <mat-card-header>
       <mat-card-title fxLayout="row" fxLayoutGap="0.5em">
         <div>
@@ -10,13 +10,21 @@
     </mat-card-header>
 
     <mat-card-content>
-      <mat-list>
+      <mat-list *ngIf="docker">
         <mat-list-item>Images: {{ docker.info.Images }}</mat-list-item>
         <mat-list-item>Volumes: {{ docker.data_usage.Volumes.length }}</mat-list-item>
         <mat-list-item>Containers: {{ docker.info.Containers }}</mat-list-item>
         <mat-list-item>Containers running: {{ docker.info.ContainersRunning }}</mat-list-item>
         <mat-list-item>Containers paused: {{ docker.info.ContainersPaused }}</mat-list-item>
         <mat-list-item>Containers stopped: {{ docker.info.ContainersStopped }}</mat-list-item>
+      </mat-list>
+
+      <mat-list *ngIf="dockerMalfunctioning">
+        <mat-list-item>The service is malfunctioning, please check your settings or the server console logs.</mat-list-item>
+      </mat-list>
+
+      <mat-list *ngIf="dockerDisabled">
+        <mat-list-item>The service is disabled. To enable it please change your server settings.</mat-list-item>
       </mat-list>
     </mat-card-content>
   </mat-card>
