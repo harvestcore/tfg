@@ -1,4 +1,5 @@
 FROM node:12.17.0-alpine as build
+
 WORKDIR ./app
 
 COPY package.json .
