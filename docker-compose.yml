@@ -1,0 +1,23 @@
+version: '3'
+services:
+  ipmanager-backend:
+    container_name: ipmanager-backend
+    build: ./backend
+    ports:
+      - 5000:5000
+    environment:
+      - MONGO_HOSTNAME=mongo
+      - BASE_DATABASE=ipm_root
+    depends_on:
+      - mongo
+
+  ipmanager-frontend:
+    container_name: ipmanager-frontend
+    build: ./frontend
+    ports:
+      - 80:80
+    depends_on:
+      - ipmanager-backend
+
+  mongo:
+    image: mongo:4.2.3
