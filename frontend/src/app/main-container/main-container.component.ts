@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 
-import {StatusService} from '../../services/status.service';
-import {CustomerService} from '../../services/customer.service';
-import {UserService} from '../../services/user.service';
+import { CustomerService } from '../../services/customer.service';
+import { StatusService } from '../../services/status.service';
+import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'app-main-container',
@@ -98,6 +98,7 @@ export class MainContainerComponent implements OnInit {
       this.mongoIconStyle.color = (serverUp && heartbeat.data.mongo.is_up) ? 'green' : 'red';
 
       if (!this.mongo || (this.mongo && this.mongo.databases.length !== mongo.databases.length)) {
+        this.mongo = {};
         this.customerService.queryCustomer({query: {}, filter: {}}).subscribe(res => {
           if (res.ok) {
             mongo = {

@@ -1,7 +1,7 @@
-import { HttpClient } from '@angular/common/http';
 import { EventEmitter, Injectable } from '@angular/core';
-import { interval, Observable, of } from 'rxjs';
 import { catchError, map, distinctUntilChanged } from 'rxjs/operators';
+import { HttpClient } from '@angular/common/http';
+import { interval, Observable, of } from 'rxjs';
 
 import { AuthService } from './auth.service';
 import { UrlService } from './url.service';

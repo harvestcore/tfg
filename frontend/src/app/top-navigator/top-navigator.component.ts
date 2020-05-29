@@ -2,10 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { AuthService } from '../../services/auth.service';
+import { StatusService } from '../../services/status.service';
 import { UserService } from '../../services/user.service';
 
 import { User } from '../../interfaces/user';
-import {StatusService} from '../../services/status.service';
 
 @Component({
   selector: 'app-top-navigator',

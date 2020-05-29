@@ -1,15 +1,15 @@
 import { TestBed } from '@angular/core/testing';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 
 import { AuthGuard } from './auth.guard';
+import { AuthMockService } from '../services/mocks/auth-mock.service';
+import { AuthService } from '../services/auth.service';
+import { StatusMockService } from '../services/mocks/status-mock.service';
+import { StatusService } from '../services/status.service';
+import { UserMockService } from '../services/mocks/user-mock.service';
 import { UserService } from '../services/user.service';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
-import {CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
-import {StatusService} from '../services/status.service';
-import {AuthService} from '../services/auth.service';
-import {UserMockService} from '../services/mocks/user-mock.service';
-import {StatusMockService} from '../services/mocks/status-mock.service';
-import {AuthMockService} from '../services/mocks/auth-mock.service';
 
 describe('AuthGuard', () => {
   let guard: AuthGuard;

@@ -1,9 +1,9 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
+import { imports } from '../../app.module';
 import { ContainersComponent } from './containers.component';
-import {DeployMockService} from '../../../services/mocks/deploy-mock.service';
-import {DeployService} from '../../../services/deploy.service';
-import {imports} from '../../app.module';
+import { DeployMockService } from '../../../services/mocks/deploy-mock.service';
+import { DeployService } from '../../../services/deploy.service';
 
 describe('ContainersComponent', () => {
   let component: ContainersComponent;
