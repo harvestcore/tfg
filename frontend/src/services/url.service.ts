@@ -5,25 +5,26 @@ import {environment} from '../environments/environment';
   providedIn: 'root'
 })
 export class UrlService {
-  private browserWindow = window || {};
-  // tslint:disable-next-line:no-string-literal
-  private env = this.browserWindow['__env'] || null;
-  private client: string;
+  client: string;
+  url: string;
 
-  constructor() { }
-
-  setClient(client: string) {
-    this.client = client;
-  }
-
-  getBackendUrl(): string {
+  constructor() {
+    // tslint:disable-next-line:no-string-literal
+    const env = window['__env'] || null;
     let protocol = 'http://';
     let client = '';
     let backendUrl: string;
 
-    if (this.env && this.env.backendUrl) {
-      backendUrl = this.env.backendUrl;
-      if (this.env.httpsEnabled) {
+    console.log('env', env);
+
+    if (env) {
+      console.log('aaaaaaa');
+    }
+
+    if (env && env.backendUrl) {
+      console.log('aaa');
+      backendUrl = env.backendUrl;
+      if (env.httpsEnabled) {
         protocol = 'https://';
       }
     } else {
@@ -37,6 +38,14 @@ export class UrlService {
       client = this.client + '.';
     }
 
-    return protocol + client + backendUrl;
+    this.url = protocol + client + backendUrl;
+  }
+
+  setClient(client: string) {
+    this.client = client;
+  }
+
+  getBackendUrl(): string {
+    return this.url;
   }
 }

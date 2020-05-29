@@ -1,5 +1,7 @@
 (function (window) {
-  window.__env = window.__env || {};
-  window.__env.apiUrl = '192.168.1.110:5000';
-  window.__env.httpsEnabled = false;
+  // window.__env = null;
+  window.__env = {
+    apiUrl: '127.0.0.1:5000',
+    httpsEnabled: false
+  };
 }(this));
