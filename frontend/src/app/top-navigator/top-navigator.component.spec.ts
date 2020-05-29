@@ -7,18 +7,22 @@ import {UserService} from '../../services/user.service';
 import {AuthService} from '../../services/auth.service';
 import {AuthMockService} from '../../services/mocks/auth-mock.service';
 import {UserMockService} from '../../services/mocks/user-mock.service';
+import {StatusMockService} from '../../services/mocks/status-mock.service';
+import {StatusService} from '../../services/status.service';
 
 describe('TopNavigatorComponent', () => {
   let component: TopNavigatorComponent;
   let fixture: ComponentFixture<TopNavigatorComponent>;
   const mockAuthService = new AuthMockService();
   const mockUserService = new UserMockService();
+  const mockStatusService = new StatusMockService();
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports,
       providers: [
         { provide: UserService, useValue: mockUserService },
+        { provide: StatusService, useValue: mockStatusService },
         { provide: AuthService, useValue: mockAuthService }
       ],
       declarations: [ TopNavigatorComponent ],

@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
-  backendUrl: 'your-api-url',
+  backendUrl: '127.0.0.1:5000',
   httpsEnabled: false
 };

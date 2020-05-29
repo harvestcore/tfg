@@ -79,10 +79,12 @@ class DockerEngine:
             except docker.errors.APIError:
                 return {
                     'status': False,
+                    'disabled': False,
                     'msg': 'Docker is not working properly'
                 }
         else:
             return {
                 'status': False,
+                'disabled': True,
                 'msg': 'Docker is not enabled'
             }
