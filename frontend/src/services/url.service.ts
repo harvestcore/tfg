@@ -15,14 +15,7 @@ export class UrlService {
     let client = '';
     let backendUrl: string;
 
-    console.log('env', env);
-
-    if (env) {
-      console.log('aaaaaaa');
-    }
-
     if (env && env.backendUrl) {
-      console.log('aaa');
       backendUrl = env.backendUrl;
       if (env.httpsEnabled) {
         protocol = 'https://';
