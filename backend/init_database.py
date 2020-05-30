@@ -14,4 +14,3 @@ User().insert({
     'email': 'admin@yourdomain.com',
     'password': 'admin'
 })
-
