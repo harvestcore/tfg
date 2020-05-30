@@ -18,6 +18,9 @@ jobs:
       working-directory: ./
       MONGO_HOSTNAME: 172.18.0.5
       BASE_DATABASE: ipm_root
+    strategy:
+      matrix:
+        node-version: [12.x]
 
     steps:
     - name: Git checkout
@@ -39,6 +42,9 @@ jobs:
     - name: Install frontend dependencies
       run: npm install --save-dev cypress
       working-directory: ./frontend
+
+    - name: Install setuptools
+      run: pip3 install setuptools==46.0.0
 
     - name: Install backend dependencies
       run: pip3 install -r backend/requirements.txt
