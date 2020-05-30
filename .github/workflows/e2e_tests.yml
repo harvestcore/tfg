@@ -18,9 +18,6 @@ jobs:
       working-directory: ./
       MONGO_HOSTNAME: 172.18.0.5
       BASE_DATABASE: ipm_root
-    strategy:
-      matrix:
-        node-version: [12.x]
 
     steps:
     - name: Git checkout
@@ -44,8 +41,7 @@ jobs:
       working-directory: ./frontend
 
     - name: Install backend dependencies
-      run: pip3 install -r requirements.txt
-      working-directory: ./backend
+      run: pip3 install -r backend/requirements.txt
 
     - name: Install Cypress
       run: npm install --save-dev cypress
@@ -55,7 +51,6 @@ jobs:
 
     - name: Run mongo
       run: docker run --net testingnet --ip ${{env.MONGO_HOSTNAME}} -d mongo:4.2.3
-      working-directory: ./backend
 
     - name: Initialize db
       run: python3 init_database.py
