@@ -99,6 +99,10 @@ class Item:
         Updates the item that fits the criteria with the new data.
     """
     def update(self, criteria, data):
+        if 'password' in data.keys():
+            password = Fernet(ENC_KEY).encrypt(data['password'].encode()) \
+                .decode('utf-8')
+            data.update({'password': password})
         try:
             self.cursor().update_one(filter=criteria, update={'$set': data})
             return True

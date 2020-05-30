@@ -41,8 +41,8 @@ export class AuthGuard implements CanActivate {
       canAccess = true;
     } else {
       if (this.userService.userLoggedIn()) {
-        const user = this.userService.getCurrentUser();
         if (url === 'admin') {
+          const user = this.userService.getCurrentUser();
           canAccess = user.type === 'admin';
         } else {
           if (url === 'deploy') {

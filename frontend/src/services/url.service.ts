@@ -10,6 +10,10 @@ export class UrlService {
   url: string;
 
   constructor() {
+    this.computeUrl();
+  }
+
+  private computeUrl() {
     // tslint:disable-next-line:no-string-literal
     const env = window['__env'] || null;
     let protocol = 'http://';
@@ -37,6 +41,7 @@ export class UrlService {
 
   setClient(client: string) {
     this.client = client;
+    this.computeUrl();
   }
 
   getBackendUrl(): string {
