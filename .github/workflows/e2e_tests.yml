@@ -31,8 +31,8 @@ jobs:
     - name: Build images
       run: docker-compose build
 
-    - name: Build images
-      run: docker-compose up
+    - name: Run images
+      run: docker-compose up -d
 
     - name: Initialize db
       run: python3 init_database.py
