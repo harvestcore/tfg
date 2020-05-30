@@ -95,7 +95,7 @@ context('Provision panel', () => {
     cy.wait(150);
 
     cy.get('h3').contains('Running playbook').should('exist');
-    cy.wait(5000);
+    cy.wait(1000);
 
     cy.get('button').contains('Ok').click();
     cy.wait(250);

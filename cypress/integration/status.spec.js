@@ -28,15 +28,6 @@ context('Status', () => {
     cy.get('mat-card').contains('Docker service').should('exist');
   });
 
-  it('check that mongo card has its fields', () => {
-    cy.get('mat-list-item').contains('Images').should('exist');
-    cy.get('mat-list-item').contains('Volumes').should('exist');
-    cy.get('mat-list-item').contains('Containers').should('exist');
-    cy.get('mat-list-item').contains('Containers running').should('exist');
-    cy.get('mat-list-item').contains('Containers paused').should('exist');
-    cy.get('mat-list-item').contains('Containers stopped').should('exist');
-  });
-
   it('check that the user button exists', () => {
     cy.get('button').contains('admin (').should('exist');
   });

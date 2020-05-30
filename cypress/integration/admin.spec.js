@@ -60,6 +60,7 @@ context('Admin panel', () => {
     cy.get('#password').should('have.value', 'admin');
 
     cy.get('button').contains('Save').click();
+    cy.wait(500)
 
     // Check that the user is updated
     cy.get('td').contains('Admin name').should('exist');

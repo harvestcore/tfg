@@ -16,59 +16,27 @@ jobs:
     runs-on: ubuntu-latest
     env:
       working-directory: ./
-      MONGO_HOSTNAME: 172.18.0.5
+      MONGO_HOSTNAME: 172.20.0.2
       BASE_DATABASE: ipm_root
-    strategy:
-      matrix:
-        node-version: [12.x]
 
     steps:
     - name: Git checkout
       uses: actions/checkout@v1
     
     - run: ls -l
-    - run: npm -v
-    - run: python --version
-    - run: python3 --version
-
-    - name: Node ${{ matrix.node-version }}
-      uses: actions/setup-node@v1
-      with:
-        node-version: ${{ matrix.node-version }}
 
     - name: Install Cypress
       run: npm install --save-dev cypress
 
-    - name: Install Gunicorn
-      run: pip3 install gunicorn
+    - name: Build images
+      run: docker-compose build
 
-    - name: Install frontend dependencies
-      run: npm install --save-dev cypress
-      working-directory: ./frontend
-
-    - name: Install setuptools
-      run: pip3 install setuptools==46.0.0
-
-    - name: Install backend dependencies
-      run: pip3 install -r backend/requirements.txt
-
-    - name: Install Cypress
-      run: npm install --save-dev cypress
-
-    - name: Create docker network
-      run: docker network create --subnet=172.18.0.0/16 testingnet
-
-    - name: Run mongo
-      run: docker run --net testingnet --ip ${{env.MONGO_HOSTNAME}} -d mongo:4.2.3
+    - name: Build images
+      run: docker-compose up
 
     - name: Initialize db
       run: python3 init_database.py
       working-directory: ./backend
 
-    - name: Run backend
-      run: gunicorn -b 0.0.0.0:5000 wsgi:app --daemon
-      working-directory: ./backend
-
     - name: Run e2e tests
-      run: sleep 5 & cypress run
-
+      run: cypress run
