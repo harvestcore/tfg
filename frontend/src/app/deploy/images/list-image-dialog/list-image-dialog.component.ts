@@ -52,6 +52,7 @@ export class ListImageDialogComponent implements OnInit {
       }
     }).subscribe(response => {
       if (response.ok) {
+        this.results = null;
         this.results = response.data.items;
       } else {
         this.snack('There was an error while searching');
