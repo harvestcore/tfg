@@ -39,6 +39,9 @@ jobs:
     - name: Install Cypress
       run: npm install --save-dev cypress
 
+    - name: Install Gunicorn
+      run: pip3 install gunicorn
+
     - name: Install frontend dependencies
       run: npm install --save-dev cypress
       working-directory: ./frontend
