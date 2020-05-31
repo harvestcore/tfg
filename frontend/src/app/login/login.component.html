@@ -22,8 +22,10 @@
           <input matInput id="password" type="password" formControlName="password" required (ngModelChange)="resetFeedback()">
         </mat-form-field>
         <button mat-raised-button color="accent" class="button" type="submit">Login</button>
+        <mat-progress-bar *ngIf="loggingIn" mode="indeterminate" color="accent"></mat-progress-bar>
       </form>
     </mat-card-content>
+
 
     <mat-card-footer *ngIf="showFeedback" fxLayout="row" fxLayoutGap="0.25em">
       <fa-icon icon="exclamation-triangle"></fa-icon>

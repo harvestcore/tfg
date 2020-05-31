@@ -18,6 +18,7 @@ export class LoginComponent implements OnInit {
   username: string;
   password: string;
 
+  loggingIn = false;
   showFeedback = false;
 
   constructor(
@@ -45,6 +46,7 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit(data: BasicAuth) {
+    this.loggingIn = true;
     this.authService.login(data).subscribe(response => {
       if (response.ok) {
         this.userService.setCurrentUser(data.username).subscribe(() => {
@@ -54,6 +56,8 @@ export class LoginComponent implements OnInit {
       } else {
         this.showFeedback = true;
       }
+
+      this.loggingIn = false;
     });
   }
 }

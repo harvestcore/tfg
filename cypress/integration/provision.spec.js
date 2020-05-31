@@ -61,10 +61,7 @@ context('Provision panel', () => {
   });
 
   it('create playbook', () => {
-    cy.get('#mat-tab-label-0-0').click();
-    cy.wait(500);
-
-    cy.get('[icon="plus"]').click();
+    cy.get('#mat-tab-label-0-1').click();
     cy.wait(500);
 
     cy.get('.view-line').type('---\n' +
@@ -88,9 +85,6 @@ context('Provision panel', () => {
 
   it('run playbook', () => {
     cy.get('#mat-tab-label-0-0').click();
-    cy.wait(500);
-
-    cy.get('[icon="sync"]').click();
     cy.wait(500);
 
     cy.get('.cdk-column-name > .mat-sort-header-container > .mat-sort-header-button').click();
