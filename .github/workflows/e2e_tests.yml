@@ -42,4 +42,4 @@ jobs:
       working-directory: ./backend
 
     - name: Run e2e tests
-      run: cypress run
+      run: ./node_modules/cypress/bin/cypress run
