@@ -23,7 +23,6 @@
     </div>
 
     <app-ipmtable
-      *ngIf="data"
       [displayedColumns]="displayedColumns"
       [actions]="['P', 'E', 'R']"
       (playCallback)="runPlaybook($event)"

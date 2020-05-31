@@ -56,10 +56,17 @@ class MongoEngine:
     """
         Returns the current status of the Mongo client.
     """
-    def status(self):
+    def status(self, is_admin):
         info = self.client.server_info()
-        return {
-            'is_up': info['ok'] == 1.0,
-            'data_usage': [db for db in self.client.list_databases()],
-            'info': info
-        }
+        if is_admin:
+            return {
+                'is_up': info['ok'] == 1.0,
+                'data_usage': [db for db in self.client.list_databases()],
+                'info': info
+            }
+        else:
+            return {
+                'is_up': info['ok'] == 1.0,
+                'data_usage': [],
+                'info': 'Not available'
+            }

@@ -23,7 +23,7 @@
 
   <mat-divider></mat-divider>
 
-  <mat-progress-bar class="expansion-content" *ngIf="pullingImage" mode="indeterminate" color="accent"></mat-progress-bar>
+  <mat-progress-bar class="expansion-content" *ngIf="pullingImage || searchingImage" mode="indeterminate" color="accent"></mat-progress-bar>
 
   <div class="table">
     <app-ipmtable

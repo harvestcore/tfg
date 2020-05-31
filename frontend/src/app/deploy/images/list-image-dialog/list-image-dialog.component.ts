@@ -27,6 +27,7 @@ export class ListImageDialogComponent implements OnInit {
   };
 
   pullingImage = false;
+  searchingImage = false;
   results: DockerHubImage[];
 
   constructor(
@@ -45,6 +46,8 @@ export class ListImageDialogComponent implements OnInit {
   }
 
   search() {
+    this.results = null;
+    this.searchingImage = true;
     this.deployService.imageOperation({
       operation: 'search',
       data: {
@@ -52,11 +55,12 @@ export class ListImageDialogComponent implements OnInit {
       }
     }).subscribe(response => {
       if (response.ok) {
-        this.results = null;
         this.results = response.data.items;
       } else {
         this.snack('There was an error while searching');
       }
+
+      this.searchingImage = false;
     });
   }
 
