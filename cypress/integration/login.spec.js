@@ -11,15 +11,17 @@ context('Login', () => {
   });
 
   it('type wrong username', () => {
-    cy.get('#username').type('test').should('have.value', 'test');
+    cy.get('#username').type('1234username').should('have.value', '1234username');
   });
 
   it('type wrong password', () => {
-    cy.get('#password').type('test').should('have.value', 'test');
+    cy.get('#password').type('1234password').should('have.value', '1234password');
   });
 
   it('perform wrong login', () => {
+    cy.clearCookie('ipm-token');
     cy.contains('Login').click();
+    cy.wait(2000);
   });
 
   it('check feedback', () => {

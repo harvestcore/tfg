@@ -83,11 +83,14 @@ context('Provision panel', () => {
     cy.get('.mat-select-placeholder').click();
     cy.get('span').contains('aaaa-testing-host-group').click();
     cy.get('button').contains('Create').click();
-    cy.wait(250);
+    cy.wait(500);
   });
 
   it('run playbook', () => {
     cy.get('#mat-tab-label-0-0').click();
+    cy.wait(500);
+
+    cy.get('[icon="sync"]').click();
     cy.wait(500);
 
     cy.get('.cdk-column-name > .mat-sort-header-container > .mat-sort-header-button').click();
