@@ -32,8 +32,9 @@ class StatusService(Resource):
 
     @staticmethod
     def get():
-        hc = MongoEngine().status() is not None and DockerEngine().status() \
-             is not None
+        mongo = MongoEngine().status()
+        docker = DockerEngine().status()
+        hc = mongo['is_up'] and docker['is_up']
         code = 200 if hc else 500
         return {
             'ok': hc

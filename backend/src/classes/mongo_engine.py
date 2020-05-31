@@ -56,7 +56,7 @@ class MongoEngine:
     """
         Returns the current status of the Mongo client.
     """
-    def status(self, is_admin):
+    def status(self, is_admin=False):
         info = self.client.server_info()
         if is_admin:
             return {
