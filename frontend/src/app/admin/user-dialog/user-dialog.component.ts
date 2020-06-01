@@ -41,9 +41,11 @@ export class UserDialogComponent implements OnInit {
       ]),
       public_id: new FormControl(this.item.public_id, []),
       first_name: new FormControl(this.item.first_name, [
+        Validators.required,
         Validators.minLength(1)
       ]),
       last_name: new FormControl(this.item.last_name, [
+        Validators.required,
         Validators.minLength(1)
       ])
     });

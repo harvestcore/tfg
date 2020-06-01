@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 
-import {StatusService} from '../../services/status.service';
-import {CustomerService} from '../../services/customer.service';
-import {UserService} from '../../services/user.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
+
+import { CustomerService } from '../../services/customer.service';
+import { StatusService } from '../../services/status.service';
+import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'app-main-container',
@@ -32,6 +34,7 @@ export class MainContainerComponent implements OnInit {
   data: any;
 
   constructor(
+    private snackBar: MatSnackBar,
     private customerService: CustomerService,
     private userService: UserService,
     private statusService: StatusService
@@ -50,8 +53,9 @@ export class MainContainerComponent implements OnInit {
   updateStatus() {
     this.statusService.getStatus().subscribe(response => {
       if (response.ok) {
-        this.statusService.executeCallbacks(response);
         this.updateStatusByHeartbeat(response);
+      } else {
+        this.snack('An error ocurred while fetching the data');
       }
     });
 
@@ -97,19 +101,22 @@ export class MainContainerComponent implements OnInit {
       };
       this.mongoIconStyle.color = (serverUp && heartbeat.data.mongo.is_up) ? 'green' : 'red';
 
-      if (!this.mongo || (this.mongo && this.mongo.databases.length !== mongo.databases.length)) {
+      if (this.userService.currentUserIsAdmin() &&
+          !this.mongo ||
+          (this.mongo && this.mongo.databases && this.mongo.databases.length !== mongo.databases.length)
+      ) {
         this.customerService.queryCustomer({query: {}, filter: {}}).subscribe(res => {
           if (res.ok) {
             mongo = {
               ...mongo,
-              customers: res.data.total
+              customers: res.data.total ? res.data.total : 1
             };
 
             this.userService.queryUser({query: {}, filter: {}}).subscribe(r => {
               if (r.ok) {
                 mongo = {
                   ...mongo,
-                  users: r.data.total
+                  users: r.data.total ? r.data.total : 1
                 };
                 this.mongo = null;
                 this.mongo = mongo;
@@ -121,4 +128,9 @@ export class MainContainerComponent implements OnInit {
     }
   }
 
+  snack(msg: string) {
+    this.snackBar.open(msg, null, {
+      duration: 3000
+    });
+  }
 }

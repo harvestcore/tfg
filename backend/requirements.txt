@@ -1,4 +1,4 @@
-ansible==2.9.5
+setuptools==46.0.0
 cffi==1.14.0
 cryptography==2.8
 docker==4.2.0
@@ -13,6 +13,6 @@ PyJWT==1.7.1
 pymongo==3.9.0
 pytest==5.3.5
 PyYAML==5.3
-setuptools==46.0.0
+ansible==2.9.5
 tldextract==2.2.2
 Werkzeug==0.16.1

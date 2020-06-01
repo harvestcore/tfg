@@ -1,7 +1,7 @@
-import { HttpClient } from '@angular/common/http';
 import { EventEmitter, Injectable } from '@angular/core';
-import { interval, Observable, of } from 'rxjs';
 import { catchError, map, distinctUntilChanged } from 'rxjs/operators';
+import { HttpClient } from '@angular/common/http';
+import { interval, Observable, of } from 'rxjs';
 
 import { AuthService } from './auth.service';
 import { UrlService } from './url.service';
@@ -24,14 +24,14 @@ export class StatusService {
     interval(this.heartbeatInterval).pipe(
       distinctUntilChanged()
     ).subscribe(() => {
-        this.getStatus().subscribe(hbResponse => {
-          if (this.userService.userLoggedIn()) {
-            this.notifier.emit({
-              online: true,
-              ...hbResponse
-            });
-          }
-        });
+        if (this.userService.userLoggedIn()) {
+          this.getStatus().subscribe(hbResponse => {
+              this.notifier.emit({
+                online: true,
+                ...hbResponse
+              });
+          });
+        }
       },
       error => {
         if (this.userService.userLoggedIn()) {

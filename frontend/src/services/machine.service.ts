@@ -1,13 +1,13 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import {Observable, of} from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
+import { HttpClient } from '@angular/common/http';
+import { Observable, of } from 'rxjs';
 
 import { AuthService } from './auth.service';
 import { UrlService } from './url.service';
 
 import { Machine } from '../interfaces/machine';
 import { Query } from '../interfaces/query';
-import {catchError, map} from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'

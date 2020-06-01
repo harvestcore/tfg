@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { EventEmitter, Injectable, Output } from '@angular/core';
+import { EventEmitter, Injectable } from '@angular/core';
 import { map, catchError } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
 
@@ -8,8 +8,8 @@ import * as Cookies from 'js-cookie';
 
 import { AccessToken } from '../interfaces/access-token';
 import { BasicAuth } from '../interfaces/basic-auth';
+import { Router } from '@angular/router';
 import { UrlService } from './url.service';
-import {Router} from '@angular/router';
 
 @Injectable({
   providedIn: 'root'

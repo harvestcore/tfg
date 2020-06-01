@@ -19,12 +19,8 @@ class UserServiceGet(Resource):
     @staticmethod
     @token_required
     def get(username):
-        user = Login().get_username(request.headers['x-access-token'])
-
-        if user and User().is_admin(user):
-            user = User().find(criteria={'username': username})
-            return parse_data(UserSchema, user.data)
-        return response_by_success(False)
+        user = User().find(criteria={'username': username})
+        return parse_data(UserSchema, user.data)
 
 
 @api.route('/query')
@@ -50,14 +46,10 @@ class UserService(Resource):
     @staticmethod
     @token_required
     def get():
-        user = Login().get_username(request.headers['x-access-token'])
-
-        if user and User().is_admin(user):
-            username = Login().get_username(request.headers['x-access-token'])
-            user = User().find({'username': username})
-            return parse_data(UserSchema, user.data) if user and user.data \
-                else response_by_success(False)
-        return response_by_success(False)
+        username = Login().get_username(request.headers['x-access-token'])
+        user = User().find({'username': username})
+        return parse_data(UserSchema, user.data) if user and user.data \
+            else response_by_success(False)
 
     @staticmethod
     @token_required

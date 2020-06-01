@@ -79,6 +79,33 @@ const providers = [
   UserService
 ];
 
+export const declarations = [
+  AdminComponent,
+  AppComponent,
+  AreyousuredialogComponent,
+  ContainersComponent,
+  DeployComponent,
+  EditorComponent,
+  HostsComponent,
+  HostsdialogComponent,
+  ImagesComponent,
+  IpmtableComponent,
+  ListImageDialogComponent,
+  LoginComponent,
+  MachinesComponent,
+  MachinesdialogComponent,
+  MainContainerComponent,
+  ManageDialogComponent,
+  ManageImageDialogComponent,
+  NotFoundComponent,
+  PlaybooksComponent,
+  PlaybooksdialogComponent,
+  ProvisionComponent,
+  RunplaybookdialogComponent,
+  TopNavigatorComponent,
+  UserDialogComponent
+];
+
 export const imports = [
   AppRoutingModule,
   BrowserAnimationsModule,
@@ -114,35 +141,8 @@ export const imports = [
 ];
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    AreyousuredialogComponent,
-    IpmtableComponent,
-    DeployComponent,
-    LoginComponent,
-    MachinesComponent,
-    MachinesdialogComponent,
-    MainContainerComponent,
-    NotFoundComponent,
-    ProvisionComponent,
-    TopNavigatorComponent,
-    HostsComponent,
-    PlaybooksComponent,
-    HostsdialogComponent,
-    EditorComponent,
-    PlaybooksdialogComponent,
-    RunplaybookdialogComponent,
-    ContainersComponent,
-    ManageDialogComponent,
-    ImagesComponent,
-    ManageImageDialogComponent,
-    ListImageDialogComponent,
-    AdminComponent,
-    UserDialogComponent,
-  ],
-  imports: [
-    imports
-  ],
+  declarations,
+  imports,
   providers,
   bootstrap: [AppComponent]
 })

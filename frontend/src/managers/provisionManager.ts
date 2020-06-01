@@ -1,5 +1,5 @@
-import {EventEmitter} from '@angular/core';
-import {Playbook} from '../interfaces/playbook';
+import { EventEmitter } from '@angular/core';
+import { Playbook } from '../interfaces/playbook';
 
 class ProvisionManager {
   notifier = new EventEmitter();

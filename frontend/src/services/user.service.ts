@@ -1,13 +1,13 @@
-import {HttpClient} from '@angular/common/http';
 import { EventEmitter, Injectable } from '@angular/core';
-import {Observable, of} from 'rxjs';
-import {catchError, map} from 'rxjs/operators';
+import { HttpClient } from '@angular/common/http';
+import { Observable, of } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
 
 import { AuthService } from './auth.service';
+import { UrlService } from './url.service';
 
 import { User } from '../interfaces/user';
 import { Query } from '../interfaces/query';
-import { UrlService } from './url.service';
 
 @Injectable({
   providedIn: 'root'
@@ -33,13 +33,29 @@ export class UserService {
   }
 
   setCurrentUser(username: string) {
-    return this.getUser(username).pipe(map(user => {
-      this.currentUser = user;
-    }));
+    return this.getUser(username).pipe(
+      map(user => {
+        this.currentUser = user;
+        return {
+          ok: true,
+          user
+        };
+      }),
+      catchError(error => {
+        return of({
+          ok: false,
+          error
+        });
+      })
+    );
   }
 
   clearCurrentUser() {
     this.currentUser = null;
+  }
+
+  currentUserIsAdmin(): boolean {
+    return this.currentUser.type === 'admin';
   }
 
   getCurrentUser(): User {

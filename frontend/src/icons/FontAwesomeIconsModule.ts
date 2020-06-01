@@ -59,8 +59,8 @@ const icons = [
 ];
 
 @NgModule({
-  imports: [FontAwesomeModule],
-  exports: [FontAwesomeModule],
+  imports: [ FontAwesomeModule ],
+  exports: [ FontAwesomeModule ],
 })
 export class FontAwesomeIconsModule {
   constructor(library: FaIconLibrary) {
