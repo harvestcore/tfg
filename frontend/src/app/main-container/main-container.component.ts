@@ -53,7 +53,6 @@ export class MainContainerComponent implements OnInit {
   updateStatus() {
     this.statusService.getStatus().subscribe(response => {
       if (response.ok) {
-        this.statusService.executeCallbacks(response);
         this.updateStatusByHeartbeat(response);
       } else {
         this.snack('An error ocurred while fetching the data');
@@ -102,8 +101,10 @@ export class MainContainerComponent implements OnInit {
       };
       this.mongoIconStyle.color = (serverUp && heartbeat.data.mongo.is_up) ? 'green' : 'red';
 
-      if (this.userService.currentUserIsAdmin() && !this.mongo || (this.mongo && this.mongo.databases.length !== mongo.databases.length)) {
-        this.mongo = {};
+      if (this.userService.currentUserIsAdmin() &&
+          !this.mongo ||
+          (this.mongo && this.mongo.databases && this.mongo.databases.length !== mongo.databases.length)
+      ) {
         this.customerService.queryCustomer({query: {}, filter: {}}).subscribe(res => {
           if (res.ok) {
             mongo = {
