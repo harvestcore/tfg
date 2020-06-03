@@ -32,6 +32,12 @@ La instalación del backend y del frontend puede consultarse [aquí](dev/install
 
 
 
+## Primeros pasos (inicialización de BD y CLI)
+
+Tras la instalación del backend sigue [estos primeros pasos](dev/first-steps.md) para inicializar la base de datos y para introducirte al uso del CLI.
+
+
+
 ## Otros
 
 - [Criterio de aceptación de pull request](dev/pr-acceptance.md)
