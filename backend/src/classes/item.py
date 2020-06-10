@@ -1,9 +1,6 @@
 from bson.json_util import dumps
-from cryptography.fernet import Fernet
 import json
-import uuid
 
-from config.server_environment import ENC_KEY
 from src.classes.mongo_engine import MongoEngine
 
 
@@ -56,14 +53,6 @@ class Item:
         elif type(data) is dict:
             _operation = 'insert_one'
             data.update(info)
-            if 'password' in data.keys():
-                password = Fernet(ENC_KEY).encrypt(data['password'].encode())\
-                    .decode('utf-8')
-                data.update({'password': password})
-
-            if 'public_id' in self.table_schema.keys()\
-                    and 'public_id' not in data.keys():
-                data.update({'public_id': str(uuid.uuid4())})
         elif type(data) is list:
             _operation = 'insert_many'
             for item in data:
@@ -99,10 +88,6 @@ class Item:
         Updates the item that fits the criteria with the new data.
     """
     def update(self, criteria, data):
-        if 'password' in data.keys():
-            password = Fernet(ENC_KEY).encrypt(data['password'].encode()) \
-                .decode('utf-8')
-            data.update({'password': password})
         try:
             self.cursor().update_one(filter=criteria, update={'$set': data})
             return True
