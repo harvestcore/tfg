@@ -22,6 +22,13 @@ class MachineServiceGet(Resource):
         user = Machine().find(criteria={'name': name})
         return parse_data(MachineSchema, user.data)
 
+    @staticmethod
+    @token_required
+    def delete(name):
+        return response_by_success(Machine().remove(criteria={
+            'name': name
+        }), is_remove=True)
+
 
 @api.route('/query')
 class MachineServiceGetWithQuery(Resource):
@@ -52,11 +59,3 @@ class MachineService(Resource):
         return response_by_success(Machine().update(criteria={
             'name': data['name']
         }, data=data['data']))
-
-    @staticmethod
-    @token_required
-    def delete():
-        data = validate_or_abort(MachineSchemaDelete, request.get_json())
-        return response_by_success(Machine().remove(criteria={
-            'name': data['name']
-        }), is_remove=True)

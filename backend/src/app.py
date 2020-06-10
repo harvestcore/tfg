@@ -35,8 +35,7 @@ if DOCKER_ENABLED:
 
 @app.before_request
 def before_request():
-    data = tldextract.extract(request.host)
-    if Customer().is_customer(data.subdomain):
-        Customer().set_customer(data.subdomain)
+    if Customer().is_customer(''):
+        Customer().set_customer('')
     else:
         abort(404, "Not found")
