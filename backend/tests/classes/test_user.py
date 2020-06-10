@@ -68,7 +68,7 @@ class UserTests(unittest.TestCase):
             'password': 'admin1'
         }
         keys = ['_id', 'type', 'first_name', 'last_name', 'username', 'email',
-                'password', 'enabled', 'deleted', 'public_id']
+                'password', 'public_id', 'enabled', 'deleted']
         User().insert(u)
         user = User().find()
 

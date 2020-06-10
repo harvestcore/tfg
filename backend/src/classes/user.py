@@ -1,3 +1,7 @@
+from cryptography.fernet import Fernet
+import uuid
+
+from config.server_environment import ENC_KEY
 from src.classes.item import Item
 
 
@@ -26,6 +30,15 @@ class User(Item):
             if data['type'] not in ['admin', 'regular']:
                 return False
 
+            if 'password' in data.keys():
+                password = Fernet(ENC_KEY).encrypt(data['password'].encode())\
+                    .decode('utf-8')
+                data.update({'password': password})
+
+            if 'public_id' in self.table_schema.keys()\
+                    and 'public_id' not in data.keys():
+                data.update({'public_id': str(uuid.uuid4())})
+
             current = super(User, self)\
                 .find(criteria={'username': data['username'],
                                 'email': data['email']})
@@ -34,6 +47,17 @@ class User(Item):
                 return super(User, self).insert(data)
 
         return False
+
+    """
+        Updates the data of a user.
+    """
+    def update(self, criteria, data):
+        if 'password' in data.keys():
+            password = Fernet(ENC_KEY).encrypt(data['password'].encode()) \
+                .decode('utf-8')
+            data.update({'password': password})
+
+        return super(User, self).update(criteria, data)
 
     """
         Checks if the given username belongs to an admin user.
