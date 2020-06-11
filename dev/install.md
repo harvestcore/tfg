@@ -54,7 +54,7 @@ Si por el contrario quieres construir tú mismo la imagen, ejectuta:
 ```bash
 cd backend
 
-docker build .
+docker build . -t ipm-backend:<tag>
 ```
 
 
@@ -72,19 +72,19 @@ cd frontend
 npm build --prod
 ```
 
-Para ejecutarlo se recomienda utilizar Nginx u otro tipo de servidor web. En la raíz del frontend se adjunta el archivo de configuración (`nginx.conf`) usado para construir la imagen de Docker, y puede ser usado.
+Para ejecutarlo se recomienda utilizar Nginx u otro tipo de servidor web. En la raíz del frontend se adjunta el archivo de configuración (`nginx.conf`) usado para construir la imagen de Docker, y tambien puede ser usado en este caso.
 
 
 
 #### Docker
 
-Puedes ejecutar el frontend con Docker, para ello puedes bajarte la imagen del repositorio disponible o puedes construir y ejecutar tu mismo la imagen.
+Puedes ejecutar el frontend con Docker, para ello puedes bajarte la imagen del repositorio disponible o puedes construir y ejecutar tú mismo la imagen.
 
 ```bash
 docker pull harvestcore/ipm-frontend:<tag>
 ```
 
-El tag o versión lo puedes consultar [aquí](https://github.com/harvestcore/tfg/releases) o [aquí](https://hub.docker.com/r/harvestcore/ipm-backend/tags). Se recomienda usar siempre la última versión estable, las versiones *latest* pueden contener bugs.
+El tag o versión lo puedes consultar [aquí](https://github.com/harvestcore/tfg/releases) o [aquí](https://hub.docker.com/r/harvestcore/ipm-frontend/tags). Se recomienda usar siempre la última versión estable, las versiones *latest* pueden contener bugs.
 
 ```bash
 cd frontend
