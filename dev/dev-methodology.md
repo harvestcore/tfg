@@ -186,3 +186,4 @@ https://www.wearemarketing.com/es/blog/metodologia-scrum-que-es-y-como-funciona.
 https://kanbanize.com/es/recursos-de-kanban/primeros-pasos/que-es-kanban
 
 https://es.wikipedia.org/wiki/Kanban_(desarrollo)
+

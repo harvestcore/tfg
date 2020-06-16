@@ -292,3 +292,67 @@ Para el funcionamiento del backend y el frontend sería necesaria la definición
 *Developer journey*:
 
 - Identificar todas las variables de entorno necesarias, definirlas y asignarles un valor por defecto.
+
+
+
+
+
+## CLI
+
+Módulo propuesto para poder realizar ciertas desde la terminal, sin necesidad de ejecutar el backend. Podría ser usado en la primera instalación de este y/o para crear unos primeros usuarios o clientes.
+
+Funcionalidad propuesta:
+
+- Crear clientes.
+- Activar o desactivar clientes.
+- Agregar usuarios a un cliente.
+
+
+
+*Developer journey*:
+
+- Crear CLI haciendo uso de los métodos de los módulos anterior mencionados.
+
+
+
+
+
+## Frontend
+
+El desarrollo de un backend que ofrezca una API permite que se pueda desarrollar cualquier tipo de frontend, ya sea web, una aplicación móvil o incluso acceso mediante línea de comandos. En este caso, para satisfacer los requisitos del software se propone crear un frontend que permita realizar todas las operaciones anterior mencionadas.
+
+Este podría tener las siguientes páginas:
+
+- */*: Donde mostrar el estado general del sistema.
+- */admin*: Administración de usuarios.
+- */deploy*: Administración de los despliegues, contenedores e imágenes.
+- */provision*: Administración del aprovisionamiento, grupos de hosts y playbooks.
+- */machines*: Administración de las máquinas.
+
+Por otro lado, atendiendo a los requisitos del software, se propone la creación de un componente para generar tablas de forma dinámica, que encapsule todas las funcionalidades requeridas. Además debe incluir autenticación de los usuarios.
+
+Para la comunicación con la API se propone la creación de diferentes servicios centrados en cada uno de los módulos del backend. De esta manera los servicios pueden inyectarse en los componentes y la comunicación es directa. Estos serían:
+
+- Autenticación
+- Clientes
+- Usuarios
+- Hosts
+- Playbooks
+- Máquinas
+- Aprovisionamiento
+- Despliegues
+- Estado
+
+
+
+*Developer journey*:
+
+- Crear componentes para cada una de las secciones.
+- Crear componente para la tabla.
+- Crear servicios.
+- Crear router y guard para manejar rutas y permisos de acceso a estas.
+
+
+
+
+
