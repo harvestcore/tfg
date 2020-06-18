@@ -206,7 +206,7 @@ Esta es la clase encargada del manejo de los usuarios y hereda de *Item*. Trabaj
 
 Se han sobreescrito los métodos de inserción y actualización de datos para tener en cuenta las restricciones de tipo de usuario, para la generación del UUID y para el cifrado de la contraseña. Este cifrado se hace con Fernet, el cual es de tipo simétrico.
 
-En cuanto al servicio, este tiene está estructurado de la misma forma que se especifica [aquí](#servicios), siendo los endpoints:
+En cuanto al servicio, este está estructurado de la misma forma que se especifica [aquí](#servicios), siendo los endpoints:
 
 - *GET /api/user/<username>*
 - *POST /api/user*
@@ -256,6 +256,8 @@ Los endpoints desarrollados son los siguientes:
 - *POST /api/deploy/container/single*: Operaciones en un único contenedor.
 - *POST /api/deploy/image*: Operaciones en todas las imágenes.
 - *POST /api/deploy/image/single*: Operaciones en una única imagen.
+
+
 
 La información sobre el estado de este módulo se devuelve con la misma estructura que se utiliza en [MongoEngine](#mongoengine):
 
@@ -432,3 +434,258 @@ Además se ha creado un pequeño script que permite inicializar la base de datos
 
 ## Frontend
 
+El frontend implementado es una de las infinitas propuestas que satisfacen los requisitos del software deseados. En las siguientes secciones se detallan los módulos que se han desarrollado.
+
+
+
+#### Servicios HTTP
+
+Para la comunicación frontend-backend se han creado diferentes servicios, que de forma asíncrona realizan las peticiones HTTP a la API. Todos ellos hacen uso de *HttpClient*, que es el múdulo de Angular para realizar este tipo de peticiones. La estructura en general es muy similar, habiéndose creado métodos concretos para cada tipo de operación o endpoint. Cada uno de estos métodos tiene la forma:
+
+```typescript
+metodo(params: any): Observable<any> {
+    return this.httpClient.put(url, {
+      data
+    }, {
+        headers: access_token
+    }).pipe(
+      map(data => {
+        return {
+          ok: true,
+          data
+        };
+      }),
+      catchError(error => {
+        return of({
+          ok: false,
+          error
+        });
+      })
+    );
+  }
+```
+
+Se puede observar que:
+
+- Se hace una petición HTTP (en el caso del ejemplo PUT) a través del módulo *HttpClient* con diferentes argumentos. El primero es la URL a la que se hace esa petición, el segundo los datos que se quieren pasar en el *body* de esta y el tercero son las cabeceras, que en el caso de la API desarrollada es necesaria la cabecera *x-access-token* con el token de acceso.
+
+- Se devuelve un observable. Este observable es asíncrono, lo que quiere decir que se lanza la petición y que de forma asíncrona se completará la misma y se procesarán los datos.
+- Se hace un pipe. Esto permite hacer un primer procesado de los datos y en este caso se agrega una clave que indica que se han recibido los datos.
+- Se capturan los posibles errores. En caso de que la petición no se complete o surja algún tipo de error se obtiene el error y se devuelve.
+
+
+
+Los servicios desarrollados son los siguientes:
+
+##### URL
+
+Este servicio no es un servicio como tal, ya que no realiza peticiones HTTP, pero sí se encarga del procesado  de la URL a la que se hacen las peticiones. Es usado por el resto de servicios para obtener la URL a la que tienen que hacer dichas peticiones. El procesado consiste en la creación de la URL a partir del protocolo de acceso a la API (HTTP o HTTPS), del cliente y de la URL donde se encuentra la API.
+
+De este modo el resto de servicios solo tienen que hacer una llamada a este servicio para obtener la URL actual.
+
+
+
+##### Autenticación
+
+La autenticación es el módulo más importante del frontend, ya que se encarga de toda la gestión del token y del acceso de los usuarios a las diferentes rutas de la aplicación. Este servicio se compone de dos métodos principales, login y logout, y de algunos secundarios. El funcionamiento de estos es:
+
+- *login(auth)*: A partir de los datos de autenticación del usuario realiza el login y se almacena en las cookies del navegador el token de acceso. Se comprueba si existe el token en las cookies: en caso afirmativo se comprueba si es válido y autoriza o no el acceso; en caso contrario se hace una petición al endpoint *GET /api/login* con los datos de acceso para obtener un nuevo token. Finalmente se almacena el token en las cookies. Debido a la asincronía de las peticiones este método también devuelve un observable.
+- *logout()*: Hace una petición de logout a la API y cuando obtiene la respuesta borra el token de las cookies del navegador.
+
+
+
+##### Resto de servicios
+
+Los demás servicios tienen la estructura ya explicada al principio de esta sección, con métodos para hacer peticiones a los diferentes endpoints de la API y manejo de los posibles errores. Cuando ha sido preciso se han también métodos auxiliares. Estos servicios son:
+
+- Clientes
+- Usuarios
+- Hosts
+- Playbooks
+- Máquinas
+- Aprovisionamiento
+- Despliegues
+- Estado del backend
+
+
+
+#### Guard
+
+Para proteger las rutas de usuarios no identificados se ha creado un *Guard*. Este realiza una serie de comprobaciones acordes a nuestras necesidades antes de permitir o no el acceso a una página. En el caso de este frontend la única ruta que se quiere accesible por cualquier usuario es el login, por lo que el resto se han protegido.
+
+Se ha hecho uso del método *CanActivate* que proporciona Angular para este cometido. Además, se han tenido en cuenta diferentes aspectos a la hora de diseñar y desarrollar esta funcionalidad, ya que por ejemplo no se debería poder acceder a los despliegues con Docker si este esta desactivado en el backend.
+
+Hace uso del *router* que también proporciona Angular del servicio de autenticación, y su funcionamiento es el siguiente:
+
+- Si se quiere ir al login se permite el acceso.
+- En caso contrario se comprueba si el usuario está logeado.
+  - Si está logeado:
+    - Si se quiere acceder a la página de administración de usuarios se comprueba el usuario que está intentando acceder y se le permite o no el acceso.
+    - Si se quiere acceder a la página de los despliegues se comprueba si Docker está activo en el backend.
+  - Si no lo está:
+    - Se le redirige al login.
+
+Una vez implementado esto solo ha sido necesario indicar en el *router* las rutas que se quieren proteger.
+
+
+
+#### Variables de entorno
+
+Para que la comunicación frontend-backend pueda llevarse a cabo es necesario definir una serie de variables de entorno. Estas indican la URL en la que se encuentra la API, entre otros. Son:
+
+- *production*: Utilizada por Angular a la hora de construir la aplicación.
+- *backendUrl*: URL sin protocolo de la API.
+- *httpsEnabled*: Indica si el protocolo de la API es HTTP o HTTPS.
+
+Actualmente el proyecto cuenta con cuatro "entornos" distintos. El primero es el de desarrollo, utilizado durante el desarrollo del proyecto. El segundo es el de producción, el cual es el que se debe usar a la hora de utilizar el proyecto. El tercero, llamado *on-premise* es el usado a la hora de construir la imagen de Docker y está configurado por defecto para funcionar *out-of-the-box* con el docker-compose. El último, que se encuentra en el archivo *env.js* en la raíz del directorio *src* del proyecto, permite redefinir las variables de entorno sin tener que reconstruir el backend. Por defecto se encuentra desactivado.
+
+
+
+#### Interfaces
+
+Se han creado además una serie de interfaces para controlar más aún los datos que se manejan en el frontend. Estas contemplan cada tipo de dato y son:
+
+- *AccessToken*: Token de acceso.
+- *BasicAuth*: Credenciales de usuario.
+- *Container*: Contenedor, usado en el módulo de despliegues.
+- *SingleContainerOperation*: Operación que se ejecuta en un único contenedor.
+- *ContainerOperation*: Operación que se ejecuta en todos los contenedores.
+- *Image*: Imagen, usada en el módulo de despliegues.
+- *SingleImageOperation*: Operación que se ejecuta en una única imagen.
+- *ImageOperation*: Operación que se ejecuta en todas las imágenes.
+- *Customer*: Cliente.
+- *DockerHubImage*: Imagen de DockerHub, usada al utilizar la operación de búsqueda de imágenes.
+- *Host*: Grupo de hosts.
+- *Machine*: Máquina.
+- *Playbook*: Playbook.
+- *Query*: Criterio de búsqueda, usado en todos los endpoints para hacer consultas complejas.
+- *StatusResponse*: Estado del backend.
+- *User*: Usuario.
+
+
+
+#### Componentes
+
+En cuanto a componentes se ha intentado abstraer y reutilizar lo máximo posible.
+
+
+
+##### Tabla
+
+Usado para crear tablas dinánicas sin necesidad de configuraciones exahustivas. Sus funcionalidades extra son una barra de búsqueda de elementos, un selector de las columnas que se muestran, una barra inferior para paginación y la posibilidad de agregar un botón de acción personalizado para cada item de la tabla. 
+
+Parámetros de entrada:
+
+- *tittle*: Título de la tabla.
+- *displayedColumns*: Columnas que se quieren mostrar.
+- *deselectedColumns*: Columas que por defecto no aparecerán mostradas.
+- *data*: Array con los datos a mostrar.
+- *actions*: Array de strings para configurar las acciones disponibles para cada item.
+- *customActionData*: Diccionario con la configuración de la acción personalizada adicional.
+
+Por defecto cada item tiene cuatro acciones asociadas: *play* (P), *detail* (D), *edit* (E) y *remove* (R). Estas se activan mediante el array *actions*, agregando los idenficativos de las acciones que se deseen a este. En cambio, para configurar la acción adicional se debe incluir en *customActionData* el icono y el tooltip a mostrar y agregar el identificativo 'C' al array *actions*.
+
+Estas acciones son botones que se agregan en una columna de la tabla y cuando estos se pulsan emiten un evento con los datos del item al que pertenezcan. De este modo solo queda implementar la lógica en el componente que esté usando la tabla para que tome esos datos y los procese a voluntad.
+
+Un ejemplo de uso de esta tabla sería el siguiente:
+
+```html
+<app-ipmtable
+      *ngIf="data"
+      [displayedColumns]="displayedColumns"
+      [deselectedColumns]="['id']"
+      [actions]="['P','C','R']"
+      [data]="data"
+      (playCallback)="runImage($event)"
+      (removeCallback)="removeImage($event)"
+      (customActionCallback)="manageImage($event)"
+      [customActionData]="manageContainerCustomActionData"
+>
+```
+
+
+
+Parámetros de salida:
+
+- *playCallback*
+- *detailCallback*
+- *editCallback*
+- *removeCallback*
+- *customActionCallback*
+
+
+
+##### Navegador superior
+
+Se trata de una barra de navegación superior que cuenta con diferentes botones para navegar por las diferentes páginas. Cuenta con lógica interna para desactivar o no el enlace a la página de despliegues en caso de que Docker no se encuentre activado y para mostrar o no el enlace a la administración de usuarios.
+
+Los enlaces con los que cuenta son:
+
+- Home
+- Despliegues
+- Aprovisionamiento
+- Máquinas
+- Administración de usuarios
+- Logout
+
+
+
+##### Home (/)
+
+Este componente muestra tarjetas con información sobre el estado del backend. Esta información depende del usuario que se encuentre visitandola, ya que un administrador recibirá más información que un usuario regular. Por otro lado también se adapta a la disponibilidad de Docker en el backend.
+
+
+
+##### Login (/login)
+
+Componente bastante sencillo que cuenta con un formulario con tres campos. El primero es opcional y sirve para indicar el cliente al que se quiere conectar el usuario. El segundo y tercer campo son el usuario y contraseña del usuario.
+
+
+
+##### Admin (/admin)
+
+Administración de usuarios. Este componente solo es accesible por usuarios administradores. Hace uso de la tabla anterior para mostrar los usuarios que se encuentran registrados en el cliente actual y permite operar con ellos. Se ha creado un diálogo anexo a este componente para crear y editar estos usuarios y se puede acceder a él mediante las acciones de la tabla.
+
+
+
+##### AreYouSureDialog
+
+En ocasiones es necesaria es necesaria una confirmación a la hora de realizar una acción. Se ha creado este  diálogo para tener un componente común a todas estas confirmaciones. Al cerrarse emite un valor (*true* o *false*) que indica la decisión del usuario.
+
+
+
+##### Despliegues (/deploy)
+
+Este componente se compone de dos pestañas, *Containers* e *Images*.
+
+-  *Containers*: En esta primera pestaña se muestran los contenedores que se encuentran en el backend (en cualquier estado) y se pueden administrar. Esta administración consiste en un diálogo en el que se pueden ejecutar diferentes operaciones sobre cada contenedor, son:
+
+  - Pausar y despausar
+  - Recargar
+  - Reiniciar
+  - Parar
+  - Forzar parada
+  - Cambiar nombre
+  - Obtener logs
+
+  Además cuenta con dos botones específicos para este componente en la esquina superior derecha. Estos son para ejecutar imágenes, lo que nos lleva a la segunda pestaña, y para eliminar los contenedores obsoletos (mediante una operación).
+
+- *Images*: Aquí aparecen las imágenes que se encuentran también en el backend. Cada una de estas imágenes se puede ejecutar, administrar (recargar y obtener historial) y borrar del backend. Los botones de la esquina superior derecha son para hacer búsquedas de imágenes en DockerHub y para eliminar aquellas imágenes obsoletas del sistema.
+
+
+
+##### Aprovisionamiento (/provision)
+
+En el caso del aprovisionamiento este componente cuenta con tres pestañas, las cuales son:
+
+- *Playbooks*: Gestión de los playbooks. Se pueden ejecutar, modificar y eliminar. Además cuenta con un botón para crear nuevos playbooks.
+- *Editor*. Editor de texto configurado con la sintaxis YAML para crear y modificar los diferentes playbooks. Esta pestaña se encuentra enlazada con la primera ya que cuando se crea un playbook nuevo o se quiere modificar uno existente se redirige al usuario aquí.
+- *Host groups*: Gestión de los grupos de hosts de manera similar a los clientes o usuarios. Se encuentra enlazado con el servicio de máquinas para obtener las direcciones IP de las máquinas que se encuentran almacenadas en el sistema.
+
+Del mismo modo que en otros componentes, se hace uso de diálogos para la gestión de los datos.
+
+
+
+##### Máquinas (/machines)
+
+Este componente es muy similar a [*Admin*](#admin). Cuenta con una tabla para mostrar los datos de todas las máquinas actuales y además se ha creado un diálogo (también accesible por las acciones) para crear y modificar los datos de las máquinas.
