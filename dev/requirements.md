@@ -16,7 +16,7 @@ En este documento se encuentran registrados todos los requisitos del sistema.
 
 - El sistema permitirá aprovisionar máquinas.
 
-- El sistema desplegará servicios.
+- El sistema desplegará servicios en Docker.
 
 - En el sistema podrá haber distintos clientes.
 

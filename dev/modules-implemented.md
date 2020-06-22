@@ -20,7 +20,7 @@ Los métodos implementados son los siguientes:
 
 - Asignación de base de datos y colección actual. Usados para seleccionar la base de datos necesaria para cada cliente, y la colección donde realizar operaciones.
 
-- Datos estadísticos. Se extrae del cliente de MongoDB y se devuelve en un diccionario con la siguiente forma:
+- Datos estadísticos. Se extraen del cliente de MongoDB y se devuelve en un diccionario con la siguiente forma:
 
   ```python
   {
