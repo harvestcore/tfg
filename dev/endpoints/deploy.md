@@ -50,7 +50,7 @@
 
 
 
-## POST /api/deploy/container
+## POST /deploy/container
 
 Permite ejecutar operaciones básicas en todos los contenedores.
 
@@ -146,7 +146,7 @@ Respuesta (más de un contenedor):
 
 
 
-## POST /api/deploy/container/single
+## POST /deploy/container/single
 
 Permite ejecutar operaciones básicas en un contenedor en concreto.
 
@@ -183,7 +183,7 @@ Respuesta:
 
 
 
-## POST /api/deploy/image
+## POST /deploy/image
 
 Permite ejecutar operaciones básicas en todos las imágenes.
 
@@ -286,7 +286,7 @@ Respuesta:
 
 
 
-## POST /api/deploy/image/single
+## POST /deploy/image/single
 
 Permite ejecutar operaciones básicas en una imagen en concreto.
 

@@ -1,6 +1,6 @@
 # Aprovisionamiento
 
-## POST /api/provision
+## POST /provision
 
 Ejecuta un playbook.
 

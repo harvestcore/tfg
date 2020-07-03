@@ -7,7 +7,7 @@
 
 \section{Status}
 
-\subsection{\textit{GET /api/status}}
+\subsection{\textit{GET /status}}
 Devuelve el estado actual de los dos servicios principales del backend, MongoDB y Docker.
 
 Cabeceras necesarias:
@@ -90,7 +90,7 @@ Respuesta:
 
 \section{Autenticación}
 
-\subsection{\textit{GET /api/login}}
+\subsection{\textit{GET /login}}
 Loguea al usuario en el cliente.
 
 Cabeceras necesarias:
@@ -120,7 +120,7 @@ Respuesta:
 
 
 
-\subsection{\textit{POST /api/logout}}
+\subsection{\textit{POST /logout}}
 
 Desloguea al usuario del cliente.
 
@@ -171,7 +171,7 @@ Respuesta:
 \end{table}
 
 
-\subsection{\textit{POST /api/customer/query}}
+\subsection{\textit{POST /customer/query}}
 Devuelve los clientes que cumplen los criterios de búsqueda.
 
 Cabeceras necesarias:
@@ -227,7 +227,7 @@ Respuesta (más de un usuario):
 
 
 
-\subsection{\textit{POST /api/customer}}
+\subsection{\textit{POST /customer}}
 Crea un nuevo cliente.
 
 Cabeceras necesarias:
@@ -259,7 +259,7 @@ Respuesta:
 
 
 
-\subsection{\textit{PUT /api/customer}}
+\subsection{\textit{PUT /customer}}
 Modifica los datos de un cliente.
 
 Cabeceras necesarias:
@@ -305,7 +305,7 @@ Respuesta:
 
 
 
-\subsection{\textit{DELETE /api/customer}}
+\subsection{\textit{DELETE /customer}}
 Elimina un cliente.
 
 Cabeceras necesarias:
@@ -366,7 +366,7 @@ Respuesta:
 \end{adjustbox}
 \end{table}
 
-\subsection{\textit{GET /api/user/:username}}
+\subsection{\textit{GET /user/:username}}
 Devuelve toda la información asociada a un usuario.
 
 Cabeceras necesarias:
@@ -407,7 +407,7 @@ Respuesta:
 
 
 
-\subsection{\textit{POST /api/customer/query}}
+\subsection{\textit{POST /customer/query}}
 Devuelve los usuarios que cumplen los criterios de búsqueda.
 
 Cabeceras necesarias:
@@ -462,7 +462,7 @@ Respuesta (más de un usuario):
 \end{table}
 
 
-\subsection{\textit{POST /api/user}}
+\subsection{\textit{POST /user}}
 Crea un nuevo usuario.
 
 Cabeceras necesarias:
@@ -497,7 +497,7 @@ Respuesta:
 
 
 
-\subsection{\textit{PUT /api/user}}
+\subsection{\textit{PUT /user}}
 Modifica los datos de un usuario.
 
 Cabeceras necesarias:
@@ -546,7 +546,7 @@ Respuesta:
 
 
 
-\subsection{\textit{DELETE /api/user}}
+\subsection{\textit{DELETE /user}}
 Elimina un usuario.
 
 Cabeceras necesarias:
@@ -614,7 +614,7 @@ Respuesta:
 \end{table}
 
 
-\subsection{\textit{GET /api/machine/:name}}
+\subsection{\textit{GET /machine/:name}}
 Devuelve toda la información asociada a una máquina.
 
 Cabeceras necesarias:
@@ -655,7 +655,7 @@ Respuesta:
 
 
 
-\subsection{\textit{POST/api/machine/query}}
+\subsection{\textit{POST/machine/query}}
 
 Cabeceras necesarias:
 \begin{table}[h!]
@@ -709,7 +709,7 @@ Respuesta (más de una máquina):
 
 
 
-\subsection{\textit{POST /api/machine}}
+\subsection{\textit{POST /machine}}
 
 Cabeceras necesarias:
 \begin{table}[h!]
@@ -740,7 +740,7 @@ Respuesta:
 \end{table}
 
 
-\subsection{\textit{PUT /api/machine}}
+\subsection{\textit{PUT /machine}}
 
 Cabeceras necesarias:
 \begin{table}[h!]
@@ -781,7 +781,7 @@ Respuesta:
 \end{adjustbox}
 \end{table}
 
-\subsection{\textit{DELETE /api/machine}}
+\subsection{\textit{DELETE /machine}}
 
 Cabeceras necesarias:
 \begin{table}[h!]
@@ -844,7 +844,7 @@ Respuesta:
 \end{adjustbox}
 \end{table}
 
-\subsection{\textit{GET /api/provision/hosts/:name}}
+\subsection{\textit{GET /provision/hosts/:name}}
 
 Devuelve toda la información asociada a un grupo de hosts.
 
@@ -889,7 +889,7 @@ Respuesta:
 
 
 
-\subsection{\textit{POST/api/provision/hosts/query}}
+\subsection{\textit{POST/provision/hosts/query}}
 
 Devuelve los grupos de hosts que cumplen los criterios de búsqueda.
 
@@ -946,7 +946,7 @@ Respuesta (más de una máquina):
 
 
 
-\subsection{\textit{POST /api/provision/hosts}}
+\subsection{\textit{POST /provision/hosts}}
 
 Cabeceras necesarias:
 \begin{table}[h!]
@@ -977,7 +977,7 @@ Respuesta:
 \end{table}
 
 
-\subsection{\textit{PUT /api/provision/hosts}}
+\subsection{\textit{PUT /provision/hosts}}
 
 Cabeceras necesarias:
 \begin{table}[h!]
@@ -1018,7 +1018,7 @@ Respuesta:
 \end{adjustbox}
 \end{table}
 
-\subsection{\textit{DELETE /api/provision/hosts}}
+\subsection{\textit{DELETE /provision/hosts}}
 
 Cabeceras necesarias:
 \begin{table}[h!]
@@ -1080,7 +1080,7 @@ Respuesta:
 \end{adjustbox}
 		\end{table}
 	
-	\subsection{\textit{GET /api/provision/playbook/:name}}
+	\subsection{\textit{GET /provision/playbook/:name}}
 		Devuelve toda la información asociada a un Playbook.
 		
 		Cabeceras necesarias:
@@ -1121,7 +1121,7 @@ Respuesta:
 	
 	
 	
-	\subsection{\textit{POST/api/provision/playbook/query}}
+	\subsection{\textit{POST/provision/playbook/query}}
 		Devuelve los grupos de hosts que cumplen los criterios de búsqueda.
 		
 		Cabeceras necesarias:
@@ -1176,7 +1176,7 @@ Respuesta:
 	
 	
 	
-	\subsection{\textit{POST /api/provision/playbook}}
+	\subsection{\textit{POST /provision/playbook}}
 		Crea un nuevo Playbook.
 		
 		Cabeceras necesarias:
@@ -1208,7 +1208,7 @@ Respuesta:
 	\end{table}
 	
 	
-	\subsection{\textit{PUT /api/provision/playbook}}
+	\subsection{\textit{PUT /provision/playbook}}
 		Modifica los datos de un Playbook.
 		
 		Cabeceras necesarias:
@@ -1250,7 +1250,7 @@ Respuesta:
 \end{adjustbox}
 		\end{table}
 	
-	\subsection{\textit{DELETE /api/provision/playbook}}
+	\subsection{\textit{DELETE /provision/playbook}}
 		Elimina un Playbook.
 		
 		Cabeceras necesarias:
@@ -1303,7 +1303,7 @@ Respuesta:
 \section{Aprovisionamiento}
 
 
-	\subsection{\textit{POST /api/provision}}
+	\subsection{\textit{POST /provision}}
 		Ejecuta un playbook.
 	
 		Cabeceras necesarias:
@@ -1417,7 +1417,7 @@ Respuesta:
 		\end{table}
 	
 	
-	\subsection{\textit{POST /api/deploy/container}}
+	\subsection{\textit{POST /deploy/container}}
 		Permite ejecutar operaciones básicas en todos los contenedores.
 		
 		Cabeceras necesarias:
@@ -1546,7 +1546,7 @@ Respuesta:
 	
 	
 
-	\subsection{\textit{POST /api/deploy/container/single}}
+	\subsection{\textit{POST /deploy/container/single}}
 		Permite ejecutar operaciones básicas en un contenedor en concreto.
 	
 		Cabeceras necesarias:
@@ -1608,7 +1608,7 @@ Respuesta:
 	
 	
 	
-	\subsection{\textit{POST /api/deploy/image}}
+	\subsection{\textit{POST /deploy/image}}
 		Permite ejecutar operaciones básicas en todos las imágenes.
 	
 		Cabeceras necesarias:
@@ -1778,7 +1778,7 @@ Respuesta:
 		
 	
 	
-	\subsection{\textit{POST /api/deploy/image/single}}
+	\subsection{\textit{POST /deploy/image/single}}
 		Permite ejecutar operaciones básicas en una imagen en concreto.
 		
 		Cabeceras necesarias:

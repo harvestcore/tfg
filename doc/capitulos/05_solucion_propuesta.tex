@@ -30,7 +30,7 @@ Se propone un módulo que permita la autenticación de usuarios en el sistema. E
 \bigskip
 En cada petición este token deberá ser decodificado, se comprobará al usuario al que pertenece y finalmente se permitirá el acceso o no. Todos los endpoints del backend estarían protegidos por esta autenticación, salvo:
 \begin{itemize}
-	\item \textit{GET /api/login}
+	\item \textit{GET /login}
 	\item \textit{GET /api/heartbeat}
 \end{itemize}
 
@@ -38,8 +38,8 @@ En cada petición este token deberá ser decodificado, se comprobará al usuario
 \bigskip
 El servicio de autenticación a implementar debería implementar:
 \begin{itemize}
-	\item \textit{GET /api/login}
-	\item \textit{GET /api/logout}
+	\item \textit{GET /login}
+	\item \textit{GET /logout}
 \end{itemize}
 
 
@@ -81,11 +81,11 @@ Debido a que partimos del módulo \textit{Item} para desarrollar el de usuarios 
 \bigskip
 Este módulo contaría con los siguientes endpoints:
 \begin{itemize}
-	\item \textit{GET /api/user/:user} - Obtener la información de un usuario.
-	\item \textit{POST /api/user} - Crear un usuario.
-	\item \textit{PUT /api/user} - Modificar un usuario.
-	\item \textit{DELETE /api/user} - Eliminar un usuario.
-	\item \textit{POST /api/user/query} - Listar usuarios.
+	\item \textit{GET /user/:user} - Obtener la información de un usuario.
+	\item \textit{POST /user} - Crear un usuario.
+	\item \textit{PUT /user} - Modificar un usuario.
+	\item \textit{DELETE /user} - Eliminar un usuario.
+	\item \textit{POST /user/query} - Listar usuarios.
 \end{itemize} 
 
 
@@ -112,10 +112,10 @@ Estas serían:
 \bigskip
 Las anteriores operaciones corresponderían con los siguientes endpoints:
 \begin{itemize}
-	\item \textit{POST /api/deploy/container}
-	\item \textit{POST /api/deploy/container/single}
-	\item \textit{POST /api/deploy/image}
-	\item \textit{POST /api/deploy/image/single}
+	\item \textit{POST /deploy/container}
+	\item \textit{POST /deploy/container/single}
+	\item \textit{POST /deploy/image}
+	\item \textit{POST /deploy/image/single}
 \end{itemize}
 
 
@@ -139,16 +139,16 @@ En el caso de este módulo son necesarias dos clases extra, una para almacenar l
 
 Los endpoints que se proponen para manejar ambas clases son:
 \begin{itemize}
-	\item \textit{GET /api/provision/hosts/:name} - Obtener la información de un grupo de hosts.
-	\item \textit{POST /api/provision/hosts} - Crear un grupo de hosts.
-	\item \textit{PUT /api/provision/hosts} - Modificar un grupo de hosts.
-	\item \textit{DELETE /api/provision/hosts} - Eliminar un grupo de hosts.
-	\item \textit{POST /api/provision/hosts/query} - Listar grupos de hosts.
-	\item \textit{GET /api/provision/playbook/:name} - Obtener la información de un \textit{Playbook}.
-	\item \textit{POST /api/provision/playbook} - Crear un \textit{Playbook}.
-	\item \textit{PUT /api/provision/playbook} - Modificar un \textit{Playbook}.
-	\item \textit{DELETE /api/provision/playbook} - Eliminar un \textit{Playbook}.
-	\item \textit{POST /api/provision/playbook/query} - Listar \textit{playbooks}.
+	\item \textit{GET /provision/hosts/:name} - Obtener la información de un grupo de hosts.
+	\item \textit{POST /provision/hosts} - Crear un grupo de hosts.
+	\item \textit{PUT /provision/hosts} - Modificar un grupo de hosts.
+	\item \textit{DELETE /provision/hosts} - Eliminar un grupo de hosts.
+	\item \textit{POST /provision/hosts/query} - Listar grupos de hosts.
+	\item \textit{GET /provision/playbook/:name} - Obtener la información de un \textit{Playbook}.
+	\item \textit{POST /provision/playbook} - Crear un \textit{Playbook}.
+	\item \textit{PUT /provision/playbook} - Modificar un \textit{Playbook}.
+	\item \textit{DELETE /provision/playbook} - Eliminar un \textit{Playbook}.
+	\item \textit{POST /provision/playbook/query} - Listar \textit{playbooks}.
 \end{itemize}
 
 
@@ -161,7 +161,7 @@ Siguiendo los requisitos del software, las restricciones son:
 \bigskip
 Por otro lado, para ejecutar los playbooks se propone la creación de una clase \textit{AnsibleEngine}, que sería la encargada de implementar aquellos métodos necesarios para ejecutarlos. También se propone el siguiente endpoint:
 \begin{itemize}
-	\item \textit{POST /api/provision}
+	\item \textit{POST /provision}
 \end{itemize}
 
 
@@ -174,11 +174,11 @@ Módulo encargado del almacenamiento y gestión de máquinas y dispositivos. Ten
 \bigskip
 Los endpoints propuestos para este módulo son:
 \begin{itemize}
-	\item \textit{GET /api/machine/:user} - Obtener la información de una máquina.
-	\item \textit{POST /api/machine} - Crear una máquina.
-	\item \textit{PUT /api/machine} - Modificar una máquina.
-	\item \textit{DELETE /api/machine} - Eliminar una máquina.
-	\item \textit{POST /api/machine/query} - Listar máquinas.
+	\item \textit{GET /machine/:user} - Obtener la información de una máquina.
+	\item \textit{POST /machine} - Crear una máquina.
+	\item \textit{PUT /machine} - Modificar una máquina.
+	\item \textit{DELETE /machine} - Eliminar una máquina.
+	\item \textit{POST /machine/query} - Listar máquinas.
 \end{itemize}
 
 
@@ -201,7 +201,7 @@ Para comprobar el estado del backend se propone la creación de un servicio que 
 \bigskip
 El endpoint sería el siguiente:
 \begin{itemize}
-	\item \textit{GET /api/status}
+	\item \textit{GET /status}
 \end{itemize}
 
 \bigskip

@@ -1,6 +1,6 @@
 # Autenticación
 
-## GET /api/login
+## GET /login
 
 Loguea al usuario en el cliente.
 
@@ -18,7 +18,7 @@ Respuesta:
 
 
 
-## POST /api/logout
+## POST /logout
 
 Desloguea al usuario del cliente.
 

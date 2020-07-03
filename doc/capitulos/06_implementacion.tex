@@ -93,11 +93,11 @@ En cuanto a los servicios que se han desarrollado a partir de clases que heredan
 \bigskip
 SIDENOTE Suponemos que el servicio \textit{service} permite hacer operaciones con objetos de tipo Service.
 \begin{itemize}
-	\item \textit{GET /api/service/:name}: Devuelve los datos asociados a un objeto Service.
-	\item \textit{POST /api/service}: Crea un objeto de tipo Service.
-	\item \textit{PUT /api/service}: Modifica un objeto de tipo Service.
-	\item \textit{DELETE /api/service}: Elimina un objeto de tipo Service.
-	\item \textit{POST /api/service/query}: Permite hacer consultas más elaboradas haciendo uso del criterio de búsqueda y de la proyección de MongoDB. Los objetos obtenidos se devuelven en forma de diccionario (en el caso de un sólo resultado) o de lista de diccionarios (más de un resultado).
+	\item \textit{GET /service/:name}: Devuelve los datos asociados a un objeto Service.
+	\item \textit{POST /service}: Crea un objeto de tipo Service.
+	\item \textit{PUT /service}: Modifica un objeto de tipo Service.
+	\item \textit{DELETE /service}: Elimina un objeto de tipo Service.
+	\item \textit{POST /service/query}: Permite hacer consultas más elaboradas haciendo uso del criterio de búsqueda y de la proyección de MongoDB. Los objetos obtenidos se devuelven en forma de diccionario (en el caso de un sólo resultado) o de lista de diccionarios (más de un resultado).
 \end{itemize}
 
 
@@ -151,7 +151,7 @@ Los métodos que se han desarrollado han sido los siguientes:
 
 
 \bigskip
-Una vez desarrollada la clase que permite accesos de usuarios se ha desarrollado el servicio. Todas las rutas del backend, salvo \textit{GET /api/login} y \textit{GET /api/heartbeat} están protegidas con esta autenticación. Para ello se ha creado un decorador que comprueba el token de acceso cada vez que se quiere acceder a un endpoint. Es el siguiente:
+Una vez desarrollada la clase que permite accesos de usuarios se ha desarrollado el servicio. Todas las rutas del backend, salvo \textit{GET /login} y \textit{GET /api/heartbeat} están protegidas con esta autenticación. Para ello se ha creado un decorador que comprueba el token de acceso cada vez que se quiere acceder a un endpoint. Es el siguiente:
 \begin{itemize}
 	\item \textit{token\_required}: Obtiene el token de la cabecera \textit{x-access-token}, comprueba si es válido y permite el acceso o no al endpoint. En caso de no ser válido se devuelve un mensaje de error y un código de error 401.
 \end{itemize}
@@ -160,8 +160,8 @@ Una vez desarrollada la clase que permite accesos de usuarios se ha desarrollado
 \bigskip
 El servicio de login cuenta con dos endpoints, los cuales son:
 \begin{itemize}
-	\item \textit{GET /api/login}: Loguea al usuario, para ello toma los datos de acceso de la cabecera \textit{Basic auth} y devuelve o no el token asociado al usuario.
-	\item \textit{GET /api/logout}: Desloguea al usuario que previamente debe estar logueado.
+	\item \textit{GET /login}: Loguea al usuario, para ello toma los datos de acceso de la cabecera \textit{Basic auth} y devuelve o no el token asociado al usuario.
+	\item \textit{GET /logout}: Desloguea al usuario que previamente debe estar logueado.
 \end{itemize}
 
 
@@ -198,10 +198,10 @@ Los métodos que implementa esta clase son:
 \bigskip
 Los endpoints desarrollados tienen la forma que se indica [aquí](servicios), pero no se han implementado todos ellos, sólo los siguientes:
 \begin{itemize}
-	\item \textit{POST /api/customer}
-	\item \textit{PUT /api/customer}
-	\item \textit{DELETE /api/customer}
-	\item \textit{POST /api/customer/query}
+	\item \textit{POST /customer}
+	\item \textit{PUT /customer}
+	\item \textit{DELETE /customer}
+	\item \textit{POST /customer/query}
 \end{itemize}
 
 
@@ -236,11 +236,11 @@ Se han sobreescrito los métodos de inserción y actualización de datos para te
 \bigskip
 En cuanto al servicio, este está estructurado de la misma forma que se especifica [aquí](servicios), siendo los endpoints:
 \begin{itemize}
-	\item \textit{GET /api/user/:username}
-	\item \textit{POST /api/user}
-	\item \textit{PUT /api/user}
-	\item \textit{DELETE /api/user}
-	\item \textit{POST /api/user/query}
+	\item \textit{GET /user/:username}
+	\item \textit{POST /user}
+	\item \textit{PUT /user}
+	\item \textit{DELETE /user}
+	\item \textit{POST /user/query}
 \end{itemize}
 
 
@@ -284,10 +284,10 @@ Para manejar esto se ha creado la clase \textit{DockerEngine}, la cual se conect
 \bigskip
 Los endpoints desarrollados son los siguientes:
 \begin{itemize}
-	\item \textit{POST /api/deploy/container}: Operaciones en todos los contenedores.
-	\item \textit{POST /api/deploy/container/single}: Operaciones en un único contenedor.
-	\item \textit{POST /api/deploy/image}: Operaciones en todas las imágenes.
-	\item \textit{POST /api/deploy/image/single}: Operaciones en una única imagen.
+	\item \textit{POST /deploy/container}: Operaciones en todos los contenedores.
+	\item \textit{POST /deploy/container/single}: Operaciones en un único contenedor.
+	\item \textit{POST /deploy/image}: Operaciones en todas las imágenes.
+	\item \textit{POST /deploy/image/single}: Operaciones en una única imagen.
 \end{itemize}
 
 
@@ -338,11 +338,11 @@ Clase que hereda de \textit{Item} cuyos datos miembro son:
 \bigskip
 Comparte los mismos endpoints que se indican [aquí](servicios), siendo estos:
 \begin{itemize}
-	\item \textit{GET /api/provision/hosts/:name}
-	\item \textit{POST /api/provision/hosts}
-	\item \textit{PUT /api/provision/hosts}
-	\item \textit{DELETE /api/provision/hosts}
-	\item \textit{POST /api/provision/hosts/query}
+	\item \textit{GET /provision/hosts/:name}
+	\item \textit{POST /provision/hosts}
+	\item \textit{PUT /provision/hosts}
+	\item \textit{DELETE /provision/hosts}
+	\item \textit{POST /provision/hosts/query}
 \end{itemize}
 
 
@@ -361,11 +361,11 @@ Clase que hereda de \textit{Item} cuyos datos miembro son:
 \bigskip
 Comparte los mismos endpoints que se indican [aquí](servicios), siendo estos:
 \begin{itemize}
-	\item \textit{GET /api/provision/playbooks/:name}
-	\item \textit{POST /api/provision/playbooks}
-	\item \textit{PUT /api/provision/playbooks}
-	\item \textit{DELETE /api/provision/playbooks}
-	\item \textit{POST /api/provision/playbooks/query}
+	\item \textit{GET /provision/playbooks/:name}
+	\item \textit{POST /provision/playbooks}
+	\item \textit{PUT /provision/playbooks}
+	\item \textit{DELETE /provision/playbooks}
+	\item \textit{POST /provision/playbooks/query}
 \end{itemize}
 
 \bigskip
@@ -382,7 +382,7 @@ Este método toma como entrada el grupo de hosts a los que se le va a ejecutar e
 \bigskip
 El endpoint creado es el siguiente:
 \begin{itemize}
-	\item \textit{POST /api/provision}
+	\item \textit{POST /provision}
 \end{itemize}
 
 
@@ -414,11 +414,11 @@ En el caso de las máquinas todas las direcciones IP que se manejan deben ser va
 \bigskip
 El servicio tiene la misma estructura que la explicada [aquí](servicios) y sus endpoints son:
 \begin{itemize}
-	\item \textit{GET /api/machine/:name}
-	\item \textit{POST /api/machine}
-	\item \textit{PUT /api/machine}
-	\item \textit{DELETE /api/machine}
-	\item \textit{POST /api/machine/query}
+	\item \textit{GET /machine/:name}
+	\item \textit{POST /machine}
+	\item \textit{PUT /machine}
+	\item \textit{DELETE /machine}
+	\item \textit{POST /machine/query}
 \end{itemize}
 
 
@@ -428,7 +428,7 @@ El servicio tiene la misma estructura que la explicada [aquí](servicios) y sus 
 
 Para consultar el estado del backend se han creado dos \textit{endpoints}. El primero ofrece una información más detallada de los dos servicios más importantes y el segundo ofrece sólo el estado general del backend. Son:
 \begin{itemize}
-	\item \textit{GET /api/status}: \textit{Endpoint} autenticado que devuelve un diccionario con los estados de \textit{MongoDB} y \textit{Docker}, con la forma indicada anteriormente. Los usuarios administradores obtienen más información en el caso de \textit{MongoDB}. La estructura devuelta es:
+	\item \textit{GET /status}: \textit{Endpoint} autenticado que devuelve un diccionario con los estados de \textit{MongoDB} y \textit{Docker}, con la forma indicada anteriormente. Los usuarios administradores obtienen más información en el caso de \textit{MongoDB}. La estructura devuelta es:
 
 \begin{lstlisting}
 {
@@ -542,7 +542,7 @@ De este modo el resto de servicios solo tienen que hacer una llamada a este serv
 
 La autenticación es el módulo más importante del frontend, ya que se encarga de toda la gestión del token y del acceso de los usuarios a las diferentes rutas de la aplicación. Este servicio se compone de dos métodos principales, login y logout, y de algunos secundarios. El funcionamiento de estos es:
 \begin{itemize}
-	\item \textit{login(auth)}: A partir de los datos de autenticación del usuario realiza el login y se almacena en las cookies del navegador el token de acceso. Se comprueba si existe el token en las cookies: en caso afirmativo se comprueba si es válido y autoriza o no el acceso; en caso contrario se hace una petición al endpoint \textit{GET /api/login} con los datos de acceso para obtener un nuevo token. Finalmente se almacena el token en las cookies. Debido a la asincronía de las peticiones este método también devuelve un observable.
+	\item \textit{login(auth)}: A partir de los datos de autenticación del usuario realiza el login y se almacena en las cookies del navegador el token de acceso. Se comprueba si existe el token en las cookies: en caso afirmativo se comprueba si es válido y autoriza o no el acceso; en caso contrario se hace una petición al endpoint \textit{GET /login} con los datos de acceso para obtener un nuevo token. Finalmente se almacena el token en las cookies. Debido a la asincronía de las peticiones este método también devuelve un observable.
 	\item \textit{logout()}: Hace una petición de logout a la API y cuando obtiene la respuesta borra el token de las cookies del navegador.
 \end{itemize}
 

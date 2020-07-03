@@ -18,7 +18,7 @@
 
 
 
-## GET /api/user/{username}
+## GET /user/{username}
 
 Devuelve toda la información asociada a un usuario.
 
@@ -42,7 +42,7 @@ Respuesta:
 
 
 
-## POST /api/user/query
+## POST /user/query
 
 Devuelve los usuarios que cumplen los criterios de búsqueda.
 
@@ -74,7 +74,7 @@ Respuesta (más de un usuario):
 
 
 
-## POST /api/user
+## POST /user
 
 Crea un nuevo usuario.
 
@@ -97,7 +97,7 @@ Respuesta:
 
 
 
-## PUT /api/user
+## PUT /user
 
 Modifica los datos de un usuario.
 
@@ -123,7 +123,7 @@ Respuesta:
 
 
 
-## DELETE /api/user
+## DELETE /user
 
 Elimina un usuario.
 

@@ -86,11 +86,11 @@ En cuanto a los servicios que se han desarrollado a partir de clases que heredan
 
 > Suponemos que el servicio *service* permite hacer operaciones con objetos de tipo Service.
 
-- *GET /api/service/<name>*: Devuelve los datos asociados a un objeto Service.
-- *POST /api/service*: Crea un objeto de tipo Service.
-- *PUT /api/service*: Modifica un objeto de tipo Service.
-- *DELETE /api/service*: Elimina un objeto de tipo Service.
-- *POST /api/service/query*: Permite hacer consultas más elaboradas haciendo uso del criterio de búsqueda y de la proyección de MongoDB. Los objetos obtenidos se devuelven en forma de diccionario (en el caso de un sólo resultado) o de lista de diccionarios (más de un resultado).
+- *GET /service/<name>*: Devuelve los datos asociados a un objeto Service.
+- *POST /service*: Crea un objeto de tipo Service.
+- *PUT /service*: Modifica un objeto de tipo Service.
+- *DELETE /service*: Elimina un objeto de tipo Service.
+- *POST /service/query*: Permite hacer consultas más elaboradas haciendo uso del criterio de búsqueda y de la proyección de MongoDB. Los objetos obtenidos se devuelven en forma de diccionario (en el caso de un sólo resultado) o de lista de diccionarios (más de un resultado).
 
 
 
@@ -134,7 +134,7 @@ Los métodos que se han desarrollado han sido los siguientes:
 
 
 
-Una vez desarrollada la clase que permite accesos de usuarios se ha desarrollado el servicio. Todas las rutas del backend, salvo *GET /api/login* y *GET /api/heartbeat* están protegidas con esta autenticación. Para ello se ha creado un decorador que comprueba el token de acceso cada vez que se quiere acceder a un endpoint. Es el siguiente:
+Una vez desarrollada la clase que permite accesos de usuarios se ha desarrollado el servicio. Todas las rutas del backend, salvo *GET /login* y *GET /api/heartbeat* están protegidas con esta autenticación. Para ello se ha creado un decorador que comprueba el token de acceso cada vez que se quiere acceder a un endpoint. Es el siguiente:
 
 - *token_required*: Obtiene el token de la cabecera *x-access-token*, comprueba si es válido y permite el acceso o no al endpoint. En caso de no ser válido se devuelve un mensaje de error y un código de error 401.
 
@@ -142,8 +142,8 @@ Una vez desarrollada la clase que permite accesos de usuarios se ha desarrollado
 
 El servicio de login cuenta con dos endpoints, los cuales son:
 
-- *GET /api/login*: Loguea al usuario, para ello toma los datos de acceso de la cabecera *Basic auth* y devuelve o no el token asociado al usuario.
-- *GET /api/logout*: Desloguea al usuario que previamente debe estar logueado.
+- *GET /login*: Loguea al usuario, para ello toma los datos de acceso de la cabecera *Basic auth* y devuelve o no el token asociado al usuario.
+- *GET /logout*: Desloguea al usuario que previamente debe estar logueado.
 
 
 
@@ -175,10 +175,10 @@ Los métodos que implementa esta clase son:
 
 Los endpoints desarrollados tienen la forma que se indica [aquí](#servicios), pero no se han implementado todos ellos, sólo los siguientes:
 
-- *POST /api/customer*
-- *PUT /api/customer*
-- *DELETE /api/customer*
-- *POST /api/customer/query*
+- *POST /customer*
+- *PUT /customer*
+- *DELETE /customer*
+- *POST /customer/query*
 
 
 
@@ -208,11 +208,11 @@ Se han sobreescrito los métodos de inserción y actualización de datos para te
 
 En cuanto al servicio, este está estructurado de la misma forma que se especifica [aquí](#servicios), siendo los endpoints:
 
-- *GET /api/user/<username>*
-- *POST /api/user*
-- *PUT /api/user*
-- *DELETE /api/user*
-- *POST /api/user/query*
+- *GET /user/<username>*
+- *POST /user*
+- *PUT /user*
+- *DELETE /user*
+- *POST /user/query*
 
 
 
@@ -252,10 +252,10 @@ Para manejar esto se ha creado la clase *DockerEngine*, la cual se conecta al da
 
 Los endpoints desarrollados son los siguientes:
 
-- *POST /api/deploy/container*: Operaciones en todos los contenedores.
-- *POST /api/deploy/container/single*: Operaciones en un único contenedor.
-- *POST /api/deploy/image*: Operaciones en todas las imágenes.
-- *POST /api/deploy/image/single*: Operaciones en una única imagen.
+- *POST /deploy/container*: Operaciones en todos los contenedores.
+- *POST /deploy/container/single*: Operaciones en un único contenedor.
+- *POST /deploy/image*: Operaciones en todas las imágenes.
+- *POST /deploy/image/single*: Operaciones en una única imagen.
 
 
 
@@ -299,11 +299,11 @@ Clase que hereda de *Item* cuyos datos miembro son:
 
 Comparte los mismos endpoints que se indican [aquí](#servicios), siendo estos:
 
-- *GET /api/provision/hosts/<name>*
-- *POST /api/provision/hosts*
-- *PUT /api/provision/hosts*
-- *DELETE /api/provision/hosts*
-- *POST /api/provision/hosts/query*
+- *GET /provision/hosts/<name>*
+- *POST /provision/hosts*
+- *PUT /provision/hosts*
+- *DELETE /provision/hosts*
+- *POST /provision/hosts/query*
 
 
 
@@ -318,11 +318,11 @@ Clase que hereda de *Item* cuyos datos miembro son:
 
 Comparte los mismos endpoints que se indican [aquí](#servicios), siendo estos:
 
-- *GET /api/provision/playbooks/<name>*
-- *POST /api/provision/playbooks*
-- *PUT /api/provision/playbooks*
-- *DELETE /api/provision/playbooks*
-- *POST /api/provision/playbooks/query
+- *GET /provision/playbooks/<name>*
+- *POST /provision/playbooks*
+- *PUT /provision/playbooks*
+- *DELETE /provision/playbooks*
+- *POST /provision/playbooks/query
 
 
 
@@ -336,7 +336,7 @@ Este método toma como entrada el grupo de hosts a los que se le va a ejecutar e
 
 El endpoint creado es el siguiente:
 
-- *POST /api/provision*
+- *POST /provision*
 
 
 
@@ -364,11 +364,11 @@ En el caso de las máquinas todas las direcciones IP que se manejan deben ser va
 
 El servicio tiene la misma estructura que la explicada [aquí](#servicios) y sus endpoints son:
 
-- *GET /api/machine/<name>*
-- *POST /api/machine*
-- *PUT /api/machine*
-- *DELETE /api/machine*
-- *POST /api/machine/query*
+- *GET /machine/<name>*
+- *POST /machine*
+- *PUT /machine*
+- *DELETE /machine*
+- *POST /machine/query*
 
 
 
@@ -378,7 +378,7 @@ El servicio tiene la misma estructura que la explicada [aquí](#servicios) y sus
 
 Para consultar el estado del backend se han creado dos endpoints. El primero ofrece una información más detallada de los dos servicios más importantes y el segundo ofrece sólo el estado general del backend. Son:
 
-- *GET /api/status*: Endpoint autenticado que devuelve un diccionario con los estados de MongoDB y Docker, con la forma indicada anteriormente. Los usuarios administradores obtienen más información en el caso de Mongo. La estructura devuelta es:
+- *GET /status*: Endpoint autenticado que devuelve un diccionario con los estados de MongoDB y Docker, con la forma indicada anteriormente. Los usuarios administradores obtienen más información en el caso de Mongo. La estructura devuelta es:
 
   ```python
   {
@@ -489,7 +489,7 @@ De este modo el resto de servicios solo tienen que hacer una llamada a este serv
 
 La autenticación es el módulo más importante del frontend, ya que se encarga de toda la gestión del token y del acceso de los usuarios a las diferentes rutas de la aplicación. Este servicio se compone de dos métodos principales, login y logout, y de algunos secundarios. El funcionamiento de estos es:
 
-- *login(auth)*: A partir de los datos de autenticación del usuario realiza el login y se almacena en las cookies del navegador el token de acceso. Se comprueba si existe el token en las cookies: en caso afirmativo se comprueba si es válido y autoriza o no el acceso; en caso contrario se hace una petición al endpoint *GET /api/login* con los datos de acceso para obtener un nuevo token. Finalmente se almacena el token en las cookies. Debido a la asincronía de las peticiones este método también devuelve un observable.
+- *login(auth)*: A partir de los datos de autenticación del usuario realiza el login y se almacena en las cookies del navegador el token de acceso. Se comprueba si existe el token en las cookies: en caso afirmativo se comprueba si es válido y autoriza o no el acceso; en caso contrario se hace una petición al endpoint *GET /login* con los datos de acceso para obtener un nuevo token. Finalmente se almacena el token en las cookies. Debido a la asincronía de las peticiones este método también devuelve un observable.
 - *logout()*: Hace una petición de logout a la API y cuando obtiene la respuesta borra el token de las cookies del navegador.
 
 

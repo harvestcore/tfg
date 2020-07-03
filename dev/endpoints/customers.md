@@ -13,7 +13,7 @@
 
 
 
-## POST /api/customer/query
+## POST /customer/query
 
 Devuelve los clientes que cumplen los criterios de búsqueda.
 
@@ -45,7 +45,7 @@ Respuesta (más de un usuario):
 
 
 
-## POST /api/customer
+## POST /customer
 
 Crea un nuevo cliente.
 
@@ -68,7 +68,7 @@ Respuesta:
 
 
 
-## PUT /api/customer
+## PUT /customer
 
 Modifica los datos de un cliente.
 
@@ -94,7 +94,7 @@ Respuesta:
 
 
 
-## DELETE /api/customer
+## DELETE /customer
 
 Elimina un cliente.
 

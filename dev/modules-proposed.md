@@ -42,15 +42,15 @@ En cada petición este token deberá ser decodificado, se comprobará al usuario
 
 Todos los endpoints del backend estarían protegidos por esta autenticación, salvo:
 
-- *GET /api/login*
+- *GET /login*
 - *GET /api/heartbeat*
 
 
 
 El servicio de autenticación a implementar debería implementar:
 
-- *GET /api/login*
-- *GET /api/logout*
+- *GET /login*
+- *GET /logout*
 
 
 
@@ -107,11 +107,11 @@ Debido a que partimos del módulo Item, para desarrollar el módulo de usuarios 
 
 Este módulo contaría con los siguientes endpoints:
 
-- *GET /api/user/:user* - Obtener la información de un usuario.
-- *POST /api/user* - Crear un usuario.
-- *PUT /api/user* - Modificar un usuario.
-- *DELETE /api/user* - Eliminar un usuario.
-- *POST /api/user/query* - Listar usuarios.
+- *GET /user/:user* - Obtener la información de un usuario.
+- *POST /user* - Crear un usuario.
+- *PUT /user* - Modificar un usuario.
+- *DELETE /user* - Eliminar un usuario.
+- *POST /user/query* - Listar usuarios.
 
 
 
@@ -142,10 +142,10 @@ Estas serían:
 
 Las anteriores operaciones corresponderían con los siguientes endpoints:
 
-- *POST /api/deploy/container*
-- *POST /api/deploy/container/single*
-- *POST /api/deploy/image*
-- *POST /api/deploy/image/single*
+- *POST /deploy/container*
+- *POST /deploy/container/single*
+- *POST /deploy/image*
+- *POST /deploy/image/single*
 
 
 
@@ -175,19 +175,19 @@ En el caso de este módulo son necesarias dos clases extra, una para almacenar l
 
 Los endpoints que se proponen para manejar ambas clases son:
 
-- *GET /api/provision/hosts/:name* - Obtener la información de un grupo de hosts.
-- *POST /api/provision/hosts* - Crear un grupo de hosts.
-- *PUT /api/provision/hosts* - Modificar un grupo de hosts.
-- *DELETE /api/provision/hosts* - Eliminar un grupo de hosts.
-- *POST /api/provision/hosts/query* - Listar grupos de hosts.
+- *GET /provision/hosts/:name* - Obtener la información de un grupo de hosts.
+- *POST /provision/hosts* - Crear un grupo de hosts.
+- *PUT /provision/hosts* - Modificar un grupo de hosts.
+- *DELETE /provision/hosts* - Eliminar un grupo de hosts.
+- *POST /provision/hosts/query* - Listar grupos de hosts.
 
 
 
-- *GET /api/provision/playbook/:name* - Obtener la información de un playbook.
-- *POST /api/provision/playbook* - Crear un playbook.
-- *PUT /api/provision/playbook* - Modificar un playbook.
-- *DELETE /api/provision/playbook* - Eliminar un playbook.
-- *POST /api/provision/playbook/query* - Listar playbooks.
+- *GET /provision/playbook/:name* - Obtener la información de un playbook.
+- *POST /provision/playbook* - Crear un playbook.
+- *PUT /provision/playbook* - Modificar un playbook.
+- *DELETE /provision/playbook* - Eliminar un playbook.
+- *POST /provision/playbook/query* - Listar playbooks.
 
 
 
@@ -207,7 +207,7 @@ Siguiendo los requisitos del software, las restricciones son:
 
 Por otro lado para ejecutar los playbooks se propone la creación de una clase *AnsibleEngine*, que sería la encargada de implementar aquellos métodos necesarios para ejecutar los playbooks. También se propone el siguiente endpoint:
 
-- *POST /api/provision*
+- *POST /provision*
 
 
 
@@ -226,11 +226,11 @@ Módulo encargado del almacenamiento y gestión de máquinas y dispositivos. Ten
 
 Los endpoints propuestos para este módulo son:
 
-- *GET /api/machine/:user* - Obtener la información de una máquina.
-- *POST /api/machine* - Crear una máquina.
-- *PUT /api/machine* - Modificar una máquina.
-- *DELETE /api/machine* - Eliminar una máquina.
-- *POST /api/machine/query* - Listar máquinas.
+- *GET /machine/:user* - Obtener la información de una máquina.
+- *POST /machine* - Crear una máquina.
+- *PUT /machine* - Modificar una máquina.
+- *DELETE /machine* - Eliminar una máquina.
+- *POST /machine/query* - Listar máquinas.
 
 
 
@@ -256,7 +256,7 @@ Para comprobar el estado del backend se propone la creación de un servicio que 
 
 El endpoint sería el siguiente:
 
-- *GET /api/status*
+- *GET /status*
 
 Debido a que este endpoint devolvería información relevante éste deberia estar también protegido por la autenticación comentada en secciones anteriores.
 
