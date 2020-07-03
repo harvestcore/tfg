@@ -28,9 +28,3 @@ Es interactivo y permite:
 - Agregar un usuario a un cliente (o *customer*).
 
 Internamente utiliza la configuración de las [variables de entorno](env-vars.md) que se encuentre establecida en el momento de utilizar el CLI.
-
-
-
-### Rationale
-
-Existen multitud de librerias y frameworks 

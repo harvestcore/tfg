@@ -1,0 +1,89 @@
+\chapter{Planificación}
+
+\section{Metodología de desarrollo}
+
+Podría definirse una metodología de desarrollo como el proceso disciplinado de desarrollo de software con el fin de hacerlo más eficiente. En la actualidad existen muchas de estas metodologías que han surgido a lo largo del tiempo mejorándose unas a otras teniendo en cuenta factores como los costes, planificación, calidad y las dificultades asociadas al desarrollo de un software.
+
+Aunque las bases esenciales no difieren entre metodologías sí hay diferencias en los ámbitos en los que se centran principalmente. Por este motivo voy a utilizar una mezcla de dos metodologías ágiles: \textit{SCRUM} y \textit{Kanban}.
+
+Lo interesante de Scrum es la forma de dividir el proceso de desarrollo del software. Para ello se usan \textit{sprints}, los cuales son un periodo de tiempo (variables) en el que se planifican tareas, se desarrollan y luego se entregan de forma funcional. Esto permite entregas paulatinas, un \textit{feedback} continuo y un desarrollo más dinámico por parte de todos los implicados.
+
+Agrupa todas las buenas prácticas de las metodologías ágiles, y si bien en mi caso estoy algo más limitado al ser Product Owner, Scrum Master y desarrollador al mismo tiempo, la organización es muy atractiva en este tipo de proyectos. La división por \textit{sprints} hace que cada mes (tiempo que estimo suficiente para un \textit{sprint} completo) se tenga un conjunto de funcionalidades nuevas. Por otro lado, las reuniones diarias son conmigo mismo (y en ocasiones con el tutor, las cuales pueden solucionar problemas que surjan), lo que permite que la organización sea mejor y sepa qué hacer cada día.
+
+\bigskip
+Kanban por su parte es una metodología que utiliza tarjetas para simbolizar las tareas que se tienen que realizar en el desarrollo de un software. Estas tarjetas se utilizan en un tablero dividido por columnas, las cuales simbolizan tareas que no se han empezado aún, tareas que estan en progreso, ya terminadas, etc.
+
+Pienso que la organización visual de las tareas es bastante provechosa, pues dicha visualización permite saber las tareas que son más urgentes o el estado en el que se encuentran. \textit{GitHub} cuenta con una herramienta llamada \textit{Proyectos} que ofrece un tablero Kanban para la organización de tareas y además integración con las \textit{issues} y \textit{pull requests} que se van creando en el proyecto, algo que pienso que es beneficioso para el proyecto y que voy a usar durante el desarrollo del mismo.
+
+Las metodologías tradicionales surgieron cuando aparecieron los primeros sistemas software y están caracterizadas por tener una estructura lineal, en la que al principio se acuerdan las características que debe tener el software y no se modifican durante el desarrollo del sistema, y finalmente se entrega el producto sin dar lugar a cambios. Por lo general se centran en la documentación exhaustiva del proyecto y suelen ser llevadas a cabo por equipos compuestos por multitud de desarrolladores. Además, durante el desarrollo no se tiene una especial comunicación con el cliente.
+
+Aunque tienen algunas ventajas, como tener los objetivos claros desde el primer momento o tener un seguimiento continuo, las desventajas hacen que no tenga cabida este tipo de metodología en el proyecto. Estas son los costes elevados, que no se permitan cambios durante el desarrollo y que la entrega del producto se haga al final del desarrollo, entre otros.
+
+
+\section{Temporización}
+
+Como se indicaba en la sección anterior los \textit{sprints} planeados tienen una duración aproximada de un mes. Comencé el desarrollo del proyecto a comienzos del mes de febrero y lo he terminado a finales de junio, por lo que se han realizado cinco \textit{sprints}. En total se han creado y finalizado 61 \textit{issues} que se han ido repartiendo por los hitos y desarrollando a lo largo de todo este tiempo. 
+
+Al comienzo del desarrollo se definieron tres hitos que corresponden con las tres partes principales de este proyecto. Son: Desarrollo del backend, desarrollo del frontend y documentación.
+
+\bigskip
+El trabajo realizado dividido por \textit{sprints} ha sido el siguiente:
+
+\subsection{Febrero}
+Comienzo de la investigación de herramientas y tecnologías, además de algunas tareas de documentación. Creación del repositorio en \textit{GitHub}, del proyecto del backend y pipelines en \textit{GitHub Actions}. Clase Item, Client y sus servicios. Creación del login y del despliegue de servicios. Clase DockerEngine.
+
+\bigskip
+\textbf{Issues:} \href{https://github.com/harvestcore/tfg/issues/1}{DEV-1}, \href{https://github.com/harvestcore/tfg/issues/3}{DEV-3}, \href{https://github.com/harvestcore/tfg/issues/4}{DEV-4}, \href{https://github.com/harvestcore/tfg/issues/6}{DEV-6}, \href{https://github.com/harvestcore/tfg/issues/11}{DEV-11}, \href{https://github.com/harvestcore/tfg/issues/12}{DEV-12}, \href{https://github.com/harvestcore/tfg/issues/13}{DEV-13}, \href{https://github.com/harvestcore/tfg/issues/17}{DEV-17}, \href{https://github.com/harvestcore/tfg/issues/25}{DEV-25}, \href{https://github.com/harvestcore/tfg/issues/27}{DEV-27} y \href{https://github.com/harvestcore/tfg/issues/29}{DEV-29}.
+
+
+\subsection{Marzo}
+Aprovisionado de máquinas. Multiclient en el backend. Arreglo de algunos \textit{bugs}. \textit{Dockerizado} del backend y creación de pipelines.
+
+\bigskip
+\textbf{Issues:} \href{https://github.com/harvestcore/tfg/issues/22}{DEV-22},  \href{https://github.com/harvestcore/tfg/issues/32}{DEV-32},  \href{https://github.com/harvestcore/tfg/issues/37}{DEV-37},  \href{https://github.com/harvestcore/tfg/issues/40}{DEV-40},  \href{https://github.com/harvestcore/tfg/issues/44}{DEV-44} y  \href{https://github.com/harvestcore/tfg/issues/45}{DEV-45}. 
+
+
+\subsection{Abril}
+Tests adicionales. Creación del \textit{CLI}. Servicios para el estado del servidor y \textit{heartbeat}. Clase Machine y servicio para el manejo de máquinas. Test en profundidad del backend y arreglo de \textit{bugs}. Documentación.
+
+\bigskip
+\textbf{Issues:} \href{https://github.com/harvestcore/tfg/issues/19}{DEV-19},  \href{https://github.com/harvestcore/tfg/issues/24}{DEV-24},  \href{https://github.com/harvestcore/tfg/issues/26}{DEV-26},  \href{https://github.com/harvestcore/tfg/issues/35}{DEV-35},  \href{https://github.com/harvestcore/tfg/issues/37}{DEV-37},  \href{https://github.com/harvestcore/tfg/issues/40}{DEV-40},  \href{https://github.com/harvestcore/tfg/issues/43}{DEV-43},  \href{https://github.com/harvestcore/tfg/issues/49}{DEV-49} y  \href{https://github.com/harvestcore/tfg/issues/59}{DEV-59}.
+
+
+\subsection{Mayo}
+\textit{Sprint} dedicado completamente al frontend. Creación del proyecto y pipelines. Servicios para comunicación frontend-backend. Routing. Diseño. Login y multiclient. Componentes.
+
+\bigskip
+\textbf{Issues:} \href{https://github.com/harvestcore/tfg/issues/33}{DEV-33}, 
+\href{https://github.com/harvestcore/tfg/issues/41}{DEV-41}, 
+\href{https://github.com/harvestcore/tfg/issues/42}{DEV-42}, 
+\href{https://github.com/harvestcore/tfg/issues/68}{DEV-68}, 
+\href{https://github.com/harvestcore/tfg/issues/69}{DEV-69}, 
+\href{https://github.com/harvestcore/tfg/issues/70}{DEV-70}, 
+\href{https://github.com/harvestcore/tfg/issues/73}{DEV-73}, 
+\href{https://github.com/harvestcore/tfg/issues/75}{DEV-75}, 
+\href{https://github.com/harvestcore/tfg/issues/77}{DEV-77}, 
+\href{https://github.com/harvestcore/tfg/issues/78}{DEV-78}, 
+\href{https://github.com/harvestcore/tfg/issues/81}{DEV-81}, 
+\href{https://github.com/harvestcore/tfg/issues/82}{DEV-82}, 
+\href{https://github.com/harvestcore/tfg/issues/83}{DEV-83}, 
+\href{https://github.com/harvestcore/tfg/issues/88}{DEV-88}, 
+\href{https://github.com/harvestcore/tfg/issues/91}{DEV-91} y 
+\href{https://github.com/harvestcore/tfg/issues/94}{DEV-94}.
+
+
+\subsection{Junio}
+Test en profundidad del frontend y arreglo de \textit{bugs}. Documentación y enmaquetado.
+
+\bigskip
+\textbf{Issues:} \href{https://github.com/harvestcore/tfg/issues/20}{DEV-20}, 
+\href{https://github.com/harvestcore/tfg/issues/23}{DEV-23}, 
+\href{https://github.com/harvestcore/tfg/issues/92}{DEV-92}, 
+\href{https://github.com/harvestcore/tfg/issues/100}{DEV-100}, 
+\href{https://github.com/harvestcore/tfg/issues/102}{DEV-102}, 
+\href{https://github.com/harvestcore/tfg/issues/103}{DEV-103}, 
+\href{https://github.com/harvestcore/tfg/issues/104}{DEV-104}, 
+\href{https://github.com/harvestcore/tfg/issues/105}{DEV-105}, 
+\href{https://github.com/harvestcore/tfg/issues/106}{DEV-106}, 
+\href{https://github.com/harvestcore/tfg/issues/107}{DEV-107} y 
+\href{https://github.com/harvestcore/tfg/issues/109}{DEV-109}.

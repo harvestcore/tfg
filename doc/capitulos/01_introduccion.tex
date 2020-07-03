@@ -1,52 +1,37 @@
 \chapter{Introducción}
 
 
-\textbf{Ámbito}
-\vspace{0,2cm}
+Cada día el número de equipos que se utilizan de forma profesional en empresas y organizaciones crece de forma exponencial. Todos ellos requieren una configuración inicial para empezar a trabajar, la cual puede comprender tanto la instalación de aplicaciones de forma local como el despliegue de servicios para poder trabajar con ellos, entre otros.
 
-El sistema está centrado en empresas de pequeño y mediano tamaño, donde el número de equipos a aprovisionar es considerable y creciente así como el número de servicios a utilizar está también en incremento.
+Esta configuración inicial se suele realizar en varias etapas, comenzando por la instalación física de los equipos, configuración de red, instalación de software y finalmente la configuración de éste. Cada uno de estos pasos comprende una serie de tareas secundarias que generalmente se suelen realizar de forma independiente. La independencia de las tareas hace que la puesta a punto de todas las máquinas tome un tiempo muy valioso. Un ejemplo sería la instalación de un mismo software en cientos de máquinas, en la que hacerlo de manera secuencial tomaría mucho tiempo. Para solucionar esto han surgido herramientas que permiten realizar estas instalaciones en un solo paso, algo que soluciona en parte el problema.
 
+Por otro lado el despliegue de los servicios que pueden necesitarse también suele tomar un tiempo considerable, algo que aunque está ligado al paso anterior, no se realiza al mismo tiempo.
 
-\vspace{1cm}
+Además todas las configuraciones de las máquinas que se manejan no suelen estar centralizadas. Cierto es que los routers o switches actuales tienen capacidades para almacenar todo esto, pero implica que se tiene que acceder a ellos para consultarlas.
 
+En este proyecto se expone una solución al problema expuesto, \textbf{IPManager}. Esta se compone de un backend y un frontend y busca unificar todos los procesos descritos anteriormente en un puesto centralizado que permite a un administrador de sistemas agilizar el desarrollo de estas tareas. También ofrece modularidad en dos grandes aspectos: permitiendo que se puedan agregar nuevas funcionalidades de forma sencilla en el backend y proporcionando una API REST.
 
-\textbf{Extensión}
-\vspace{0,2cm}
+Con la reciente crisis provocada por el COVID-19 muchas empresas han tenido que dejar de lado sus oficinas para operar mediante teletrabajo. Herramientas como \textbf{IPManager} permiten que el administrador del sistema pueda administrarlo todo de forma remota sin tener que desplazarse de su hogar. Todas las facilidades que se puedan ofrecer al trabajo remoto son necesarias, por lo que ofrecer soluciones que permitan esto tiene una especial importancia.
 
-Se pretende que el sistema pueda realizar las siguientes tareas:
+\section{Objetivos}
 
-- Despliegue de servicios on-premise y en la nube.
-- Aprovisionamiento de sistemas.
+El desarrollo de este proyecto tiene los siguientes objetivos:
 
-Además, dispondría de una interfaz de usuario gráfica así como un cliente de línea de comandos.
+\begin{itemize}
+\item Ofrecer una solución que unifique todos estos procesos, para simplificarlos y para reducir el tiempo empleado en ellos. Estos son el aprovisionado de sistemas, el despliegue de servicios y el almacenado de configuraciones de máquinas.
+\item Ofrecer una solución liviana y no intrusiva en el ecosistema donde se instale.
+\item Ofrecer una solución que provea una de \textit{API REST} para permitir el desarrollo de otros frontend y la integración de estos.
+\item Ofrecer una solución totalmente compuesta por software libre.
+\end{itemize}
 
+\section{Estructura del documento}
 
-\vspace{1cm}
+En este documento se explica todo el desarrollo del proyecto, así como las decisiones tomadas y los diferentes aspectos que se han tenido en cuenta.
 
+Se comienza con una descripción más concreta del problema y con el análisis de requisitos en el \textit{capítulo 2}. Tras esto, en el \textit{capítulo 3}, se hace un repaso al estado del arte en este ámbito.
 
-\textbf{Notas}
-\vspace{0,2cm}
+El capítulo 4 se ha dedicado a la exposición de las herramientas y tecnologías que se han empleado, y en el \textit{capítulo 5} y \textit{capítulo 6} se desarrolla en profundidad la solución que se propone y la implementación de la misma.
 
-- Backend y frontend.
+Finalmente, en el \textit{capítulo 7}, se exponen algunas conclusiones personales tras desarrollar este proyecto y también se enumeran los posibles trabajos futuros que se podrían incluir en este proyecto.
 
-- Probablemente en:
-
-\hspace{1cm}- Python: Hay bastantes librerias y lo conozco bien.
-
-\hspace{1cm}- Go: No hay tantas librerias y me gustaría aprender a usarlo.
-
-\hspace{1cm}- Angular: Lo conozco bastante bien.
-
-- Crear scripts de aprovisionamiento y ejecutarlos.
-
-- Poder crear imagenes de docker / ejecutarlas.
-
-- Despliegue en la nube y on-premise.
-
-- Mongo como db.
-
-- Guardar configuraciones (?)
-
-- Multiclient (?)
-
-- Tests de back y front.
+De forma anexa se ha incluido también la especificación de los endpoints del backend y de las variables de entorno, una guía de instalación del proyecto y una introducción a los primeros pasos a dar tras instalar el software.

@@ -1,0 +1,283 @@
+\chapter{Solución propuesta}
+
+
+\section{Almacenamiento}
+
+Para facilitar el desarrollo de los diferentes módulos se propone desarrollar una base común que sirva como puente para realizar operaciones en las diferentes colecciones de la base de datos.
+
+\bigskip
+Esta podría llamarse \textit{Item} e implementaría las cuatro operaciones básicas necesarias para manejar cualquier tipo de dato: crear, modificar, obtener y eliminar. Una vez implementados esos métodos básicos el resto de módulos que se desarrollen sólo tienen que sobreescribir las operaciones necesarias para adecuarlas a cada uso concreto.
+
+\bigskip
+Por otro lado, para manejar el cliente de MongoDB se propone crear una clase, llamada MongoEngine, que permita realizar diferentes operaciones en las colecciones y bases de datos. Además, podría obtenerse también algún tipo de estadísticos de este servicio. Ambos módulos funcionarían conjuntamente para ofrecer un conector a la base de datos sencillo y capaz de adaptarse a cualquier tipo de uso.
+
+\bigskip
+Para la configuración de cada clase que pueda heredar de \textit{Item} se debería definir un nombre de la colección a usar por esa clase y además el esquema de la colección. Este esquema sería el conjunto de datos que se pueden almacenar en la colección.
+
+
+\bigskip
+En conclusión, se propone:
+\begin{itemize}
+	\item Clase Item
+	\item Clase MongoEngine
+\end{itemize}
+
+
+\section{Autenticación}
+
+Se propone un módulo que permita la autenticación de usuarios en el sistema. Este haría uso de JWT (JSON Web Token) para encriptar la información y se debería incluir en las cabeceras de las peticiones que se realicen al backend. La cabecera a usar podría ser: \textit{x-access-token}.
+
+\bigskip
+En cada petición este token deberá ser decodificado, se comprobará al usuario al que pertenece y finalmente se permitirá el acceso o no. Todos los endpoints del backend estarían protegidos por esta autenticación, salvo:
+\begin{itemize}
+	\item \textit{GET /api/login}
+	\item \textit{GET /api/heartbeat}
+\end{itemize}
+
+
+\bigskip
+El servicio de autenticación a implementar debería implementar:
+\begin{itemize}
+	\item \textit{GET /api/login}
+	\item \textit{GET /api/logout}
+\end{itemize}
+
+
+
+\section{Clientes}
+
+Se propone este módulo para diferenciar y manejar los diferentes clientes que podrían acceder al backend. Cada uno de estos clientes contaría con su propia base de datos por lo que se debería administrar y controlar esos datos.
+
+\bigskip
+La clase \textit{Customer} es la propuesta en este caso. Heredaría las funcionalidades de \textit{Item} y las complementaría con la gestión de estos clientes. Para diferenciar un cliente de otro se propone que se acceda al backend por medio de un subdominio.
+
+
+
+\section{Usuarios}
+
+Este módulo es el encargado de la gestión de los usuarios y sus funcionalidades serían las siguientes:
+\begin{itemize}
+	\item Crear usuarios
+	\item Modificar usuarios
+	\item Obtener información de los usuarios
+	\item Eliminar usuarios
+\end{itemize}
+
+
+\bigskip
+Para satisfacer los requisitos del software se propone lo siguiente:
+\begin{itemize}
+	\item Los datos a almacenar por usuario son: Identificador único, Tipo de usuario, Nombre, Apellidos, Email, Nombre de usuario, Contraseña.
+	\item La contraseña se encriptaría con encriptado simétrico Fernet.
+	\item Los tipos de usuario aceptados serían 'admin' y 'regular'.
+	\item El email será único.
+\end{itemize}
+
+
+
+\bigskip
+Debido a que partimos del módulo \textit{Item} para desarrollar el de usuarios solo es necesario heredar de éste y hacer algunas modificaciones. En cuanto al borrado y obtención de usuarios no sería necesario hacer ningún tipo de modificación. Por otro lado, en las operaciones de inserción y modificación sólo habría que añadir el código necesario para el encriptado de la contraseña y para la comprobación del tipo de usuario y del email único.
+
+\bigskip
+Este módulo contaría con los siguientes endpoints:
+\begin{itemize}
+	\item \textit{GET /api/user/:user} - Obtener la información de un usuario.
+	\item \textit{POST /api/user} - Crear un usuario.
+	\item \textit{PUT /api/user} - Modificar un usuario.
+	\item \textit{DELETE /api/user} - Eliminar un usuario.
+	\item \textit{POST /api/user/query} - Listar usuarios.
+\end{itemize} 
+
+
+
+
+
+\section{Despliegues}
+
+Éste módulo sería el encargado de realizar los despliegues de los servicios mediante contenedores Docker. Para llevar a cabo esto el módulo se conectaría a un servidor de Docker y contendría los métodos necesarios para ejecutar contenedores, imágenes y operaciones en ambos.
+
+\bigskip
+En el caso de los despliegues no es necesario el almacenamiento de datos de ningún tipo por lo que tampoco sería necesario crear clases que hereden de \textit{Item}. En cambio, se propone la creación de una clase, llamada \textit{DockerEngine}, que permita conectarse al cliente de Docker e implemente los métodos necesarios para hacer las operaciones deseadas.
+
+\bigskip
+Estas serían:
+\begin{itemize}
+	\item Ejecutar operaciones en todos los contenedores.
+	\item Ejecutar operaciones en un contenedor en concreto.
+	\item Ejecutar operaciones en todas las imágenes.
+	\item Ejecutar operaciones en una imagen en concreto.
+\end{itemize}
+
+
+\bigskip
+Las anteriores operaciones corresponderían con los siguientes endpoints:
+\begin{itemize}
+	\item \textit{POST /api/deploy/container}
+	\item \textit{POST /api/deploy/container/single}
+	\item \textit{POST /api/deploy/image}
+	\item \textit{POST /api/deploy/image/single}
+\end{itemize}
+
+
+\bigskip
+Además, del mismo modo que se propone en el módulo de almacenamiento, podrían sacarse una serie de estadísticos de este servicio.
+
+
+
+
+
+\section{Aprovisionamiento}
+Sería el encargado de aprovisionar sistemas mediante el uso de Ansible y se centraría exclusivamente en la ejecución de \textit{playbooks}. Por el funcionamiento de Ansible debería establecer una conexión SSH con los hosts indicados y ejecutaría las órdenes que se encuentran en el playbook.
+
+\bigskip
+En el caso de este módulo son necesarias dos clases extra, una para almacenar los \textit{playbooks} y otra para almacenar los grupos de hosts donde se van a ejecutar esos \textit{playbooks}. Las clases serían:
+\begin{itemize}
+	\item \textbf{Hosts}
+	\item \textbf{Playbooks}
+\end{itemize}
+
+
+Los endpoints que se proponen para manejar ambas clases son:
+\begin{itemize}
+	\item \textit{GET /api/provision/hosts/:name} - Obtener la información de un grupo de hosts.
+	\item \textit{POST /api/provision/hosts} - Crear un grupo de hosts.
+	\item \textit{PUT /api/provision/hosts} - Modificar un grupo de hosts.
+	\item \textit{DELETE /api/provision/hosts} - Eliminar un grupo de hosts.
+	\item \textit{POST /api/provision/hosts/query} - Listar grupos de hosts.
+	\item \textit{GET /api/provision/playbook/:name} - Obtener la información de un \textit{Playbook}.
+	\item \textit{POST /api/provision/playbook} - Crear un \textit{Playbook}.
+	\item \textit{PUT /api/provision/playbook} - Modificar un \textit{Playbook}.
+	\item \textit{DELETE /api/provision/playbook} - Eliminar un \textit{Playbook}.
+	\item \textit{POST /api/provision/playbook/query} - Listar \textit{playbooks}.
+\end{itemize}
+
+
+Siguiendo los requisitos del software, las restricciones son:
+\begin{itemize}
+	\item Se almacenará para cada \textit{Playbook} un identificador único, un nombre y el \textit{Playbook} en sí.
+	\item Se almacenará para cada grupo de \textit{playbooks} un identificador único, un nombre y el conjunto de direcciones IP asociadas.
+\end{itemize}
+
+\bigskip
+Por otro lado, para ejecutar los playbooks se propone la creación de una clase \textit{AnsibleEngine}, que sería la encargada de implementar aquellos métodos necesarios para ejecutarlos. También se propone el siguiente endpoint:
+\begin{itemize}
+	\item \textit{POST /api/provision}
+\end{itemize}
+
+
+
+
+\section{Máquinas}
+
+Módulo encargado del almacenamiento y gestión de máquinas y dispositivos. Tendría estructura similar a las clases \textit{Host} o \textit{Playbook}, ya que heredaría las funcionalidades que ofrece la clase base \textit{Item}.
+
+\bigskip
+Los endpoints propuestos para este módulo son:
+\begin{itemize}
+	\item \textit{GET /api/machine/:user} - Obtener la información de una máquina.
+	\item \textit{POST /api/machine} - Crear una máquina.
+	\item \textit{PUT /api/machine} - Modificar una máquina.
+	\item \textit{DELETE /api/machine} - Eliminar una máquina.
+	\item \textit{POST /api/machine/query} - Listar máquinas.
+\end{itemize}
+
+
+
+\bigskip
+Requisitos del software:
+\begin{itemize}
+	\item El sistema almacenará para cada máquina un identificador único, un nombre, una descripción, un tipo de máquina, dirección IPv4 e IPv4, dirección MAC, máscara de red, dirección broadcast y dirección de red.
+\end{itemize}
+
+
+
+
+
+\section{Estado del backend y \textit{heartbeat}}
+
+
+Para comprobar el estado del backend se propone la creación de un servicio que devuelva información asociada al modulo de despliegues y al de almacenamiento. Para ello se propone agregar métodos a las clases \textit{MongoEngine} y \textit{DockerEngine} que devuelvan esta información asociada.
+
+\bigskip
+El endpoint sería el siguiente:
+\begin{itemize}
+	\item \textit{GET /api/status}
+\end{itemize}
+
+\bigskip
+Debido a que este endpoint devolvería información relevante, éste deberia estar también protegido por la autenticación comentada en secciones anteriores.
+
+\bigskip
+Anexo a este estado se propone el siguiente endpoint:
+\begin{itemize}
+	\item \textit{GET /api/heartbeat}
+\end{itemize}
+
+
+\bigskip
+En este caso solo devolvería si los diferentes módulos del backend se encuentran funcionando correctamente o no, y no sería necesario que estuviera autenticado. Este endpoint podría ser usado por Docker en el caso de que el backend se ejecute en un contenedor de este tipo.
+
+
+
+\section{Variables de entorno}
+
+
+Para el funcionamiento del backend y el frontend sería necesaria la definición de variables de entorno que permitan configurar ciertos aspectos de estos. Serían:
+\begin{itemize}
+	\item Hostname y puerto de MongoDB.
+	\item Nombre de la base de datos a utilizar.
+	\item Claves de encriptado para las contraseñas y los token de autenticación.
+	\item Hostname de Docker.
+	\item URL y puerto del backend.
+\end{itemize}
+
+
+
+
+
+\section{CLI}
+
+Módulo propuesto para poder realizar ciertas operaciones desde la terminal, sin necesidad de ejecutar el backend. Podría ser usado en la primera instalación de este y/o para crear unos primeros usuarios o clientes.
+
+\bigskip
+Funcionalidad propuesta:
+\begin{itemize}
+	\item Crear clientes.
+	\item Activar o desactivar clientes.
+	\item Agregar usuarios a un cliente.
+\end{itemize}
+
+
+
+
+\section{Frontend}
+
+El desarrollo de un backend que ofrezca una API permite que se pueda desarrollar cualquier tipo de frontend, ya sea web, una aplicación móvil o incluso acceso mediante línea de comandos. En este caso, para satisfacer los requisitos del software, se propone crear un frontend que permita realizar todas las operaciones anteriormente mencionadas.
+
+\bigskip
+Este podría tener las siguientes páginas:
+\begin{itemize}
+	\item \textit{/}: Donde mostrar el estado general del sistema.
+	\item \textit{/admin}: Administración de usuarios.
+	\item \textit{/deploy}: Administración de los despliegues, contenedores e imágenes.
+	\item \textit{/provision}: Administración del aprovisionamiento, grupos de hosts y playbooks.
+	\item \textit{/machines}: Administración de las máquinas.
+\end{itemize}
+
+\bigskip
+Por otro lado, atendiendo a los requisitos del software, se propone la creación de un componente para generar tablas de forma dinámica que encapsule todas las funcionalidades requeridas. Además debe incluir autenticación de los usuarios.
+
+\bigskip
+Para la comunicación con la API se propone la creación de diferentes servicios centrados en cada uno de los módulos del backend. De esta manera los servicios pueden inyectarse en los componentes y la comunicación es directa. Estos serían:
+\begin{itemize}
+	\item Autenticación
+	\item Clientes
+	\item Usuarios
+	\item Hosts
+	\item Playbooks
+	\item Máquinas
+	\item Aprovisionamiento
+	\item Despliegues
+	\item Estado
+\end{itemize}
+

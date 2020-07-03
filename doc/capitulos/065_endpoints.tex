@@ -1,4 +1,4 @@
-\chapter{Implementación}
+\chapter{Módulos implementados}
 
 
 
@@ -59,7 +59,7 @@ table_schema = {
 \end{lstlisting}
 
 \bigskip
-Al realizar consultas se puede sobrescribir este esquema, para obtener únicamente los datos deseados.
+Al realizar consultas  se puede sobreescribir este esquema, para obtener únicamente los datos deseados.
 \begin{itemize}
 	\item \textit{data}: Diccionario donde se almacenan los datos de los objetos que se creen de este tipo o que se obtengan al hacer una consulta.
 \end{itemize}
@@ -80,7 +80,7 @@ Para el diseño y desarrollo de esta clase se ha intentado abstraer y simplifica
 
 
 \bigskip
-Con esta implementación cualquier clase que se quiera que tenga la capacidad de almacenar datos solo tendrá que heredar de esta clase. Podrá sobrescribir aquellos métodos a los que quiera agregar más funcionalidad y podrá también implementar nuevos métodos, ya que tiene acceso al cursor de MongoClient para realizar cualquier tipo de operación permitida.
+Con esta implementación cualquier clase que se quiera que tenga la capacidad de almacenar datos solo tendrá que heredar de esta clase. Podrá sobreescribir aquellos métodos a los que quiera agregar más funcionalidad y podrá también implementar nuevos métodos, ya que tiene acceso al cursor de MongoClient para realizar cualquier tipo de operación permitida.
 
 
 
@@ -93,7 +93,7 @@ En cuanto a los servicios que se han desarrollado a partir de clases que heredan
 \bigskip
 SIDENOTE Suponemos que el servicio \textit{service} permite hacer operaciones con objetos de tipo Service.
 \begin{itemize}
-	\item \textit{GET /api/service/:name}: Devuelve los datos asociados a un objeto Service.
+	\item \textit{GET /api/service/<name>}: Devuelve los datos asociados a un objeto Service.
 	\item \textit{POST /api/service}: Crea un objeto de tipo Service.
 	\item \textit{PUT /api/service}: Modifica un objeto de tipo Service.
 	\item \textit{DELETE /api/service}: Elimina un objeto de tipo Service.
@@ -124,13 +124,11 @@ Para la creación de esta clase se ha partido de la clase \textit{Item}, definie
 \begin{itemize}
 	\item \textit{table\_name}: login
 	\item \textit{table\_schema}: (Por defecto todos los valores a 1).
-	\begin{itemize}
-		\item \textit{token}: JWT del usuario que tenga acceso actualmente al backend.
-		\item \textit{username}: Nombre de usuario.
-		\item \textit{exp}: Fecha y hora a la que expira el acceso.
-		\item \textit{login\_time}: Fecha y hora a la que el usuario realizó el acceso.
-		\item \textit{public\_id}: UUID que identifica al usuario.
-	\end{itemize}
+	\item \textit{token}: JWT del usuario que tenga acceso actualmente al backend.
+	\item \textit{username}: Nombre de usuario.
+	\item \textit{exp}: Fecha y hora a la que expira el acceso.
+	\item \textit{login\_time}: Fecha y hora a la que el usuario realizó el acceso.
+	\item \textit{public\_id}: UUID que identifica al usuario.
 \end{itemize}
 
 
@@ -176,10 +174,8 @@ Los datos miembro de esta clase son:
 \begin{itemize}
 	\item \textit{table\_name}: customers
 	\item \textit{table\_schema}: (Por defecto todos los valores a 1).
-	\begin{itemize}
-		\item \textit{domain}: Subdominio al que hace referencia este cliente.
-		\item \textit{db\_name}: Nombre de la base de datos donde se almacenarán todos sus datos.
-	\end{itemize}
+	\item \textit{domain}: Subdominio al que hace referencia este cliente.
+	\item \textit{db\_name}: Nombre de la base de datos donde se almacenarán todos sus datos.
 \end{itemize}
 
 
@@ -218,15 +214,13 @@ Esta es la clase encargada del manejo de los usuarios y hereda de \textit{Item}.
 \begin{itemize}
 	\item \textit{table\_name}: users
 	\item \textit{table\_schema}: (Por defecto todos los valores a 1).
-	\begin{itemize}
-		\item \textit{type}: Tipo del usuario, puede ser \textit{admin} o \textit{regular}.
-		\item \textit{first\_name}: Nombre del usuario.
-		\item \textit{last\_nam}e: Apellido/s del usuario.
-		\item \textit{username}: Nickname del usuario.
-		\item \textit{email}: Email del usuario.
-		\item \textit{password}: Contraseña del usuario.
-		\item \textit{public\_id}: UUID del usuario.
-	\end{itemize}
+	\item \textit{type}: Tipo del usuario, puede ser \textit{admin} o \textit{regular}.
+	\item \textit{first\_name}: Nombre del usuario.
+	\item \textit{last\_nam}e: Apellido/s del usuario.
+	\item \textit{username}: Nickname del usuario.
+	\item \textit{email}: Email del usuario.
+	\item \textit{password}: Contraseña del usuario.
+	\item \textit{public\_id}: UUID del usuario.
 \end{itemize}
 
 
@@ -236,7 +230,7 @@ Se han sobreescrito los métodos de inserción y actualización de datos para te
 \bigskip
 En cuanto al servicio, este está estructurado de la misma forma que se especifica [aquí](servicios), siendo los endpoints:
 \begin{itemize}
-	\item \textit{GET /api/user/:username}
+	\item \textit{GET /api/user/<username>}
 	\item \textit{POST /api/user}
 	\item \textit{PUT /api/user}
 	\item \textit{DELETE /api/user}
@@ -271,13 +265,13 @@ Las operaciones constan de nombre, datos y, en ocasiones, de un objeto concreto:
 
 
 \bigskip
-Para manejar esto se ha creado la clase \textit{DockerEngine}, la cual se conecta al \textit{daemon} de Docker e implementa los métodos necesarios para realizar las funciones anterior mencionadas. Concretamente estas son:
+Para manejar esto se ha creado la clase \textit{DockerEngine}, la cual se conecta al daemon de Docker e implementa los métodos necesarios para realizar las funciones anterior mencionadas. Concretamente estas son:
 \begin{itemize}
 	\item \textit{run\_container\_operation(operation, data)}: Ejecuta una operación en todos los contenedor.
 	\item \textit{run\_image\_operation(operation, data)}: Ejecuta una operación en todas las imágenes.
 	\item \textit{run\_operation\_in\_object(object, operation, data)}: Ejecuta una operación en todos los contenedor.
 	\item \textit{get\_container\_by\_id(name)}: Ejecuta una operación en todos los contenedor.
-	\item \textit{get\_image\_by\_name(container\_id)}: Ejecuta una operación en todos los contenedores.
+	\item \textit{get\_image\_by\_name(container\_id)}: Ejecuta una operación en todos los contenedor.
 \end{itemize}
 
 
@@ -295,8 +289,8 @@ Los endpoints desarrollados son los siguientes:
 La información sobre el estado de este módulo se devuelve con la misma estructura que se utiliza en [MongoEngine](mongoengine):
 \begin{lstlisting}
 {
-	"is_up": boolean,
-	"data_usage": list,
+	"is\_up": boolean,
+	"data\_usage": list,
 	"info": dict || string
 }
 \end{lstlisting}
@@ -329,16 +323,14 @@ Clase que hereda de \textit{Item} cuyos datos miembro son:
 \begin{itemize}
 	\item \textit{table\_name}: hosts
 	\item \textit{table\_schema}: (Por defecto todos los valores a 1).
-	\begin{itemize}
-		\item \textit{name}: Nombre del grupo de hosts.
-		\item \textit{ips}: Lista de direcciones IP que componen el grupo de hosts.
-	\end{itemize}
+	\item \textit{name}: Nombre del grupo de hosts.
+	\item \textit{ips}: Lista de direcciones IP que componen el grupo de hosts.
 \end{itemize}
 	
 \bigskip
 Comparte los mismos endpoints que se indican [aquí](servicios), siendo estos:
 \begin{itemize}
-	\item \textit{GET /api/provision/hosts/:name}
+	\item \textit{GET /api/provision/hosts/<name>}
 	\item \textit{POST /api/provision/hosts}
 	\item \textit{PUT /api/provision/hosts}
 	\item \textit{DELETE /api/provision/hosts}
@@ -350,18 +342,16 @@ Comparte los mismos endpoints que se indican [aquí](servicios), siendo estos:
 
 Clase que hereda de \textit{Item} cuyos datos miembro son:
 \begin{itemize}
-	\item \textit{table\_name}: \textit{playbooks}
+	\item \textit{table\_name}: playbooks
 	\item \textit{table\_schema}: (Por defecto todos los valores a 1).
-	\begin{itemize}
-		\item \textit{name}: Nombre del \textit{playbook}.
-		\item \textit{playbook}: Contenido del \textit{playbook} codificado como \textit{JSON}.
-	\end{itemize}
+	\item \textit{name}: Nombre del playbook.
+	\item \textit{playbook}: Contenido del playbook codificado como JSON.
 \end{itemize}
 	
 \bigskip
 Comparte los mismos endpoints que se indican [aquí](servicios), siendo estos:
 \begin{itemize}
-	\item \textit{GET /api/provision/playbooks/:name}
+	\item \textit{GET /api/provision/playbooks/<name>}
 	\item \textit{POST /api/provision/playbooks}
 	\item \textit{PUT /api/provision/playbooks}
 	\item \textit{DELETE /api/provision/playbooks}
@@ -375,7 +365,7 @@ Para la ejecución de los playbooks se ha desarrollado la clase \textit{AnsibleE
 \end{itemize}
 
 \bigskip
-Este método toma como entrada el grupo de hosts a los que se le va a ejecutar el \textit{playbook}, el \textit{playbook} en cuestión y un diccionario con las contraseñas para acceder a las máquinas. La librería de \textit{Ansible} usada requiere que los hosts se pasen como un archivo de texto plano, por lo que se ha desarrollado una función auxiliar que crea un fichero cuando se ejecuta un \textit{playbook}. El directorio donde se guardan estos archivos puede configurarse mediante una variable de entorno.
+Este método toma como entrada el grupo de hosts a los que se le va a ejecutar el playbook, el playbook en cuestión y un diccionario con las contraseñas para acceder a las máquinas. La librería de Ansible usada requiere que los hosts se pasen como un archivo de texto plano, por lo que se ha desarrollado una función auxiliar que crea un fichero cuando se ejecuta un playbook. El directorio donde se guardan estos archivos puede configurarse mediante una variable de entorno.
 
 
 
@@ -394,27 +384,25 @@ Para el almacenamiento y gestión de máquinas se ha creado la clase \textit{Mac
 \begin{itemize}
 	\item \textit{table\_name}: machines
 	\item \textit{table\_schema}: (Por defecto todos los valores a 1).
-	\begin{itemize}
-		\item \textit{name}: Nombre de la máquina.
-		\item \textit{description}: Descripción breve de la máquina.
-		\item \textit{type}: Tipo de máquina, puede ser \textit{local} o \textit{remote}.
-		\item \textit{ipv4}: Dirección IPv4 de la máquina.
-		\item \textit{ipv6}: Dirección IPv6 de la máquina.
-		\item \textit{mac}: MAC del adaptador de red que conecta la máquina a la red.
-		\item \textit{broadcast}: Dirección broadcast de la red a la que está conectada la máquina.
-		\item \textit{netmask}: Máscara de red.
-		\item \textit{network}: Red a la que está conectada la máquina.
-	\end{itemize}
+	\item \textit{name}: Nombre de la máquina.
+	\item \textit{description}: Descripción breve de la máquina.
+	\item \textit{type}: Tipo de máquina, puede ser \textit{local} o \textit{remote}.
+	\item \textit{ipv4}: Dirección IPv4 de la máquina.
+	\item \textit{ipv6}: Dirección IPv6 de la máquina.
+	\item \textit{mac}: MAC del adaptador de red que conecta la máquina a la red.
+	\item \textit{broadcast}: Dirección broadcast de la red a la que está conectada la máquina.
+	\item \textit{netmask}: Máscara de red.
+	\item \textit{network}: Red a la que está conectada la máquina.
 \end{itemize}
 
 
 \bigskip
-En el caso de las máquinas todas las direcciones IP que se manejan deben ser validadas, por lo que se ha creado un método auxiliar para realizar esta función. Además se han sobrescrito los métodos de inserción y actualización para realizar esta validación.
+En el caso de las máquinas todas las direcciones IP que se manejan deben ser validadas, por lo que se ha creado un método auxiliar para realizar esta función. Además se han sobreescrito los métodos de inserción y actualización para realizar esta validación.
 
 \bigskip
 El servicio tiene la misma estructura que la explicada [aquí](servicios) y sus endpoints son:
 \begin{itemize}
-	\item \textit{GET /api/machine/:name}
+	\item \textit{GET /api/machine/<name>}
 	\item \textit{POST /api/machine}
 	\item \textit{PUT /api/machine}
 	\item \textit{DELETE /api/machine}
@@ -426,9 +414,9 @@ El servicio tiene la misma estructura que la explicada [aquí](servicios) y sus 
 \section{Estado del backend y \textit{heartbeat}}
 
 
-Para consultar el estado del backend se han creado dos \textit{endpoints}. El primero ofrece una información más detallada de los dos servicios más importantes y el segundo ofrece sólo el estado general del backend. Son:
+Para consultar el estado del backend se han creado dos endpoints. El primero ofrece una información más detallada de los dos servicios más importantes y el segundo ofrece sólo el estado general del backend. Son:
 \begin{itemize}
-	\item \textit{GET /api/status}: \textit{Endpoint} autenticado que devuelve un diccionario con los estados de \textit{MongoDB} y \textit{Docker}, con la forma indicada anteriormente. Los usuarios administradores obtienen más información en el caso de \textit{MongoDB}. La estructura devuelta es:
+	\item \textit{GET /api/status}: Endpoint autenticado que devuelve un diccionario con los estados de MongoDB y Docker, con la forma indicada anteriormente. Los usuarios administradores obtienen más información en el caso de Mongo. La estructura devuelta es:
 
 \begin{lstlisting}
 {
@@ -456,7 +444,7 @@ En el caso que Docker no se encuentre funcionando correctamente o se encuentre d
 }
 \end{lstlisting}
 	
-	\item \textit{GET /api/heartbeat}: \textit{Endpoint} no autenticado que devuelve el estado simplificado. Este endpoint puede ser usado para comprobar que el backend se encuentra activo de forma manual o por ejemplo por la funcionalidad \textit{Heartbeat} que incorpora Docker para conocer el estado de salud de los contenedores.
+	\item \textit{GET /api/heartbeat}: Endpoint no autenticado que devuelve el estado simplificado. Este endpoint puede ser usado para comprobar que el backend se encuentra activo de forma manual o por ejemplo por la funcionalidad \textit{Heartbeat} que incorpora Docker para conocer el estado de salud de los contenedores.
 	
 \begin{lstlisting}
 {
@@ -467,17 +455,17 @@ En el caso que Docker no se encuentre funcionando correctamente o se encuentre d
 
 
 
-\section{\textit{CLI} e inicialización de la base de datos}
+\section{CLI e inicialización de la BD}
 
 
-Se ha desarrollado un \textit{CLI} interactivo que permite realizar operaciones básicas con los clientes y usuarios mediante una terminal de comandos. Para ello hace uso de las clases y métodos anterior explicados. Estas operaciones son:
+Se ha desarrollado un CLI interactivo que permite realizar operaciones básicas con los clientes y usuarios mediante una terminal de comandos. Para ello hace uso de las clases y métodos anterior explicados. Estas operaciones son:
 \begin{itemize}
 	\item Crear, activar y desactivar clientes.
 	\item Agregar usuarios a un cliente.
 \end{itemize}
 
 
-Además se ha creado un \textit{script} que permite inicializar la base de datos, insertando un usuario administrador por defecto.
+Además se ha creado un pequeño script que permite inicializar la base de datos, insertando un usuario administrador por defecto.
 
 
 
@@ -489,10 +477,10 @@ El frontend implementado es una de las infinitas propuestas que satisfacen los r
 
 
 
-\subsection{Servicios \textit{HTTP}}
+\subsection{Servicios HTTP}
 
 
-Para la comunicación frontend-backend se han creado diferentes servicios, que de forma asíncrona realizan las peticiones \textit{HTTP} a la \textit{API}. Todos ellos hacen uso de \textit{HttpClient}, que es el múdulo de \textit{Angular} para realizar este tipo de peticiones. La estructura en general es muy similar, habiéndose creado métodos concretos para cada tipo de operación o endpoint. Cada uno de estos métodos tiene la forma:
+Para la comunicación frontend-backend se han creado diferentes servicios, que de forma asíncrona realizan las peticiones HTTP a la API. Todos ellos hacen uso de \textit{HttpClient}, que es el múdulo de Angular para realizar este tipo de peticiones. La estructura en general es muy similar, habiéndose creado métodos concretos para cada tipo de operación o endpoint. Cada uno de estos métodos tiene la forma:
 
 \begin{lstlisting}
 metodo(params: any): Observable<any> {
@@ -633,6 +621,7 @@ Se han creado además una serie de interfaces para controlar más aún los datos
 \subsection{Componentes}
 
 
+\bigskip
 En cuanto a componentes se ha intentado abstraer y reutilizar lo máximo posible.
 
 
@@ -652,8 +641,10 @@ Parámetros de entrada:
 	\item \textit{customActionData}: Diccionario con la configuración de la acción personalizada adicional.
 \end{itemize}
 
+\bigskip	
 Por defecto cada item tiene cuatro acciones asociadas: \textit{play} (P), \textit{detail} (D), \textit{edit} (E) y \textit{remove} (R). Estas se activan mediante el array \textit{actions}, agregando los idenficativos de las acciones que se deseen a este. En cambio, para configurar la acción adicional se debe incluir en \textit{customActionData} el icono y el tooltip a mostrar y agregar el identificativo 'C' al array \textit{actions}.
 
+\bigskip
 Estas acciones son botones que se agregan en una columna de la tabla y cuando estos se pulsan emiten un evento con los datos del item al que pertenezcan. De este modo solo queda implementar la lógica en el componente que esté usando la tabla para que tome esos datos y los procese a voluntad.
 
 Un ejemplo de uso de esta tabla sería el siguiente:
@@ -711,7 +702,7 @@ Este componente muestra tarjetas con información sobre el estado del backend. E
 \subsubsection{Login (/login)}
 
 
-Componente bastante sencillo que cuenta con un formulario con tres campos. El primero es opcional y sirve para indicar el cliente al que se quiere conectar el usuario. El segundo y tercer campo son su usuario y contraseña.
+Componente bastante sencillo que cuenta con un formulario con tres campos. El primero es opcional y sirve para indicar el cliente al que se quiere conectar el usuario. El segundo y tercer campo son el usuario y contraseña del usuario.
 
 
 \subsubsection{Admin (/admin)}

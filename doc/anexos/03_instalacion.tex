@@ -1,0 +1,128 @@
+\chapter{Instalación del sistema}
+
+Una vez clonado el repositorio puedes instalar y ejecutar tanto backend como frontend siguiendo los pasos que se describen a continuación.
+
+\section{Backend}
+El backend de IPManager tiene algunas dependencias que tienes que instalar para que funcione correctamente, son las siguientes:
+
+\begin{lstlisting}
+apt install sshpass
+apt instal openssl
+apt install libffi6
+
+pip3 install -r requirements.txt
+\end{lstlisting}
+
+Asegúrate que la versión instalada del paquete \textit{werkzeug} coincide con 0.16.1.
+
+Para ejecutarlo puedes hacerlo mediante Flask o con Gunicorn.
+
+\begin{itemize}
+	\item Flask (no recomendado):
+\begin{lstlisting}
+export FLASK_APP=wsgi.py
+
+flask run
+\end{lstlisting}
+	
+	\item Gunicorn:
+\begin{lstlisting}
+gunicorn -b 0.0.0.0:5000 wsgi:app
+\end{lstlisting}
+	
+\end{itemize}
+
+\subsection{Docker}
+El backend también está disponible en Docker, puedes descargarte la imagen de la siguiente manera:
+
+\begin{lstlisting}
+docker pull harvestcore/ipm-backend:<tag>
+\end{lstlisting}
+
+Se recomienda siempre utilizar la última versión disponible de la imagen, la cual puede consultarse \href{https://github.com/harvestcore/tfg/releases}{aquí} o \href{https://hub.docker.com/r/harvestcore/ipm-backend/tags}{aquí}. Revisa también las [variables de entorno](./env-vars.md) necesarias para ejecutar el backend.
+
+Ejemplo de ejecución:
+
+\begin{lstlisting}
+docker run -e MONGO_HOSTNAME=172.20.0.2 harvestcore/ipm-backend:<tag>
+\end{lstlisting}
+
+Si por el contrario quieres construir tú mismo la imagen, ejectuta:
+
+\begin{lstlisting}
+cd backend
+
+docker build . -t ipm-backend:<tag>
+\end{lstlisting}
+
+
+
+
+
+\section{Frontend}
+
+Para instalar el frontend primero revisa y configura las [variables de entorno](./env-vars.md), tras eso solo tienes que ejecutar lo siguiente:
+
+\begin{lstlisting}
+cd frontend
+
+// Construir el frontend
+npm build --prod
+\end{lstlisting}
+
+Para ejecutarlo se recomienda utilizar Nginx u otro tipo de servidor web. En la raíz del frontend se adjunta el archivo de configuración (\textit{nginx.conf}) usado para construir la imagen de Docker, y tambien puede ser usado en este caso.
+
+
+
+\subsection{Docker}
+
+Puedes ejecutar el frontend con Docker, para ello puedes bajarte la imagen del repositorio disponible o puedes construir y ejecutar tú mismo la imagen.
+
+\begin{lstlisting}
+docker pull harvestcore/ipm-frontend:<tag>
+\end{lstlisting}
+
+El tag o versión lo puedes consultar \href{https://github.com/harvestcore/tfg/releases}{aquí} o \href{https://hub.docker.com/r/harvestcore/ipm-frontend/tags}{aquí}. Se recomienda usar siempre la última versión estable.
+
+\begin{lstlisting}
+cd frontend
+
+// Construir imagen
+docker build . -t ipm-frontend:<tag>
+
+docker run ipm-frontend:<tag>
+\end{lstlisting}
+
+
+
+\section{Docker-compose}
+
+En el caso de utilizar el docker-compose que se encuentra en la raíz del repositorio solo es necesario ejecutar lo siguiente:
+
+\begin{lstlisting}
+docker-compose build
+
+docker-compose up
+\end{lstlisting}
+
+Por supuesto se pueden agregar variables de entorno para configurar el backend. Un ejemplo sería:
+
+\begin{lstlisting}
+docker-compose up -e BASE_DATABASE=ipm_root
+\end{lstlisting}
+
+El docker-compose tiene configurada una red bridge con la siguiente subnet:
+
+\begin{itemize}
+	\item 172.20.0.0/16
+\end{itemize}
+
+Por otro lado las máquinas cuentan con las siguientes direcciones IP estáticas asignadas:
+
+\begin{itemize}
+	\item mongo: 172.20.0.2
+	\item ipmanager-backend: 172.20.0.3
+	\item ipmanager-frontend: 172.20.0.4
+\end{itemize}
+
+También se fija la variable de entorno \textit{BASE\_DATABASE} con valor \textit{ipm\_root}.

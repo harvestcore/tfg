@@ -1,0 +1,1834 @@
+\chapter{Especificación de \textit{endpoints}}
+
+\textbf{Leyenda:}
+
+\textbf{E/S}: Parámetro de \textbf{E}ntrada o \textbf{S}alida.
+
+
+\section{Status}
+
+\subsection{\textit{GET /api/status}}
+Devuelve el estado actual de los dos servicios principales del backend, MongoDB y Docker.
+
+Cabeceras necesarias:
+\begin{table}[h!]
+	\centering
+	\begin{tabular}{|l|l|l|}
+		\hline
+		Nombre & Opcional & Descripción \\ \hline
+		x-access-token & No & Token de acceso. \\ \hline
+	\end{tabular}
+\end{table}
+
+Respuesta:
+\begin{table}[!h]
+	\centering
+	\begin{adjustbox}{max width=\textwidth}
+	\begin{tabular}{|l|l|l|l|}
+		\hline
+		Parámetro & Key & Tipo & Descripción \\ \hline
+		mongo &  & dict &  \\ \hline
+		& is\_up & bool & Si el servicio se encuentra activo o no. \\ \hline
+		& data\_usage & list[dict] & Información de uso de datos de cada base de datos. \\ \hline
+		& info & string & Información adicional del cliente de MongoDB. \\ \hline
+		docker &  & dict &  \\ \hline
+		& is\_up & bool & Si el servicio se encuentra activo o no. \\ \hline
+		& data\_usage & dict & Información de uso de las imágenes y contenedores. \\ \hline
+		& info & string & Información adicional del cliente de Docker. \\ \hline
+	\end{tabular}
+	\end{adjustbox}
+\end{table}
+
+En caso de que el servicio de Docker no se encuentre activado o presenta errores, el estado de este en la respuesta anterior tiene la siguiente forma:
+
+\begin{table}[!h]
+	\centering
+	
+	\begin{adjustbox}{max width=\textwidth}
+	\begin{tabular}{|l|l|l|l|}
+		\hline
+		Parámetro & Key & Tipo & Descripción \\ \hline
+		docker &  & dict &  \\ \hline
+		& status & bool & False. El servicio no funcina correctamente. \\ \hline
+		& disabled & bool & Si el servicio se encuentra desactivado o no. \\ \hline
+		& msg & string & Información adicional. \\ \hline
+	\end{tabular}
+	\end{adjustbox}
+\end{table}
+
+
+
+
+
+
+\section{Heartbeat}
+
+\subsection{\textit{GET /api/heartbeat}}
+
+Devuelve el estado actual de los dos servicios principales del backend de forma simplificada.
+
+Respuesta:
+\begin{table}[!h]
+	\centering
+\begin{adjustbox}{max width=\textwidth}
+	\begin{tabular}{|l|l|l|}
+		\hline
+		Parámetro & Tipo & Descripción \\ \hline
+		ok & bool & Si los servicios del sistema funcionan correctamente o no. \\ \hline
+	\end{tabular}
+\end{adjustbox}
+\end{table}
+
+
+
+
+
+
+
+
+
+
+\section{Autenticación}
+
+\subsection{\textit{GET /api/login}}
+Loguea al usuario en el cliente.
+
+Cabeceras necesarias:
+\begin{table}[h!]
+	\centering
+	\begin{adjustbox}{max width=\textwidth}
+	\begin{tabular}{|l|l|l|}
+		\hline
+		Nombre & Opcional & Descripción \\ \hline
+		x-access-token & No & Token de acceso. \\ \hline
+	\end{tabular}
+\end{adjustbox}
+\end{table}
+
+
+Respuesta:
+\begin{table}[h!]
+	\centering
+	\begin{adjustbox}{max width=\textwidth}
+	\begin{tabular}{|l|l|l|}
+		\hline
+		Parámetro & Tipo & Descripción \\ \hline
+		token & string & Token JWT utilizado para identificar al usuario. \\ \hline
+	\end{tabular}
+\end{adjustbox}
+\end{table}
+
+
+
+\subsection{\textit{POST /api/logout}}
+
+Desloguea al usuario del cliente.
+
+\bigskip
+Cabeceras necesarias:
+
+\begin{table}[h!]
+	\centering
+\begin{adjustbox}{max width=\textwidth}
+	\begin{tabular}{|l|l|l|}
+		\hline
+		Nombre & Opcional & Descripción \\ \hline
+		x-access-token & No & Token de acceso. \\ \hline
+	\end{tabular}
+\end{adjustbox}
+\end{table}
+
+
+Respuesta:
+\begin{table}[!h]
+	\centering
+	\begin{adjustbox}{max width=\textwidth}
+	\begin{tabular}{|l|l|l|}
+		\hline
+		Parámetro & Tipo & Descripción \\ \hline
+		ok & bool & Si la operación se ha ejecutado correctamente o no. \\ \hline
+		message & string & Mensaje complementario al estado de la operación. \\ \hline
+	\end{tabular}
+\end{adjustbox}
+\end{table}
+
+
+
+
+\section{Clientes}
+
+\subsection{Cliente}
+\begin{table}[!h]
+	\centering
+	\begin{adjustbox}{max width=\textwidth}
+	\begin{tabular}{|l|l|l|l|l|}
+		\hline
+		Parámetro & Tipo & Opcional & E/S & Descripción \\ \hline
+		domain & string & No & E/S & Subdominio del cliente. \\ \hline
+		db\_name & string & No & E/S & Base de datos del cliente. \\ \hline
+	\end{tabular}
+\end{adjustbox}
+\end{table}
+
+
+\subsection{\textit{POST /api/customer/query}}
+Devuelve los clientes que cumplen los criterios de búsqueda.
+
+Cabeceras necesarias:
+\begin{table}[h!]
+	\centering
+	\begin{adjustbox}{max width=\textwidth}
+	\begin{tabular}{|l|l|l|}
+		\hline
+		Nombre & Opcional & Descripción \\ \hline
+		x-access-token & No & Token de acceso. \\ \hline
+	\end{tabular}
+\end{adjustbox}
+\end{table}
+
+Cuerpo de la petición (JSON):
+\begin{table}[!h]
+	\centering
+	\begin{adjustbox}{max width=\textwidth}
+	\begin{tabular}{|l|l|l|l|}
+		\hline
+		Parámetro & Tipo & Opcional & Descripción \\ \hline
+		query & dict & No & Criterio de búsqueda. \\ \hline
+		filter & dict & Sí & Parámetros que se quieren en la respuesta. \\ \hline
+	\end{tabular}
+\end{adjustbox}
+\end{table}
+
+Respuesta (un solo usuario):
+\begin{table}[!h]
+	\centering
+	
+	\begin{adjustbox}{max width=\textwidth}
+	\begin{tabular}{|l|l|l|}
+		\hline
+		Parámetro & Tipo & Descripción \\ \hline
+		data & [Cliente](\#cliente) & Cliente que cumple el criterio de búsqueda. \\ \hline
+	\end{tabular}
+\end{adjustbox}
+\end{table}
+
+Respuesta (más de un usuario):
+\begin{table}[!h]
+	\centering
+	\begin{adjustbox}{max width=\textwidth}
+	\begin{tabular}{|l|l|l|}
+		\hline
+		Parámetro & Tipo & Descripción \\ \hline
+		total & int & Número de clientes que cumplen el criterio de búsqueda. \\ \hline
+		items & list[[Cliente](\#cliente)] & Clientes que cumplen el criterio de búsqueda. \\ \hline
+	\end{tabular}
+\end{adjustbox}
+\end{table}
+
+
+
+\subsection{\textit{POST /api/customer}}
+Crea un nuevo cliente.
+
+Cabeceras necesarias:
+\begin{table}[h!]
+	\centering
+	\begin{tabular}{|l|l|l|}
+		\hline
+		Nombre & Opcional & Descripción \\ \hline
+		x-access-token & No & Token de acceso. \\ \hline
+	\end{tabular}
+\end{table}
+
+Cuerpo de la petición (JSON):
+- [Cliente](cliente)
+
+
+Respuesta:
+\begin{table}[!h]
+	\centering
+	\begin{adjustbox}{max width=\textwidth}
+	\begin{tabular}{|l|l|l|}
+		\hline
+		Parámetro & Tipo & Descripción \\ \hline
+		ok & bool & Si la operación se ha ejecutado correctamente o no. \\ \hline
+		message & string & Mensaje complementario al estado de la operación. \\ \hline
+	\end{tabular}
+\end{adjustbox}
+\end{table}
+
+
+
+\subsection{\textit{PUT /api/customer}}
+Modifica los datos de un cliente.
+
+Cabeceras necesarias:
+\begin{table}[h!]
+	\centering
+	\begin{adjustbox}{max width=\textwidth}
+	\begin{tabular}{|l|l|l|}
+		\hline
+		Nombre & Opcional & Descripción \\ \hline
+		x-access-token & No & Token de acceso. \\ \hline
+	\end{tabular}
+\end{adjustbox}
+\end{table}
+
+Cuerpo de la petición (JSON):
+\begin{table}[!h]
+	\centering
+	\begin{adjustbox}{max width=\textwidth}
+	\begin{tabular}{|l|l|l|l|}
+		\hline
+		Parámetro & Tipo & Opcional & Descripción \\ \hline
+		domain & string & No & Subominio del cliente que se quiere modificar. \\ \hline
+		data & [Cliente](\#cliente) & No & Nuevos datos del cliente. \\ \hline
+	\end{tabular}
+\end{adjustbox}
+\end{table}
+
+Respuesta:
+\begin{table}[!h]
+	\centering
+	\begin{adjustbox}{max width=\textwidth}
+	\begin{tabular}{|l|l|l|}
+		\hline
+		Parámetro & Tipo & Descripción \\ \hline
+		ok & bool & Si la operación se ha ejecutado correctamente o no. \\ \hline
+		message & string & Mensaje complementario al estado de la operación. \\ \hline
+	\end{tabular}
+\end{adjustbox}
+\end{table}
+
+
+
+
+
+
+\subsection{\textit{DELETE /api/customer}}
+Elimina un cliente.
+
+Cabeceras necesarias:
+\begin{table}[h!]
+	\centering
+	\begin{adjustbox}{max width=\textwidth}
+	\begin{tabular}{|l|l|l|}
+		\hline
+		Nombre & Opcional & Descripción \\ \hline
+		x-access-token & No & Token de acceso. \\ \hline
+	\end{tabular}
+\end{adjustbox}
+\end{table}
+
+Cuerpo de la petición (JSON):
+\begin{table}[!h]
+	\centering
+	\begin{adjustbox}{max width=\textwidth}
+	\begin{tabular}{|l|l|l|l|}
+		\hline
+		Parámetro & Tipo & Opcional & Descripción \\ \hline
+		domain & string & No & Subdominio del cliente que se quiere eliminar. \\ \hline
+	\end{tabular}
+\end{adjustbox}
+\end{table}
+
+Respuesta:
+\begin{table}[!h]
+	\centering
+	\begin{adjustbox}{max width=\textwidth}
+	\begin{tabular}{|l|l|l|}
+		\hline
+		Parámetro & Tipo & Descripción \\ \hline
+		ok & bool & Si la operación se ha ejecutado correctamente o no. \\ \hline
+		message & string & Mensaje complementario al estado de la operación. \\ \hline
+	\end{tabular}
+\end{adjustbox}
+\end{table}
+
+
+\section{Usuarios}
+
+\subsection{Usuario}
+\begin{table}[h!]
+	\centering
+	\begin{adjustbox}{max width=\textwidth}
+	\begin{tabular}{|l|l|l|l|l|}
+		\hline
+		Parámetro & Tipo & Opcional & E/S & Descripción \\ \hline
+		type & string & No & E/S & Tipo de usuario. \\ \hline
+		public\_id & string & - & S & UUID del usuario. \\ \hline
+		first\_name & string & No & E/S & Nombre del usuario. \\ \hline
+		last\_name & string & No & E/S & Apellido del usuario. \\ \hline
+		username & string & No & E/S & Nickname del usuario. \\ \hline
+		email & string & No & E/S & Email del usuario. \\ \hline
+		password & string & No & E & Contraseña del usuario. \\ \hline
+	\end{tabular}
+\end{adjustbox}
+\end{table}
+
+\subsection{\textit{GET /api/user/:username}}
+Devuelve toda la información asociada a un usuario.
+
+Cabeceras necesarias:
+\begin{table}[h!]
+	\centering
+	\begin{adjustbox}{max width=\textwidth}
+	\begin{tabular}{|l|l|l|}
+		\hline
+		Nombre & Opcional & Descripción \\ \hline
+		x-access-token & No & Token de acceso. \\ \hline
+	\end{tabular}
+\end{adjustbox}
+\end{table}
+
+Parámetros de la URL:
+\begin{table}[h!]
+	\centering
+	\begin{adjustbox}{max width=\textwidth}
+	\begin{tabular}{|l|l|l|}
+		\hline
+		Nombre & Opcional & Descripción \\ \hline
+		username & No & Nombre del usuario a consultar. \\ \hline
+	\end{tabular}
+\end{adjustbox}
+\end{table}
+
+Respuesta:
+\begin{table}[h!]
+	\centering
+	\begin{adjustbox}{max width=\textwidth}
+	\begin{tabular}{|l|l|l|}
+		\hline
+		Parámetro & Tipo & Descripción \\ \hline
+		data & [Usuario](\#usuario) & Diccionario con toda la información del usuario consultado. \\ \hline
+	\end{tabular}
+\end{adjustbox}
+\end{table}
+
+
+
+\subsection{\textit{POST /api/customer/query}}
+Devuelve los usuarios que cumplen los criterios de búsqueda.
+
+Cabeceras necesarias:
+\begin{table}[h!]
+	\centering
+	\begin{adjustbox}{max width=\textwidth}
+	\begin{tabular}{|l|l|l|}
+		\hline
+		Nombre & Opcional & Descripción \\ \hline
+		x-access-token & No & Token de acceso. \\ \hline
+	\end{tabular}
+\end{adjustbox}
+\end{table}
+
+
+Cuerpo de la petición (JSON):
+\begin{table}[h!]
+	\centering
+	\begin{adjustbox}{max width=\textwidth}
+	\begin{tabular}{|l|l|l|l|}
+		\hline
+		Parámetro & Tipo & Opcional & Descripción \\ \hline
+		query & dict & No & Criterio de búsqueda. \\ \hline
+		filter & dict & Sí & Parámetros que se quieren en la respuesta. \\ \hline
+	\end{tabular}
+\end{adjustbox}
+\end{table}
+
+Respuesta (un solo usuario):
+\begin{table}[h!]
+	\centering
+	\begin{adjustbox}{max width=\textwidth}
+	\begin{tabular}{|l|l|l|}
+		\hline
+		Parámetro & Tipo & Descripción \\ \hline
+		data & [Usuario](\#usuario) & Usuario que cumple el criterio de búsqueda. \\ \hline
+	\end{tabular}
+\end{adjustbox}
+\end{table}
+
+Respuesta (más de un usuario):
+\begin{table}[h!]
+	\centering
+	\begin{adjustbox}{max width=\textwidth}
+	\begin{tabular}{|l|l|l|}
+		\hline
+		Parámetro & Tipo & Descripción \\ \hline
+		total & int & Número de usuarios que cumplen el criterio de búsqueda. \\ \hline
+		items & list[[Usuario](\#usuario)] & Usuarios que cumplen el criterio de búsqueda. \\ \hline
+	\end{tabular}
+\end{adjustbox}
+\end{table}
+
+
+\subsection{\textit{POST /api/user}}
+Crea un nuevo usuario.
+
+Cabeceras necesarias:
+\begin{table}[h!]
+	\centering
+	\begin{adjustbox}{max width=\textwidth}
+	\begin{tabular}{|l|l|l|}
+		\hline
+		Nombre & Opcional & Descripción \\ \hline
+		x-access-token & No & Token de acceso. \\ \hline
+	\end{tabular}
+\end{adjustbox}
+\end{table}
+
+Cuerpo de la petición (JSON):
+
+- [Usuario](usuario)
+
+Respuesta:
+\begin{table}[!h]
+	\centering
+	\begin{adjustbox}{max width=\textwidth}
+	\begin{tabular}{|l|l|l|}
+		\hline
+		Parámetro & Tipo & Descripción \\ \hline
+		ok & bool & Si la operación se ha ejecutado correctamente o no. \\ \hline
+		message & string & Mensaje complementario al estado de la operación. \\ \hline
+	\end{tabular}
+\end{adjustbox}
+\end{table}
+
+
+
+
+\subsection{\textit{PUT /api/user}}
+Modifica los datos de un usuario.
+
+Cabeceras necesarias:
+\begin{table}[h!]
+	\centering
+	\begin{adjustbox}{max width=\textwidth}
+	\begin{tabular}{|l|l|l|}
+		\hline
+		Nombre & Opcional & Descripción \\ \hline
+		x-access-token & No & Token de acceso. \\ \hline
+	\end{tabular}
+\end{adjustbox}
+\end{table}
+
+
+Cuerpo de la petición (JSON):
+\begin{table}[!h]
+	\centering
+	\begin{adjustbox}{max width=\textwidth}
+	\begin{tabular}{|l|l|l|l|}
+		\hline
+		Parámetro & Tipo & Opcional & Descripción \\ \hline
+		email & string & No & Email del usuario que se quiere modificar. \\ \hline
+		data & [Usuario](\#usuario) & No & Nuevos datos del usuario. \\ \hline
+	\end{tabular}
+\end{adjustbox}
+\end{table}
+
+Respuesta:
+\begin{table}[!h]
+	\centering
+	\begin{adjustbox}{max width=\textwidth}
+	\begin{tabular}{|l|l|l|}
+		\hline
+		Parámetro & Tipo & Descripción \\ \hline
+		ok & bool & Si la operación se ha ejecutado correctamente o no. \\ \hline
+		message & string & Mensaje complementario al estado de la operación. \\ \hline
+	\end{tabular}
+\end{adjustbox}
+\end{table}
+
+
+
+
+
+
+
+
+\subsection{\textit{DELETE /api/user}}
+Elimina un usuario.
+
+Cabeceras necesarias:
+\begin{table}[h!]
+	\centering
+	\begin{adjustbox}{max width=\textwidth}
+	\begin{tabular}{|l|l|l|}
+		\hline
+		Nombre & Opcional & Descripción \\ \hline
+		x-access-token & No & Token de acceso. \\ \hline
+	\end{tabular}
+\end{adjustbox}
+\end{table}
+
+Cuerpo de la petición (JSON):
+\begin{table}[!h]
+	\centering
+	\begin{adjustbox}{max width=\textwidth}
+	\begin{tabular}{|l|l|l|l|}
+		\hline
+		Parámetro & Tipo & Opcional & Descripción \\ \hline
+		email & string & No & Email del usuario que se quiere eliminar. \\ \hline
+	\end{tabular}
+\end{adjustbox}
+\end{table}
+
+Respuesta:
+\begin{table}[!h]
+	\centering
+	\begin{adjustbox}{max width=\textwidth}
+	\begin{tabular}{|l|l|l|}
+		\hline
+		Parámetro & Tipo & Descripción \\ \hline
+		ok & bool & Si la operación se ha ejecutado correctamente o no. \\ \hline
+		message & string & Mensaje complementario al estado de la operación. \\ \hline
+	\end{tabular}
+\end{adjustbox}
+\end{table}
+
+
+
+
+
+\section{Máquinas}
+
+\subsection{Machine}
+\begin{table}[!h]
+	\centering
+	\begin{adjustbox}{max width=\textwidth}
+	\begin{tabular}{|l|l|l|l|l|}
+		\hline
+		Parámetro & Tipo & Opcional & E/S & Descripción \\ \hline
+		name & string & No & E/S & Tipo de usuario. \\ \hline
+		description & string & Sí & E/S & Descripción de la máquina. \\ \hline
+		type & string & No & E/S & Tipo de la máquina. \\ \hline
+		ipv4 & string & Sí & E/S & Dirección IPv4 de la máquina. \\ \hline
+		ipv6 & string & Sí & E/S & Dirección IPv6 de la máquina. \\ \hline
+		mac & string & Sí & E/S & Dirección MAC de la máquina. \\ \hline
+		broadcast & string & Sí & E/S & Broadcast de la red a la que se conecta la máquina. \\ \hline
+		gateway & string & Sí & E/S & Gateway de la red a la que se conecta la máquina. \\ \hline
+		netmask & string & Sí & E/S & Netmask de la red a la que se conecta la máquina. \\ \hline
+		network & string & Sí & E/S & Network de la red a la que se conecta la máquina. \\ \hline
+	\end{tabular}
+\end{adjustbox}
+\end{table}
+
+
+\subsection{\textit{GET /api/machine/:name}}
+Devuelve toda la información asociada a una máquina.
+
+Cabeceras necesarias:
+\begin{table}[h!]
+	\centering
+	\begin{adjustbox}{max width=\textwidth}
+	\begin{tabular}{|l|l|l|}
+		\hline
+		Nombre & Opcional & Descripción \\ \hline
+		x-access-token & No & Token de acceso. \\ \hline
+	\end{tabular}
+\end{adjustbox}
+\end{table}
+
+Parámetros de la URL:
+\begin{table}[h!]
+	\centering
+	\begin{adjustbox}{max width=\textwidth}
+	\begin{tabular}{|l|l|l|}
+		\hline
+		Nombre & Opcional & Descripción \\ \hline
+		name & No & Nombre de la máquina a consultar. \\ \hline
+	\end{tabular}
+\end{adjustbox}
+\end{table}
+
+Respuesta:
+\begin{table}[h!]
+	\centering
+	\begin{adjustbox}{max width=\textwidth}
+	\begin{tabular}{|l|l|l|}
+		\hline
+		Parámetro & Tipo & Descripción \\ \hline
+		data & [Machine](\#machine) & Diccionario con toda la información de la máquina consultada. \\ \hline
+	\end{tabular}
+\end{adjustbox}
+\end{table}
+
+
+
+\subsection{\textit{POST/api/machine/query}}
+
+Cabeceras necesarias:
+\begin{table}[h!]
+	\centering
+	\begin{adjustbox}{max width=\textwidth}
+	\begin{tabular}{|l|l|l|}
+		\hline
+		Nombre & Opcional & Descripción \\ \hline
+		x-access-token & No & Token de acceso. \\ \hline
+	\end{tabular}
+\end{adjustbox}
+\end{table}
+
+Cuerpo de la petición (JSON):
+\begin{table}[h!]
+	\centering
+	\begin{adjustbox}{max width=\textwidth}
+	\begin{tabular}{|l|l|l|l|}
+		\hline
+		Parámetro & Tipo & Opcional & Descripción \\ \hline
+		query & dict & No & Criterio de búsqueda. \\ \hline
+		filter & dict & Sí & Parámetros que se quieren en la respuesta. \\ \hline
+	\end{tabular}
+\end{adjustbox}
+\end{table}
+
+Respuesta (una sola máquina):
+\begin{table}[h!]
+	\centering
+	\begin{adjustbox}{max width=\textwidth}
+	\begin{tabular}{|l|l|l|}
+		\hline
+		Parámetro & Tipo & Descripción \\ \hline
+		data & [Machine](\#machine) & Máquina que cumple el criterio de búsqueda. \\ \hline
+	\end{tabular}
+\end{adjustbox}
+\end{table}
+
+Respuesta (más de una máquina):
+\begin{table}[h!]
+	\centering
+	\begin{adjustbox}{max width=\textwidth}
+	\begin{tabular}{|l|l|l|}
+		\hline
+		Parámetro & Tipo & Descripción \\ \hline
+		total & int & Número de máquinas que cumplen el criterio de búsqueda. \\ \hline
+		items & list[[Machine](\#machine)] & Máquinas que cumplen el criterio de búsqueda. \\ \hline
+	\end{tabular}
+\end{adjustbox}
+\end{table}
+
+
+
+\subsection{\textit{POST /api/machine}}
+
+Cabeceras necesarias:
+\begin{table}[h!]
+	\centering
+	\begin{adjustbox}{max width=\textwidth}
+	\begin{tabular}{|l|l|l|}
+		\hline
+		Nombre & Opcional & Descripción \\ \hline
+		x-access-token & No & Token de acceso. \\ \hline
+	\end{tabular}
+\end{adjustbox}
+\end{table}
+
+Cuerpo de la petición (JSON):
+- [Machine](machine)
+
+Respuesta:
+\begin{table}[!h]
+	\centering
+	\begin{adjustbox}{max width=\textwidth}
+	\begin{tabular}{|l|l|l|}
+		\hline
+		Parámetro & Tipo & Descripción \\ \hline
+		ok & bool & Si la operación se ha ejecutado correctamente o no. \\ \hline
+		message & string & Mensaje complementario al estado de la operación. \\ \hline
+	\end{tabular}
+\end{adjustbox}
+\end{table}
+
+
+\subsection{\textit{PUT /api/machine}}
+
+Cabeceras necesarias:
+\begin{table}[h!]
+	\centering
+	\begin{adjustbox}{max width=\textwidth}
+	\begin{tabular}{|l|l|l|}
+		\hline
+		Nombre & Opcional & Descripción \\ \hline
+		x-access-token & No & Token de acceso. \\ \hline
+	\end{tabular}
+\end{adjustbox}
+\end{table}
+
+Cuerpo de la petición (JSON):
+\begin{table}[!h]
+	\centering
+	\begin{adjustbox}{max width=\textwidth}
+	\begin{tabular}{|l|l|l|l|}
+		\hline
+		Parámetro & Tipo & Opcional & Descripción \\ \hline
+		name & string & No & Nombre de la máquina que se quiere modificar. \\ \hline
+		data & [Machine](\#machine) & No & Nuevos datos de la máquina. \\ \hline
+	\end{tabular}
+\end{adjustbox}
+\end{table}
+
+
+Respuesta:
+\begin{table}[!h]
+	\centering
+	\begin{adjustbox}{max width=\textwidth}
+	\begin{tabular}{|l|l|l|}
+		\hline
+		Parámetro & Tipo & Descripción \\ \hline
+		ok & bool & Si la operación se ha ejecutado correctamente o no. \\ \hline
+		message & string & Mensaje complementario al estado de la operación. \\ \hline
+	\end{tabular}
+\end{adjustbox}
+\end{table}
+
+\subsection{\textit{DELETE /api/machine}}
+
+Cabeceras necesarias:
+\begin{table}[h!]
+	\centering
+	\begin{adjustbox}{max width=\textwidth}
+	\begin{tabular}{|l|l|l|}
+		\hline
+		Nombre & Opcional & Descripción \\ \hline
+		x-access-token & No & Token de acceso. \\ \hline
+	\end{tabular}
+\end{adjustbox}
+\end{table}
+
+Cuerpo de la petición (JSON):
+\begin{table}[!h]
+	\centering
+	\begin{adjustbox}{max width=\textwidth}
+	\begin{tabular}{|l|l|l|l|}
+		\hline
+		Parámetro & Tipo & Opcional & Descripción \\ \hline
+		name & string & No & Nombre de la máquina que se quiere eliminar. \\ \hline
+	\end{tabular}
+\end{adjustbox}
+\end{table}
+
+Respuesta:
+\begin{table}[!h]
+	\centering
+	\begin{adjustbox}{max width=\textwidth}
+	\begin{tabular}{|l|l|l|}
+		\hline
+		Parámetro & Tipo & Descripción \\ \hline
+		ok & bool & Si la operación se ha ejecutado correctamente o no. \\ \hline
+		message & string & Mensaje complementario al estado de la operación. \\ \hline
+	\end{tabular}
+\end{adjustbox}
+\end{table}
+
+
+
+
+
+
+
+
+
+
+\section{Grupos de hosts}
+
+\subsection{Hosts}
+\begin{table}[!h]
+	\centering
+	\begin{adjustbox}{max width=\textwidth}
+	\begin{tabular}{|l|l|l|l|l|}
+		\hline
+		Parámetro & Tipo & Opcional & E/S & Descripción \\ \hline
+		name & string & No & E/S & Nombre del grupo de hosts. \\ \hline
+		ips & list[string] & No & E/S & Direcciones IPv4. \\ \hline
+	\end{tabular}
+\end{adjustbox}
+\end{table}
+
+\subsection{\textit{GET /api/provision/hosts/:name}}
+
+Devuelve toda la información asociada a un grupo de hosts.
+
+Cabeceras necesarias:
+
+\begin{table}[h!]
+	\centering
+	\begin{adjustbox}{max width=\textwidth}
+	\begin{tabular}{|l|l|l|}
+		\hline
+		Nombre & Opcional & Descripción \\ \hline
+		x-access-token & No & Token de acceso. \\ \hline
+	\end{tabular}
+\end{adjustbox}
+\end{table}
+
+Parámetros de la URL:
+
+\begin{table}[h!]
+	\centering
+	\begin{adjustbox}{max width=\textwidth}
+	\begin{tabular}{|l|l|l|}
+		\hline
+		Nombre & Opcional & Descripción \\ \hline
+		name & No & Nombre del grupo de hosts a consultar. \\ \hline
+	\end{tabular}
+\end{adjustbox}
+\end{table}
+
+Respuesta:
+
+\begin{table}[h!]
+	\centering
+	\begin{adjustbox}{max width=\textwidth}
+	\begin{tabular}{|l|l|l|}
+		\hline
+		Parámetro & Tipo & Descripción \\ \hline
+		data & [Hosts](\#hosts) & Diccionario con toda la información del grupo de hosts consultado. \\ \hline
+	\end{tabular}
+\end{adjustbox}
+\end{table}
+
+
+
+\subsection{\textit{POST/api/provision/hosts/query}}
+
+Devuelve los grupos de hosts que cumplen los criterios de búsqueda.
+
+Cabeceras necesarias:
+
+\begin{table}[h!]
+	\centering
+	\begin{adjustbox}{max width=\textwidth}
+	\begin{tabular}{|l|l|l|}
+		\hline
+		Nombre & Opcional & Descripción \\ \hline
+		x-access-token & No & Token de acceso. \\ \hline
+	\end{tabular}
+\end{adjustbox}
+\end{table}
+
+Cuerpo de la petición (JSON):
+\begin{table}[h!]
+	\centering
+	\begin{adjustbox}{max width=\textwidth}
+	\begin{tabular}{|l|l|l|l|}
+		\hline
+		Parámetro & Tipo & Opcional & Descripción \\ \hline
+		query & dict & No & Criterio de búsqueda. \\ \hline
+		filter & dict & Sí & Parámetros que se quieren en la respuesta. \\ \hline
+	\end{tabular}
+\end{adjustbox}
+\end{table}
+
+Respuesta (una sola máquina):
+\begin{table}[h!]
+	\centering
+	\begin{adjustbox}{max width=\textwidth}
+	\begin{tabular}{|l|l|l|}
+		\hline
+		Parámetro & Tipo & Descripción \\ \hline
+		data & [Hosts](\#hosts) & Grupo de hosts que cumple el criterio de búsqueda. \\ \hline
+	\end{tabular}
+\end{adjustbox}
+\end{table}
+
+Respuesta (más de una máquina):
+\begin{table}[h!]
+	\centering
+	\begin{adjustbox}{max width=\textwidth}
+	\begin{tabular}{|l|l|l|}
+		\hline
+		Parámetro & Tipo & Descripción \\ \hline
+		total & int & Número de grupos de hosts que cumplen el criterio de búsqueda. \\ \hline
+		items & list[[Hosts](\#hosts)] & Grupos de hosts que cumplen el criterio de búsqueda. \\ \hline
+	\end{tabular}
+\end{adjustbox}
+\end{table}
+
+
+
+\subsection{\textit{POST /api/provision/hosts}}
+
+Cabeceras necesarias:
+\begin{table}[h!]
+	\centering
+	\begin{adjustbox}{max width=\textwidth}
+	\begin{tabular}{|l|l|l|}
+		\hline
+		Nombre & Opcional & Descripción \\ \hline
+		x-access-token & No & Token de acceso. \\ \hline
+	\end{tabular}
+\end{adjustbox}
+\end{table}
+
+Cuerpo de la petición (JSON):
+- [Machine](machine)
+
+Respuesta:
+\begin{table}[!h]
+	\centering
+	\begin{adjustbox}{max width=\textwidth}
+	\begin{tabular}{|l|l|l|}
+		\hline
+		Parámetro & Tipo & Descripción \\ \hline
+		ok & bool & Si la operación se ha ejecutado correctamente o no. \\ \hline
+		message & string & Mensaje complementario al estado de la operación. \\ \hline
+	\end{tabular}
+\end{adjustbox}
+\end{table}
+
+
+\subsection{\textit{PUT /api/provision/hosts}}
+
+Cabeceras necesarias:
+\begin{table}[h!]
+	\centering
+	\begin{adjustbox}{max width=\textwidth}
+	\begin{tabular}{|l|l|l|}
+		\hline
+		Nombre & Opcional & Descripción \\ \hline
+		x-access-token & No & Token de acceso. \\ \hline
+	\end{tabular}
+\end{adjustbox}
+\end{table}
+
+Cuerpo de la petición (JSON):
+\begin{table}[!h]
+	\centering
+	\begin{adjustbox}{max width=\textwidth}
+	\begin{tabular}{|l|l|l|l|}
+		\hline
+		Parámetro & Tipo & Opcional & Descripción \\ \hline
+		name & string & No & Nombre del grupo de hosts que se quiere modificar. \\ \hline
+		data & [Hosts](\#hosts) & No & Nuevos datos del grupo de hosts. \\ \hline
+	\end{tabular}
+\end{adjustbox}
+\end{table}
+
+
+Respuesta:
+\begin{table}[!h]
+	\centering
+	\begin{adjustbox}{max width=\textwidth}
+	\begin{tabular}{|l|l|l|}
+		\hline
+		Parámetro & Tipo & Descripción \\ \hline
+		ok & bool & Si la operación se ha ejecutado correctamente o no. \\ \hline
+		message & string & Mensaje complementario al estado de la operación. \\ \hline
+	\end{tabular}
+\end{adjustbox}
+\end{table}
+
+\subsection{\textit{DELETE /api/provision/hosts}}
+
+Cabeceras necesarias:
+\begin{table}[h!]
+	\centering
+	\begin{adjustbox}{max width=\textwidth}
+	\begin{tabular}{|l|l|l|}
+		\hline
+		Nombre & Opcional & Descripción \\ \hline
+		x-access-token & No & Token de acceso. \\ \hline
+	\end{tabular}
+\end{adjustbox}
+\end{table}
+
+Cuerpo de la petición (JSON):
+\begin{table}[!h]
+	\centering
+	\begin{adjustbox}{max width=\textwidth}
+	\begin{tabular}{|l|l|l|l|}
+		\hline
+		Parámetro & Tipo & Opcional & Descripción \\ \hline
+		name & string & No & Nombre del grupo de hosts que se quiere eliminar. \\ \hline
+	\end{tabular}
+\end{adjustbox}
+\end{table}
+
+Respuesta:
+\begin{table}[!h]
+	\centering
+	\begin{adjustbox}{max width=\textwidth}
+	\begin{tabular}{|l|l|l|}
+		\hline
+		Parámetro & Tipo & Descripción \\ \hline
+		ok & bool & Si la operación se ha ejecutado correctamente o no. \\ \hline
+		message & string & Mensaje complementario al estado de la operación. \\ \hline
+	\end{tabular}
+\end{adjustbox}
+\end{table}
+
+
+
+
+
+
+
+
+
+\section{Playbooks}
+
+	\subsection{Playbook}
+		\begin{table}[!h]
+			\centering
+	\begin{adjustbox}{max width=\textwidth}
+			\begin{tabular}{|l|l|l|l|l|}
+				\hline
+				Parámetro & Tipo & Opcional & E/S & Descripción \\ \hline
+				name & string & No & E/S & Nombre del Playbook. \\ \hline
+				playbook & dict & No & E/S & Contenido del Playbook codificado como JSON. \\ \hline
+			\end{tabular}
+\end{adjustbox}
+		\end{table}
+	
+	\subsection{\textit{GET /api/provision/playbook/:name}}
+		Devuelve toda la información asociada a un Playbook.
+		
+		Cabeceras necesarias:
+		\begin{table}[h!]
+			\centering
+	\begin{adjustbox}{max width=\textwidth}
+			\begin{tabular}{|l|l|l|}
+				\hline
+				Nombre & Opcional & Descripción \\ \hline
+				x-access-token & No & Token de acceso. \\ \hline
+			\end{tabular}
+\end{adjustbox}
+		\end{table}
+		
+		Parámetros de la URL:
+		\begin{table}[h!]
+			\centering
+	\begin{adjustbox}{max width=\textwidth}
+			\begin{tabular}{|l|l|l|}
+				\hline
+				Nombre & Opcional & Descripción \\ \hline
+				name & No & Nombre del Playbook a consultar. \\ \hline
+			\end{tabular}
+\end{adjustbox}
+		\end{table}
+		
+		Respuesta:
+		\begin{table}[h!]
+			\centering
+	\begin{adjustbox}{max width=\textwidth}
+			\begin{tabular}{|l|l|l|}
+				\hline
+				Parámetro & Tipo & Descripción \\ \hline
+				data & [Hosts](\#hosts) & Diccionario con toda la información del Playbook consultado. \\ \hline
+			\end{tabular}
+\end{adjustbox}
+		\end{table}
+	
+	
+	
+	\subsection{\textit{POST/api/provision/playbook/query}}
+		Devuelve los grupos de hosts que cumplen los criterios de búsqueda.
+		
+		Cabeceras necesarias:
+		\begin{table}[h!]
+			\centering
+	\begin{adjustbox}{max width=\textwidth}
+			\begin{tabular}{|l|l|l|}
+				\hline
+				Nombre & Opcional & Descripción \\ \hline
+				x-access-token & No & Token de acceso. \\ \hline
+			\end{tabular}
+\end{adjustbox}
+		\end{table}
+		
+		Cuerpo de la petición (JSON):
+		\begin{table}[h!]
+			\centering
+	\begin{adjustbox}{max width=\textwidth}
+			\begin{tabular}{|l|l|l|l|}
+				\hline
+				Parámetro & Tipo & Opcional & Descripción \\ \hline
+				query & dict & No & Criterio de búsqueda. \\ \hline
+				filter & dict & Sí & Parámetros que se quieren en la respuesta. \\ \hline
+			\end{tabular}
+\end{adjustbox}
+		\end{table}
+		
+		Respuesta (un solo Playbook):
+		\begin{table}[h!]
+			\centering
+	\begin{adjustbox}{max width=\textwidth}
+			\begin{tabular}{|l|l|l|}
+				\hline
+				Parámetro & Tipo & Descripción \\ \hline
+				data & [Playbook](\#playbook) & Playbook que cumple el criterio de búsqueda. \\ \hline
+			\end{tabular}
+\end{adjustbox}
+		\end{table}
+		
+		Respuesta (más de un Playbook):
+		\begin{table}[h!]
+			\centering
+	\begin{adjustbox}{max width=\textwidth}
+			\begin{tabular}{|l|l|l|}
+				\hline
+				Parámetro & Tipo & Descripción \\ \hline
+				total & int & Número de Playbooks que cumplen el criterio de búsqueda. \\ \hline
+				items & list[[Playbook](\#playbook)] & Playbooks que cumplen el criterio de búsqueda. \\ \hline
+			\end{tabular}
+\end{adjustbox}
+		\end{table}
+	
+	
+	
+	\subsection{\textit{POST /api/provision/playbook}}
+		Crea un nuevo Playbook.
+		
+		Cabeceras necesarias:
+		\begin{table}[h!]
+			\centering
+	\begin{adjustbox}{max width=\textwidth}
+			\begin{tabular}{|l|l|l|}
+				\hline
+				Nombre & Opcional & Descripción \\ \hline
+				x-access-token & No & Token de acceso. \\ \hline
+			\end{tabular}
+\end{adjustbox}
+		\end{table}
+		
+		Cuerpo de la petición (JSON):
+		- [Playbook](playbook)
+		
+		Respuesta:
+		\begin{table}[!h]
+			\centering
+	\begin{adjustbox}{max width=\textwidth}
+			\begin{tabular}{|l|l|l|}
+				\hline
+				Parámetro & Tipo & Descripción \\ \hline
+				ok & bool & Si la operación se ha ejecutado correctamente o no. \\ \hline
+				message & string & Mensaje complementario al estado de la operación. \\ \hline
+			\end{tabular}
+\end{adjustbox}
+	\end{table}
+	
+	
+	\subsection{\textit{PUT /api/provision/playbook}}
+		Modifica los datos de un Playbook.
+		
+		Cabeceras necesarias:
+		\begin{table}[h!]
+			\centering
+	\begin{adjustbox}{max width=\textwidth}
+			\begin{tabular}{|l|l|l|}
+				\hline
+				Nombre & Opcional & Descripción \\ \hline
+				x-access-token & No & Token de acceso. \\ \hline
+			\end{tabular}
+\end{adjustbox}
+		\end{table}
+		
+		Cuerpo de la petición (JSON):
+		\begin{table}[!h]
+			\centering
+	\begin{adjustbox}{max width=\textwidth}
+			\begin{tabular}{|l|l|l|l|}
+				\hline
+				Parámetro & Tipo & Opcional & Descripción \\ \hline
+				name & string & No & Nombre del grupo de hosts que se quiere modificar. \\ \hline
+				data & [Hosts](\#hosts) & No & Nuevos datos del grupo de hosts. \\ \hline
+			\end{tabular}
+\end{adjustbox}
+		\end{table}
+		
+		
+		Respuesta:
+		\begin{table}[!h]
+			\centering
+	\begin{adjustbox}{max width=\textwidth}
+			\begin{tabular}{|l|l|l|}
+				\hline
+				Parámetro & Tipo & Descripción \\ \hline
+				ok & bool & Si la operación se ha ejecutado correctamente o no. \\ \hline
+				message & string & Mensaje complementario al estado de la operación. \\ \hline
+			\end{tabular}
+\end{adjustbox}
+		\end{table}
+	
+	\subsection{\textit{DELETE /api/provision/playbook}}
+		Elimina un Playbook.
+		
+		Cabeceras necesarias:
+		\begin{table}[h!]
+			\centering
+	\begin{adjustbox}{max width=\textwidth}
+			\begin{tabular}{|l|l|l|}
+				\hline
+				Nombre & Opcional & Descripción \\ \hline
+				x-access-token & No & Token de acceso. \\ \hline
+			\end{tabular}
+\end{adjustbox}
+		\end{table}
+		
+		Cuerpo de la petición (JSON):
+		\begin{table}[!h]
+			\centering
+	\begin{adjustbox}{max width=\textwidth}
+			\begin{tabular}{|l|l|l|l|}
+				\hline
+				Parámetro & Tipo & Opcional & Descripción \\ \hline
+				name & string & No & Nombre del Playbook que se quiere eliminar. \\ \hline
+			\end{tabular}
+\end{adjustbox}
+		\end{table}
+		
+		Respuesta:
+		\begin{table}[!h]
+			\centering
+	\begin{adjustbox}{max width=\textwidth}
+			\begin{tabular}{|l|l|l|}
+				\hline
+				Parámetro & Tipo & Descripción \\ \hline
+				ok & bool & Si la operación se ha ejecutado correctamente o no. \\ \hline
+				message & string & Mensaje complementario al estado de la operación. \\ \hline
+			\end{tabular}
+\end{adjustbox}
+		\end{table}
+
+
+
+
+
+
+
+
+
+
+
+\section{Aprovisionamiento}
+
+
+	\subsection{\textit{POST /api/provision}}
+		Ejecuta un playbook.
+	
+		Cabeceras necesarias:
+		\begin{table}[h!]
+			\centering
+	\begin{adjustbox}{max width=\textwidth}
+			\begin{tabular}{|l|l|l|}
+				\hline
+				Nombre & Opcional & Descripción \\ \hline
+				x-access-token & No & Token de acceso. \\ \hline
+			\end{tabular}
+\end{adjustbox}
+		\end{table}
+		
+		Cuerpo de la petición (JSON):
+		\begin{table}[h!]
+			\centering
+	\begin{adjustbox}{max width=\textwidth}
+			\begin{tabular}{|l|l|l|l|l|}
+				\hline
+				Parámetro & Key & Tipo & Opcional & Descripción \\ \hline
+				hosts &  & list[string] & No & Lista de grupo de hosts donde se quiere ejecutar el playbook. \\ \hline
+				playbook &  & string & No & Nombre del playbook a ejecutar. \\ \hline
+				passwords &  & dict & No & Contraseñas necesarias para la conexión a los hosts. \\ \hline
+				& conn\_pass & string & Sí & Contraseña de acceso. \\ \hline
+				& become\_pass & string & Sí & Contraseña para acceder al root. \\ \hline
+			\end{tabular}
+\end{adjustbox}
+		\end{table}
+		
+		Respuesta:
+		\begin{table}[h!]
+			\centering
+	\begin{adjustbox}{max width=\textwidth}
+			\begin{tabular}{|l|l|l|}
+				\hline
+				Parámetro & Tipo & Descripción \\ \hline
+				result & string & Respuesta de la ejecución del playbook. \\ \hline
+			\end{tabular}
+\end{adjustbox}
+		\end{table}
+
+
+
+
+
+
+
+\section{Despliegue}
+
+	\subsection{Contenedor}
+		\begin{table}[h!]
+			\centering
+	\begin{adjustbox}{max width=\textwidth}
+			\begin{tabular}{|l|l|l|l|}
+				\hline
+				Parámetro & Tipo & E/S & Descripción \\ \hline
+				id & string & S & Identificador del contenedor \\ \hline
+				short\_id & string & S & Identificador del contenedor truncado a 10 carácteres. \\ \hline
+				name & string & S & Nombre del contenedor. \\ \hline
+				labels & dict & S & Etiquetas del contenedor. \\ \hline
+				status & string & S & Estado del contenedor. \\ \hline
+				image & Image & S & Imagen que se esta ejecutando en el contenedor. \\ \hline
+			\end{tabular}
+\end{adjustbox}
+		\end{table}
+	
+	\subsection{Imagen}
+		\begin{table}[h!]
+			\centering
+	\begin{adjustbox}{max width=\textwidth}
+			\begin{tabular}{|l|l|l|l|}
+				\hline
+				Parámetro & Tipo & E/S & Descripción \\ \hline
+				id & string & S & Identificador de la imagen. \\ \hline
+				labels & dict & S & Etiquetas de la imagen. \\ \hline
+				short\_id & string & S & Identificador de la imagen truncado a 10 carácteres. \\ \hline
+				tags & list[string] & S & Tags de la imagen. \\ \hline
+			\end{tabular}
+\end{adjustbox}
+		\end{table}
+	
+	\subsection{Filtro de contenedores}
+		\begin{table}[h!]
+			\centering
+	\begin{adjustbox}{max width=\textwidth}
+			\begin{tabular}{|l|l|l|l|l|}
+				\hline
+				Parámetro & Key & Tipo & Opcional & Descripción \\ \hline
+				filters &  & dict & No &  \\ \hline
+				& exited & boolean & Sí & Si el contenedor ha finalizado su ejecución o no. \\ \hline
+				& status & string & Sí & Estado del contenedor. \\ \hline
+				& id & string & Sí & Identificador del contenedor. \\ \hline
+				& name & string & Sí & Nombre del contenedor. \\ \hline
+			\end{tabular}
+\end{adjustbox}
+		\end{table}
+	
+	\subsection{Filtro de imágenes}
+		\begin{table}[h!]
+			\centering
+	\begin{adjustbox}{max width=\textwidth}
+			\begin{tabular}{|l|l|l|l|l|}
+				\hline
+				Parámetro & Key & Tipo & Opcional & Descripción \\ \hline
+				filters &  & dict & No &  \\ \hline
+				& dangling & boolean & Sí & Si la imagen se encuentra colgada o no. \\ \hline
+				& label & string & Sí & Etiqueta de la imagen. \\ \hline
+			\end{tabular}
+\end{adjustbox}
+		\end{table}
+	
+	
+	\subsection{\textit{POST /api/deploy/container}}
+		Permite ejecutar operaciones básicas en todos los contenedores.
+		
+		Cabeceras necesarias:
+		\begin{table}[h!]
+			\centering
+	\begin{adjustbox}{max width=\textwidth}
+			\begin{tabular}{|l|l|l|}
+				\hline
+				Nombre & Opcional & Descripción \\ \hline
+				x-access-token & No & Token de acceso. \\ \hline
+			\end{tabular}
+\end{adjustbox}
+		\end{table}
+		
+		Cuerpo de la petición (JSON):
+		\begin{table}[!h]
+			\centering
+	\begin{adjustbox}{max width=\textwidth}
+			\begin{tabular}{|l|l|l|l|}
+				\hline
+				Parámetro & Tipo & Opcional & Descripción \\ \hline
+				operation & string & No & Nombre de la operación que se quiere ejecutar. Valores posibles: \textit{run}, \textit{get}, \textit{list}, \textit{prune}. \\ \hline
+				data & dict & No & Argumentos de la operación. \\ \hline
+			\end{tabular}
+\end{adjustbox}
+		\end{table}
+	
+		Tipos de operaciones:
+		\subsubsection{run}
+			\begin{table}[!h]
+				\centering
+	\begin{adjustbox}{max width=\textwidth}
+				\begin{tabular}{|l|l|l|l|l|}
+					\hline
+					Parámetro & Key & Tipo & Opcional & Descripción \\ \hline
+					data &  & dict & No & Argumentos de la operación. \\ \hline
+					& image & string & No & Imagen a ejecutar. \\ \hline
+					& command & list[string] & Sí & Comando a ejecutar en el contenedor. \\ \hline
+					& auto\_remove & bool & Sí & Eliminar o no el contenedor al terminar la ejecución. \\ \hline
+					& detach & bool & Sí & Ejecutar o no el contenedor en segundo plano. Por defecto \textit{true}. \\ \hline
+					& entrypoint & list[string] & Sí & Entrypoint del contenedor. \\ \hline
+					& environment & dict & Sí & Variables de entorno. \\ \hline
+					& hostname & string & Sí & Hostname del contenedor. \\ \hline
+					& mounts & list[string] & Sí & Lista de volumenes que se montan en el contenedor. \\ \hline
+					& name & string & Sí & Nombre del contenedor. \\ \hline
+					& network & string & Sí & Nombre de la red a la que se conecta. \\ \hline
+					& ports & dict & Sí & Puertos a enlazar. \\ \hline
+					& user & string & Sí & Usuario para ejecutar los posibles comandos dentro del contenedor. \\ \hline
+					& volumes & dict & Sí & Volumenes a montar. \\ \hline
+					& working\_dir & string & Sí & Directorio de trabajo. \\ \hline
+					& remove & bool & Sí & Eliminar el contenedor al terminar la ejecución. \\ \hline
+				\end{tabular}
+\end{adjustbox}
+			\end{table}
+		
+		\subsubsection{get}
+			\begin{table}[!h]
+				\centering
+	\begin{adjustbox}{max width=\textwidth}
+				\begin{tabular}{|l|l|l|l|l|}
+					\hline
+					Parámetro & Key & Tipo & Opcional & Descripción \\ \hline
+					data &  & dict & No & Argumentos de la operación. \\ \hline
+					& container\_id & string & No & Identificador del contenedor \\ \hline
+				\end{tabular}
+\end{adjustbox}
+			\end{table}
+		
+			Respuesta:
+			- [Contenedor](contenedor)
+			
+		\subsubsection{list}
+			\begin{table}[!h]
+				\centering
+	\begin{adjustbox}{max width=\textwidth}
+				\begin{tabular}{|l|l|l|l|l|}
+					\hline
+					Parámetro & Key & Tipo & Opcional & Descripción \\ \hline
+					data &  & dict & No & Argumentos de la operación. \\ \hline
+					& all & bool & No & Mostrar o no todos los contenedores (en ejecución y detenidos o finalizados). \\ \hline
+					& since & string & No & Mostrar contenedores creados desde este identificador. \\ \hline
+					& before & string & No & Mostrar contenedores creados previos a este identificador. \\ \hline
+					& filters & [Filtro](\#filtro-de-contenedores) & No & Filtros para afinar la búsqueda. \\ \hline
+				\end{tabular}
+\end{adjustbox}
+			\end{table}
+		
+			Respuesta (un solo contenedor):
+			\begin{table}[!h]
+				\centering
+	\begin{adjustbox}{max width=\textwidth}
+				\begin{tabular}{|l|l|l|}
+					\hline
+					Parámetro & Tipo & Descripción \\ \hline
+					data & list[[Contenedor](\#contenedor)] & Contenedor que cumple el criterio de búsqueda. \\ \hline
+				\end{tabular}
+\end{adjustbox}
+			\end{table}
+		
+			Respuesta (más de un contenedor):
+			\begin{table}[!h]
+				\centering
+	\begin{adjustbox}{max width=\textwidth}
+				\begin{tabular}{|l|l|l|}
+					\hline
+					Parámetro & Tipo & Descripción \\ \hline
+					total & int & Número de contenedores que cumplen el criterio de búsqueda. \\ \hline
+					items & list[[Contenedor](\#contenedor)] & Contenedores que cumplen el criterio de búsqueda. \\ \hline
+				\end{tabular}
+\end{adjustbox}
+			\end{table}
+		
+		\subsubsection{prune}
+			\begin{table}[!h]
+				\centering
+	\begin{adjustbox}{max width=\textwidth}
+				\begin{tabular}{|l|l|l|l|l|}
+					\hline
+					Parámetro & Key & Tipo & Opcional & Descripción \\ \hline
+					data &  & dict & No & Argumentos de la operación. \\ \hline
+					& filters & [Filtro](\#filtro-de-contenedores) & Sí & Filtros. \\ \hline
+				\end{tabular}
+\end{adjustbox}
+			\end{table}
+	
+	
+	
+
+	\subsection{\textit{POST /api/deploy/container/single}}
+		Permite ejecutar operaciones básicas en un contenedor en concreto.
+	
+		Cabeceras necesarias:
+		\begin{table}[h!]
+			\centering
+	\begin{adjustbox}{max width=\textwidth}
+			\begin{tabular}{|l|l|l|}
+				\hline
+				Nombre & Opcional & Descripción \\ \hline
+				x-access-token & No & Token de acceso. \\ \hline
+			\end{tabular}
+\end{adjustbox}
+		\end{table}
+		
+		Cuerpo de la petición (JSON):
+		\begin{table}[!h]
+			\centering
+	\begin{adjustbox}{max width=\textwidth}
+			\begin{tabular}{|l|l|l|l|}
+				\hline
+				Parámetro & Tipo & Opcional & Descripción \\ \hline
+				container\_id & string & No & Identificador del contenedor. \\ \hline
+				operation & string & No & Nombre de la operación que se quiere ejecutar. Valores posibles: \textit{kill}, \textit{logs}, \textit{pause}, \textit{reload}, \textit{rename}, \textit{restart}, \textit{stop}, \textit{unpause}. \\ \hline
+				data & dict & No & Argumentos de la operación. \\ \hline
+			\end{tabular}
+\end{adjustbox}
+		\end{table}
+	
+		Tipos de operaciones:
+		
+		\subsubsection{rename}
+			\begin{table}[!h]
+				\centering
+	\begin{adjustbox}{max width=\textwidth}
+				\begin{tabular}{|l|l|l|l|l|}
+					\hline
+					Parámetro & Key & Tipo & Opcional & Descripción \\ \hline
+					data &  & dict & No & Argumentos de la operación. \\ \hline
+					& name & string & No & Nuevo nombre del contenedor. \\ \hline
+				\end{tabular}
+\end{adjustbox}
+			\end{table}
+		
+		\subsubsection{logs}
+			Respuesta:
+			
+			\begin{table}[!h]
+				\centering
+	\begin{adjustbox}{max width=\textwidth}
+				\begin{tabular}{|l|l|l|}
+					\hline
+					Parámetro & Tipo & Descripción \\ \hline
+					data & string & Logs del contenedor. \\ \hline
+				\end{tabular}
+\end{adjustbox}
+			\end{table}
+		
+	
+	
+	
+	
+	\subsection{\textit{POST /api/deploy/image}}
+		Permite ejecutar operaciones básicas en todos las imágenes.
+	
+		Cabeceras necesarias:
+		\begin{table}[h!]
+			\centering
+	\begin{adjustbox}{max width=\textwidth}
+			\begin{tabular}{|l|l|l|}
+				\hline
+				Nombre & Opcional & Descripción \\ \hline
+				x-access-token & No & Token de acceso. \\ \hline
+			\end{tabular}
+\end{adjustbox}
+		\end{table}
+		
+		Cuerpo de la petición (JSON):
+		
+		\begin{table}[!h]
+			\centering
+	\begin{adjustbox}{max width=\textwidth}
+			\begin{tabular}{|l|l|l|l|}
+				\hline
+				Parámetro & Tipo & Opcional & Descripción \\ \hline
+				operation & string & No & Nombre de la operación que se quiere ejecutar. Valores posibles: \textit{list}, \textit{get}, \textit{prune}, \textit{pull}, \textit{remove}, \textit{search}. \\ \hline
+				data & dict & No & Argumentos de la operación. \\ \hline
+			\end{tabular}
+\end{adjustbox}
+		\end{table}
+	
+		Tipos de operaciones:
+		
+			\subsubsection{list}
+				\begin{table}[!h]
+					\centering
+	\begin{adjustbox}{max width=\textwidth}
+					\begin{tabular}{|l|l|l|l|l|}
+						\hline
+						Parámetro & Key & Tipo & Opcional & Descripción \\ \hline
+						data &  & dict & No & Argumentos de la operación. \\ \hline
+						& name & string & Sí & Mostrar sólo las imágenes pertenecientes a este repositorio. \\ \hline
+						& all & bool & Sí & Mostrar todas las imágenes o no (incluídas las imágenes de capas intermedias). \\ \hline
+						& filters & [Filtro](\#filtro-de-imágenes) & Sí & Filtros adicionales. \\ \hline
+					\end{tabular}
+\end{adjustbox}
+				\end{table}
+			
+				Respuesta (una sola imagen):
+				\begin{table}[!h]
+					\centering
+	\begin{adjustbox}{max width=\textwidth}
+					\begin{tabular}{|l|l|l|}
+						\hline
+						Parámetro & Tipo & Descripción \\ \hline
+						data & [Imagen](\#imagen) & Diccionario con los datos de la imagen. \\ \hline
+					\end{tabular}
+\end{adjustbox}
+				\end{table}
+			
+				Respuesta (más de una imagen):
+				\begin{table}[!h]
+					\centering
+	\begin{adjustbox}{max width=\textwidth}
+					\begin{tabular}{|l|l|l|}
+						\hline
+						Parámetro & Tipo & Descripción \\ \hline
+						total & int & Número de imágenes listadas. \\ \hline
+						items & list[[Imagen](\#imagen)] & Imágenes listadas. \\ \hline
+					\end{tabular}
+\end{adjustbox}
+				\end{table}
+			
+			\subsubsection{get}
+				\begin{table}[!h]
+					\centering
+	\begin{adjustbox}{max width=\textwidth}
+					\begin{tabular}{|l|l|l|l|l|}
+						\hline
+						Parámetro & Key & Tipo & Opcional & Descripción \\ \hline
+						data &  & dict & No & Argumentos de la operación. \\ \hline
+						& name & string & No & Nombre de la imagen. \\ \hline
+					\end{tabular}
+\end{adjustbox}
+				\end{table}
+			
+				Respuesta:
+				
+				- [Imagen](imagen)
+				
+			\subsubsection{prune}
+				\begin{table}[!h]
+					\centering
+	\begin{adjustbox}{max width=\textwidth}
+					\begin{tabular}{|l|l|l|l|l|}
+						\hline
+						Parámetro & Key & Tipo & Opcional & Descripción \\ \hline
+						data &  & dict & No & Argumentos de la operación. \\ \hline
+						& filters & [Filter](filter) & Sí & Filtros adicionales. \\ \hline
+					\end{tabular}
+\end{adjustbox}
+				\end{table}
+			
+			\subsubsection{pull}
+				\begin{table}[!h]
+					\centering
+	\begin{adjustbox}{max width=\textwidth}
+					\begin{tabular}{|l|l|l|l|l|}
+						\hline
+						Parámetro & Key & Tipo & Opcional & Descripción \\ \hline
+						data &  & dict & No & Argumentos de la operación. \\ \hline
+						& repository & string & Sí & Repositorio e imagen a descargar. \\ \hline
+						& tag & string & Sí & Tag de la imagen. \\ \hline
+						& auth\_config & dict & Sí & Sobreescribir las credenciales. \\ \hline
+						& platform & string & Sí & Plataforma en formato: os[/arch[/variant]] \\ \hline
+					\end{tabular}
+\end{adjustbox}
+				\end{table}
+			
+				Respuesta:
+				
+				- [Imagen](imagen) descargada.
+				
+			\subsubsection{remove}
+				\begin{table}[!h]
+					\centering
+	\begin{adjustbox}{max width=\textwidth}
+					\begin{tabular}{|l|l|l|l|l|}
+						\hline
+						Parámetro & Key & Tipo & Opcional & Descripción \\ \hline
+						data &  & dict & No & Argumentos de la operación. \\ \hline
+						& image & string & No & Imagen a eliminar. \\ \hline
+						& force & bool & Sí & Forzar borrado. \\ \hline
+						& noprune & bool & Sí & Borrar o no imágenes padre sin tag. \\ \hline
+					\end{tabular}
+\end{adjustbox}
+				\end{table}
+			
+			\subsubsection{search}
+				\begin{table}[!h]
+					\centering
+	\begin{adjustbox}{max width=\textwidth}
+					\begin{tabular}{|l|l|l|l|l|}
+						\hline
+						Parámetro & Key & Tipo & Opcional & Descripción \\ \hline
+						data &  & dict & No & Argumentos de la operación. \\ \hline
+						& term & string & No & Término de búsqueda. \\ \hline
+					\end{tabular}
+\end{adjustbox}
+				\end{table}
+			
+				Respuesta:
+				
+				\begin{table}[!h]
+					\centering
+	\begin{adjustbox}{max width=\textwidth}
+					\begin{tabular}{|l|l|l|l|}
+						\hline
+						Parámetro & Key & Tipo & Descripción \\ \hline
+						total &  & int & Número de imágenes encontradas. \\ \hline
+						items &  & list[dict] & Imágenes encontradas. \\ \hline
+						& star\_count & int & Número de estrellas en DockerHub. \\ \hline
+						& is\_official & bool & Si la imagen es oficial o no. \\ \hline
+						& name & string & Nombre de la imagen \\ \hline
+						& is\_automated & bool & Imagen automatizada. \\ \hline
+						& description & string & Descripción. \\ \hline
+					\end{tabular}
+\end{adjustbox}
+				\end{table}
+		
+	
+	
+	\subsection{\textit{POST /api/deploy/image/single}}
+		Permite ejecutar operaciones básicas en una imagen en concreto.
+		
+		Cabeceras necesarias:
+		\begin{table}[h!]
+			\centering
+	\begin{adjustbox}{max width=\textwidth}
+			\begin{tabular}{|l|l|l|}
+				\hline
+				Nombre & Opcional & Descripción \\ \hline
+				x-access-token & No & Token de acceso. \\ \hline
+			\end{tabular}
+\end{adjustbox}
+		\end{table}
+		
+		Cuerpo de la petición (JSON):
+		
+		\begin{table}[!h]
+			\centering
+	\begin{adjustbox}{max width=\textwidth}
+			\begin{tabular}{|l|l|l|l|}
+				\hline
+				Parámetro & Tipo & Opcional & Descripción \\ \hline
+				name & string & No & Nombre de la imagen. \\ \hline
+				operation & string & No & Nombre de la operación que se quiere ejecutar. Valores posibles: \textit{history}, \textit{reload}. \\ \hline
+				data & dict & No & Argumentos de la operación. \\ \hline
+			\end{tabular}
+\end{adjustbox}
+		\end{table}
+	
+		Tipos de operaciones:
+		
+			\subsubsection{history}
+				Respuesta:
+				
+				\begin{table}[!h]
+					\centering
+	\begin{adjustbox}{max width=\textwidth}
+					\begin{tabular}{|l|l|l|}
+						\hline
+						Parámetro & Tipo & Descripción \\ \hline
+						data & string & Historia de la imagen. \\ \hline
+					\end{tabular}
+\end{adjustbox}
+				\end{table}
+			
+			\subsubsection{reload}
+				Recarga la imagen y aplica los posibles cambios que tenga.
+		
+		
+	
+
+
+
