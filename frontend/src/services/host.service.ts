@@ -13,7 +13,7 @@ import { Query } from '../interfaces/query';
   providedIn: 'root'
 })
 export class HostService {
-  path = '/api/provision/hosts';
+  path = '/provision/hosts';
 
   constructor(
     private httpClient: HttpClient,

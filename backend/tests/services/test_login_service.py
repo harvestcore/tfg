@@ -27,7 +27,7 @@ class LoginServiceTests(unittest.TestCase):
         })
 
         response = self.app.get(
-            '/api/login',
+            '/login',
             headers={"Authorization": "Basic dXNlcnRlc3Q6dXNlcnRlc3Q="}
         )
         self.assertEqual(response.status_code, 200)
@@ -39,7 +39,7 @@ class LoginServiceTests(unittest.TestCase):
         }
 
         response = self.app.get(
-            '/api/logout',
+            '/logout',
             headers=headers
         )
         self.assertEqual(response.status_code, 200, 'Logout failed')

@@ -13,7 +13,7 @@ import { Query } from '../interfaces/query';
   providedIn: 'root'
 })
 export class MachineService {
-  path = '/api/machine';
+  path = '/machine';
 
   constructor(
     private httpClient: HttpClient,

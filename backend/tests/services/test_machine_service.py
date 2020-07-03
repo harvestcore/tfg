@@ -14,7 +14,7 @@ from config.server_environment import TESTING_DATABASE
 class UserTests(unittest.TestCase):
     app = app.test_client()
     headers = TestingLogin().headers
-    path = '/api/machine'
+    path = '/machine'
 
     def setUp(self):
         Customer().set_customer(TESTING_DATABASE)
