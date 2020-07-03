@@ -11,7 +11,7 @@ import {UrlService} from './url.service';
   providedIn: 'root'
 })
 export class ProvisionService {
-  path = '/api/provision';
+  path = '/provision';
 
   constructor(
     private httpClient: HttpClient,

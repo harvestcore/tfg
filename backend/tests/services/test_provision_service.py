@@ -14,7 +14,7 @@ from config.server_environment import TESTING_DATABASE
 
 
 class ProvisionHostServiceTests(unittest.TestCase):
-    path = '/api/provision/hosts'
+    path = '/provision/hosts'
     app = app.test_client()
     headers = TestingLogin().headers
 
@@ -168,7 +168,7 @@ class ProvisionHostServiceTests(unittest.TestCase):
 class ProvisionPlaybookServiceTests(unittest.TestCase):
     app = app.test_client()
     headers = TestingLogin().headers
-    path = '/api/provision/playbook'
+    path = '/provision/playbook'
 
     def setUp(self):
         Customer().set_customer(TESTING_DATABASE)
@@ -384,7 +384,7 @@ class ProvisionPlaybookServiceTests(unittest.TestCase):
 class ProvisionRunPlaybooksServiceTests(unittest.TestCase):
     app = app.test_client()
     headers = TestingLogin().headers
-    path = '/api/provision'
+    path = '/provision'
     playbook = 'test-alpine-ssh'
     hosts = ['alpine']
 

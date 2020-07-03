@@ -15,8 +15,8 @@ import { UrlService } from './url.service';
   providedIn: 'root'
 })
 export class AuthService {
-  loginPath = '/api/login';
-  logoutPath = '/api/logout';
+  loginPath = '/login';
+  logoutPath = '/logout';
 
   private token: AccessToken;
   loginStateChangedNotifier = new EventEmitter();

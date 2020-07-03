@@ -13,7 +13,7 @@ import { Query } from '../interfaces/query';
   providedIn: 'root'
 })
 export class UserService {
-  private path = '/api/user';
+  private path = '/user';
 
   private currentUser: User;
   userStateChangedNotifier = new EventEmitter();

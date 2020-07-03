@@ -14,7 +14,7 @@ import { Query } from '../interfaces/query';
 })
 export class CustomerService {
 
-  path = '/api/customer';
+  path = '/customer';
 
   constructor(
     private httpClient: HttpClient,

@@ -9,7 +9,7 @@ from src.services.login import token_required
 
 
 api_status = Namespace(name='status', description='Status')
-api_healthcheck = Namespace(name='healthcheck', description='Health Check')
+api_healthcheck = Namespace(name='api/healthcheck', description='Health Check')
 
 
 @api_status.route('')

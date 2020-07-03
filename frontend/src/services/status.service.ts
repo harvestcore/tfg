@@ -13,7 +13,7 @@ import { UserService } from './user.service';
 export class StatusService {
   heartbeatInterval = 30000;
   notifier = new EventEmitter();
-  path = '/api/status';
+  path = '/status';
 
   constructor(
     private httpClient: HttpClient,

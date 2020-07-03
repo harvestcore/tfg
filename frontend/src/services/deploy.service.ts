@@ -13,7 +13,7 @@ import { ImageOperation, SingleImageOperation } from '../interfaces/image';
   providedIn: 'root'
 })
 export class DeployService {
-  path = '/api/deploy';
+  path = '/deploy';
 
   constructor(
     private httpClient: HttpClient,
