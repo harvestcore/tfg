@@ -16,10 +16,7 @@ from src.services.user import api as user
 
 
 app = Flask(__name__)
-api = Api(app,
-          prefix='/api',
-          title='IPManager',
-          description='Manage your deploys')
+api = Api(app, title='IPManager', description='Manage your deploys')
 api.add_namespace(customer)
 api.add_namespace(healthcheck)
 api.add_namespace(login)

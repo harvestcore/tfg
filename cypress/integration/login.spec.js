@@ -30,7 +30,7 @@ context('Login', () => {
 
   it('get token from backend and store it in cookies', () => {
     cy.request({
-      url: 'http://localhost:5000/api/login',
+      url: 'http://localhost:5000/login',
       headers: {
         'Authorization': 'Basic YWRtaW46YWRtaW4='
       }

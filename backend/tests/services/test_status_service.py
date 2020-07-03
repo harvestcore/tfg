@@ -32,7 +32,7 @@ class StatusServiceTests(unittest.TestCase):
         }
 
         response = self.app.get(
-            '/api/status',
+            '/status',
             headers=self.headers
         )
 

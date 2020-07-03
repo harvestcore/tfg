@@ -3,7 +3,7 @@ Cypress.Commands.add('login', () => {
     Cypress.Cookies.preserveOnce('ipm-token');
 
     cy.request({
-      url: 'http://localhost:5000/api/login',
+      url: 'http://localhost:5000/login',
       headers: {
         'Authorization': 'Basic YWRtaW46YWRtaW4='
       }

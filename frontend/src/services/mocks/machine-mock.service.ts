@@ -8,7 +8,7 @@ import { Query } from '../../interfaces/query';
   providedIn: 'root'
 })
 export class MachineMockService {
-  path = '/api/machine';
+  path = '/machine';
 
   constructor() { }
 

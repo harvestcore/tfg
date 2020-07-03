@@ -13,7 +13,7 @@ import { Query } from '../interfaces/query';
   providedIn: 'root'
 })
 export class PlaybookService {
-  path = '/api/provision/playbook';
+  path = '/provision/playbook';
 
   constructor(
     private httpClient: HttpClient,

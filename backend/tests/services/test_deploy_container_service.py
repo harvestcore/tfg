@@ -12,7 +12,7 @@ from config.server_environment import TESTING_DATABASE
 class DeployContainerServiceTests(unittest.TestCase):
     app = app.test_client()
     headers = TestingLogin().headers
-    path = '/api/deploy'
+    path = '/deploy'
 
     def setUp(self):
         Customer().set_customer(TESTING_DATABASE)
