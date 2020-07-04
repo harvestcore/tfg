@@ -1,4 +1,5 @@
 \chapter{Variables de entorno}
+\label{sec:variables}
 
 \textbf{IPManager} necesita algunas variables de entorno para funcionar correctamente. Todas tienen un valor por defecto, aunque se recomienda que se revisen y se modifiquen antes de comenzar a usar tanto backend como frontend.
 
@@ -7,15 +8,15 @@
 Estas variables se pueden configurar como variables de entorno o se pueden configurar directamente en \textsf{config/server\_environment.py}.
 
 \begin{itemize}
-	\item \textsf{MONGO\_HOSTNAME} Hostname donde se encuentra el host de MongoDB. Por defecto \textsf{127.0.0.1}.
-	\item \textsf{MONGO\_PORT} Puerto del host de \textit{MongoDB}. Por defecto \textsf{27017}.
-	\item \textsf{TESTING\_DATABASE} Nombre de la colección usada para ejecutar los tests unitarios. Por defecto \textsf{ipm\_root\_testing}.
-	\item \textsf{BASE\_DATABASE} Nombre de la colección base de IPManager. En esta colección se almacenan datos de los clientes del backend. Por defecto toma el valor que tenga la variable \textsf{TESTING\_COLLECTION}.
-	\item \textsf{ENC\_KEY} Clave usada para encriptar las contraseñas. Puedes generar una clave ejecutando el archivo \textsf{generate\_key.py} que se encuentra en \textsf{utils}. Por defecto se usa una aleatoria.
-	\item \textsf{JWT\_ENC\_KEY} Clave usada para encriptar los \textit{JWT} usados en el login. Puedes generar una clave ejecutando el archivo \textsf{generate\_key.py} que se encuentra en \textsf{utils}. Por defecto se usa una aleatoria.
-	\item \textsf{DOCKER\_BASE\_URL} URL o path donde se encuentra el socket de Docker. Por defecto \textsf{unix://var/run/docker.sock}.
-	\item \textsf{DOCKER\_ENABLED} Activa o desactiva los endpoints para gestión de servicios. Por defecto comprueba si el backend se está ejecutando en un Docker para desactivarlos en caso afirmativo.
-	\item \textsf{ANSIBLE\_PATH} Path relativo o absoluto donde se van a almacenar los diferentes archivos generados por el backend necesarios para el aprovisionamiento. Por defecto \textsf{./}.
+	\item \textsf{MONGO\_HOSTNAME}. Hostname donde se encuentra el host de \textit{MongoDB}. Por defecto \textsf{127.0.0.1}.
+	\item \textsf{MONGO\_PORT}. Puerto del host de \textit{MongoDB}. Por defecto \textsf{27017}.
+	\item \textsf{TESTING\_DATABASE}. Nombre de la colección usada para ejecutar los tests unitarios. Por defecto \textsf{ipm\_root\_testing}.
+	\item \textsf{BASE\_DATABASE}. Nombre de la colección base de \textbf{IPManager}. En esta colección se almacenan datos de los clientes del backend. Por defecto toma el valor que tenga la variable \textsf{TESTING\_COLLECTION}.
+	\item \textsf{ENC\_KEY}. Clave usada para encriptar las contraseñas. Puedes generar una clave ejecutando el archivo \textsf{generate\_key.py} que se encuentra en \textsf{utils}. Por defecto se usa una aleatoria.
+	\item \textsf{JWT\_ENC\_KEY}. Clave usada para encriptar los \textit{JWT} usados en el login. Puedes generar una clave ejecutando el archivo \textsf{generate\_key.py} que se encuentra en el directorio \textit{src/utils}. Por defecto se usa una aleatoria.
+	\item \textsf{DOCKER\_BASE\_URL}. \textit{URL} o \textit{path} donde se encuentra el socket de \textit{Docker}. Por defecto \textsf{unix://var/run/docker.sock}.
+	\item \textsf{DOCKER\_ENABLED}. Activa o desactiva los endpoints para gestión de servicios. Por defecto comprueba si el backend se está ejecutando en un \textit{Docker} para desactivarlos en caso afirmativo.
+	\item \textsf{ANSIBLE\_PATH}. \textit{Path} relativo o absoluto donde se van a almacenar los diferentes archivos generados por el backend necesarios para el aprovisionamiento. Por defecto \textsf{./}.
 \end{itemize}
 
 
@@ -24,8 +25,8 @@ Estas variables se pueden configurar como variables de entorno o se pueden confi
 El frontend cuenta con dos variables de entorno que se tienen que configurar previamente, son:
 
 \begin{itemize}
-	\item \textsf{backendUrl}. URL del backend sin protocolo.
-	\item \textsf{httpsEnabled}. \textit{True} si el backend cuenta con HTTPS, \textit{false} en caso contrario.
+	\item \textsf{backendUrl}. \textit{URL} del backend sin protocolo.
+	\item \textsf{httpsEnabled}. \textit{True} si el backend cuenta con \textit{HTTPS}, \textit{false} en caso contrario.
 \end{itemize}
 
 La configuración de estas variables se puede hacer de dos maneras:
@@ -34,7 +35,7 @@ La configuración de estas variables se puede hacer de dos maneras:
 	\item En los archivos \textsf{environment.*.ts} que se encuentran en \textsf{fronend/src/environments}. Estos archivos una vez configurados son inmutables una vez se ha construido el frontend.
 
 	\begin{itemize}
-		\item \textsf{environment.on-premise.ts}. Entorno utilizado para construir la imagen de Docker. Por defecto se utilizan los valores usados en el \textit{docker-compose}.
+		\item \textsf{environment.on-premise.ts}. Entorno utilizado para construir la imagen de \textit{Docker}. Por defecto se utilizan los valores usados en el \textit{docker-compose}.
 		\item \textsf{environment.prod.ts}. Entorno utilizado para construir una versión de producción.
 	\end{itemize}
 

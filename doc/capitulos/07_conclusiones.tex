@@ -1,2 +1,25 @@
 \chapter{Conclusiones y trabajos futuros}
 
+Tras el desarrollo de este proyecto se puede comprobar que los objetivos que se marcaron al inicio se han alcanzado exitosamente.
+
+\textbf{IPManager} es una solución que responde al problema que se plantea ya que unifica los procesos de aprovisionado de sistemas, despliegue de servicios y almacenamiento de configuraciones de una manera sencilla y modular. Además, basada en una arquitectura de microservicios, provee de un backend y un frontend que pueden funcionar de forma independiente el uno del otro.
+
+Es también una solución liviana y no intrusiva ya que se puede instalar en sistemas con pocos recursos de manera local o a través de contenedores \textit{Docker}, o incluso se puede desplegar en sistemas \textit{Cloud}.
+
+Ofrece tambien una \textit{API REST} que posibilita las comunicaciones con otros sistemas. Un ejemplo de este uso es \textbf{IPMDroid}, una aplicación móvil para Android que se ha desarrollado de forma paralela a este proyecto para la asignatura ''Programación de Dispositivos Móviles''. Esta ofrece una interfaz sencilla para la administración de configuraciones y despliegue de servicios y se puede encontrar en \href{https://github.com/harvestcore/ipmdroid}{este repositorio} en \textit{Github}.
+
+Además, todo el proyecto está compuesto por software libre bajo la licencia \href{https://www.gnu.org/licenses/gpl-3.0.html}{GNU GPLv3} y se encuentra en \href{https://github.com/harvestcore/tfg}{este repositorio}.
+
+Por último, y no por ello menos importante, se ha aprendido a desarrollar un proyecto de grandes dimensiones desde las etapas más tempranas, como son las primeras investigaciones e ideas, hasta las finales, dejando la puerta abierta a posibles mejoras y actualizaciones.
+
+
+\pagebreak
+En cuanto a trabajos futuros hay ciertos aspectos que se podrían mejorar:
+
+\begin{itemize}
+	\item Actualmente el módulo para despliegues de servicios solo permite realizar operaciones con imágenes y contenedores, por lo que una mejora sería integrar el manejo de redes, volúmenes u otras configuraciones relacionadas con \textit{Docker}.
+	\item Se podrían ampliar los datos que se almacenan en el módulo de configuraciones. Las actuales se centran en configuraciones de red, pero podrían ampliarse para almacenar cualquier otro aspecto.
+	\item El módulo de aprovisionamiento se centra exclusivamente en la ejecución de \textit{Playbooks}. Una mejora en este aspecto podría ser un mejor manejo de los parámetros de ejecución de estos.
+	\item El frontend desarrollado intenta ser sencillo a la par que funcional, pero hay características que se podrían mejorar. Una mejora podría ser las vistas individuales de las configuraciones de las máquinas que se almacenan.
+\end{itemize}
+

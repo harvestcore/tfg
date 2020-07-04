@@ -5,11 +5,11 @@
 \section{Almacenamiento}
 
 \subsection{MongoEngine}
+\label{sec:mongoengine}
 
-Esta clase es la que nos permite conectarnos al servidor de MongoDB y realizar todas aquellas operaciones que deseemos. Se ha desarrollado como un singleton para que solo haya una instancia activa al mismo tiempo.
+Esta clase es la que nos permite conectarnos al servidor de \textit{MongoDB} y realizar todas aquellas operaciones que deseemos. Se ha desarrollado como un singleton para que solo haya una instancia activa al mismo tiempo.
 
-\bigskip
-Cada instancia de MongoClient que se crea tiene una \textit{pool} de conexiones, que abre y cierra sockets bajo demanda para manejar todas las operaciones que se realicen de forma simultánea. Por este motivo es contraproducente crear una instancia de MongoClient cada vez que se quiera realizar una operación. Por defecto el tamaño de esta \textit{pool} es de 100, pero podría incrementarse si fuera necesario.
+Cada instancia de \textit{MongoClient} que se crea tiene una \textit{pool} de conexiones, que abre y cierra sockets bajo demanda para manejar todas las operaciones que se realicen de forma simultánea. Por este motivo es contraproducente crear una instancia de \textit{MongoClient} cada vez que se quiera realizar una operación. Por defecto el tamaño de esta \textit{pool} es de 100, pero podría incrementarse si fuera necesario.
 
 \bigskip
 Los métodos implementados son los siguientes:
@@ -17,9 +17,10 @@ Los métodos implementados son los siguientes:
 	\item Creación del cliente.
 	\item Borrado de bases de datos y de colecciones. Usados principalmente en los tests unitarios.
 	\item Asignación de base de datos y colección actual. Usados para seleccionar la base de datos necesaria para cada cliente, y la colección donde realizar operaciones.
-	\item Datos estadísticos. Se extraen del cliente de MongoDB y se devuelve en un diccionario con la siguiente forma:
+	\item Datos estadísticos. Se extraen del cliente de \textit{MongoDB} y se devuelve en un diccionario con la siguiente forma:
 \end{itemize}
-	
+
+\pagebreak
 \begin{lstlisting}
 {
 	"is_up": bool,
@@ -29,9 +30,9 @@ Los métodos implementados son los siguientes:
 \end{lstlisting}
 
 \begin{itemize}
-	\item is\_up: Indica el estado del servicio, true si se encuentra funcionando correctamente, false en caso contrario.
-	\item data: Información de uso de datos de las bases de datos almacenadas.
-	\item info: Información adicional del cliente.
+	\item \textit{is\_up}: Indica el estado del servicio, true si se encuentra funcionando correctamente, false en caso contrario.
+	\item \textit{data}: Información de uso de datos de las bases de datos almacenadas.
+	\item \textit{info}: Información adicional del cliente.
 \end{itemize}
 
 
@@ -41,10 +42,10 @@ Los métodos implementados son los siguientes:
 Clase base de la que heredan todas las clases que necesitan algún tipo de almacenamiento de datos. Sus datos miembro son:
 \begin{itemize}
 	\item \textit{table\_name}: Nombre de la tabla (o colección) donde se van a almacenar los datos.
-	\item \textit{table\_schema}: Esquema de la tabla equivalente a la proyección de MongoDB. Es un diccionario compuesto por claves (nombres de los datos que va a almacenar la tabla) y por un valor 1 ó 0. Todas las claves que aparezcan en este diccionario serán claves válidas para almacenar en la tabla. Los valores indican lo siguiente:
+	\item \textit{table\_schema}: Esquema de la tabla equivalente a la proyección de \textit{MongoDB}. Es un diccionario compuesto por claves (nombres de los datos que va a almacenar la tabla) y por un valor 1 ó 0. Todas las claves que aparezcan en este diccionario serán claves válidas para almacenar en la tabla. Los valores indican lo siguiente:
 	\begin{itemize}
-		\item 1: El dato se devuelve al hacer una consulta.
-		\item 0: El dato no se devuelve al hacer una consulta.
+		\item \textit{1}: El dato se devuelve al hacer una consulta.
+		\item \textit{0}: El dato no se devuelve al hacer una consulta.
 	\end{itemize}
 \end{itemize}
 
@@ -66,7 +67,7 @@ Al realizar consultas se puede sobrescribir este esquema, para obtener únicamen
 
 
 \bigskip
-Para el diseño y desarrollo de esta clase se ha intentado abstraer y simplificar al máximo las funcionalidades de esta, para que se pueda adaptar a cualquier tipo de uso. No se han hecho uso de todas las funciones que ofrece PyMongo en cuanto a manejo de datos en colecciones. Aún así los métodos son los mínimos para que se pueda cualquier tipo de operación básica. Los métodos implementados en la clase \textit{Item} son los siguientes:
+Para el diseño y desarrollo de esta clase se ha intentado abstraer y simplificar al máximo las funcionalidades de esta, para que se pueda adaptar a cualquier tipo de uso. No se han hecho uso de todas las funciones que ofrece \textit{PyMongo} en cuanto a manejo de datos en colecciones. Aún así los métodos son los mínimos para que se pueda cualquier tipo de operación básica. Los métodos implementados en la clase \textit{Item} son los siguientes:
 \begin{itemize}
 	\item \textit{cursor}: Hace uso del nombre de la tabla para obtener el cursor a ella y poder realizar todas las operaciones necesarias.
 	\item \textit{find(criteria, projection)}: Devuelve todos los elementos (sólo los parámetros indicados en la proyección) que cumplan os criterios de búsqueda.
@@ -80,24 +81,24 @@ Para el diseño y desarrollo de esta clase se ha intentado abstraer y simplifica
 
 
 \bigskip
-Con esta implementación cualquier clase que se quiera que tenga la capacidad de almacenar datos solo tendrá que heredar de esta clase. Podrá sobrescribir aquellos métodos a los que quiera agregar más funcionalidad y podrá también implementar nuevos métodos, ya que tiene acceso al cursor de MongoClient para realizar cualquier tipo de operación permitida.
+Con esta implementación cualquier clase que se quiera que tenga la capacidad de almacenar datos solo tendrá que heredar de esta clase. Podrá sobrescribir aquellos métodos a los que quiera agregar más funcionalidad y podrá también implementar nuevos métodos, ya que tiene acceso al cursor de \textit{MongoClient} para realizar cualquier tipo de operación permitida.
 
 
 
 
 \section{Servicios}
+\label{sec:servicios}
 
 
-En cuanto a los servicios que se han desarrollado a partir de clases que heredan de Item, la estructura general de todos es la siguiente:
+En cuanto a los servicios que se han desarrollado a partir de clases que heredan de \textit{Item}, la estructura general de todos es la siguiente:
 
-\bigskip
-SIDENOTE Suponemos que el servicio \textit{service} permite hacer operaciones con objetos de tipo Service.
+En los siguientes \textit{endpoints} suponemos que el servicio \textit{service} permite hacer operaciones con objetos de tipo \textit{Service}:
 \begin{itemize}
-	\item \textit{GET /service/:name}: Devuelve los datos asociados a un objeto Service.
-	\item \textit{POST /service}: Crea un objeto de tipo Service.
-	\item \textit{PUT /service}: Modifica un objeto de tipo Service.
-	\item \textit{DELETE /service}: Elimina un objeto de tipo Service.
-	\item \textit{POST /service/query}: Permite hacer consultas más elaboradas haciendo uso del criterio de búsqueda y de la proyección de MongoDB. Los objetos obtenidos se devuelven en forma de diccionario (en el caso de un sólo resultado) o de lista de diccionarios (más de un resultado).
+	\item \textit{GET /service/:name}: Devuelve los datos asociados a un objeto de tipo \textit{Service}.
+	\item \textit{POST /service}: Crea un objeto de tipo \textit{Service}.
+	\item \textit{PUT /service}: Modifica un objeto de tipo \textit{Service}.
+	\item \textit{DELETE /service}: Elimina un objeto de tipo \textit{Service}.
+	\item \textit{POST /service/query}: Permite hacer consultas más elaboradas haciendo uso del criterio de búsqueda y de la proyección de \textit{MongoDB}. Los objetos obtenidos se devuelven en forma de diccionario (en el caso de un sólo resultado) o de lista de diccionarios (más de un resultado).
 \end{itemize}
 
 
@@ -117,19 +118,18 @@ Por otro lado, se han creado diferentes esquemas con \textit{Marshmallow} para v
 
 \section{Autenticación}
 
-Utilizado para sólo permitir el uso de la API a los usuarios registrados. Esta autenticación se hace mediante JWT (JSON Web Token).
+Utilizado para sólo permitir el uso de la \textit{API} a los usuarios registrados. Esta autenticación se hace mediante \textit{JWT} (\textit{JSON Web Token}).
 
-\bigskip
 Para la creación de esta clase se ha partido de la clase \textit{Item}, definiendo una nueva clase \textit{Login} con los siguientes datos miembro:
 \begin{itemize}
 	\item \textit{table\_name}: login
 	\item \textit{table\_schema}: (Por defecto todos los valores a 1).
 	\begin{itemize}
-		\item \textit{token}: JWT del usuario que tenga acceso actualmente al backend.
+		\item \textit{token}: \textit{JWT} del usuario que tenga acceso actualmente al backend.
 		\item \textit{username}: Nombre de usuario.
 		\item \textit{exp}: Fecha y hora a la que expira el acceso.
 		\item \textit{login\_time}: Fecha y hora a la que el usuario realizó el acceso.
-		\item \textit{public\_id}: UUID que identifica al usuario.
+		\item \textit{public\_id}: \textit{UUID} que identifica al usuario.
 	\end{itemize}
 \end{itemize}
 
@@ -140,17 +140,14 @@ Para controlar los accesos que puedan quedar obsoletos o en los que no se haya r
 
 \bigskip
 Los métodos que se han desarrollado han sido los siguientes:
-
 \begin{itemize}
-	\item \textit{login(auth)}: En este método se realiza todo el proceso del login. Se parte de los datos de autenticación, compuestos por un usuario y una contraseña y se comprueba si tal usuario existe. Se verifica que la contraseña sea la correcta y en caso correcto se procede a la creación del token. Tanto como si el usuario no estaba logueado previamente como si ya lo estaba, se generan todos los datos asociados nuevamente, y se insertan o actualizan. En el token JWT se codifica el \textit{public\_id} y la fecha y hora de expiración, \textit{exp}. Si el proceso ha sido correcto se devolverá el token creado.
+	\item \textit{login(auth)}: En este método se realiza todo el proceso del login. Se parte de los datos de autenticación, compuestos por un usuario y una contraseña y se comprueba si tal usuario existe. Se verifica que la contraseña sea la correcta y en caso correcto se procede a la creación del token. Tanto como si el usuario no estaba logueado previamente como si ya lo estaba, se generan todos los datos asociados nuevamente, y se insertan o actualizan. En el token se codifica el \textit{public\_id} y la fecha y hora de expiración, \textit{exp}. Si el proceso ha sido correcto se devolverá el token creado.
 	\item \textit{logout(username)}: Desloguea al usuario denotado por \textit{username}. Verifica que existe el usuario y borra cualquier tipo de información asociada de eśte en la colección actual.
 	\item \textit{token\_access(token)}: Decodifica el token y devuelve al usuario logueado que tenga tal \textit{public\_id}.
 	\item \textit{get\_username(token)}: Devuelve el nombre del usuario asociado al token.
 \end{itemize}
 
 
-
-\bigskip
 Una vez desarrollada la clase que permite accesos de usuarios se ha desarrollado el servicio. Todas las rutas del backend, salvo \textit{GET /login} y \textit{GET /api/heartbeat} están protegidas con esta autenticación. Para ello se ha creado un decorador que comprueba el token de acceso cada vez que se quiere acceder a un endpoint. Es el siguiente:
 \begin{itemize}
 	\item \textit{token\_required}: Obtiene el token de la cabecera \textit{x-access-token}, comprueba si es válido y permite el acceso o no al endpoint. En caso de no ser válido se devuelve un mensaje de error y un código de error 401.
@@ -158,7 +155,7 @@ Una vez desarrollada la clase que permite accesos de usuarios se ha desarrollado
 
 
 \bigskip
-El servicio de login cuenta con dos endpoints, los cuales son:
+El servicio de login cuenta con dos \textit{endpoints}, los cuales son:
 \begin{itemize}
 	\item \textit{GET /login}: Loguea al usuario, para ello toma los datos de acceso de la cabecera \textit{Basic auth} y devuelve o no el token asociado al usuario.
 	\item \textit{GET /logout}: Desloguea al usuario que previamente debe estar logueado.
@@ -196,7 +193,7 @@ Los métodos que implementa esta clase son:
 
 
 \bigskip
-Los endpoints desarrollados tienen la forma que se indica [aquí](servicios), pero no se han implementado todos ellos, sólo los siguientes:
+Los \textit{endpoints} desarrollados tienen la forma que se indica \hyperref[sec:servicios]{aquí}, pero no se han implementado todos ellos, sólo los siguientes:
 \begin{itemize}
 	\item \textit{POST /customer}
 	\item \textit{PUT /customer}
@@ -214,7 +211,7 @@ Por otro lado, para controlar el cliente que se debe utilizar en cada petición 
 \section{Usuarios}
 
 
-Esta es la clase encargada del manejo de los usuarios y hereda de \textit{Item}. Trabaja junto con la clase \textit{Login} para permitir el acceso a la API. Los datos miembro de esta clase son:
+Esta es la clase encargada del manejo de los usuarios y hereda de \textit{Item}. Trabaja junto con la clase \textit{Login} para permitir el acceso a la \textit{API}. Los datos miembro de esta clase son:
 \begin{itemize}
 	\item \textit{table\_name}: users
 	\item \textit{table\_schema}: (Por defecto todos los valores a 1).
@@ -225,16 +222,15 @@ Esta es la clase encargada del manejo de los usuarios y hereda de \textit{Item}.
 		\item \textit{username}: Nickname del usuario.
 		\item \textit{email}: Email del usuario.
 		\item \textit{password}: Contraseña del usuario.
-		\item \textit{public\_id}: UUID del usuario.
+		\item \textit{public\_id}: \textit{UUID} del usuario.
 	\end{itemize}
 \end{itemize}
 
 
 \bigskip
-Se han sobreescrito los métodos de inserción y actualización de datos para tener en cuenta las restricciones de tipo de usuario, para la generación del UUID y para el cifrado de la contraseña. Este cifrado se hace con Fernet, el cual es de tipo simétrico.
+Se han sobreescrito los métodos de inserción y actualización de datos para tener en cuenta las restricciones de tipo de usuario, para la generación del \textit{UUID} y para el cifrado de la contraseña. Este cifrado se hace con \textit{Fernet}, el cual es de tipo simétrico.
 
-\bigskip
-En cuanto al servicio, este está estructurado de la misma forma que se especifica [aquí](servicios), siendo los endpoints:
+En cuanto al servicio, este está estructurado de la misma forma que se especifica \hyperref[sec:servicios]{aquí}, siendo los \textit{endpoints}:
 \begin{itemize}
 	\item \textit{GET /user/:username}
 	\item \textit{POST /user}
@@ -248,15 +244,14 @@ En cuanto al servicio, este está estructurado de la misma forma que se especifi
 
 \section{Despliegues}
 
-Este módulo es el encargado de realizar los despliegues de los servicios mediante contenedores Docker. Para llevar a cabo esto se conecta a un servidor de Docker y contiene los métodos necesarios para ejecutar contenedores, imágenes y operaciones en ambos.
+Este módulo es el encargado de realizar los despliegues de los servicios mediante contenedores \textit{Docker}. Para llevar a cabo esto se conecta a un servidor de \textit{Docker} y contiene los métodos necesarios para ejecutar contenedores, imágenes y operaciones en ambos.
 
-\bigskip
 Actualmente no permite realizar algunas funciones, como son el manejo de redes, nodos, o volúmenes. Una futura mejora o ampliación del módulo podría incluir estas u otras nuevas funcionalidades. Por el momento no eran necesarias y se han priorizado los contenedores y las imágenes. Por otro lado también permite obtener información del estado del cliente, del uso de almacenamiento e información general.
 
 \bigskip
 Contextualización:
 \begin{itemize}
-	\item En este módulo se entiende por \textbf{cliente} al conector que se crea en el sistema para comunicarnos con el daemon de Docker.
+	\item En este módulo se entiende por \textbf{cliente} al conector que se crea en el sistema para comunicarnos con el \textit{daemon} de \textit{Docker}.
 	\item Un \textbf{objeto} puede ser una imagen o un contenedor.
 	\item Por \textbf{operación} se entiende toda aquella tarea que se puede ejecutar en un contenedor o en una imagen.
 \end{itemize}
@@ -271,7 +266,7 @@ Las operaciones constan de nombre, datos y, en ocasiones, de un objeto concreto:
 
 
 \bigskip
-Para manejar esto se ha creado la clase \textit{DockerEngine}, la cual se conecta al \textit{daemon} de Docker e implementa los métodos necesarios para realizar las funciones anterior mencionadas. Concretamente estas son:
+Para manejar esto se ha creado la clase \textit{DockerEngine}, la cual se conecta al \textit{daemon} de \textit{Docker} e implementa los métodos necesarios para realizar las funciones anterior mencionadas. Concretamente estas son:
 \begin{itemize}
 	\item \textit{run\_container\_operation(operation, data)}: Ejecuta una operación en todos los contenedor.
 	\item \textit{run\_image\_operation(operation, data)}: Ejecuta una operación en todas las imágenes.
@@ -282,7 +277,7 @@ Para manejar esto se ha creado la clase \textit{DockerEngine}, la cual se conect
 
 
 \bigskip
-Los endpoints desarrollados son los siguientes:
+Los \textit{endpoints} desarrollados son los siguientes:
 \begin{itemize}
 	\item \textit{POST /deploy/container}: Operaciones en todos los contenedores.
 	\item \textit{POST /deploy/container/single}: Operaciones en un único contenedor.
@@ -292,7 +287,7 @@ Los endpoints desarrollados son los siguientes:
 
 
 \bigskip
-La información sobre el estado de este módulo se devuelve con la misma estructura que se utiliza en [MongoEngine](mongoengine):
+La información sobre el estado de este módulo se devuelve con la misma estructura que se utiliza en \hyperref[sec:mongoengine]{\textit{MongoEngine}}:
 \begin{lstlisting}
 {
 	"is_up": boolean,
@@ -304,7 +299,7 @@ La información sobre el estado de este módulo se devuelve con la misma estruct
 
 
 \bigskip
-Puede ocurrir que el backend se esté ejecutando en un contenedor Docker, por lo que intentar conectarse al daemon no sería posible en ese caso. Cuando se ejecuta el backend éste comprueba internamente en qué entorno se esta ejecutando y la variable que almacena la localización del daemon o servidor. Estas comprobaciones determinarán si éste módulo se encontrará activo o no.
+Puede ocurrir que el backend se esté ejecutando en un contenedor \textit{Docker}, por lo que intentar conectarse al \textit{daemon} no sería posible en ese caso. Cuando se ejecuta el backend éste comprueba internamente en qué entorno se esta ejecutando y la variable que almacena la localización del \textit{daemon} o servidor. Estas comprobaciones determinarán si éste módulo se encontrará activo o no.
 
 
 
@@ -312,14 +307,13 @@ Puede ocurrir que el backend se esté ejecutando en un contenedor Docker, por lo
 \section{Aprovisionamiento}
 
 
-Es el encargado de aprovisionar sistemas mediante el uso de Ansible y se centra exclusivamente en la ejecución de playbooks y en la gestión y almacenamiento de grupos de hosts y playbooks.
+Es el encargado de aprovisionar sistemas mediante el uso de Ansible y se centra exclusivamente en la ejecución de \textit{playbooks} y en la gestión y almacenamiento de grupos de \textit{hosts} y \textit{playbooks}.
 \begin{itemize}
-	\item Un \textbf{grupo de hosts} es aquella máquina o grupo de máquinas que se quiere aprovisionar.
+	\item Un \textbf{grupo de \textit{hosts}} es aquella máquina o grupo de máquinas que se quiere aprovisionar.
 	\item Un \textbf{playbook} es el conjunto de ordenes, comandos y tareas que se quiere que se ejecuten en un grupo de hosts.
 \end{itemize}
 
-\bigskip
-Tanto los hosts como los playbooks se pueden almacenar en base de datos si se desea y por tanto se han desarrollado las clases \textit{Hosts} y \textit{Playbook}.
+Tanto los \textit{hosts} como los \textit{playbooks} se pueden almacenar en base de datos si se desea y por tanto se han desarrollado las clases \textit{Hosts} y \textit{Playbook}.
 
 
 
@@ -330,13 +324,13 @@ Clase que hereda de \textit{Item} cuyos datos miembro son:
 	\item \textit{table\_name}: hosts
 	\item \textit{table\_schema}: (Por defecto todos los valores a 1).
 	\begin{itemize}
-		\item \textit{name}: Nombre del grupo de hosts.
-		\item \textit{ips}: Lista de direcciones IP que componen el grupo de hosts.
+		\item \textit{name}: Nombre del grupo de \textit{hosts}.
+		\item \textit{ips}: Lista de direcciones IP que componen el grupo de \textit{hosts}.
 	\end{itemize}
 \end{itemize}
 	
 \bigskip
-Comparte los mismos endpoints que se indican [aquí](servicios), siendo estos:
+Comparte los mismos \textit{endpoints} que se indican \hyperref[sec:servicios]{aquí}, siendo estos:
 \begin{itemize}
 	\item \textit{GET /provision/hosts/:name}
 	\item \textit{POST /provision/hosts}
@@ -359,7 +353,7 @@ Clase que hereda de \textit{Item} cuyos datos miembro son:
 \end{itemize}
 	
 \bigskip
-Comparte los mismos endpoints que se indican [aquí](servicios), siendo estos:
+Comparte los mismos \textit{endpoints} que se indican \hyperref[sec:servicios]{aquí}, siendo estos:
 \begin{itemize}
 	\item \textit{GET /provision/playbooks/:name}
 	\item \textit{POST /provision/playbooks}
@@ -375,7 +369,7 @@ Para la ejecución de los playbooks se ha desarrollado la clase \textit{AnsibleE
 \end{itemize}
 
 \bigskip
-Este método toma como entrada el grupo de hosts a los que se le va a ejecutar el \textit{playbook}, el \textit{playbook} en cuestión y un diccionario con las contraseñas para acceder a las máquinas. La librería de \textit{Ansible} usada requiere que los hosts se pasen como un archivo de texto plano, por lo que se ha desarrollado una función auxiliar que crea un fichero cuando se ejecuta un \textit{playbook}. El directorio donde se guardan estos archivos puede configurarse mediante una variable de entorno.
+Este método toma como entrada el grupo de \textit{hosts} a los que se le va a ejecutar el \textit{playbook}, el \textit{playbook} en cuestión y un diccionario con las contraseñas para acceder a las máquinas. La librería de \textit{Ansible} usada requiere que los \textit{hosts} se pasen como un archivo de texto plano, por lo que se ha desarrollado una función auxiliar que crea un fichero cuando se ejecuta un \textit{playbook}. El directorio donde se guardan estos archivos puede configurarse mediante una variable de entorno.
 
 
 
@@ -412,7 +406,7 @@ Para el almacenamiento y gestión de máquinas se ha creado la clase \textit{Mac
 En el caso de las máquinas todas las direcciones IP que se manejan deben ser validadas, por lo que se ha creado un método auxiliar para realizar esta función. Además se han sobrescrito los métodos de inserción y actualización para realizar esta validación.
 
 \bigskip
-El servicio tiene la misma estructura que la explicada [aquí](servicios) y sus endpoints son:
+El servicio tiene la misma estructura que la explicada \hyperref[sec:servicios]{aquí} y sus \textit{endpoints} son:
 \begin{itemize}
 	\item \textit{GET /machine/:name}
 	\item \textit{POST /machine}
@@ -446,7 +440,7 @@ Para consultar el estado del backend se han creado dos \textit{endpoints}. El pr
 \end{lstlisting}
 
 \bigskip	
-En el caso que Docker no se encuentre funcionando correctamente o se encuentre desactivado el estado devuelto es:
+En el caso que \textit{Docker} no se encuentre funcionando correctamente o se encuentre desactivado el estado devuelto es:
 	
 \begin{lstlisting}
 {
@@ -520,9 +514,9 @@ metodo(params: any): Observable<any> {
 \bigskip
 Se puede observar que:
 \begin{itemize}
-	\item Se hace una petición HTTP (en el caso del ejemplo PUT) a través del módulo \textit{HttpClient} con diferentes argumentos. El primero es la URL a la que se hace esa petición, el segundo los datos que se quieren pasar en el \textit{bod}y de esta y el tercero son las cabeceras, que en el caso de la API desarrollada es necesaria la cabecera \textit{x-access-token} con el token de acceso.
-	\item Se devuelve un observable. Este observable es asíncrono, lo que quiere decir que se lanza la petición y que de forma asíncrona se completará la misma y se procesarán los datos.
-	\item Se hace un pipe. Esto permite hacer un primer procesado de los datos y en este caso se agrega una clave que indica que se han recibido los datos.
+	\item Se hace una petición \textit{HTTP} (en el caso del ejemplo se usa \textit{PUT}) a través del módulo \textit{HttpClient} con diferentes argumentos. El primero es la \textit{URL} a la que se hace esa petición, el segundo los datos que se quieren pasar en el \textit{bod}y de esta y el tercero son las cabeceras, que en el caso de la \textit{API} desarrollada es necesaria la cabecera \textit{x-access-token} con el token de acceso.
+	\item El observable que se devuelve es asíncrono, lo que quiere decir que se lanza la petición y que de forma asíncrona se completará la misma y se procesarán los datos.
+	\item Se hace un \textit{pipe}. Esto permite hacer un primer procesado de los datos y en este caso se agrega una clave que indica que se han recibido los datos.
 	\item Se capturan los posibles errores. En caso de que la petición no se complete o surja algún tipo de error se obtiene el error y se devuelve.
 \end{itemize}
 
@@ -532,10 +526,9 @@ Los servicios desarrollados son los siguientes:
 
 \subsubsection{URL}
 
-Este servicio no es un servicio como tal, ya que no realiza peticiones HTTP, pero sí se encarga del procesado  de la URL a la que se hacen las peticiones. Es usado por el resto de servicios para obtener la URL a la que tienen que hacer dichas peticiones. El procesado consiste en la creación de la URL a partir del protocolo de acceso a la API (HTTP o HTTPS), del cliente y de la URL donde se encuentra la API.
+Este servicio no es un servicio como tal, ya que no realiza peticiones \textit{HTTP}, pero sí se encarga del procesado  de la \textit{URL} a la que se hacen las peticiones. Es usado por el resto de servicios para obtener la \textit{URL} a la que tienen que hacer dichas peticiones. El procesado consiste en la creación de la \textit{URL} a partir del protocolo de acceso a la \textit{API} (\textit{HTTP} o \textit{HTTPS}), del cliente y de la \textit{URL} donde se encuentra la \textit{API}.
 
-\bigskip
-De este modo el resto de servicios solo tienen que hacer una llamada a este servicio para obtener la URL actual.
+De este modo el resto de servicios solo tienen que hacer una llamada a este servicio para obtener la \textit{URL} actual.
 
 
 \subsubsection{Autenticación}
@@ -543,14 +536,14 @@ De este modo el resto de servicios solo tienen que hacer una llamada a este serv
 La autenticación es el módulo más importante del frontend, ya que se encarga de toda la gestión del token y del acceso de los usuarios a las diferentes rutas de la aplicación. Este servicio se compone de dos métodos principales, login y logout, y de algunos secundarios. El funcionamiento de estos es:
 \begin{itemize}
 	\item \textit{login(auth)}: A partir de los datos de autenticación del usuario realiza el login y se almacena en las cookies del navegador el token de acceso. Se comprueba si existe el token en las cookies: en caso afirmativo se comprueba si es válido y autoriza o no el acceso; en caso contrario se hace una petición al endpoint \textit{GET /login} con los datos de acceso para obtener un nuevo token. Finalmente se almacena el token en las cookies. Debido a la asincronía de las peticiones este método también devuelve un observable.
-	\item \textit{logout()}: Hace una petición de logout a la API y cuando obtiene la respuesta borra el token de las cookies del navegador.
+	\item \textit{logout()}: Hace una petición de logout a la \textit{API} y cuando obtiene la respuesta borra el token de las cookies del navegador.
 \end{itemize}
 
 
 
 \subsubsection{Resto de servicios}
 
-Los demás servicios tienen la estructura ya explicada al principio de esta sección, con métodos para hacer peticiones a los diferentes endpoints de la API y manejo de los posibles errores. Cuando ha sido preciso se han también métodos auxiliares. Estos servicios son:
+Los demás servicios tienen la estructura ya explicada al principio de esta sección, con métodos para hacer peticiones a los diferentes \textit{endpoints} de la \textit{API} y manejo de los posibles errores. Cuando ha sido preciso se han también métodos auxiliares. Estos servicios son:
 \begin{itemize}
 	\item Clientes
 	\item Usuarios
@@ -567,23 +560,21 @@ Los demás servicios tienen la estructura ya explicada al principio de esta secc
 
 Para proteger las rutas de usuarios no identificados se ha creado un \textit{Guard}. Este realiza una serie de comprobaciones acordes a nuestras necesidades antes de permitir o no el acceso a una página. En el caso de este frontend la única ruta que se quiere accesible por cualquier usuario es el login, por lo que el resto se han protegido.
 
-\bigskip
-Se ha hecho uso del método \textit{CanActivate} que proporciona Angular para este cometido. Además, se han tenido en cuenta diferentes aspectos a la hora de diseñar y desarrollar esta funcionalidad, ya que por ejemplo no se debería poder acceder a los despliegues con Docker si este esta desactivado en el backend.
+Se ha hecho uso del método \textit{CanActivate} que proporciona \textit{Angular} para este cometido. Además, se han tenido en cuenta diferentes aspectos a la hora de diseñar y desarrollar esta funcionalidad, ya que por ejemplo no se debería poder acceder a los despliegues con \textit{Docker} si este esta desactivado en el backend.
 
-\bigskip
 Hace uso del \textit{router} que también proporciona Angular del servicio de autenticación, y su funcionamiento es el siguiente:
 \begin{itemize}
-	\item Si se quiere ir al login se permite el acceso.
-	\item En caso contrario se comprueba si el usuario está logeado.
+	\item Si se quiere ir al \textit{login} se permite el acceso.
+	\item En caso contrario se comprueba si el usuario está \textit{logeado}.
 	\begin{itemize}
-		\item Si está logeado:
+		\item Si lo está:
 			\begin{itemize}
 				\item Si se quiere acceder a la página de administración de usuarios se comprueba el usuario que está intentando acceder y se le permite o no el acceso.
-				\item Si se quiere acceder a la página de los despliegues se comprueba si Docker está activo en el backend.
+				\item Si se quiere acceder a la página de los despliegues se comprueba si \textit{Docker} está activo en el backend.
 			\end{itemize}
 		\item Si no lo está:
 			\begin{itemize}
-				\item Se le redirige al login.
+				\item Se le redirige al \textit{login}.
 			\end{itemize}
 	\end{itemize}
 \end{itemize}
@@ -595,15 +586,15 @@ Una vez implementado esto solo ha sido necesario indicar en el \textit{router} l
 \subsection{Variables de entorno}
 
 
-Para que la comunicación frontend-backend pueda llevarse a cabo es necesario definir una serie de variables de entorno. Estas indican la URL en la que se encuentra la API, entre otros. Son:
+Para que la comunicación frontend-backend pueda llevarse a cabo es necesario definir una serie de variables de entorno. Estas indican la \textit{URL} en la que se encuentra la \textit{API}, entre otros. Son:
 \begin{itemize}
-	\item \textit{production}: Utilizada por Angular a la hora de construir la aplicación.
-	\item \textit{backendUrl}: URL sin protocolo de la API.
-	\item \textit{httpsEnabled}: Indica si el protocolo de la API es HTTP o HTTPS.
+	\item \textit{production}: Utilizada por \textit{Angular} a la hora de construir la aplicación.
+	\item \textit{backendUrl}: \textit{URL} sin protocolo de la \textit{API}.
+	\item \textit{httpsEnabled}: Indica si el protocolo de la \textit{API} es \textit{HTTP} o \textit{HTTPS}.
 \end{itemize}
 
 \bigskip
-Actualmente el proyecto cuenta con cuatro "entornos" distintos. El primero es el de desarrollo, utilizado durante el desarrollo del proyecto. El segundo es el de producción, el cual es el que se debe usar a la hora de utilizar el proyecto. El tercero, llamado \textit{on-premise} es el usado a la hora de construir la imagen de Docker y está configurado por defecto para funcionar \textit{out-of-the-box} con el docker-compose. El último, que se encuentra en el archivo \textit{env.j}s en la raíz del directorio \textit{src} del proyecto, permite redefinir las variables de entorno sin tener que reconstruir el backend. Por defecto se encuentra desactivado.
+Actualmente el proyecto cuenta con cuatro entornos distintos. El primero es el de desarrollo, utilizado durante el desarrollo del proyecto. El segundo es el de producción, el cual es el que se debe usar a la hora de utilizar el proyecto en producción. El tercero, llamado \textit{on-premise} es el usado a la hora de construir la imagen de \textit{Docker} y está configurado por defecto para funcionar \textit{out-of-the-box} con el \textit{docker-compose}. El último, que se encuentra en el archivo \textit{env.j}s en la raíz del directorio \textit{src} del proyecto, permite redefinir las variables de entorno sin tener que reconstruir el backend. Por defecto se encuentra desactivado.
 
 
 \subsection{Interfaces}
@@ -611,7 +602,7 @@ Actualmente el proyecto cuenta con cuatro "entornos" distintos. El primero es el
 
 Se han creado además una serie de interfaces para controlar más aún los datos que se manejan en el frontend. Estas contemplan cada tipo de dato y son:
 \begin{itemize}
-	\item \textit{AccessToken}: Token de acceso.
+	\item \textit{AccessToken}: \textit{Token} de acceso.
 	\item \textit{BasicAuth}: Credenciales de usuario.
 	\item \textit{Container}: Contenedor, usado en el módulo de despliegues.
 	\item \textit{SingleContainerOperation}: Operación que se ejecuta en un único contenedor.
@@ -620,11 +611,11 @@ Se han creado además una serie de interfaces para controlar más aún los datos
 	\item \textit{SingleImageOperation}: Operación que se ejecuta en una única imagen.
 	\item \textit{ImageOperation}: Operación que se ejecuta en todas las imágenes.
 	\item \textit{Customer}: Cliente.
-	\item \textit{DockerHubImage}: Imagen de DockerHub, usada al utilizar la operación de búsqueda de imágenes.
-	\item \textit{Host}: Grupo de hosts.
+	\item \textit{DockerHubImage}: Imagen de \textit{DockerHub}, usada al utilizar la operación de búsqueda de imágenes.
+	\item \textit{Host}: Grupo de \textit{hosts}.
 	\item \textit{Machine}: Máquina.
 	\item \textit{Playbook}: Playbook.
-	\item \textit{Query}: Criterio de búsqueda, usado en todos los endpoints para hacer consultas complejas.
+	\item \textit{Query}: Criterio de búsqueda, usado en todos los \textit{endpoints} para hacer consultas complejas.
 	\item \textit{StatusResponse}: Estado del backend.
 	\item \textit{User}: Usuario.
 \end{itemize}
@@ -647,12 +638,12 @@ Parámetros de entrada:
 	\item \textit{title}: Título de la tabla.
 	\item \textit{displayedColumns}: Columnas que se quieren mostrar.
 	\item \textit{deselectedColumns}: Columas que por defecto no aparecerán mostradas.
-	\item \textit{data}: Array con los datos a mostrar.
-	\item \textit{actions}: Array de strings para configurar las acciones disponibles para cada item.
+	\item \textit{data}: \textit{Array} con los datos a mostrar.
+	\item \textit{actions}: \textit{Array} de strings para configurar las acciones disponibles para cada item.
 	\item \textit{customActionData}: Diccionario con la configuración de la acción personalizada adicional.
 \end{itemize}
 
-Por defecto cada item tiene cuatro acciones asociadas: \textit{play} (P), \textit{detail} (D), \textit{edit} (E) y \textit{remove} (R). Estas se activan mediante el array \textit{actions}, agregando los idenficativos de las acciones que se deseen a este. En cambio, para configurar la acción adicional se debe incluir en \textit{customActionData} el icono y el tooltip a mostrar y agregar el identificativo 'C' al array \textit{actions}.
+Por defecto cada item tiene cuatro acciones asociadas: \textit{play} (P), \textit{detail} (D), \textit{edit} (E) y \textit{remove} (R). Estas se activan mediante el array \textit{actions}, agregando los idenficativos de las acciones que se deseen a este. En cambio, para configurar la acción adicional se debe incluir en \textit{customActionData} el icono y el tooltip a mostrar y agregar el identificativo 'C' a \textit{actions}.
 
 Estas acciones son botones que se agregan en una columna de la tabla y cuando estos se pulsan emiten un evento con los datos del item al que pertenezcan. De este modo solo queda implementar la lógica en el componente que esté usando la tabla para que tome esos datos y los procese a voluntad.
 
@@ -688,7 +679,7 @@ Parámetros de salida:
 
 \subsubsection{Navegador superior}
 
-Se trata de una barra de navegación superior que cuenta con diferentes botones para navegar por las diferentes páginas. Cuenta con lógica interna para desactivar o no el enlace a la página de despliegues en caso de que Docker no se encuentre activado y para mostrar o no el enlace a la administración de usuarios.
+Se trata de una barra de navegación superior que cuenta con diferentes botones para navegar por las diferentes páginas. Cuenta con lógica interna para desactivar o no el enlace a la página de despliegues en caso de que \textit{Docker} no se encuentre activado y para mostrar o no el enlace a la administración de usuarios.
 
 \bigskip
 Los enlaces con los que cuenta son:
@@ -705,7 +696,7 @@ Los enlaces con los que cuenta son:
 
 \subsubsection{Home (/)}
 
-Este componente muestra tarjetas con información sobre el estado del backend. Esta información depende del usuario que se encuentre visitandola, ya que un administrador recibirá más información que un usuario regular. Por otro lado también se adapta a la disponibilidad de Docker en el backend.
+Este componente muestra tarjetas con información sobre el estado del backend. Esta información depende del usuario que se encuentre visitandola, ya que un administrador recibirá más información que un usuario regular. Por otro lado también se adapta a la disponibilidad de \textit{Docker} en el backend.
 
 
 \subsubsection{Login (/login)}
@@ -715,7 +706,7 @@ Componente bastante sencillo que cuenta con un formulario con tres campos. El pr
 
 
 \subsubsection{Admin (/admin)}
-
+\label{sec:admin}
 
 Administración de usuarios. Este componente solo es accesible por usuarios administradores. Hace uso de la tabla anterior para mostrar los usuarios que se encuentran registrados en el cliente actual y permite operar con ellos. Se ha creado un diálogo anexo a este componente para crear y editar estos usuarios y se puede acceder a él mediante las acciones de la tabla.
 
@@ -738,7 +729,7 @@ Este componente se compone de dos pestañas, \textit{Containers} e \textit{Image
 \bigskip
 Además cuenta con dos botones específicos para este componente en la esquina superior derecha. Estos son para ejecutar imágenes, lo que nos lleva a la segunda pestaña, y para eliminar los contenedores obsoletos (mediante una operación).
 \begin{itemize}
-	\item \textit{Images}: Aquí aparecen las imágenes que se encuentran también en el backend. Cada una de estas imágenes se puede ejecutar, administrar (recargar y obtener historial) y borrar del backend. Los botones de la esquina superior derecha son para hacer búsquedas de imágenes en DockerHub y para eliminar aquellas imágenes obsoletas del sistema.
+	\item \textit{Images}: Aquí aparecen las imágenes que se encuentran también en el backend. Cada una de estas imágenes se puede ejecutar, administrar (recargar y obtener historial) y borrar del backend. Los botones de la esquina superior derecha son para hacer búsquedas de imágenes en \textit{DockerHub} y para eliminar aquellas imágenes obsoletas del sistema.
 \end{itemize}
 
 
@@ -749,8 +740,8 @@ Además cuenta con dos botones específicos para este componente en la esquina s
 
 En el caso del aprovisionamiento este componente cuenta con tres pestañas, las cuales son:
 \begin{itemize}
-	\item \textit{Playbooks}: Gestión de los playbooks. Se pueden ejecutar, modificar y eliminar. Además cuenta con un botón para crear nuevos playbooks.
-	\item \textit{Editor}. Editor de texto configurado con la sintaxis YAML para crear y modificar los diferentes playbooks. Esta pestaña se encuentra enlazada con la primera ya que cuando se crea un playbook nuevo o se quiere modificar uno existente se redirige al usuario aquí.
+	\item \textit{Playbooks}: Gestión de los \textit{playbooks}. Se pueden ejecutar, modificar y eliminar. Además cuenta con un botón para crear nuevos playbooks.
+	\item \textit{Editor}. Editor de texto configurado con la sintaxis \textit{YAML} para crear y modificar los diferentes playbooks. Esta pestaña se encuentra enlazada con la primera ya que cuando se crea un playbook nuevo o se quiere modificar uno existente se redirige al usuario aquí.
 	\item \textit{Host groups}: Gestión de los grupos de hosts de manera similar a los clientes o usuarios. Se encuentra enlazado con el servicio de máquinas para obtener las direcciones IP de las máquinas que se encuentran almacenadas en el sistema.
 \end{itemize}
 
@@ -759,8 +750,7 @@ Del mismo modo que en otros componentes, se hace uso de diálogos para la gesti�
 
 \subsubsection{Máquinas (/machines)}
 
-
-Este componente es muy similar a [\textit{Admin}](admin). Cuenta con una tabla para mostrar los datos de todas las máquinas actuales y además se ha creado un diálogo (también accesible por las acciones) para crear y modificar los datos de las máquinas.
+Este componente es muy similar a \hyperref[sec:admin]{\textit{Admin}}. Cuenta con una tabla para mostrar los datos de todas las máquinas actuales y además se ha creado un diálogo (también accesible por las acciones) para crear y modificar los datos de las máquinas.
 
 
 \subsubsection{AreYouSureDialog}

@@ -8,7 +8,7 @@
 \section{Status}
 
 \subsection{\textit{GET /status}}
-Devuelve el estado actual de los dos servicios principales del backend, MongoDB y Docker.
+Devuelve el estado actual de los dos servicios principales del backend, \textit{MongoDB} y \textit{Docker}.
 
 Cabeceras necesarias:
 \begin{table}[h!]
@@ -21,7 +21,7 @@ Cabeceras necesarias:
 \end{table}
 
 Respuesta:
-\begin{table}[!h]
+\begin{table}[h!]
 	\centering
 	\begin{adjustbox}{max width=\textwidth}
 	\begin{tabular}{|l|l|l|l|}
@@ -39,9 +39,10 @@ Respuesta:
 	\end{adjustbox}
 \end{table}
 
-En caso de que el servicio de Docker no se encuentre activado o presenta errores, el estado de este en la respuesta anterior tiene la siguiente forma:
+\pagebreak
+En caso de que el servicio de \textit{Docker} no se encuentre activado o presenta errores los \textit{endpoints} correspondientes al servicio de despliegue no estarán disponibles y el estado de este en la respuesta anterior tendrá la siguiente forma:
 
-\begin{table}[!h]
+\begin{table}[h!]
 	\centering
 	
 	\begin{adjustbox}{max width=\textwidth}
@@ -68,7 +69,7 @@ En caso de que el servicio de Docker no se encuentre activado o presenta errores
 Devuelve el estado actual de los dos servicios principales del backend de forma simplificada.
 
 Respuesta:
-\begin{table}[!h]
+\begin{table}[h!]
 	\centering
 \begin{adjustbox}{max width=\textwidth}
 	\begin{tabular}{|l|l|l|}
@@ -119,7 +120,7 @@ Respuesta:
 \end{table}
 
 
-
+\pagebreak
 \subsection{\textit{POST /logout}}
 
 Desloguea al usuario del cliente.
@@ -140,7 +141,7 @@ Cabeceras necesarias:
 
 
 Respuesta:
-\begin{table}[!h]
+\begin{table}[h!]
 	\centering
 	\begin{adjustbox}{max width=\textwidth}
 	\begin{tabular}{|l|l|l|}
@@ -158,7 +159,8 @@ Respuesta:
 \section{Clientes}
 
 \subsection{Cliente}
-\begin{table}[!h]
+\label{sec:cliente}
+\begin{table}[h!]
 	\centering
 	\begin{adjustbox}{max width=\textwidth}
 	\begin{tabular}{|l|l|l|l|l|}
@@ -186,8 +188,8 @@ Cabeceras necesarias:
 \end{adjustbox}
 \end{table}
 
-Cuerpo de la petición (JSON):
-\begin{table}[!h]
+Cuerpo de la petición (\textit{JSON}):
+\begin{table}[h!]
 	\centering
 	\begin{adjustbox}{max width=\textwidth}
 	\begin{tabular}{|l|l|l|l|}
@@ -199,28 +201,29 @@ Cuerpo de la petición (JSON):
 \end{adjustbox}
 \end{table}
 
+\pagebreak
 Respuesta (un solo usuario):
-\begin{table}[!h]
+\begin{table}[h!]
 	\centering
 	
 	\begin{adjustbox}{max width=\textwidth}
 	\begin{tabular}{|l|l|l|}
 		\hline
 		Parámetro & Tipo & Descripción \\ \hline
-		data & [Cliente](\#cliente) & Cliente que cumple el criterio de búsqueda. \\ \hline
+		data & \hyperref[sec:cliente]{Cliente} & Cliente que cumple el criterio de búsqueda. \\ \hline
 	\end{tabular}
 \end{adjustbox}
 \end{table}
 
 Respuesta (más de un usuario):
-\begin{table}[!h]
+\begin{table}[h!]
 	\centering
 	\begin{adjustbox}{max width=\textwidth}
 	\begin{tabular}{|l|l|l|}
 		\hline
 		Parámetro & Tipo & Descripción \\ \hline
 		total & int & Número de clientes que cumplen el criterio de búsqueda. \\ \hline
-		items & list[[Cliente](\#cliente)] & Clientes que cumplen el criterio de búsqueda. \\ \hline
+		items & list[\hyperref[sec:cliente]{Cliente}] & Clientes que cumplen el criterio de búsqueda. \\ \hline
 	\end{tabular}
 \end{adjustbox}
 \end{table}
@@ -240,12 +243,11 @@ Cabeceras necesarias:
 	\end{tabular}
 \end{table}
 
-Cuerpo de la petición (JSON):
-- [Cliente](cliente)
+Cuerpo de la petición (\textit{JSON}): \hyperref[sec:cliente]{Cliente}
 
 
 Respuesta:
-\begin{table}[!h]
+\begin{table}[h!]
 	\centering
 	\begin{adjustbox}{max width=\textwidth}
 	\begin{tabular}{|l|l|l|}
@@ -274,21 +276,22 @@ Cabeceras necesarias:
 \end{adjustbox}
 \end{table}
 
-Cuerpo de la petición (JSON):
-\begin{table}[!h]
+Cuerpo de la petición (\textit{JSON}):
+\begin{table}[h!]
 	\centering
 	\begin{adjustbox}{max width=\textwidth}
 	\begin{tabular}{|l|l|l|l|}
 		\hline
 		Parámetro & Tipo & Opcional & Descripción \\ \hline
 		domain & string & No & Subominio del cliente que se quiere modificar. \\ \hline
-		data & [Cliente](\#cliente) & No & Nuevos datos del cliente. \\ \hline
+		data & \hyperref[sec:cliente]{Cliente} & No & Nuevos datos del cliente. \\ \hline
 	\end{tabular}
 \end{adjustbox}
 \end{table}
 
+\pagebreak
 Respuesta:
-\begin{table}[!h]
+\begin{table}[h!]
 	\centering
 	\begin{adjustbox}{max width=\textwidth}
 	\begin{tabular}{|l|l|l|}
@@ -320,8 +323,8 @@ Cabeceras necesarias:
 \end{adjustbox}
 \end{table}
 
-Cuerpo de la petición (JSON):
-\begin{table}[!h]
+Cuerpo de la petición (\textit{JSON}):
+\begin{table}[h!]
 	\centering
 	\begin{adjustbox}{max width=\textwidth}
 	\begin{tabular}{|l|l|l|l|}
@@ -333,7 +336,7 @@ Cuerpo de la petición (JSON):
 \end{table}
 
 Respuesta:
-\begin{table}[!h]
+\begin{table}[h!]
 	\centering
 	\begin{adjustbox}{max width=\textwidth}
 	\begin{tabular}{|l|l|l|}
@@ -349,6 +352,7 @@ Respuesta:
 \section{Usuarios}
 
 \subsection{Usuario}
+\label{sec:usuario}
 \begin{table}[h!]
 	\centering
 	\begin{adjustbox}{max width=\textwidth}
@@ -400,14 +404,14 @@ Respuesta:
 	\begin{tabular}{|l|l|l|}
 		\hline
 		Parámetro & Tipo & Descripción \\ \hline
-		data & [Usuario](\#usuario) & Diccionario con toda la información del usuario consultado. \\ \hline
+		data & \hyperref[sec:usuario]{Usuario} & Diccionario con toda la información del usuario consultado. \\ \hline
 	\end{tabular}
 \end{adjustbox}
 \end{table}
 
 
 
-\subsection{\textit{POST /customer/query}}
+\subsection{\textit{POST /user/query}}
 Devuelve los usuarios que cumplen los criterios de búsqueda.
 
 Cabeceras necesarias:
@@ -423,7 +427,7 @@ Cabeceras necesarias:
 \end{table}
 
 
-Cuerpo de la petición (JSON):
+Cuerpo de la petición (\textit{JSON}):
 \begin{table}[h!]
 	\centering
 	\begin{adjustbox}{max width=\textwidth}
@@ -443,11 +447,12 @@ Respuesta (un solo usuario):
 	\begin{tabular}{|l|l|l|}
 		\hline
 		Parámetro & Tipo & Descripción \\ \hline
-		data & [Usuario](\#usuario) & Usuario que cumple el criterio de búsqueda. \\ \hline
+		data & \hyperref[sec:usuario]{Usuario} & Usuario que cumple el criterio de búsqueda. \\ \hline
 	\end{tabular}
 \end{adjustbox}
 \end{table}
 
+\pagebreak
 Respuesta (más de un usuario):
 \begin{table}[h!]
 	\centering
@@ -456,11 +461,10 @@ Respuesta (más de un usuario):
 		\hline
 		Parámetro & Tipo & Descripción \\ \hline
 		total & int & Número de usuarios que cumplen el criterio de búsqueda. \\ \hline
-		items & list[[Usuario](\#usuario)] & Usuarios que cumplen el criterio de búsqueda. \\ \hline
+		items & list[\hyperref[sec:usuario]{Usuario}] & Usuarios que cumplen el criterio de búsqueda. \\ \hline
 	\end{tabular}
 \end{adjustbox}
 \end{table}
-
 
 \subsection{\textit{POST /user}}
 Crea un nuevo usuario.
@@ -477,12 +481,10 @@ Cabeceras necesarias:
 \end{adjustbox}
 \end{table}
 
-Cuerpo de la petición (JSON):
-
-- [Usuario](usuario)
+Cuerpo de la petición (\textit{JSON}): \hyperref[sec:usuario]{Usuario}
 
 Respuesta:
-\begin{table}[!h]
+\begin{table}[h!]
 	\centering
 	\begin{adjustbox}{max width=\textwidth}
 	\begin{tabular}{|l|l|l|}
@@ -513,21 +515,21 @@ Cabeceras necesarias:
 \end{table}
 
 
-Cuerpo de la petición (JSON):
-\begin{table}[!h]
+Cuerpo de la petición (\textit{JSON}):
+\begin{table}[h!]
 	\centering
 	\begin{adjustbox}{max width=\textwidth}
 	\begin{tabular}{|l|l|l|l|}
 		\hline
 		Parámetro & Tipo & Opcional & Descripción \\ \hline
 		email & string & No & Email del usuario que se quiere modificar. \\ \hline
-		data & [Usuario](\#usuario) & No & Nuevos datos del usuario. \\ \hline
+		data & \hyperref[sec:usuario]{Usuario} & No & Nuevos datos del usuario. \\ \hline
 	\end{tabular}
 \end{adjustbox}
 \end{table}
 
 Respuesta:
-\begin{table}[!h]
+\begin{table}[h!]
 	\centering
 	\begin{adjustbox}{max width=\textwidth}
 	\begin{tabular}{|l|l|l|}
@@ -561,8 +563,8 @@ Cabeceras necesarias:
 \end{adjustbox}
 \end{table}
 
-Cuerpo de la petición (JSON):
-\begin{table}[!h]
+Cuerpo de la petición (\textit{JSON}):
+\begin{table}[h!]
 	\centering
 	\begin{adjustbox}{max width=\textwidth}
 	\begin{tabular}{|l|l|l|l|}
@@ -574,7 +576,7 @@ Cuerpo de la petición (JSON):
 \end{table}
 
 Respuesta:
-\begin{table}[!h]
+\begin{table}[h!]
 	\centering
 	\begin{adjustbox}{max width=\textwidth}
 	\begin{tabular}{|l|l|l|}
@@ -593,7 +595,8 @@ Respuesta:
 \section{Máquinas}
 
 \subsection{Machine}
-\begin{table}[!h]
+\label{sec:maquina}
+\begin{table}[h!]
 	\centering
 	\begin{adjustbox}{max width=\textwidth}
 	\begin{tabular}{|l|l|l|l|l|}
@@ -613,7 +616,7 @@ Respuesta:
 \end{adjustbox}
 \end{table}
 
-
+\pagebreak
 \subsection{\textit{GET /machine/:name}}
 Devuelve toda la información asociada a una máquina.
 
@@ -648,7 +651,7 @@ Respuesta:
 	\begin{tabular}{|l|l|l|}
 		\hline
 		Parámetro & Tipo & Descripción \\ \hline
-		data & [Machine](\#machine) & Diccionario con toda la información de la máquina consultada. \\ \hline
+		data & \hyperref[sec:maquina]{Machine} & Diccionario con toda la información de la máquina consultada. \\ \hline
 	\end{tabular}
 \end{adjustbox}
 \end{table}
@@ -669,7 +672,7 @@ Cabeceras necesarias:
 \end{adjustbox}
 \end{table}
 
-Cuerpo de la petición (JSON):
+Cuerpo de la petición (\textit{JSON}):
 \begin{table}[h!]
 	\centering
 	\begin{adjustbox}{max width=\textwidth}
@@ -689,7 +692,7 @@ Respuesta (una sola máquina):
 	\begin{tabular}{|l|l|l|}
 		\hline
 		Parámetro & Tipo & Descripción \\ \hline
-		data & [Machine](\#machine) & Máquina que cumple el criterio de búsqueda. \\ \hline
+		data & \hyperref[sec:maquina]{Machine} & Máquina que cumple el criterio de búsqueda. \\ \hline
 	\end{tabular}
 \end{adjustbox}
 \end{table}
@@ -702,7 +705,7 @@ Respuesta (más de una máquina):
 		\hline
 		Parámetro & Tipo & Descripción \\ \hline
 		total & int & Número de máquinas que cumplen el criterio de búsqueda. \\ \hline
-		items & list[[Machine](\#machine)] & Máquinas que cumplen el criterio de búsqueda. \\ \hline
+		items & list[\hyperref[sec:maquina]{Machine}] & Máquinas que cumplen el criterio de búsqueda. \\ \hline
 	\end{tabular}
 \end{adjustbox}
 \end{table}
@@ -723,11 +726,10 @@ Cabeceras necesarias:
 \end{adjustbox}
 \end{table}
 
-Cuerpo de la petición (JSON):
-- [Machine](machine)
+Cuerpo de la petición (\textit{JSON}): \hyperref[sec:maquina]{Machine}
 
 Respuesta:
-\begin{table}[!h]
+\begin{table}[h!]
 	\centering
 	\begin{adjustbox}{max width=\textwidth}
 	\begin{tabular}{|l|l|l|}
@@ -754,22 +756,22 @@ Cabeceras necesarias:
 \end{adjustbox}
 \end{table}
 
-Cuerpo de la petición (JSON):
-\begin{table}[!h]
+Cuerpo de la petición (\textit{JSON}):
+\begin{table}[h!]
 	\centering
 	\begin{adjustbox}{max width=\textwidth}
 	\begin{tabular}{|l|l|l|l|}
 		\hline
 		Parámetro & Tipo & Opcional & Descripción \\ \hline
 		name & string & No & Nombre de la máquina que se quiere modificar. \\ \hline
-		data & [Machine](\#machine) & No & Nuevos datos de la máquina. \\ \hline
+		data & \hyperref[sec:maquina]{Machine} & No & Nuevos datos de la máquina. \\ \hline
 	\end{tabular}
 \end{adjustbox}
 \end{table}
 
 
 Respuesta:
-\begin{table}[!h]
+\begin{table}[h!]
 	\centering
 	\begin{adjustbox}{max width=\textwidth}
 	\begin{tabular}{|l|l|l|}
@@ -780,6 +782,7 @@ Respuesta:
 	\end{tabular}
 \end{adjustbox}
 \end{table}
+
 
 \subsection{\textit{DELETE /machine}}
 
@@ -795,8 +798,10 @@ Cabeceras necesarias:
 \end{adjustbox}
 \end{table}
 
-Cuerpo de la petición (JSON):
-\begin{table}[!h]
+\pagebreak
+
+Cuerpo de la petición (\textit{JSON}):
+\begin{table}[h!]
 	\centering
 	\begin{adjustbox}{max width=\textwidth}
 	\begin{tabular}{|l|l|l|l|}
@@ -808,7 +813,7 @@ Cuerpo de la petición (JSON):
 \end{table}
 
 Respuesta:
-\begin{table}[!h]
+\begin{table}[h!]
 	\centering
 	\begin{adjustbox}{max width=\textwidth}
 	\begin{tabular}{|l|l|l|}
@@ -831,8 +836,9 @@ Respuesta:
 
 \section{Grupos de hosts}
 
-\subsection{Hosts}
-\begin{table}[!h]
+\subsection{\textit{Hosts}}
+\label{sec:hosts}
+\begin{table}[h!]
 	\centering
 	\begin{adjustbox}{max width=\textwidth}
 	\begin{tabular}{|l|l|l|l|l|}
@@ -846,7 +852,7 @@ Respuesta:
 
 \subsection{\textit{GET /provision/hosts/:name}}
 
-Devuelve toda la información asociada a un grupo de hosts.
+Devuelve toda la información asociada a un grupo de \textit{hosts}.
 
 Cabeceras necesarias:
 
@@ -882,16 +888,16 @@ Respuesta:
 	\begin{tabular}{|l|l|l|}
 		\hline
 		Parámetro & Tipo & Descripción \\ \hline
-		data & [Hosts](\#hosts) & Diccionario con toda la información del grupo de hosts consultado. \\ \hline
+		data & \hyperref[sec:hosts]{Hosts} & Diccionario con toda la información del grupo de hosts consultado. \\ \hline
 	\end{tabular}
 \end{adjustbox}
 \end{table}
 
 
-
+\pagebreak
 \subsection{\textit{POST/provision/hosts/query}}
 
-Devuelve los grupos de hosts que cumplen los criterios de búsqueda.
+Devuelve los grupos de \textit{hosts} que cumplen los criterios de búsqueda.
 
 Cabeceras necesarias:
 
@@ -906,7 +912,7 @@ Cabeceras necesarias:
 \end{adjustbox}
 \end{table}
 
-Cuerpo de la petición (JSON):
+Cuerpo de la petición (\textit{JSON}):
 \begin{table}[h!]
 	\centering
 	\begin{adjustbox}{max width=\textwidth}
@@ -926,7 +932,7 @@ Respuesta (una sola máquina):
 	\begin{tabular}{|l|l|l|}
 		\hline
 		Parámetro & Tipo & Descripción \\ \hline
-		data & [Hosts](\#hosts) & Grupo de hosts que cumple el criterio de búsqueda. \\ \hline
+		data & \hyperref[sec:hosts]{Hosts} & Grupo de hosts que cumple el criterio de búsqueda. \\ \hline
 	\end{tabular}
 \end{adjustbox}
 \end{table}
@@ -939,7 +945,7 @@ Respuesta (más de una máquina):
 		\hline
 		Parámetro & Tipo & Descripción \\ \hline
 		total & int & Número de grupos de hosts que cumplen el criterio de búsqueda. \\ \hline
-		items & list[[Hosts](\#hosts)] & Grupos de hosts que cumplen el criterio de búsqueda. \\ \hline
+		items & list[\hyperref[sec:hosts]{Hosts}] & Grupos de hosts que cumplen el criterio de búsqueda. \\ \hline
 	\end{tabular}
 \end{adjustbox}
 \end{table}
@@ -960,11 +966,10 @@ Cabeceras necesarias:
 \end{adjustbox}
 \end{table}
 
-Cuerpo de la petición (JSON):
-- [Machine](machine)
+Cuerpo de la petición (\textit{JSON}): \hyperref[sec:hosts]{Hosts}
 
 Respuesta:
-\begin{table}[!h]
+\begin{table}[h!]
 	\centering
 	\begin{adjustbox}{max width=\textwidth}
 	\begin{tabular}{|l|l|l|}
@@ -976,7 +981,7 @@ Respuesta:
 \end{adjustbox}
 \end{table}
 
-
+\pagebreak
 \subsection{\textit{PUT /provision/hosts}}
 
 Cabeceras necesarias:
@@ -991,22 +996,22 @@ Cabeceras necesarias:
 \end{adjustbox}
 \end{table}
 
-Cuerpo de la petición (JSON):
-\begin{table}[!h]
+Cuerpo de la petición (\textit{JSON}):
+\begin{table}[h!]
 	\centering
 	\begin{adjustbox}{max width=\textwidth}
 	\begin{tabular}{|l|l|l|l|}
 		\hline
 		Parámetro & Tipo & Opcional & Descripción \\ \hline
 		name & string & No & Nombre del grupo de hosts que se quiere modificar. \\ \hline
-		data & [Hosts](\#hosts) & No & Nuevos datos del grupo de hosts. \\ \hline
+		data & \hyperref[sec:hosts]{Hosts} & No & Nuevos datos del grupo de hosts. \\ \hline
 	\end{tabular}
 \end{adjustbox}
 \end{table}
 
 
 Respuesta:
-\begin{table}[!h]
+\begin{table}[h!]
 	\centering
 	\begin{adjustbox}{max width=\textwidth}
 	\begin{tabular}{|l|l|l|}
@@ -1032,8 +1037,8 @@ Cabeceras necesarias:
 \end{adjustbox}
 \end{table}
 
-Cuerpo de la petición (JSON):
-\begin{table}[!h]
+Cuerpo de la petición (\textit{JSON}):
+\begin{table}[h!]
 	\centering
 	\begin{adjustbox}{max width=\textwidth}
 	\begin{tabular}{|l|l|l|l|}
@@ -1045,7 +1050,7 @@ Cuerpo de la petición (JSON):
 \end{table}
 
 Respuesta:
-\begin{table}[!h]
+\begin{table}[h!]
 	\centering
 	\begin{adjustbox}{max width=\textwidth}
 	\begin{tabular}{|l|l|l|}
@@ -1065,17 +1070,19 @@ Respuesta:
 
 
 
+\pagebreak
 \section{Playbooks}
 
 	\subsection{Playbook}
-		\begin{table}[!h]
+	\label{sec:playbook}
+		\begin{table}[h!]
 			\centering
 	\begin{adjustbox}{max width=\textwidth}
 			\begin{tabular}{|l|l|l|l|l|}
 				\hline
 				Parámetro & Tipo & Opcional & E/S & Descripción \\ \hline
 				name & string & No & E/S & Nombre del Playbook. \\ \hline
-				playbook & dict & No & E/S & Contenido del Playbook codificado como JSON. \\ \hline
+				playbook & dict & No & E/S & Contenido del Playbook codificado como \textit{JSON}. \\ \hline
 			\end{tabular}
 \end{adjustbox}
 		\end{table}
@@ -1114,7 +1121,7 @@ Respuesta:
 			\begin{tabular}{|l|l|l|}
 				\hline
 				Parámetro & Tipo & Descripción \\ \hline
-				data & [Hosts](\#hosts) & Diccionario con toda la información del Playbook consultado. \\ \hline
+				data & \hyperref[sec:hosts]{Hosts} & Diccionario con toda la información del Playbook consultado. \\ \hline
 			\end{tabular}
 \end{adjustbox}
 		\end{table}
@@ -1122,7 +1129,7 @@ Respuesta:
 	
 	
 	\subsection{\textit{POST/provision/playbook/query}}
-		Devuelve los grupos de hosts que cumplen los criterios de búsqueda.
+		Devuelve los \textit{playbooks} que cumplen los criterios de búsqueda.
 		
 		Cabeceras necesarias:
 		\begin{table}[h!]
@@ -1136,7 +1143,7 @@ Respuesta:
 \end{adjustbox}
 		\end{table}
 		
-		Cuerpo de la petición (JSON):
+		Cuerpo de la petición (\textit{JSON}):
 		\begin{table}[h!]
 			\centering
 	\begin{adjustbox}{max width=\textwidth}
@@ -1149,19 +1156,21 @@ Respuesta:
 \end{adjustbox}
 		\end{table}
 		
-		Respuesta (un solo Playbook):
+		
+		\pagebreak
+		Respuesta (un solo \textit{Playbook}):
 		\begin{table}[h!]
 			\centering
 	\begin{adjustbox}{max width=\textwidth}
 			\begin{tabular}{|l|l|l|}
 				\hline
 				Parámetro & Tipo & Descripción \\ \hline
-				data & [Playbook](\#playbook) & Playbook que cumple el criterio de búsqueda. \\ \hline
+				data & \hyperref[sec:playbook]{Playbook} & Playbook que cumple el criterio de búsqueda. \\ \hline
 			\end{tabular}
 \end{adjustbox}
 		\end{table}
 		
-		Respuesta (más de un Playbook):
+		Respuesta (más de un \textit{Playbook}):
 		\begin{table}[h!]
 			\centering
 	\begin{adjustbox}{max width=\textwidth}
@@ -1169,7 +1178,7 @@ Respuesta:
 				\hline
 				Parámetro & Tipo & Descripción \\ \hline
 				total & int & Número de Playbooks que cumplen el criterio de búsqueda. \\ \hline
-				items & list[[Playbook](\#playbook)] & Playbooks que cumplen el criterio de búsqueda. \\ \hline
+				items & list[\hyperref[sec:playbook]{Playbook}] & Playbooks que cumplen el criterio de búsqueda. \\ \hline
 			\end{tabular}
 \end{adjustbox}
 		\end{table}
@@ -1177,7 +1186,7 @@ Respuesta:
 	
 	
 	\subsection{\textit{POST /provision/playbook}}
-		Crea un nuevo Playbook.
+		Crea un nuevo \textit{Playbook}.
 		
 		Cabeceras necesarias:
 		\begin{table}[h!]
@@ -1191,11 +1200,10 @@ Respuesta:
 \end{adjustbox}
 		\end{table}
 		
-		Cuerpo de la petición (JSON):
-		- [Playbook](playbook)
+		Cuerpo de la petición (\textit{JSON}): \hyperref[sec:playbook]{Playbook}
 		
 		Respuesta:
-		\begin{table}[!h]
+		\begin{table}[h!]
 			\centering
 	\begin{adjustbox}{max width=\textwidth}
 			\begin{tabular}{|l|l|l|}
@@ -1209,7 +1217,7 @@ Respuesta:
 	
 	
 	\subsection{\textit{PUT /provision/playbook}}
-		Modifica los datos de un Playbook.
+		Modifica los datos de un \textit{Playbook}.
 		
 		Cabeceras necesarias:
 		\begin{table}[h!]
@@ -1223,22 +1231,23 @@ Respuesta:
 \end{adjustbox}
 		\end{table}
 		
-		Cuerpo de la petición (JSON):
-		\begin{table}[!h]
+		Cuerpo de la petición (\textit{JSON}):
+		\begin{table}[h!]
 			\centering
 	\begin{adjustbox}{max width=\textwidth}
 			\begin{tabular}{|l|l|l|l|}
 				\hline
 				Parámetro & Tipo & Opcional & Descripción \\ \hline
 				name & string & No & Nombre del grupo de hosts que se quiere modificar. \\ \hline
-				data & [Hosts](\#hosts) & No & Nuevos datos del grupo de hosts. \\ \hline
+				data & \hyperref[sec:playbook]{Playbook} & No & Nuevos datos del grupo de hosts. \\ \hline
 			\end{tabular}
 \end{adjustbox}
 		\end{table}
 		
 		
+		\pagebreak
 		Respuesta:
-		\begin{table}[!h]
+		\begin{table}[h!]
 			\centering
 	\begin{adjustbox}{max width=\textwidth}
 			\begin{tabular}{|l|l|l|}
@@ -1251,7 +1260,7 @@ Respuesta:
 		\end{table}
 	
 	\subsection{\textit{DELETE /provision/playbook}}
-		Elimina un Playbook.
+		Elimina un \textit{Playbook}.
 		
 		Cabeceras necesarias:
 		\begin{table}[h!]
@@ -1265,8 +1274,8 @@ Respuesta:
 \end{adjustbox}
 		\end{table}
 		
-		Cuerpo de la petición (JSON):
-		\begin{table}[!h]
+		Cuerpo de la petición (\textit{JSON}):
+		\begin{table}[h!]
 			\centering
 	\begin{adjustbox}{max width=\textwidth}
 			\begin{tabular}{|l|l|l|l|}
@@ -1278,7 +1287,7 @@ Respuesta:
 		\end{table}
 		
 		Respuesta:
-		\begin{table}[!h]
+		\begin{table}[h!]
 			\centering
 	\begin{adjustbox}{max width=\textwidth}
 			\begin{tabular}{|l|l|l|}
@@ -1304,7 +1313,7 @@ Respuesta:
 
 
 	\subsection{\textit{POST /provision}}
-		Ejecuta un playbook.
+		Ejecuta un \textit{Playbook}.
 	
 		Cabeceras necesarias:
 		\begin{table}[h!]
@@ -1318,7 +1327,8 @@ Respuesta:
 \end{adjustbox}
 		\end{table}
 		
-		Cuerpo de la petición (JSON):
+		\pagebreak
+		Cuerpo de la petición (\textit{JSON}):
 		\begin{table}[h!]
 			\centering
 	\begin{adjustbox}{max width=\textwidth}
@@ -1355,6 +1365,7 @@ Respuesta:
 \section{Despliegue}
 
 	\subsection{Contenedor}
+	\label{sec:contenedor}
 		\begin{table}[h!]
 			\centering
 	\begin{adjustbox}{max width=\textwidth}
@@ -1372,6 +1383,7 @@ Respuesta:
 		\end{table}
 	
 	\subsection{Imagen}
+	\label{sec:imagen}
 		\begin{table}[h!]
 			\centering
 	\begin{adjustbox}{max width=\textwidth}
@@ -1387,6 +1399,7 @@ Respuesta:
 		\end{table}
 	
 	\subsection{Filtro de contenedores}
+	\label{sec:filtrocontenedor}
 		\begin{table}[h!]
 			\centering
 	\begin{adjustbox}{max width=\textwidth}
@@ -1403,6 +1416,7 @@ Respuesta:
 		\end{table}
 	
 	\subsection{Filtro de imágenes}
+	\label{sec:filtroimagen}
 		\begin{table}[h!]
 			\centering
 	\begin{adjustbox}{max width=\textwidth}
@@ -1432,8 +1446,8 @@ Respuesta:
 \end{adjustbox}
 		\end{table}
 		
-		Cuerpo de la petición (JSON):
-		\begin{table}[!h]
+		Cuerpo de la petición (\textit{JSON}):
+		\begin{table}[h!]
 			\centering
 	\begin{adjustbox}{max width=\textwidth}
 			\begin{tabular}{|l|l|l|l|}
@@ -1447,7 +1461,7 @@ Respuesta:
 	
 		Tipos de operaciones:
 		\subsubsection{run}
-			\begin{table}[!h]
+			\begin{table}[h!]
 				\centering
 	\begin{adjustbox}{max width=\textwidth}
 				\begin{tabular}{|l|l|l|l|l|}
@@ -1473,8 +1487,9 @@ Respuesta:
 \end{adjustbox}
 			\end{table}
 		
+		\pagebreak
 		\subsubsection{get}
-			\begin{table}[!h]
+			\begin{table}[h!]
 				\centering
 	\begin{adjustbox}{max width=\textwidth}
 				\begin{tabular}{|l|l|l|l|l|}
@@ -1486,11 +1501,10 @@ Respuesta:
 \end{adjustbox}
 			\end{table}
 		
-			Respuesta:
-			- [Contenedor](contenedor)
+			Respuesta: \hyperref[sec:contenedor]{Contenedor}
 			
 		\subsubsection{list}
-			\begin{table}[!h]
+			\begin{table}[h!]
 				\centering
 	\begin{adjustbox}{max width=\textwidth}
 				\begin{tabular}{|l|l|l|l|l|}
@@ -1500,45 +1514,45 @@ Respuesta:
 					& all & bool & No & Mostrar o no todos los contenedores (en ejecución y detenidos o finalizados). \\ \hline
 					& since & string & No & Mostrar contenedores creados desde este identificador. \\ \hline
 					& before & string & No & Mostrar contenedores creados previos a este identificador. \\ \hline
-					& filters & [Filtro](\#filtro-de-contenedores) & No & Filtros para afinar la búsqueda. \\ \hline
+					& filters & \hyperref[sec:filtrocontenedor]{Filtro} & No & Filtros para afinar la búsqueda. \\ \hline
 				\end{tabular}
 \end{adjustbox}
 			\end{table}
 		
 			Respuesta (un solo contenedor):
-			\begin{table}[!h]
+			\begin{table}[h!]
 				\centering
 	\begin{adjustbox}{max width=\textwidth}
 				\begin{tabular}{|l|l|l|}
 					\hline
 					Parámetro & Tipo & Descripción \\ \hline
-					data & list[[Contenedor](\#contenedor)] & Contenedor que cumple el criterio de búsqueda. \\ \hline
+					data & \hyperref[sec:contenedor]{Contenedor} & Contenedor que cumple el criterio de búsqueda. \\ \hline
 				\end{tabular}
 \end{adjustbox}
 			\end{table}
 		
 			Respuesta (más de un contenedor):
-			\begin{table}[!h]
+			\begin{table}[h!]
 				\centering
 	\begin{adjustbox}{max width=\textwidth}
 				\begin{tabular}{|l|l|l|}
 					\hline
 					Parámetro & Tipo & Descripción \\ \hline
 					total & int & Número de contenedores que cumplen el criterio de búsqueda. \\ \hline
-					items & list[[Contenedor](\#contenedor)] & Contenedores que cumplen el criterio de búsqueda. \\ \hline
+					items & list[\hyperref[sec:contenedor]{Contenedor}] & Contenedores que cumplen el criterio de búsqueda. \\ \hline
 				\end{tabular}
 \end{adjustbox}
 			\end{table}
 		
 		\subsubsection{prune}
-			\begin{table}[!h]
+			\begin{table}[h!]
 				\centering
 	\begin{adjustbox}{max width=\textwidth}
 				\begin{tabular}{|l|l|l|l|l|}
 					\hline
 					Parámetro & Key & Tipo & Opcional & Descripción \\ \hline
 					data &  & dict & No & Argumentos de la operación. \\ \hline
-					& filters & [Filtro](\#filtro-de-contenedores) & Sí & Filtros. \\ \hline
+					& filters & \hyperref[sec:filtrocontenedor]{Filtro} & Sí & Filtros. \\ \hline
 				\end{tabular}
 \end{adjustbox}
 			\end{table}
@@ -1561,8 +1575,9 @@ Respuesta:
 \end{adjustbox}
 		\end{table}
 		
-		Cuerpo de la petición (JSON):
-		\begin{table}[!h]
+		\pagebreak
+		Cuerpo de la petición (\textit{JSON}):
+		\begin{table}[h!]
 			\centering
 	\begin{adjustbox}{max width=\textwidth}
 			\begin{tabular}{|l|l|l|l|}
@@ -1578,7 +1593,7 @@ Respuesta:
 		Tipos de operaciones:
 		
 		\subsubsection{rename}
-			\begin{table}[!h]
+			\begin{table}[h!]
 				\centering
 	\begin{adjustbox}{max width=\textwidth}
 				\begin{tabular}{|l|l|l|l|l|}
@@ -1593,7 +1608,7 @@ Respuesta:
 		\subsubsection{logs}
 			Respuesta:
 			
-			\begin{table}[!h]
+			\begin{table}[h!]
 				\centering
 	\begin{adjustbox}{max width=\textwidth}
 				\begin{tabular}{|l|l|l|}
@@ -1623,9 +1638,9 @@ Respuesta:
 \end{adjustbox}
 		\end{table}
 		
-		Cuerpo de la petición (JSON):
+		Cuerpo de la petición (\textit{JSON}):
 		
-		\begin{table}[!h]
+		\begin{table}[h!]
 			\centering
 	\begin{adjustbox}{max width=\textwidth}
 			\begin{tabular}{|l|l|l|l|}
@@ -1637,10 +1652,11 @@ Respuesta:
 \end{adjustbox}
 		\end{table}
 	
+	\pagebreak
 		Tipos de operaciones:
 		
 			\subsubsection{list}
-				\begin{table}[!h]
+				\begin{table}[h!]
 					\centering
 	\begin{adjustbox}{max width=\textwidth}
 					\begin{tabular}{|l|l|l|l|l|}
@@ -1649,38 +1665,38 @@ Respuesta:
 						data &  & dict & No & Argumentos de la operación. \\ \hline
 						& name & string & Sí & Mostrar sólo las imágenes pertenecientes a este repositorio. \\ \hline
 						& all & bool & Sí & Mostrar todas las imágenes o no (incluídas las imágenes de capas intermedias). \\ \hline
-						& filters & [Filtro](\#filtro-de-imágenes) & Sí & Filtros adicionales. \\ \hline
+						& filters & \hyperref[sec:filtroimagen]{Filtro} & Sí & Filtros adicionales. \\ \hline
 					\end{tabular}
 \end{adjustbox}
 				\end{table}
 			
 				Respuesta (una sola imagen):
-				\begin{table}[!h]
+				\begin{table}[h!]
 					\centering
 	\begin{adjustbox}{max width=\textwidth}
 					\begin{tabular}{|l|l|l|}
 						\hline
 						Parámetro & Tipo & Descripción \\ \hline
-						data & [Imagen](\#imagen) & Diccionario con los datos de la imagen. \\ \hline
+						data & \hyperref[sec:imagen]{Imagen} & Diccionario con los datos de la imagen. \\ \hline
 					\end{tabular}
 \end{adjustbox}
 				\end{table}
 			
 				Respuesta (más de una imagen):
-				\begin{table}[!h]
+				\begin{table}[h!]
 					\centering
 	\begin{adjustbox}{max width=\textwidth}
 					\begin{tabular}{|l|l|l|}
 						\hline
 						Parámetro & Tipo & Descripción \\ \hline
 						total & int & Número de imágenes listadas. \\ \hline
-						items & list[[Imagen](\#imagen)] & Imágenes listadas. \\ \hline
+						items & list[\hyperref[sec:imagen]{Imagen}] & Imágenes listadas. \\ \hline
 					\end{tabular}
 \end{adjustbox}
 				\end{table}
 			
 			\subsubsection{get}
-				\begin{table}[!h]
+				\begin{table}[h!]
 					\centering
 	\begin{adjustbox}{max width=\textwidth}
 					\begin{tabular}{|l|l|l|l|l|}
@@ -1692,25 +1708,24 @@ Respuesta:
 \end{adjustbox}
 				\end{table}
 			
-				Respuesta:
-				
-				- [Imagen](imagen)
+				Respuesta: \hyperref[sec:imagen]{Imagen}
 				
 			\subsubsection{prune}
-				\begin{table}[!h]
+				\begin{table}[h!]
 					\centering
 	\begin{adjustbox}{max width=\textwidth}
 					\begin{tabular}{|l|l|l|l|l|}
 						\hline
 						Parámetro & Key & Tipo & Opcional & Descripción \\ \hline
 						data &  & dict & No & Argumentos de la operación. \\ \hline
-						& filters & [Filter](filter) & Sí & Filtros adicionales. \\ \hline
+						& filters & \hyperref[sec:filtroimagen]{Filtro} & Sí & Filtros adicionales. \\ \hline
 					\end{tabular}
 \end{adjustbox}
 				\end{table}
 			
+			\pagebreak
 			\subsubsection{pull}
-				\begin{table}[!h]
+				\begin{table}[h!]
 					\centering
 	\begin{adjustbox}{max width=\textwidth}
 					\begin{tabular}{|l|l|l|l|l|}
@@ -1725,12 +1740,10 @@ Respuesta:
 \end{adjustbox}
 				\end{table}
 			
-				Respuesta:
-				
-				- [Imagen](imagen) descargada.
+				Respuesta: \hyperref[sec:imagen]{Imagen} descargada.
 				
 			\subsubsection{remove}
-				\begin{table}[!h]
+				\begin{table}[h!]
 					\centering
 	\begin{adjustbox}{max width=\textwidth}
 					\begin{tabular}{|l|l|l|l|l|}
@@ -1745,7 +1758,7 @@ Respuesta:
 				\end{table}
 			
 			\subsubsection{search}
-				\begin{table}[!h]
+				\begin{table}[h!]
 					\centering
 	\begin{adjustbox}{max width=\textwidth}
 					\begin{tabular}{|l|l|l|l|l|}
@@ -1759,7 +1772,7 @@ Respuesta:
 			
 				Respuesta:
 				
-				\begin{table}[!h]
+				\begin{table}[h!]
 					\centering
 	\begin{adjustbox}{max width=\textwidth}
 					\begin{tabular}{|l|l|l|l|}
@@ -1778,6 +1791,7 @@ Respuesta:
 		
 	
 	
+	\pagebreak
 	\subsection{\textit{POST /deploy/image/single}}
 		Permite ejecutar operaciones básicas en una imagen en concreto.
 		
@@ -1793,9 +1807,9 @@ Respuesta:
 \end{adjustbox}
 		\end{table}
 		
-		Cuerpo de la petición (JSON):
+		Cuerpo de la petición (\textit{JSON}):
 		
-		\begin{table}[!h]
+		\begin{table}[h!]
 			\centering
 	\begin{adjustbox}{max width=\textwidth}
 			\begin{tabular}{|l|l|l|l|}
@@ -1813,7 +1827,7 @@ Respuesta:
 			\subsubsection{history}
 				Respuesta:
 				
-				\begin{table}[!h]
+				\begin{table}[h!]
 					\centering
 	\begin{adjustbox}{max width=\textwidth}
 					\begin{tabular}{|l|l|l|}

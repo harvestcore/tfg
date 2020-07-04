@@ -29,7 +29,7 @@ Telecomunicación\xspace}
 \newcommand{\myTime}{\today\xspace}
 \newcommand{\myVersion}{Version 0.1\xspace}
 
-
+\usepackage{hyperref}
 \usepackage{url}
 \usepackage{colortbl,longtable}
 %\makeindex
@@ -118,11 +118,6 @@ Telecomunicación\xspace}
 	\input{capitulos/06_implementacion}
 	
 	\input{capitulos/07_conclusiones}
-
-
-	%%\nocite{*}
-	%\bibliography{bibliografia/bibliografia}\addcontentsline{toc}{chapter}{Bibliografía}
-	%\bibliographystyle{miunsrturl}
 	
 	\appendix
 	\input{anexos/01_endpoints}
@@ -132,5 +127,10 @@ Telecomunicación\xspace}
 	%\input{glosario/entradas_glosario}
 	% \addcontentsline{toc}{chapter}{Glosario}
 	% \printglossary
+
+	\nocite{*}
+	\bibliographystyle{plain}
+	\bibliography{bibliografia/bibliografia}
+
 
 \end{document}
