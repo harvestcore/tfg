@@ -1,9 +1,15 @@
 \chapter{Especificación de \textit{endpoints}}
 
-\textbf{Leyenda:}
-
-\textbf{E/S}: Parámetro de \textbf{E}ntrada o \textbf{S}alida.
-
+{\Large \textbf{Leyenda:}}
+\begin{itemize}
+	\item \textbf{E/S}: Parámetro de \textbf{E}ntrada o \textbf{S}alida.
+	
+	\item \textbf{Opcional}
+	\begin{itemize}
+		\item \textbf{No}. Parámetro necesario por el endpoint.
+		\item \textbf{Sí}. Parámetro opcional.
+	\end{itemize}
+\end{itemize}
 
 \section{Status}
 
@@ -20,11 +26,14 @@ Cabeceras necesarias:
 	\end{tabular}
 \end{table}
 
+\bigskip
+
+\pagebreak
 Respuesta:
 \begin{table}[h!]
 	\centering
 	\begin{adjustbox}{max width=\textwidth}
-	\begin{tabular}{|l|l|l|l|}
+	\begin{tabularx}{\linewidth}{|l|l|l|L|}
 		\hline
 		Parámetro & Key & Tipo & Descripción \\ \hline
 		mongo &  & dict &  \\ \hline
@@ -35,11 +44,11 @@ Respuesta:
 		& is\_up & bool & Si el servicio se encuentra activo o no. \\ \hline
 		& data\_usage & dict & Información de uso de las imágenes y contenedores. \\ \hline
 		& info & string & Información adicional del cliente de Docker. \\ \hline
-	\end{tabular}
+	\end{tabularx}
 	\end{adjustbox}
 \end{table}
 
-\pagebreak
+
 En caso de que el servicio de \textit{Docker} no se encuentre activado o presenta errores los \textit{endpoints} correspondientes al servicio de despliegue no estarán disponibles y el estado de este en la respuesta anterior tendrá la siguiente forma:
 
 \begin{table}[h!]
@@ -72,11 +81,11 @@ Respuesta:
 \begin{table}[h!]
 	\centering
 \begin{adjustbox}{max width=\textwidth}
-	\begin{tabular}{|l|l|l|}
+	\begin{tabularx}{\linewidth}{|l|l|L|}
 		\hline
 		Parámetro & Tipo & Descripción \\ \hline
 		ok & bool & Si los servicios del sistema funcionan correctamente o no. \\ \hline
-	\end{tabular}
+	\end{tabularx}
 \end{adjustbox}
 \end{table}
 
@@ -120,7 +129,6 @@ Respuesta:
 \end{table}
 
 
-\pagebreak
 \subsection{\textit{POST /logout}}
 
 Desloguea al usuario del cliente.
@@ -201,7 +209,6 @@ Cuerpo de la petición (\textit{JSON}):
 \end{adjustbox}
 \end{table}
 
-\pagebreak
 Respuesta (un solo usuario):
 \begin{table}[h!]
 	\centering
@@ -219,12 +226,12 @@ Respuesta (más de un usuario):
 \begin{table}[h!]
 	\centering
 	\begin{adjustbox}{max width=\textwidth}
-	\begin{tabular}{|l|l|l|}
+	\begin{tabularx}{\linewidth}{|l|l|L|}
 		\hline
 		Parámetro & Tipo & Descripción \\ \hline
 		total & int & Número de clientes que cumplen el criterio de búsqueda. \\ \hline
 		items & list[\hyperref[sec:cliente]{Cliente}] & Clientes que cumplen el criterio de búsqueda. \\ \hline
-	\end{tabular}
+	\end{tabularx}
 \end{adjustbox}
 \end{table}
 
@@ -289,7 +296,6 @@ Cuerpo de la petición (\textit{JSON}):
 \end{adjustbox}
 \end{table}
 
-\pagebreak
 Respuesta:
 \begin{table}[h!]
 	\centering
@@ -349,6 +355,7 @@ Respuesta:
 \end{table}
 
 
+\pagebreak
 \section{Usuarios}
 
 \subsection{Usuario}
@@ -401,11 +408,11 @@ Respuesta:
 \begin{table}[h!]
 	\centering
 	\begin{adjustbox}{max width=\textwidth}
-	\begin{tabular}{|l|l|l|}
+	\begin{tabularx}{\linewidth}{|l|l|L|}
 		\hline
 		Parámetro & Tipo & Descripción \\ \hline
 		data & \hyperref[sec:usuario]{Usuario} & Diccionario con toda la información del usuario consultado. \\ \hline
-	\end{tabular}
+	\end{tabularx}
 \end{adjustbox}
 \end{table}
 
@@ -427,6 +434,7 @@ Cabeceras necesarias:
 \end{table}
 
 
+\pagebreak
 Cuerpo de la petición (\textit{JSON}):
 \begin{table}[h!]
 	\centering
@@ -452,17 +460,16 @@ Respuesta (un solo usuario):
 \end{adjustbox}
 \end{table}
 
-\pagebreak
 Respuesta (más de un usuario):
 \begin{table}[h!]
 	\centering
 	\begin{adjustbox}{max width=\textwidth}
-	\begin{tabular}{|l|l|l|}
+	\begin{tabularx}{\linewidth}{|l|l|L|}
 		\hline
 		Parámetro & Tipo & Descripción \\ \hline
 		total & int & Número de usuarios que cumplen el criterio de búsqueda. \\ \hline
 		items & list[\hyperref[sec:usuario]{Usuario}] & Usuarios que cumplen el criterio de búsqueda. \\ \hline
-	\end{tabular}
+	\end{tabularx}
 \end{adjustbox}
 \end{table}
 
@@ -498,7 +505,7 @@ Respuesta:
 
 
 
-
+\pagebreak
 \subsection{\textit{PUT /user}}
 Modifica los datos de un usuario.
 
@@ -513,6 +520,7 @@ Cabeceras necesarias:
 	\end{tabular}
 \end{adjustbox}
 \end{table}
+
 
 
 Cuerpo de la petición (\textit{JSON}):
@@ -591,6 +599,7 @@ Respuesta:
 
 
 
+\pagebreak
 
 \section{Máquinas}
 
@@ -599,7 +608,7 @@ Respuesta:
 \begin{table}[h!]
 	\centering
 	\begin{adjustbox}{max width=\textwidth}
-	\begin{tabular}{|l|l|l|l|l|}
+	\begin{tabularx}{\linewidth}{|l|l|l|l|L|}
 		\hline
 		Parámetro & Tipo & Opcional & E/S & Descripción \\ \hline
 		name & string & No & E/S & Tipo de usuario. \\ \hline
@@ -612,11 +621,10 @@ Respuesta:
 		gateway & string & Sí & E/S & Gateway de la red a la que se conecta la máquina. \\ \hline
 		netmask & string & Sí & E/S & Netmask de la red a la que se conecta la máquina. \\ \hline
 		network & string & Sí & E/S & Network de la red a la que se conecta la máquina. \\ \hline
-	\end{tabular}
+	\end{tabularx}
 \end{adjustbox}
 \end{table}
 
-\pagebreak
 \subsection{\textit{GET /machine/:name}}
 Devuelve toda la información asociada a una máquina.
 
@@ -648,11 +656,11 @@ Respuesta:
 \begin{table}[h!]
 	\centering
 	\begin{adjustbox}{max width=\textwidth}
-	\begin{tabular}{|l|l|l|}
+	\begin{tabularx}{\linewidth}{|l|l|L|}
 		\hline
 		Parámetro & Tipo & Descripción \\ \hline
 		data & \hyperref[sec:maquina]{Machine} & Diccionario con toda la información de la máquina consultada. \\ \hline
-	\end{tabular}
+	\end{tabularx}
 \end{adjustbox}
 \end{table}
 
@@ -701,12 +709,12 @@ Respuesta (más de una máquina):
 \begin{table}[h!]
 	\centering
 	\begin{adjustbox}{max width=\textwidth}
-	\begin{tabular}{|l|l|l|}
+	\begin{tabularx}{\linewidth}{|l|l|L|}
 		\hline
 		Parámetro & Tipo & Descripción \\ \hline
 		total & int & Número de máquinas que cumplen el criterio de búsqueda. \\ \hline
 		items & list[\hyperref[sec:maquina]{Machine}] & Máquinas que cumplen el criterio de búsqueda. \\ \hline
-	\end{tabular}
+	\end{tabularx}
 \end{adjustbox}
 \end{table}
 
@@ -742,6 +750,7 @@ Respuesta:
 \end{table}
 
 
+\pagebreak
 \subsection{\textit{PUT /machine}}
 
 Cabeceras necesarias:
@@ -760,12 +769,12 @@ Cuerpo de la petición (\textit{JSON}):
 \begin{table}[h!]
 	\centering
 	\begin{adjustbox}{max width=\textwidth}
-	\begin{tabular}{|l|l|l|l|}
+	\begin{tabularx}{\textwidth}{|l|l|l|L|}
 		\hline
 		Parámetro & Tipo & Opcional & Descripción \\ \hline
 		name & string & No & Nombre de la máquina que se quiere modificar. \\ \hline
 		data & \hyperref[sec:maquina]{Machine} & No & Nuevos datos de la máquina. \\ \hline
-	\end{tabular}
+	\end{tabularx}
 \end{adjustbox}
 \end{table}
 
@@ -798,8 +807,6 @@ Cabeceras necesarias:
 \end{adjustbox}
 \end{table}
 
-\pagebreak
-
 Cuerpo de la petición (\textit{JSON}):
 \begin{table}[h!]
 	\centering
@@ -812,6 +819,7 @@ Cuerpo de la petición (\textit{JSON}):
 \end{adjustbox}
 \end{table}
 
+\pagebreak
 Respuesta:
 \begin{table}[h!]
 	\centering
@@ -885,11 +893,11 @@ Respuesta:
 \begin{table}[h!]
 	\centering
 	\begin{adjustbox}{max width=\textwidth}
-	\begin{tabular}{|l|l|l|}
+	\begin{tabularx}{\linewidth}{|l|l|L|}
 		\hline
 		Parámetro & Tipo & Descripción \\ \hline
 		data & \hyperref[sec:hosts]{Hosts} & Diccionario con toda la información del grupo de hosts consultado. \\ \hline
-	\end{tabular}
+	\end{tabularx}
 \end{adjustbox}
 \end{table}
 
@@ -941,12 +949,12 @@ Respuesta (más de una máquina):
 \begin{table}[h!]
 	\centering
 	\begin{adjustbox}{max width=\textwidth}
-	\begin{tabular}{|l|l|l|}
+	\begin{tabularx}{\linewidth}{|l|l|L|}
 		\hline
 		Parámetro & Tipo & Descripción \\ \hline
 		total & int & Número de grupos de hosts que cumplen el criterio de búsqueda. \\ \hline
 		items & list[\hyperref[sec:hosts]{Hosts}] & Grupos de hosts que cumplen el criterio de búsqueda. \\ \hline
-	\end{tabular}
+	\end{tabularx}
 \end{adjustbox}
 \end{table}
 
@@ -968,6 +976,7 @@ Cabeceras necesarias:
 
 Cuerpo de la petición (\textit{JSON}): \hyperref[sec:hosts]{Hosts}
 
+\pagebreak
 Respuesta:
 \begin{table}[h!]
 	\centering
@@ -981,7 +990,6 @@ Respuesta:
 \end{adjustbox}
 \end{table}
 
-\pagebreak
 \subsection{\textit{PUT /provision/hosts}}
 
 Cabeceras necesarias:
@@ -1000,12 +1008,12 @@ Cuerpo de la petición (\textit{JSON}):
 \begin{table}[h!]
 	\centering
 	\begin{adjustbox}{max width=\textwidth}
-	\begin{tabular}{|l|l|l|l|}
+	\begin{tabularx}{\linewidth}{|l|l|l|L|}
 		\hline
 		Parámetro & Tipo & Opcional & Descripción \\ \hline
 		name & string & No & Nombre del grupo de hosts que se quiere modificar. \\ \hline
 		data & \hyperref[sec:hosts]{Hosts} & No & Nuevos datos del grupo de hosts. \\ \hline
-	\end{tabular}
+	\end{tabularx}
 \end{adjustbox}
 \end{table}
 
@@ -1049,6 +1057,8 @@ Cuerpo de la petición (\textit{JSON}):
 \end{adjustbox}
 \end{table}
 
+
+\pagebreak
 Respuesta:
 \begin{table}[h!]
 	\centering
@@ -1068,9 +1078,6 @@ Respuesta:
 
 
 
-
-
-\pagebreak
 \section{Playbooks}
 
 	\subsection{Playbook}
@@ -1118,16 +1125,17 @@ Respuesta:
 		\begin{table}[h!]
 			\centering
 	\begin{adjustbox}{max width=\textwidth}
-			\begin{tabular}{|l|l|l|}
+			\begin{tabularx}{\linewidth}{|l|l|L|}
 				\hline
 				Parámetro & Tipo & Descripción \\ \hline
 				data & \hyperref[sec:hosts]{Hosts} & Diccionario con toda la información del Playbook consultado. \\ \hline
-			\end{tabular}
+			\end{tabularx}
 \end{adjustbox}
 		\end{table}
 	
 	
 	
+	\pagebreak
 	\subsection{\textit{POST/provision/playbook/query}}
 		Devuelve los \textit{playbooks} que cumplen los criterios de búsqueda.
 		
@@ -1157,7 +1165,6 @@ Respuesta:
 		\end{table}
 		
 		
-		\pagebreak
 		Respuesta (un solo \textit{Playbook}):
 		\begin{table}[h!]
 			\centering
@@ -1174,12 +1181,12 @@ Respuesta:
 		\begin{table}[h!]
 			\centering
 	\begin{adjustbox}{max width=\textwidth}
-			\begin{tabular}{|l|l|l|}
+			\begin{tabularx}{\linewidth}{|l|l|L|}
 				\hline
 				Parámetro & Tipo & Descripción \\ \hline
 				total & int & Número de Playbooks que cumplen el criterio de búsqueda. \\ \hline
 				items & list[\hyperref[sec:playbook]{Playbook}] & Playbooks que cumplen el criterio de búsqueda. \\ \hline
-			\end{tabular}
+			\end{tabularx}
 \end{adjustbox}
 		\end{table}
 	
@@ -1202,6 +1209,7 @@ Respuesta:
 		
 		Cuerpo de la petición (\textit{JSON}): \hyperref[sec:playbook]{Playbook}
 		
+		\pagebreak
 		Respuesta:
 		\begin{table}[h!]
 			\centering
@@ -1235,17 +1243,16 @@ Respuesta:
 		\begin{table}[h!]
 			\centering
 	\begin{adjustbox}{max width=\textwidth}
-			\begin{tabular}{|l|l|l|l|}
+			\begin{tabularx}{\linewidth}{|l|l|l|L|}
 				\hline
 				Parámetro & Tipo & Opcional & Descripción \\ \hline
 				name & string & No & Nombre del grupo de hosts que se quiere modificar. \\ \hline
 				data & \hyperref[sec:playbook]{Playbook} & No & Nuevos datos del grupo de hosts. \\ \hline
-			\end{tabular}
+			\end{tabularx}
 \end{adjustbox}
 		\end{table}
 		
 		
-		\pagebreak
 		Respuesta:
 		\begin{table}[h!]
 			\centering
@@ -1274,6 +1281,7 @@ Respuesta:
 \end{adjustbox}
 		\end{table}
 		
+		\pagebreak
 		Cuerpo de la petición (\textit{JSON}):
 		\begin{table}[h!]
 			\centering
@@ -1327,12 +1335,11 @@ Respuesta:
 \end{adjustbox}
 		\end{table}
 		
-		\pagebreak
 		Cuerpo de la petición (\textit{JSON}):
 		\begin{table}[h!]
 			\centering
 	\begin{adjustbox}{max width=\textwidth}
-			\begin{tabular}{|l|l|l|l|l|}
+			\begin{tabularx}{\linewidth}{|l|l|l|l|L|}
 				\hline
 				Parámetro & Key & Tipo & Opcional & Descripción \\ \hline
 				hosts &  & list[string] & No & Lista de grupo de hosts donde se quiere ejecutar el playbook. \\ \hline
@@ -1340,10 +1347,11 @@ Respuesta:
 				passwords &  & dict & No & Contraseñas necesarias para la conexión a los hosts. \\ \hline
 				& conn\_pass & string & Sí & Contraseña de acceso. \\ \hline
 				& become\_pass & string & Sí & Contraseña para acceder al root. \\ \hline
-			\end{tabular}
+			\end{tabularx}
 \end{adjustbox}
 		\end{table}
 		
+		\pagebreak
 		Respuesta:
 		\begin{table}[h!]
 			\centering
@@ -1369,7 +1377,7 @@ Respuesta:
 		\begin{table}[h!]
 			\centering
 	\begin{adjustbox}{max width=\textwidth}
-			\begin{tabular}{|l|l|l|l|}
+			\begin{tabularx}{\textwidth}{|l|l|l|L|}
 				\hline
 				Parámetro & Tipo & E/S & Descripción \\ \hline
 				id & string & S & Identificador del contenedor \\ \hline
@@ -1378,7 +1386,7 @@ Respuesta:
 				labels & dict & S & Etiquetas del contenedor. \\ \hline
 				status & string & S & Estado del contenedor. \\ \hline
 				image & Image & S & Imagen que se esta ejecutando en el contenedor. \\ \hline
-			\end{tabular}
+			\end{tabularx}
 \end{adjustbox}
 		\end{table}
 	
@@ -1387,23 +1395,26 @@ Respuesta:
 		\begin{table}[h!]
 			\centering
 	\begin{adjustbox}{max width=\textwidth}
-			\begin{tabular}{|l|l|l|l|}
+			\begin{tabularx}{\linewidth}{|l|l|l|L|}
 				\hline
 				Parámetro & Tipo & E/S & Descripción \\ \hline
 				id & string & S & Identificador de la imagen. \\ \hline
 				labels & dict & S & Etiquetas de la imagen. \\ \hline
 				short\_id & string & S & Identificador de la imagen truncado a 10 carácteres. \\ \hline
 				tags & list[string] & S & Tags de la imagen. \\ \hline
-			\end{tabular}
+			\end{tabularx}
 \end{adjustbox}
 		\end{table}
 	
+	\bigskip
+	
+	\pagebreak
 	\subsection{Filtro de contenedores}
 	\label{sec:filtrocontenedor}
 		\begin{table}[h!]
 			\centering
 	\begin{adjustbox}{max width=\textwidth}
-			\begin{tabular}{|l|l|l|l|l|}
+			\begin{tabularx}{\linewidth}{|l|l|l|l|L|}
 				\hline
 				Parámetro & Key & Tipo & Opcional & Descripción \\ \hline
 				filters &  & dict & No &  \\ \hline
@@ -1411,7 +1422,7 @@ Respuesta:
 				& status & string & Sí & Estado del contenedor. \\ \hline
 				& id & string & Sí & Identificador del contenedor. \\ \hline
 				& name & string & Sí & Nombre del contenedor. \\ \hline
-			\end{tabular}
+			\end{tabularx}
 \end{adjustbox}
 		\end{table}
 	
@@ -1420,13 +1431,13 @@ Respuesta:
 		\begin{table}[h!]
 			\centering
 	\begin{adjustbox}{max width=\textwidth}
-			\begin{tabular}{|l|l|l|l|l|}
+			\begin{tabularx}{\linewidth}{|l|l|l|l|L|}
 				\hline
 				Parámetro & Key & Tipo & Opcional & Descripción \\ \hline
 				filters &  & dict & No &  \\ \hline
 				& dangling & boolean & Sí & Si la imagen se encuentra colgada o no. \\ \hline
 				& label & string & Sí & Etiqueta de la imagen. \\ \hline
-			\end{tabular}
+			\end{tabularx}
 \end{adjustbox}
 		\end{table}
 	
@@ -1450,21 +1461,21 @@ Respuesta:
 		\begin{table}[h!]
 			\centering
 	\begin{adjustbox}{max width=\textwidth}
-			\begin{tabular}{|l|l|l|l|}
+			\begin{tabularx}{\linewidth}{|l|l|l|L|}
 				\hline
 				Parámetro & Tipo & Opcional & Descripción \\ \hline
 				operation & string & No & Nombre de la operación que se quiere ejecutar. Valores posibles: \textit{run}, \textit{get}, \textit{list}, \textit{prune}. \\ \hline
 				data & dict & No & Argumentos de la operación. \\ \hline
-			\end{tabular}
+			\end{tabularx}
 \end{adjustbox}
 		\end{table}
 	
-		Tipos de operaciones:
+		\pagebreak
 		\subsubsection{run}
 			\begin{table}[h!]
 				\centering
 	\begin{adjustbox}{max width=\textwidth}
-				\begin{tabular}{|l|l|l|l|l|}
+				\begin{tabularx}{\linewidth}{|l|l|l|l|L|}
 					\hline
 					Parámetro & Key & Tipo & Opcional & Descripción \\ \hline
 					data &  & dict & No & Argumentos de la operación. \\ \hline
@@ -1483,7 +1494,7 @@ Respuesta:
 					& volumes & dict & Sí & Volumenes a montar. \\ \hline
 					& working\_dir & string & Sí & Directorio de trabajo. \\ \hline
 					& remove & bool & Sí & Eliminar el contenedor al terminar la ejecución. \\ \hline
-				\end{tabular}
+				\end{tabularx}
 \end{adjustbox}
 			\end{table}
 		
@@ -1507,7 +1518,7 @@ Respuesta:
 			\begin{table}[h!]
 				\centering
 	\begin{adjustbox}{max width=\textwidth}
-				\begin{tabular}{|l|l|l|l|l|}
+				\begin{tabularx}{\linewidth}{|l|l|l|l|L|}
 					\hline
 					Parámetro & Key & Tipo & Opcional & Descripción \\ \hline
 					data &  & dict & No & Argumentos de la operación. \\ \hline
@@ -1515,7 +1526,7 @@ Respuesta:
 					& since & string & No & Mostrar contenedores creados desde este identificador. \\ \hline
 					& before & string & No & Mostrar contenedores creados previos a este identificador. \\ \hline
 					& filters & \hyperref[sec:filtrocontenedor]{Filtro} & No & Filtros para afinar la búsqueda. \\ \hline
-				\end{tabular}
+				\end{tabularx}
 \end{adjustbox}
 			\end{table}
 		
@@ -1535,15 +1546,16 @@ Respuesta:
 			\begin{table}[h!]
 				\centering
 	\begin{adjustbox}{max width=\textwidth}
-				\begin{tabular}{|l|l|l|}
+				\begin{tabularx}{\linewidth}{|l|l|L|}
 					\hline
 					Parámetro & Tipo & Descripción \\ \hline
 					total & int & Número de contenedores que cumplen el criterio de búsqueda. \\ \hline
 					items & list[\hyperref[sec:contenedor]{Contenedor}] & Contenedores que cumplen el criterio de búsqueda. \\ \hline
-				\end{tabular}
+				\end{tabularx}
 \end{adjustbox}
 			\end{table}
-		
+	
+	\pagebreak	
 		\subsubsection{prune}
 			\begin{table}[h!]
 				\centering
@@ -1575,22 +1587,20 @@ Respuesta:
 \end{adjustbox}
 		\end{table}
 		
-		\pagebreak
 		Cuerpo de la petición (\textit{JSON}):
 		\begin{table}[h!]
 			\centering
 	\begin{adjustbox}{max width=\textwidth}
-			\begin{tabular}{|l|l|l|l|}
+			\begin{tabularx}{\linewidth}{|l|l|l|L|}
 				\hline
 				Parámetro & Tipo & Opcional & Descripción \\ \hline
 				container\_id & string & No & Identificador del contenedor. \\ \hline
 				operation & string & No & Nombre de la operación que se quiere ejecutar. Valores posibles: \textit{kill}, \textit{logs}, \textit{pause}, \textit{reload}, \textit{rename}, \textit{restart}, \textit{stop}, \textit{unpause}. \\ \hline
 				data & dict & No & Argumentos de la operación. \\ \hline
-			\end{tabular}
+			\end{tabularx}
 \end{adjustbox}
 		\end{table}
 	
-		Tipos de operaciones:
 		
 		\subsubsection{rename}
 			\begin{table}[h!]
@@ -1643,30 +1653,28 @@ Respuesta:
 		\begin{table}[h!]
 			\centering
 	\begin{adjustbox}{max width=\textwidth}
-			\begin{tabular}{|l|l|l|l|}
+			\begin{tabularx}{\linewidth}{|l|l|l|L|}
 				\hline
 				Parámetro & Tipo & Opcional & Descripción \\ \hline
 				operation & string & No & Nombre de la operación que se quiere ejecutar. Valores posibles: \textit{list}, \textit{get}, \textit{prune}, \textit{pull}, \textit{remove}, \textit{search}. \\ \hline
 				data & dict & No & Argumentos de la operación. \\ \hline
-			\end{tabular}
+			\end{tabularx}
 \end{adjustbox}
 		\end{table}
 	
-	\pagebreak
-		Tipos de operaciones:
 		
 			\subsubsection{list}
 				\begin{table}[h!]
 					\centering
 	\begin{adjustbox}{max width=\textwidth}
-					\begin{tabular}{|l|l|l|l|l|}
+					\begin{tabularx}{\linewidth}{|l|l|l|l|L|}
 						\hline
 						Parámetro & Key & Tipo & Opcional & Descripción \\ \hline
 						data &  & dict & No & Argumentos de la operación. \\ \hline
 						& name & string & Sí & Mostrar sólo las imágenes pertenecientes a este repositorio. \\ \hline
 						& all & bool & Sí & Mostrar todas las imágenes o no (incluídas las imágenes de capas intermedias). \\ \hline
 						& filters & \hyperref[sec:filtroimagen]{Filtro} & Sí & Filtros adicionales. \\ \hline
-					\end{tabular}
+					\end{tabularx}
 \end{adjustbox}
 				\end{table}
 			
@@ -1695,6 +1703,7 @@ Respuesta:
 \end{adjustbox}
 				\end{table}
 			
+			\pagebreak
 			\subsubsection{get}
 				\begin{table}[h!]
 					\centering
@@ -1723,12 +1732,11 @@ Respuesta:
 \end{adjustbox}
 				\end{table}
 			
-			\pagebreak
 			\subsubsection{pull}
 				\begin{table}[h!]
 					\centering
 	\begin{adjustbox}{max width=\textwidth}
-					\begin{tabular}{|l|l|l|l|l|}
+					\begin{tabularx}{\linewidth}{|l|l|l|l|L|}
 						\hline
 						Parámetro & Key & Tipo & Opcional & Descripción \\ \hline
 						data &  & dict & No & Argumentos de la operación. \\ \hline
@@ -1736,7 +1744,7 @@ Respuesta:
 						& tag & string & Sí & Tag de la imagen. \\ \hline
 						& auth\_config & dict & Sí & Sobreescribir las credenciales. \\ \hline
 						& platform & string & Sí & Plataforma en formato: os[/arch[/variant]] \\ \hline
-					\end{tabular}
+					\end{tabularx}
 \end{adjustbox}
 				\end{table}
 			
@@ -1757,6 +1765,7 @@ Respuesta:
 \end{adjustbox}
 				\end{table}
 			
+			\pagebreak
 			\subsubsection{search}
 				\begin{table}[h!]
 					\centering
@@ -1791,7 +1800,6 @@ Respuesta:
 		
 	
 	
-	\pagebreak
 	\subsection{\textit{POST /deploy/image/single}}
 		Permite ejecutar operaciones básicas en una imagen en concreto.
 		
@@ -1812,18 +1820,18 @@ Respuesta:
 		\begin{table}[h!]
 			\centering
 	\begin{adjustbox}{max width=\textwidth}
-			\begin{tabular}{|l|l|l|l|}
+			\begin{tabularx}{\linewidth}{|l|l|l|L|}
 				\hline
 				Parámetro & Tipo & Opcional & Descripción \\ \hline
 				name & string & No & Nombre de la imagen. \\ \hline
 				operation & string & No & Nombre de la operación que se quiere ejecutar. Valores posibles: \textit{history}, \textit{reload}. \\ \hline
 				data & dict & No & Argumentos de la operación. \\ \hline
-			\end{tabular}
+			\end{tabularx}
 \end{adjustbox}
 		\end{table}
 	
-		Tipos de operaciones:
 		
+		\pagebreak
 			\subsubsection{history}
 				Respuesta:
 				
