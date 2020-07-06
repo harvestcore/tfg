@@ -17,7 +17,7 @@ La versión instalada del paquete \textit{werkzeug} debe ser 0.16.1.
 
 Se puede ejecutar con \textit{Flask} o \textit{Gunicorn}.
 \begin{itemize}
-	\item Flask (no recomendado):
+	\item Flask:
 \begin{lstlisting}
 export FLASK_APP=wsgi.py
 
@@ -38,7 +38,7 @@ El backend también está disponible en \textit{Docker}, la imagen puede descarg
 docker pull harvestcore/ipm-backend:<tag>
 \end{lstlisting}
 
-Se recomienda siempre utilizar la última versión disponible de la imagen, la cual puede consultarse \href{https://github.com/harvestcore/tfg/releases}{aquí} o \href{https://hub.docker.com/r/harvestcore/ipm-backend/tags}{aquí}. Deben comprobarse también las \hyperref[sec:variables]{variables de entorno} necesarias para ejecutar el backend.
+Se recomienda siempre utilizar la última versión disponible de la imagen, la cual puede consultarse en la sección \textit{Releases} del repositorio en  \href{https://github.com/harvestcore/tfg/releases}{\textit{GitHub}} \cite{ipmanagerreleases} o en la sección \textit{tags} del repositorio en \href{https://hub.docker.com/r/harvestcore/ipm-backend/tags}{\textit{DockerHub}} \cite{dockerhubtagback}. Deben comprobarse también las \hyperref[sec:variables]{variables de entorno} necesarias para ejecutar el backend.
 
 Ejemplo de ejecución:
 
@@ -80,7 +80,7 @@ Se puede ejecutar el frontend con \textit{Docker}, para ello se puede descargar 
 docker pull harvestcore/ipm-frontend:<tag>
 \end{lstlisting}
 
-El tag o versión se puede consultar \href{https://github.com/harvestcore/tfg/releases}{aquí} o \href{https://hub.docker.com/r/harvestcore/ipm-frontend/tags}{aquí}. Se recomienda usar siempre la última versión estable.
+El tag o versión se puede consultar en la sección \textit{Releases} del repositorio en  \href{https://github.com/harvestcore/tfg/releases}{\textit{GitHub}} \cite{ipmanagerreleases} o en la sección \textit{tags} del repositorio en \href{https://hub.docker.com/r/harvestcore/ipm-frontend/tags}{\textit{DockerHub}} \cite{dockerhubtagfront}. Se recomienda usar siempre la última versión estable.
 
 \begin{lstlisting}
 cd frontend

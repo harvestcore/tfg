@@ -1,7 +1,15 @@
 \chapter{Solución propuesta}
 
+En este capítulo se expone la solución que se propone al problema. En primer lugar se desarrollan todos los módulos que compondrían el backend y finalmente el frontend.
+
+
+
 
 \section{Almacenamiento}
+
+La principal idea en cuanto al almacenamiento es tener algún tipo de clase que sirva de conector de cualquier tipo de dato que se quiera almacenar con el almacén de datos y que a su vez permita agregar nuevos elementos de forma sencilla.
+
+Desarrollar una estructura de herencia es el camino a seguir en este caso, el siguiente sería intentar lograr la mayor versatilidad posible.
 
 Para facilitar el desarrollo de los diferentes módulos se propone desarrollar una base común que sirva como puente para realizar operaciones en las diferentes colecciones de la base de datos.
 
@@ -22,9 +30,11 @@ En conclusión, se propone:
 
 \section{Autenticación}
 
-Se propone un módulo que permita la autenticación de usuarios en el sistema. Este haría uso de \textit{JWT} (\textit{JSON Web Token}) para encriptar la información y se debería incluir en las cabeceras de las peticiones que se realicen al backend. La cabecera a usar podría ser: \textit{x-access-token}.
+El objetivo de este módulo es agregar una capa de seguridad al backend evitando que puedan acceder a él usuarios que no se encuentran registrados. Esta capa se aplicaría a todos los \textit{endpoints} que se quieran proteger de accesos indeseados.
 
-En cada petición este token deberá ser decodificado, se comprobará al usuario al que pertenece y finalmente se permitirá el acceso o no. Todos los \textit{endpoints} del backend estarían protegidos por esta autenticación, salvo:
+Se propone por tanto un módulo que permita la autenticación de usuarios en el sistema. Este haría uso de \textit{JWT} (\textit{JSON Web Token}) para encriptar la información. Debido a que el backend es una \textit{API REST} el método de enviar este \textit{token} en cada una de las peticiones será la inclusión de este en cabeceras de las peticiones que se realicen. La cabecera a usar podría ser: \textit{x-access-token}.
+
+En cada petición este \textit{token} deberá ser decodificado, se comprobará al usuario al que pertenece y finalmente se permitirá el acceso o no. Todos los \textit{endpoints} del backend estarían protegidos por esta autenticación, salvo:
 \begin{itemize}
 	\item \textit{GET /login}
 	\item \textit{GET /api/heartbeat}
@@ -42,15 +52,19 @@ El servicio de autenticación a implementar debería implementar:
 
 \section{Clientes}
 
-Se propone este módulo para diferenciar y manejar los diferentes clientes que podrían acceder al backend. Cada uno de estos clientes contaría con su propia base de datos por lo que se debería administrar y controlar esos datos.
+Los clientes son aquella unidad que permite diferenciar un conjunto de datos de otro ya que cada uno de ellos cuenta con su propia base de datos. 
 
-La clase \textit{Customer} es la propuesta en este caso. Heredaría las funcionalidades de \textit{Item} y las complementaría con la gestión de estos clientes. Para diferenciar un cliente de otro se propone que se acceda al backend por medio de un subdominio.
+Debido a la \textit{API REST} que proporciona el backend se propone que para acceder a un cliente u otro se utlice el subdominio de la \textit{URL} a la que se le hacen las peticiones.
+
+Por tanto, este módulo sería el encargado de diferenciar y manejar los diferentes clientes que podrían acceder al backend. La clase \textit{Customer} es la propuesta en este caso. Heredaría las funcionalidades de \textit{Item} y las complementaría con la gestión de estos clientes.
+
+Para almacenar la información de estos clientes se propone también tener un ``cliente base'' el cual se encargaría de tener un registro de cada uno de los clientes disponibles en el sistema y de la base de datos que utiliza cada uno.
 
 
 
 \section{Usuarios}
 
-Este módulo es el encargado de la gestión de los usuarios y sus funcionalidades serían las siguientes:
+Éste módulo es el encargado de la gestión de los usuarios asociados a un cliente y sus funcionalidades serían las siguientes:
 \begin{itemize}
 	\item Crear usuarios
 	\item Modificar usuarios
@@ -93,7 +107,6 @@ Este módulo contaría con los siguientes \textit{endpoints}:
 
 En el caso de los despliegues no es necesario el almacenamiento de datos de ningún tipo por lo que tampoco sería necesario crear clases que hereden de \textit{Item}. En cambio, se propone la creación de una clase, llamada \textit{DockerEngine}, que permita conectarse al cliente de \textit{Docker} e implemente los métodos necesarios para hacer las operaciones deseadas.
 
-\pagebreak
 Estas serían:
 \begin{itemize}
 	\item Ejecutar operaciones en todos los contenedores.
@@ -114,7 +127,7 @@ Las anteriores operaciones corresponderían con los siguientes \textit{endpoints
 
 
 \bigskip
-Además, del mismo modo que se propone en el módulo de almacenamiento, podrían sacarse una serie de estadísticos de este servicio.
+Además, del mismo modo que se propone en el módulo de almacenamiento, podrían obtenerse una serie de datos estadísticos de este servicio.
 
 
 
@@ -133,11 +146,11 @@ En el caso de este módulo son necesarias dos clases extra, una para almacenar l
 \bigskip
 Los \textit{endpoints} que se proponen para manejar ambas clases son:
 \begin{itemize}
-	\item \textit{GET /provision/hosts/:name} - Obtener la información de un grupo de hosts.
-	\item \textit{POST /provision/hosts} - Crear un grupo de hosts.
-	\item \textit{PUT /provision/hosts} - Modificar un grupo de hosts.
-	\item \textit{DELETE /provision/hosts} - Eliminar un grupo de hosts.
-	\item \textit{POST /provision/hosts/query} - Listar grupos de hosts.
+	\item \textit{GET /provision/hosts/:name} - Obtener la información de un grupo de \textit{hosts}.
+	\item \textit{POST /provision/hosts} - Crear un grupo de \textit{hosts}.
+	\item \textit{PUT /provision/hosts} - Modificar un grupo de \textit{hosts}.
+	\item \textit{DELETE /provision/hosts} - Eliminar un grupo de \textit{hosts}.
+	\item \textit{POST /provision/hosts/query} - Listar grupos de \textit{hosts}.
 	\item \textit{GET /provision/playbook/:name} - Obtener la información de un \textit{Playbook}.
 	\item \textit{POST /provision/playbook} - Crear un \textit{Playbook}.
 	\item \textit{PUT /provision/playbook} - Modificar un \textit{Playbook}.
@@ -259,7 +272,7 @@ Este podría tener las siguientes páginas:
 \end{itemize}
 
 \bigskip
-Por otro lado, atendiendo a los requisitos del software, se propone la creación de un componente para generar tablas de forma dinámica que encapsule todas las funcionalidades requeridas. Además debe incluir autenticación de los usuarios.
+Por otro lado, atendiendo a los requisitos del software, se propone la creación de un componente para generar tablas de forma dinámica que encapsule todas las funcionalidades requeridas y que además permita tener una sincronía en la forma de mostrar los datos al usuario. Además debe incluir autenticación de los usuarios.
 
 Para la comunicación con la \textit{API} se propone la creación de diferentes servicios centrados en cada uno de los módulos del backend. De esta manera los servicios pueden inyectarse en los componentes y la comunicación es directa. Estos serían:
 \begin{itemize}

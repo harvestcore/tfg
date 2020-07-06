@@ -1,5 +1,9 @@
 \chapter{Herramientas y tecnologías utilizadas}
 
+Este capítulo desarrolla en profundidad todas las decisiones tomadas respeto a las herramientas y tecnologías que se han utilizado en \textbf{IPManager}. En cada una de las secciones se hace un breve repaso de las diferentes soluciones que existen actualmente y se exponen los motivos por los que se sigue un rumbo u otro.
+
+Se comienza por el aspecto más básico, la arquitectura de microservicios seleccionada, y se continúa con la integración continua, \textit{GitHub Actions}; y el despliegue en contenedores, \textit{Docker}. Tras esto se elige la herramienta a utilizar en al aprovisionado de sistemas, \textit{Ansible}; y el sistema de gestión de base de datos, \textit{MongoDB}. Finalmente se desarrollan las decisiones tomadas en cuanto a \textit{frameworks} y lenguajes de programación usados tanto en el backend, \textit{Python} y \textit{Flask}, como en el frontend, \textit{Angular}.
+
 \section{Arquitectura}
 
 En este aspecto tan esencial la elección está bastante clara y opto por la arquitectura de microservicios. En el proyecto que se desarrolla no tiene sentido un sistema monolítico en el que frontend y backend se encuentren juntos. En este caso las funcionalidades a desarrollar se centran en aspectos muy concretos y los beneficios de este tipo de arquitectura superan a los inconvenientes.
@@ -23,7 +27,7 @@ En cambio este sistema también tiene desventajas. Tener multitud de servicios e
 
 La integración continua es una práctica que consiste en el control de versiones del código que se desarrolla y en la ejecución de pruebas automáticas del mismo de forma periódica con el fin de detectar errores o un mal funcionamiento de una forma rápida. Actualmente es un requisito necesario e indispensable en cualquier tipo de software y debe abordar todos los aspectos del mismo.
 
-\textit{GitHub Actions} es el sistema elegido para la integración continua. Esto se debe a dos motivos, el primero es que el proyecto se encuentra alojado en \textit{GitHub} y por otro lado \textit{GitHub Actions} permite el despliegue de contenedores \textit{Docker}. Este último aspecto es muy importante en el software que se desarrolla debido a que el backend trabaja con este tipo de tecnología y los tests unitarios deben probar todas estas funcionalidades. Además para las pruebas del resto de funcionalidades el poder ejecutar un contenedor con una base de datos facilita mucho el proceso de integración continua. Así mismo son sistemas que se encuentran perfectamente integrados el uno con el otro.
+\textit{GitHub Actions} es el sistema elegido para la integración continua. Esto se debe a dos motivos, el primero es que el proyecto se encuentra alojado en \textit{GitHub} y por otro lado \textit{GitHub Actions} permite la ejecución de contenedores \textit{Docker}. Este último aspecto es muy importante en el software que se desarrolla debido a que el backend trabaja con este tipo de tecnología y los tests unitarios deben probar todas estas funcionalidades. Además para las pruebas del resto de funcionalidades el poder ejecutar un contenedor con una base de datos facilita mucho el proceso de integración continua. Así mismo son sistemas que se encuentran perfectamente integrados el uno con el otro.
 
 \bigskip
 Existen multitud de servicios para este tipo de pruebas:
@@ -69,6 +73,23 @@ Algunas otras alternativas son:
 	\item Puppet. Es un conjunto de herramientas que permiten orquestar y administrar grandes conjuntos de máquinas. Al igual que \textit{Chef} depende de un servidor central y permite ampliar su funcionalidad a través de módulos.
 \end{itemize}
 
+\section{Base de datos}
+
+
+Elegir un sistema de gestión de base de datos es una de las decisiones más importantes a la hora de diseñar y desarrollar un software. Existe una gran variedad de tipos de bases de datos y hay que tener en cuenta una serie de cuestiones que serán determinantes a la hora de elegir un tipo u otro. En este proyecto se va a usar una base de datos \textit{NoSQL}, concretamente \textit{MongoDB}.
+
+Las bases de datos de tipo \textit{SQL} se basan en las relaciones entre los datos. Estos se introducen en registros y luego se organizan por tablas, columnas y tuplas, permitiendo relacionarlos de manera sencilla. El principal lenguaje de consultas es el \textit{Standard Query Language} (\textit{SQL}), el cual esta compuesto por una serie de comandos de diferentes tipos, que se usan para unos cometidos u otros. Sus principales características son el esquema rígido que se define previo al uso que garantiza el esquema \textit{ACID}.
+
+Por las características del proyecto este modelo queda excluido, ya que el tipo de datos que se va a manejar no requiere de grandes relaciones entre ellos y además el esquema puede ser cambiante. Podría ocurrir que ciertos valores no se encontraran almacenados, bien porque no son necesarios o bien porque el usuario decide no insertarlos, por lo que sería mantener una estructura que no se está cumpliendo.
+
+Por otro lado el tipo de consultas que se van a realizar no son extremadamente complejas. Los datos manejados no tienen relaciones entre sí y las consultas serían realmente básicas. Otro punto a favor en este aspecto para las bases de datos \textit{NoSQL} es la velocidad a la hora de realizar las consultas.
+
+En el caso de la integración con el software en las bases de datos \textit{SQL} se utilizan los llamados \textit{ORM} (\textit{Object Relation Mapper}). Estos permiten realizar consultas a estas bases de datos de una forma más amigable en el lenguaje que se esté usando, lo que implica que se tenga que volver a redefinir el esquema para poder manejar estos datos. En cambio con \textit{NoSQL} esta integración suele ser mas sencilla, al utilizarse directamente objetos como diccionarios.
+
+Dentro de las bases de datos \textit{NoSQL} existen diferentes tipos. En el caso de este proyecto el modelo que mas encaja es el documental, en la que una semiestructura flexible almacenada en forma de documentos es ideal. \textit{MongoDB} es una gran elección, ya que los datos se almacenan en \textit{BSON} (\textit{Binary JSON}), lo que ofrece aún más flexibilidad a la hora de almacenar objetos. También permite crear índices en cualquier clave y el balanceo de carga en el caso de realizar grandes cantidades de consultas simultáneas.
+
+Actualmente también están destacando las bases de datos en la nube o \textit{DBaaS} (\textit{DataBase as a Service}), las cuales estan optimizadas para operaciones en entornos virtualizados. La principal característica de estos servicios es que se suele pagar por el uso de almacenamiento y además conceptos como la escalabilidad o la alta disponibilidad estan asegurados. En el caso de \textit{MongoDB} existe \textit{Atlas}, que incluso ofrece planes gratuitos. Otro ejemplo de \textit{DBaaS} sería \textit{mLab}, muy similar al anterior pero con una configuración más sencilla. Para el desarrollo de este software este aspecto es muy interesante, ya que al tratarse de un microservicio el no estar atado a una base de datos local permite que se pueda desplegar tambien en la nube.
+
 
 
 \section{Backend}
@@ -100,7 +121,7 @@ Otros \textit{frameworks} que se han tenido en cuenta a la hora de esta elecció
 \begin{itemize}
 	\item \textbf{Java}. Destacan \textit{frameworks} como \textit{Spring} y \textit{Struts}.	
 	\item \textbf{JavaScript}. \textit{Express} es el más utilizado y se ejecuta sobre \textit{Node.js}. Otros ejemplos son \textit{Sails} o \textit{Meteor}.	
-	\item \textbf{PHP}. Los más popular son \textit{Slim} y \textit{Lumen}. Ambos son microframewors bastante sencillos con muchas funcionalidades incorporadas.	
+	\item \textbf{PHP}. Los más popular son \textit{Slim} y \textit{Lumen}. Ambos son \textit{microframeworks} bastante sencillos con muchas funcionalidades incorporadas.	
 	\item \textbf{Ruby}. \textit{Roda} y \textit{Sinatra} son los más utilizados.	
 	\item \textbf{C\#}. El más popular es \textit{.NET Core}, de \textit{Microsoft}.
 	\item \textbf{Go}. Tanto \textit{Revel} como \textit{Gin} son los más usados.
@@ -129,26 +150,13 @@ En cuanto a estas alternativas, aunque es muy interesante el enfoque que tienen 
 
 Por estos motivos \textit{Angular} es la mejor solución en el caso de este software y en caso de quedarse corta en algunos aspectos, permite la integración de otras librerías. Además \textit{Angular} incluye librerías y mecanismos para tests unitarios e integración continua, algo muy necesario en el desarrollo de un software.
 
-Finalmente para los test unitarios y \textit{end-to-end} (\textit{e2e}) se van a utilizar herramientas que se integran perfectamente con \textit{Angular}. Para los primeros se utiliza \textit{Karma}, que viene incluido por defecto en el \textit{framework} y permite comprobar el funcionamiento unitario de cada uno de los componentes. Para los tests \textit{e2e} se utilizará \textit{Cypress}, una herramienta gratuita muy potente que permite realizar tests al frontend como si de un usuario se tratara, haciendo uso de datos sobre las diferentes funcionalidades del sistema.
+Finalmente para los test unitarios y \textit{end-to-end} (\textit{e2e}) se van a utilizar herramientas que se integran perfectamente con \textit{Angular}. Para los primeros se utiliza \textit{Karma}, que viene incluido por defecto en el \textit{framework} y permite comprobar el funcionamiento unitario de cada uno de los componentes.
+
+Para los tests \textit{e2e} se utilizará \textit{Cypress}, una herramienta gratuita muy potente que permite realizar tests al frontend como si de un usuario se tratara, haciendo uso de datos sobre las diferentes funcionalidades del sistema y además permite ejecutar estos tests en casi todos los navegadores actuales. En este aspecto se han tenido en cuenta opciones como \textit{Puppeteer} y \textit{Nightwatch.js}, pero se descartaron pues la sintaxis era mas compleja.
 
 
 
 
 
 
-\section{Base de datos}
 
-
-Elegir un sistema de gestión de base de datos es una de las decisiones más importantes a la hora de diseñar y desarrollar un software. Existe una gran variedad de tipos de bases de datos y hay que tener en cuenta una serie de cuestiones que serán determinantes a la hora de elegir un tipo u otro. En este proyecto se va a usar una base de datos \textit{NoSQL}, concretamente \textit{MongoDB}.
-
-Las bases de datos de tipo \textit{SQL} se basan en las relaciones entre los datos. Estos se introducen en registros y luego se organizan por tablas, columnas y tuplas, permitiendo relacionarlos de manera sencilla. El principal lenguaje de consultas es el \textit{Standard Query Language} (\textit{SQL}), el cual esta compuesto por una serie de comandos de diferentes tipos, que se usan para unos cometidos u otros. Sus principales características son el esquema rígido que se define previo al uso que garantiza el esquema \textit{ACID}.
-
-Por las características del proyecto este modelo queda excluido, ya que el tipo de datos que se va a manejar no requiere de grandes relaciones entre ellos y además el esquema puede ser cambiante. Podría ocurrir que ciertos valores no se encontraran almacenados, bien porque no son necesarios o bien porque el usuario decide no insertarlos, por lo que sería mantener una estructura que no se está cumpliendo.
-
-Por otro lado el tipo de consultas que se van a realizar no son extremadamente complejas. Los datos manejados no tienen relaciones entre sí y las consultas serían realmente básicas. Otro punto a favor en este aspecto para las bases de datos \textit{NoSQL} es la velocidad a la hora de realizar las consultas.
-
-En el caso de la integración con el software en las bases de datos \textit{SQL} se utilizan los llamados \textit{ORM} (\textit{Object Relation Mapper}). Estos permiten realizar consultas a estas bases de datos de una forma más amigable en el lenguaje que se esté usando, lo que implica que se tenga que volver a redefinir el esquema para poder manejar estos datos. En cambio con \textit{NoSQL} esta integración suele ser mas sencilla, al utilizarse directamente objetos como diccionarios.
-
-Dentro de las bases de datos \textit{NoSQL} existen diferentes tipos. En el caso de este proyecto el modelo que mas encaja es el documental, en la que una semiestructura flexible almacenada en forma de documentos es ideal. \textit{MongoDB} es una gran elección, ya que los datos se almacenan en \textit{BSON} (\textit{Binary JSON}), lo que ofrece aún más flexibilidad a la hora de almacenar objetos. También permite crear índices en cualquier clave y el balanceo de carga en el caso de realizar grandes cantidades de consultas simultáneas.
-
-Actualmente también están destacando las bases de datos en la nube o \textit{DBaaS} (\textit{DataBase as a Service}), las cuales estan optimizadas para operaciones en entornos virtualizados. La principal característica de estos servicios es que se suele pagar por el uso de almacenamiento y además conceptos como la escalabilidad o la alta disponibilidad estan asegurados. En el caso de \textit{MongoDB} existe \textit{Atlas}, que incluso ofrece planes gratuitos. Otro ejemplo de \textit{DBaaS} sería \textit{mLab}, muy similar al anterior pero con una configuración más sencilla. Para el desarrollo de este software este aspecto es muy interesante, ya que al tratarse de un microservicio el no estar atado a una base de datos local permite que se pueda desplegar tambien en la nube.

@@ -1,13 +1,16 @@
 \chapter{Implementación}
 
+Éste capítulo tiene una estructura similar al anterior, pero en sus secciones desarrolla la implementación de cada uno de los módulos que se proponen en el \textit{capítulo 6}. También se explica cuál es el flujo de trabajo en cada uno de estos módulos y algunos ejemplos de uso.
 
 
 \section{Almacenamiento}
 
+Como se explicaba en el capítulo anterior este módulo es el que permite el almacenamiento de los datos en \textit{MongoDB}. Para ello se han desarrollado las clases que se proponían. La primera, \textit{MongoEngine}, es el conector con el gestor de bases de datos; y la segunda, \textit{Item}, que abstrae todas las operaciones que se pueden realizar con los datos.
+
 \subsection{MongoEngine}
 \label{sec:mongoengine}
 
-Esta clase es la que nos permite conectarnos al servidor de \textit{MongoDB} y realizar todas aquellas operaciones que deseemos. Se ha desarrollado como un \textit{singleton} para que solo haya una instancia activa al mismo tiempo.
+Esta clase es la que nos permite conectarnos al servidor de \textit{MongoDB} y realizar todas aquellas operaciones que se deseen. Se ha desarrollado como un \textit{singleton} para que solo haya una instancia activa al mismo tiempo.
 
 Cada instancia de \textit{MongoClient} que se crea tiene un \textit{pool} de conexiones, que abre y cierra sockets bajo demanda para manejar todas las operaciones que se realicen de forma simultánea. Por este motivo es contraproducente crear una instancia de \textit{MongoClient} cada vez que se quiera realizar una operación. Por defecto el tamaño de este \textit{pool} es de 100, pero podría incrementarse si fuera necesario.
 
@@ -20,7 +23,6 @@ Los métodos implementados son los siguientes:
 	\item Datos estadísticos. Se extraen del cliente de \textit{MongoDB} y se devuelve en un diccionario con la siguiente forma:
 \end{itemize}
 
-\pagebreak
 \begin{lstlisting}
 {
 	"is_up": bool,
@@ -81,19 +83,39 @@ Para el diseño y desarrollo de esta clase se ha intentado abstraer y simplifica
 \end{itemize}
 
 
-
 \bigskip
+\textbf{Flujo de trabajo}
+
 Con esta implementación cualquier clase que se quiera que tenga la capacidad de almacenar datos solo tendrá que heredar de esta clase. Podrá sobrescribir aquellos métodos a los que quiera agregar más funcionalidad y podrá también implementar nuevos métodos, ya que tiene acceso al cursor de \textit{MongoClient} para realizar cualquier tipo de operación permitida.
 
-
-
+\smallskip
+Un ejemplo de uso podría ser:
+\begin{lstlisting}
+# Definicion de la clase Feature y sobreescritura el metodo insert
+class Feature(Item):
+	table_name = 'features'
+	table_schema = {
+		'name': 1,
+		'description': 1,
+		'data': 1
+	}
+	
+	def insert(self, data=None):
+		if data is not None:
+			if data['name'] != '':
+				return super(Machine, self).insert(data)
+						
+		return False
+\end{lstlisting}
 
 \section{Servicios}
 \label{sec:servicios}
 
+Cada uno de los servicios implementa los \textit{endpoints} que estarán disponibles para los usuarios y permiten el primer procesado de los datos previo envío a los módulos que se encargan de cada tipo de dato.
 
-En cuanto a los servicios que se han desarrollado a partir de clases que heredan de \textit{Item}, la estructura general de todos es la siguiente:
+Los servicios usados para manejar datos, que provienen de clases que heredan de \textit{Item}, tienen la estructura que se muestra a continuación. En cambio, los que no se utilizan para el manejo de datos tienen una estructura libre acorde a las necesidades de cada uno.
 
+\smallskip
 {\scriptsize En los siguientes \textit{endpoints} suponemos que el servicio \textit{service} permite hacer operaciones con objetos de tipo \textit{Service}.}
 
 \begin{itemize}
@@ -114,14 +136,34 @@ Para simplificar el código en los servicios he creado algunas funciones auxilia
 	\item \textit{parse\_data}: Devuelve los datos que se le pasan con la forma del esquema que se quiera. Tiene en cuenta si es un solo dato o un conjunto.
 \end{itemize}
 
+Por otro lado, se han creado diferentes esquemas con \textit{Marshmallow} para validar todos los datos que se manejan en los servicios. De este modo se tiene control absoluto del tipo de dato que se esté manejando en cada momento.
 
 \bigskip
-Por otro lado, se han creado diferentes esquemas con \textit{Marshmallow} para validar todos los datos que se manejan en los servicios. De este modo se tiene control absoluto del tipo de dato que se esté manejando en cada momento. En el momento de recibir una petición los datos se cotejan con el esquema que se use en el \textit{endpoint} y se asegura que los datos son los esperados, en caso contrario se rechaza la petición, para ello se hace uso de la función anterior \textit{validate\_or\_abort}. En cuanto a la salida de datos se usa \textit{parse\_data} para asegurar que los datos devueltos tenga la estructura esperada.
+\textbf{Flujo de trabajo}
 
+En el momento de recibir una petición los datos se cotejan con el esquema que se use en el \textit{endpoint} y se asegura que los datos son los esperados, en caso contrario se rechaza la petición, para ello se hace uso de la función anterior \textit{validate\_or\_abort}. En cuanto a la salida de datos se usa \textit{parse\_data} para asegurar que los datos devueltos tenga la estructura esperada.
+
+Además, en cada petición se comprueba cuál es el cliente al que pertenece la misma. Por tanto cada una de ellas procesa los datos acorde al cliente seleccionado.
+
+\smallskip
+Un ejemplo de uso de los conceptos desarrollados podría ser:
+\begin{lstlisting}
+api = Namespace(name='feature', description='Features management')
+
+@api.route('')
+class FeatureService(Resource):
+	@staticmethod
+	@token_required
+	def post():
+		data = validate_or_abort(FeatureSchema, request.get_json())
+		return response_by_success(Feature().insert(data))
+\end{lstlisting}
+
+El ejemplo anterior hace uso del decorador \textit{@token\_required}, el cual se explica con más detalle en la siguiente sección.
 
 \section{Autenticación}
 
-Utilizado para sólo permitir el uso de la \textit{API} a los usuarios registrados. Esta autenticación se hace mediante \textit{JWT} (\textit{JSON Web Token}).
+Utilizado para permitir el uso de la \textit{API} a los usuarios registrados. Esta autenticación se hace mediante \textit{JWT} (\textit{JSON Web Token}).
 
 Para la creación de esta clase se ha partido de la clase \textit{Item}, definiendo una nueva clase \textit{Login} con los siguientes datos miembros:
 \begin{itemize}
@@ -137,23 +179,24 @@ Para la creación de esta clase se ha partido de la clase \textit{Item}, definie
 \end{itemize}
 
 
-
 \bigskip
-Para controlar los accesos que puedan quedar obsoletos o en los que no se haya realizado un logout correcto, cada vez que se instancia la clase se comprueba si hay tokens con estas características y se eliminan, evitando así una acumulación innecesaria de tokens sin usar.
+\textbf{Flujo de trabajo}
+
+Para controlar los accesos que puedan quedar obsoletos o en los que no se haya realizado un logout correcto, cada vez que se instancia la clase se comprueba si hay \textit{tokens} con estas características y se eliminan, evitando así una acumulación innecesaria de \textit{tokens} sin usar.
 
 \bigskip
 Los métodos que se han desarrollado han sido los siguientes:
 \begin{itemize}
-	\item \textit{login(auth)}: En este método se realiza todo el proceso del \textit{login}. Se parte de los datos de autenticación, compuestos por un usuario y una contraseña y se comprueba si tal usuario existe. Se verifica que la contraseña sea la correcta y en caso afirmativo se procede a la creación del token. Tanto si el usuario no estaba \textit{logueado} previamente como si ya lo estaba, se generan todos los datos asociados nuevamente, y se insertan o actualizan. En el token se codifica el \textit{public\_id} y la fecha y hora de expiración, \textit{exp}. Si el proceso ha sido correcto se devolverá el token creado.
+	\item \textit{login(auth)}: En este método se realiza todo el proceso del \textit{login}. Se parte de los datos de autenticación, compuestos por un usuario y una contraseña y se comprueba si tal usuario existe. Se verifica que la contraseña sea la correcta y en caso afirmativo se procede a la creación del \textit{token}. Tanto si el usuario no estaba \textit{logueado} previamente como si ya lo estaba, se generan todos los datos asociados nuevamente, y se insertan o actualizan. En el \textit{token} se codifica el \textit{public\_id} y la fecha y hora de expiración, \textit{exp}. Si el proceso ha sido correcto se devolverá el \textit{token} creado.
 	\item \textit{logout(username)}: Desloguea al usuario denotado por \textit{username}. Verifica que existe el usuario y borra cualquier tipo de información asociada de éste en la colección actual.
-	\item \textit{token\_access(token)}: Decodifica el token y devuelve al usuario logueado que tenga tal \textit{public\_id}.
-	\item \textit{get\_username(token)}: Devuelve el nombre del usuario asociado al token.
+	\item \textit{token\_access(token)}: Decodifica el \textit{token} y devuelve al usuario logueado que tenga tal \textit{public\_id}.
+	\item \textit{get\_username(token)}: Devuelve el nombre del usuario asociado al \textit{token}.
 \end{itemize}
 
 
-Una vez desarrollada la clase que permite accesos de usuarios se ha desarrollado el servicio. Todas las rutas del backend, salvo \textit{GET /login} y \textit{GET /api/heartbeat} están protegidas con esta autenticación. Para ello se ha creado un decorador que comprueba el token de acceso cada vez que se quiere acceder a un \textit{endpoint}. Es el siguiente:
+Una vez desarrollada la clase que permite accesos de usuarios se ha desarrollado el servicio. Todas las rutas del backend, salvo \textit{GET /login} y \textit{GET /api/heartbeat} están protegidas con esta autenticación. Para ello se ha creado un decorador que comprueba el \textit{token} de acceso cada vez que se quiere acceder a un \textit{endpoint}. Es el siguiente:
 \begin{itemize}
-	\item \textit{token\_required}: Obtiene el token de la cabecera \textit{x-access-token}, comprueba si es válido y permite el acceso o no al \textit{endpoint}. En caso de no ser válido se devuelve un mensaje de error y un código de error 401.
+	\item \textit{token\_required}: Obtiene el \textit{token} de la cabecera \textit{x-access-token}, comprueba si es válido y permite el acceso o no al \textit{endpoint}. En caso de no ser válido se devuelve un mensaje de error y un código de error 401.
 \end{itemize}
 
 
@@ -169,7 +212,7 @@ El servicio de login cuenta con dos \textit{endpoints}, los cuales son:
 
 \section{Clientes}
 
-Clase que se encarga del manejo de los \textit{customers} o clientes del backend. Todas las operaciones relacionadas con clientes así como los datos asociados a ellos se almacenan en la base de datos que se define en la variable de entorno \textit{BASE\_DATABASE}.
+Clase que se encarga del manejo de los \textit{customers} o clientes del backend. Todas las operaciones relacionadas con clientes así como los datos asociados a ellos se almacenan en la base de datos que se define en la variable de entorno \textit{BASE\_DATABASE}. Este último aspecto es el que en el \textit{capítulo 6} se denominaba ``cliente base''.
 
 \bigskip
 Los datos miembros de esta clase son:
@@ -196,7 +239,7 @@ Los métodos que implementa esta clase son:
 
 
 \bigskip
-Los \textit{endpoints} desarrollados tienen la forma que se indica \hyperref[sec:servicios]{aquí}, pero no se han implementado todos ellos, sólo los siguientes:
+Los \textit{endpoints} desarrollados tienen la forma que se indica \hyperref[sec:servicios]{en el punto 7.2}, pero no se han implementado todos ellos, sólo los siguientes:
 \begin{itemize}
 	\item \textit{POST /customer}
 	\item \textit{PUT /customer}
@@ -206,7 +249,9 @@ Los \textit{endpoints} desarrollados tienen la forma que se indica \hyperref[sec
 
 
 \bigskip
-Por otro lado, para controlar el cliente que se debe utilizar en cada petición se ha creado una función para este cometido. Obtiene el subdominio del host de la petición y comprueba si se trata de un cliente válido; en caso afirmativo se asigna como cliente para esa petición y en caso negativo se aborta la petición con un código 404.
+\textbf{Flujo de trabajo}
+
+Como se indicaba en la \hyperref[sec:servicios]{sección 7.2}, para controlar el cliente que se debe utilizar en cada petición se utiliza el subdominio del host de la petición. Se ha creado una función que comprueba si este subdominio si se trata de un cliente válido; en caso afirmativo se asigna como cliente para esa petición y en caso negativo se aborta la petición con un código 404.
 
 
 
@@ -233,7 +278,7 @@ Esta es la clase encargada del manejo de los usuarios y hereda de \textit{Item}.
 \bigskip
 Se han sobreescrito los métodos de inserción y actualización de datos para tener en cuenta las restricciones de tipo de usuario, para la generación del \textit{UUID} y para el cifrado de la contraseña. Este cifrado se hace con \textit{Fernet}, el cual es de tipo simétrico.
 
-En cuanto al servicio, este está estructurado de la misma forma que se especifica \hyperref[sec:servicios]{aquí}, siendo los \textit{endpoints}:
+En cuanto al servicio, este está estructurado de la misma forma que se especifica \hyperref[sec:servicios]{en el punto 7.2}, siendo los \textit{endpoints}:
 \begin{itemize}
 	\item \textit{GET /user/:username}
 	\item \textit{POST /user}
@@ -241,6 +286,11 @@ En cuanto al servicio, este está estructurado de la misma forma que se especifi
 	\item \textit{DELETE /user}
 	\item \textit{POST /user/query}
 \end{itemize}
+
+\bigskip
+\textbf{Flujo de trabajo}
+
+Una vez disponemos tanto de la clase como del servicio sólo tenemos que crear tantos usuarios queramos o procesar y redirigir los datos que se obtengan en el servicio a esta clase.
 
 
 
@@ -260,6 +310,10 @@ Contextualización:
 \end{itemize}
 
 \bigskip
+
+
+El principal propósito de estas operaciones es unificar la forma con la que se trabaja, en este caso, con Docker. Si en lugar de abstraer este aspecto se crearan métodos para cada una de las funcionalidades disponibles la lista de estos tendría un tamaño considerable.
+
 Las operaciones constan de nombre, datos y, en ocasiones, de un objeto concreto:
 \begin{itemize}
 	\item \textit{operation}: Nombre de la operación.
@@ -305,6 +359,36 @@ La información sobre el estado de este módulo se devuelve con la misma estruct
 Puede ocurrir que el backend se esté ejecutando en un contenedor \textit{Docker}, por lo que intentar conectarse al \textit{daemon} no sería posible en ese caso. Cuando se ejecuta el backend éste comprueba internamente en qué entorno se esta ejecutando y la variable que almacena la localización del \textit{daemon} o servidor. Estas comprobaciones determinarán si éste módulo se encontrará activo o no.
 
 
+\bigskip
+\textbf{Flujo de trabajo}
+
+El flujo de trabajo de éste módulo es algo mas complejo que los anteriores. En primer lugar se tienen que tener claro el concepto de operaciónes, tras eso solo hay que ejecutarlas.
+
+Ejecutar una operación consiste en tomar un objeto, que puede ser una imagen, un contenedor o el conjunto de estos independientemente; elegir lo que se quiere hacer con ese objeto (ejecutar, borrar, listar,...); agregar los parámetros necesarios (un nombre, un valor numérico,...); y, finalmente ejecutar la operación. La salida de estas operaciones se devuelve en cada método.
+
+\smallskip
+Un ejemplo de uso de estas operaciones podría ser:
+
+\begin{lstlisting}
+# Utilizando un metodo de la clase DockerEngine
+DockerEngine().run_container_operation(
+	operation='run',
+	data = {
+		'image': 'hello-world'
+	}
+)
+
+# Haciendo una peticion al servicio
+post(self.URL + '/image',
+	headers = self.headers,
+	data = json.dumps({
+		'operation': 'run',
+		'data': {
+			'image': 'hello-world'
+		}
+	})
+)
+\end{lstlisting}
 
 
 \section{Aprovisionamiento}
@@ -333,7 +417,7 @@ Clase que hereda de \textit{Item} cuyos datos miembros son:
 \end{itemize}
 	
 \bigskip
-Comparte los mismos \textit{endpoints} que se indican \hyperref[sec:servicios]{aquí}, siendo estos:
+Comparte los mismos \textit{endpoints} que se indican \hyperref[sec:servicios]{en el punto 7.2}, siendo estos:
 \begin{itemize}
 	\item \textit{GET /provision/hosts/:name}
 	\item \textit{POST /provision/hosts}
@@ -356,7 +440,7 @@ Clase que hereda de \textit{Item} cuyos datos miembros son:
 \end{itemize}
 	
 \bigskip
-Comparte los mismos \textit{endpoints} que se indican \hyperref[sec:servicios]{aquí}, siendo estos:
+Comparte los mismos \textit{endpoints} que se indican \hyperref[sec:servicios]{en el punto 7.2}, siendo estos:
 \begin{itemize}
 	\item \textit{GET /provision/playbooks/:name}
 	\item \textit{POST /provision/playbooks}
@@ -372,7 +456,7 @@ Para la ejecución de los \textit{playbooks} se ha desarrollado la clase \textit
 \end{itemize}
 
 \bigskip
-Este método toma como entrada el grupo de \textit{hosts} a los que se le va a ejecutar el \textit{playbook}, el \textit{playbook} en cuestión y un diccionario con las contraseñas para acceder a las máquinas. La librería de \textit{Ansible} usada requiere que los \textit{hosts} se pasen como un archivo de texto plano, por lo que se ha desarrollado una función auxiliar que crea un fichero cuando se ejecuta un \textit{playbook}. El directorio donde se guardan estos archivos puede configurarse mediante una variable de entorno.
+Este método toma como entrada el grupo de \textit{hosts} a los que se le va a ejecutar el \textit{Playbook}, el \textit{Playbook} en cuestión y un diccionario con las contraseñas para acceder a las máquinas. La librería de \textit{Ansible} usada requiere que los \textit{hosts} se pasen como un archivo de texto plano, por lo que se ha desarrollado una función auxiliar que crea un fichero cuando se ejecuta un \textit{playbook}. El directorio donde se guardan estos archivos puede configurarse mediante una variable de entorno.
 
 
 
@@ -382,6 +466,15 @@ El \textit{endpoint} creado es el siguiente:
 	\item \textit{POST /provision}
 \end{itemize}
 
+
+\bigskip
+\textbf{Flujo de trabajo}
+
+El aprovisionamiento es un proceso que consta de tres pasos bien diferenciados:
+
+El primero consiste en la creación de uno o varios grupos de \textit{hosts} del modo que se ha explicado en secciones anteriores. Una vez disponemos de estos grupos de \textit{hosts} se procede a la creación de un \textit{Playbook}, también de igual manera a la explicada anteriormente. En los \textit{Playbooks} se debe indicar en qué \textit{hosts} se quieren ejecutar las órdenes de este, estos \textit{hosts} deben estar ya creados previamente.
+
+El tercer y último paso consiste en la ejecución del \textit{Playbook}. Previa ejecución de este se comprueba que el \textit{Playbook} seleccionado y que el grupo de \textit{hosts} existen y estan almacenados en el sistema, tras eso se ejecuta.
 
 
 
@@ -409,7 +502,7 @@ Para el almacenamiento y gestión de máquinas se ha creado la clase \textit{Mac
 En el caso de las máquinas todas las direcciones IP que se manejan deben ser validadas, por lo que se ha creado un método auxiliar para realizar esta función. Además se han sobrescrito los métodos de inserción y actualización para realizar esta validación.
 
 \bigskip
-El servicio tiene la misma estructura que la explicada \hyperref[sec:servicios]{aquí} y sus \textit{endpoints} son:
+El servicio tiene la misma estructura que la explicada \hyperref[sec:servicios]{en el punto 7.2} y sus \textit{endpoints} son:
 \begin{itemize}
 	\item \textit{GET /machine/:name}
 	\item \textit{POST /machine}
@@ -418,7 +511,10 @@ El servicio tiene la misma estructura que la explicada \hyperref[sec:servicios]{
 	\item \textit{POST /machine/query}
 \end{itemize}
 
+\bigskip
+\textbf{Flujo de trabajo}
 
+Este flujo de trabajo es equivalente a los que explicados en las clases y servicios comparten estructura a partir de \textit{Item}.
 
 \section{Estado del backend y \textit{heartbeat}}
 
@@ -462,6 +558,10 @@ En el caso que \textit{Docker} no se encuentre funcionando correctamente o se en
 \end{lstlisting}
 \end{itemize}
 
+\bigskip
+\textbf{Flujo de trabajo}
+
+En estos casos el flujo de trabajo es muy sencillo, se toman los datos de los clientes de \textit{MongoDB} y \textit{Docker} y se devuelven en forma de diccionario.
 
 
 \section{\textit{CLI} e inicialización de la base de datos}
@@ -517,7 +617,7 @@ metodo(params: any): Observable<any> {
 \bigskip
 Se puede observar que:
 \begin{itemize}
-	\item Se hace una petición \textit{HTTP} (en el caso del ejemplo se usa \textit{PUT}) a través del módulo \textit{HttpClient} con diferentes argumentos. El primero es la \textit{URL} a la que se hace esa petición, el segundo los datos que se quieren pasar en el \textit{bod}y de esta y el tercero son las cabeceras, que en el caso de la \textit{API} desarrollada es necesaria la cabecera \textit{x-access-token} con el token de acceso.
+	\item Se hace una petición \textit{HTTP} (en el caso del ejemplo se usa \textit{PUT}) a través del módulo \textit{HttpClient} con diferentes argumentos. El primero es la \textit{URL} a la que se hace esa petición, el segundo los datos que se quieren pasar en el \textit{bod}y de esta y el tercero son las cabeceras, que en el caso de la \textit{API} desarrollada es necesaria la cabecera \textit{x-access-token} con el \textit{token} de acceso.
 	\item El \textit{observable} que se devuelve es asíncrono, lo que quiere decir que se lanza la petición y que de forma asíncrona se completará la misma y se procesarán los datos.
 	\item Se hace un \textit{pipe}. Esto permite hacer un primer procesado de los datos y en este caso se agrega una clave que indica que se han recibido los datos.
 	\item Se capturan los posibles errores. En caso de que la petición no se complete o surja algún tipo de error se obtiene el error y se devuelve.
@@ -536,10 +636,10 @@ De este modo el resto de servicios solo tienen que hacer una llamada a este serv
 
 \subsubsection{Autenticación}
 
-La autenticación es el módulo más importante del frontend, ya que se encarga de toda la gestión del token y del acceso de los usuarios a las diferentes rutas de la aplicación. Este servicio se compone de dos métodos principales, \textit{login} y \textit{logout}, y de algunos secundarios. El funcionamiento de estos es:
+La autenticación es el módulo más importante del frontend, ya que se encarga de toda la gestión del \textit{token} y del acceso de los usuarios a las diferentes rutas de la aplicación. Este servicio se compone de dos métodos principales, \textit{login} y \textit{logout}, y de algunos secundarios. El funcionamiento de estos es:
 \begin{itemize}
-	\item \textit{login(auth)}: A partir de los datos de autenticación del usuario realiza el \textit{login} y se almacena en las \textit{cookies} del navegador el token de acceso. Se comprueba si existe el token en las \textit{cookies}: en caso afirmativo se comprueba si es válido y autoriza o no el acceso; en caso contrario se hace una petición al \textit{endpoint} \textit{GET /login} con los datos de acceso para obtener un nuevo token. Finalmente se almacena el token en las \textit{cookies}. Debido a la asincronía de las peticiones este método también devuelve un observable.
-	\item \textit{logout()}: Hace una petición de logout a la \textit{API} y cuando obtiene la respuesta borra el token de las \textit{cookies} del navegador.
+	\item \textit{login(auth)}: A partir de los datos de autenticación del usuario realiza el \textit{login} y se almacena en las \textit{cookies} del navegador el \textit{token} de acceso. Se comprueba si existe el \textit{token} en las \textit{cookies}: en caso afirmativo se comprueba si es válido y autoriza o no el acceso; en caso contrario se hace una petición al \textit{endpoint} \textit{GET /login} con los datos de acceso para obtener un nuevo \textit{token}. Finalmente se almacena el \textit{token} en las \textit{cookies}. Debido a la asincronía de las peticiones este método también devuelve un observable.
+	\item \textit{logout()}: Hace una petición de logout a la \textit{API} y cuando obtiene la respuesta borra el \textit{token} de las \textit{cookies} del navegador.
 \end{itemize}
 
 
@@ -760,5 +860,18 @@ Este componente es muy similar a \hyperref[sec:admin]{\textit{Admin}}. Cuenta co
 
 
 En ocasiones es necesaria es necesaria la confirmación del usuario a la hora de realizar una acción. Se ha creado este  diálogo para tener un componente común a todas estas confirmaciones. Al cerrarse emite un valor (\textit{true} o \textit{false}) que indica la decisión del usuario.
+
+
+\bigskip
+\textbf{Flujo de trabajo}
+
+En el caso del frontend se pueden diferenciar cuatro flujos distintos:
+
+\begin{itemize}
+	\item Administración de usuarios. En esta página (\textit{/admin}), al igual que en todas las que provienen de \textit{Item}, se ofrece una tabla en la que se permite realizar una administración de los datos que se muestran. El usuario puede consultar, crear, eliminar y modificar usuarios.
+	\item Administración de máquinas. Flujo equivalente al punto anterior. En este caso la página donde se encuentra es \textit{/machines}.
+	\item Despliegue de servicios. El flujo es algo mas complejo que el anterior. El ideal sería que el usuario se dirigiera a esta página y una vez dentro de ella navegara por las dos pestañas que se le ofrecen. En la primera puede consultar los contenedores que se están ejecutando y en la segunda las imágenes disponibles. El usuario podría ahora realizar las diferentes opciones que se le ofrecen, como buscar, descargar y ejecutar imágenes o administrar los contenedores en ejecución.
+	\item Ejecución de \textit{Playbooks}. Página \textit{/playbooks} El flujo ideal comienza creando máquinas y guardando sus configuraciones. Una dirección IPv4 válida es necesaria para crear un grupo de \textit{hosts}, por lo que es mandatorio que al menos exista una máquina almacenada en el sistema. Tras esto se procedería a crear un grupo de \textit{hosts} con tantas direcciones IPv4 como se desee. El siguiente paso sería crear un \textit{Playbook} y para ello se utiliza el editor de texto existente. Una vez se finaliza y se guarda el \textit{Playbook} se le asigna un grupo de \textit{hosts} previamente creado. Finalmente, una vez almacenado este \textit{Playbook} se puede ejecutar con la acción que aparece junto a los datos de éste en la tabla que se muestra.
+\end{itemize}
 
 
