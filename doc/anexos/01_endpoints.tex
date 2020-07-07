@@ -1078,7 +1078,7 @@ Respuesta:
 
 
 
-\section{Playbooks}
+\section{\textit{Playbooks}}
 
 	\subsection{Playbook}
 	\label{sec:playbook}
@@ -1116,7 +1116,7 @@ Respuesta:
 			\begin{tabular}{|l|l|l|}
 				\hline
 				Nombre & Opcional & Descripción \\ \hline
-				name & No & Nombre del Playbook a consultar. \\ \hline
+				name & No & Nombre del \textit{Playbook} a consultar. \\ \hline
 			\end{tabular}
 \end{adjustbox}
 		\end{table}
@@ -1128,7 +1128,7 @@ Respuesta:
 			\begin{tabularx}{\linewidth}{|l|l|L|}
 				\hline
 				Parámetro & Tipo & Descripción \\ \hline
-				data & \hyperref[sec:hosts]{Hosts} & Diccionario con toda la información del Playbook consultado. \\ \hline
+				data & \hyperref[sec:hosts]{Hosts} & Diccionario con toda la información del \textit{Playbook} consultado. \\ \hline
 			\end{tabularx}
 \end{adjustbox}
 		\end{table}
@@ -1137,7 +1137,7 @@ Respuesta:
 	
 	\pagebreak
 	\subsection{\textit{POST/provision/playbook/query}}
-		Devuelve los \textit{playbooks} que cumplen los criterios de búsqueda.
+		Devuelve los \textit{Playbooks} que cumplen los criterios de búsqueda.
 		
 		Cabeceras necesarias:
 		\begin{table}[h!]
@@ -1172,7 +1172,7 @@ Respuesta:
 			\begin{tabular}{|l|l|l|}
 				\hline
 				Parámetro & Tipo & Descripción \\ \hline
-				data & \hyperref[sec:playbook]{Playbook} & Playbook que cumple el criterio de búsqueda. \\ \hline
+				data & \hyperref[sec:playbook]{Playbook} & \textit{Playbook} que cumple el criterio de búsqueda. \\ \hline
 			\end{tabular}
 \end{adjustbox}
 		\end{table}
@@ -1185,7 +1185,7 @@ Respuesta:
 				\hline
 				Parámetro & Tipo & Descripción \\ \hline
 				total & int & Número de Playbooks que cumplen el criterio de búsqueda. \\ \hline
-				items & list[\hyperref[sec:playbook]{Playbook}] & Playbooks que cumplen el criterio de búsqueda. \\ \hline
+				items & list[\hyperref[sec:playbook]{Playbook}] & \textit{Playbooks} que cumplen el criterio de búsqueda. \\ \hline
 			\end{tabularx}
 \end{adjustbox}
 		\end{table}
@@ -1247,7 +1247,7 @@ Respuesta:
 				\hline
 				Parámetro & Tipo & Opcional & Descripción \\ \hline
 				name & string & No & Nombre del grupo de hosts que se quiere modificar. \\ \hline
-				data & \hyperref[sec:playbook]{Playbook} & No & Nuevos datos del grupo de hosts. \\ \hline
+				data & \hyperref[sec:playbook]{Playbook} & No & Nuevos datos del \textit{Playbook}. \\ \hline
 			\end{tabularx}
 \end{adjustbox}
 		\end{table}
@@ -1289,7 +1289,7 @@ Respuesta:
 			\begin{tabular}{|l|l|l|l|}
 				\hline
 				Parámetro & Tipo & Opcional & Descripción \\ \hline
-				name & string & No & Nombre del Playbook que se quiere eliminar. \\ \hline
+				name & string & No & Nombre del \textit{Playbook} que se quiere eliminar. \\ \hline
 			\end{tabular}
 \end{adjustbox}
 		\end{table}
@@ -1342,9 +1342,9 @@ Respuesta:
 			\begin{tabularx}{\linewidth}{|l|l|l|l|L|}
 				\hline
 				Parámetro & Key & Tipo & Opcional & Descripción \\ \hline
-				hosts &  & list[string] & No & Lista de grupo de hosts donde se quiere ejecutar el playbook. \\ \hline
-				playbook &  & string & No & Nombre del playbook a ejecutar. \\ \hline
-				passwords &  & dict & No & Contraseñas necesarias para la conexión a los hosts. \\ \hline
+				hosts &  & list[string] & No & Lista de grupo de hosts donde se quiere ejecutar el \textit{Playbook}. \\ \hline
+				playbook &  & string & No & Nombre del \textit{Playbook} a ejecutar. \\ \hline
+				passwords &  & dict & No & Contraseñas necesarias para la conexión a los \textit{hosts}. \\ \hline
 				& conn\_pass & string & Sí & Contraseña de acceso. \\ \hline
 				& become\_pass & string & Sí & Contraseña para acceder al root. \\ \hline
 			\end{tabularx}
@@ -1359,7 +1359,7 @@ Respuesta:
 			\begin{tabular}{|l|l|l|}
 				\hline
 				Parámetro & Tipo & Descripción \\ \hline
-				result & string & Respuesta de la ejecución del playbook. \\ \hline
+				result & string & Respuesta de la ejecución del \textit{Playbook}. \\ \hline
 			\end{tabular}
 \end{adjustbox}
 		\end{table}
@@ -1475,7 +1475,7 @@ Respuesta:
 			\begin{table}[h!]
 				\centering
 	\begin{adjustbox}{max width=\textwidth}
-				\begin{tabularx}{\linewidth}{|l|l|l|l|L|}
+				\begin{tabularx}{\linewidth}{|l|l|l|c|L|}
 					\hline
 					Parámetro & Key & Tipo & Opcional & Descripción \\ \hline
 					data &  & dict & No & Argumentos de la operación. \\ \hline

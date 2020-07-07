@@ -1,19 +1,30 @@
 \chapter{Solución propuesta}
+\label{cap6}
 
-En este capítulo se expone la solución que se propone al problema. En primer lugar se desarrollan todos los módulos que compondrían el backend y finalmente el frontend.
+En este capítulo se expone la solución que se propone al problema. Aunque en las siguientes secciones se explica con mas detenimiento el funcionamiento propuesto de cada módulo, a grandes rasgos se propone la creación de un backend y un frontend con las siguientes características:
 
+\smallskip
+El \textbf{backend} estaría compuesto por una serie de módulos con características únicas, buscando la simplicidad. El módulo más básico sería el de almacenamiento (\hyperref[sec:deploycap6]{sección 6.1}), el cual actuaría como conector con \textit{MongoDB} y permitiría realizar operaciones con datos. A partir de este módulo se crearían los correspondientes al manejo de todos los tipos de datos, estos son \textit{Clientes} (\hyperref[sec:clientcap6]{seccion 6.2}), \textit{Usuarios} (\hyperref[sec:usercap6]{seccion 6.3}), \textit{Machines} (\hyperref[sec:machinescap6]{seccion 6.6}), \textit{Hosts} y \textit{Playbooks}. Estos dos últimos se manejan a través del módulo de aprovisionado, que permite también la ejecución de \textit{Playbooks} de \textit{Ansible} (\hyperref[sec:provisioncap6]{seccion 6.5}).
 
+Para el despliegue de servicios se ha propuesto un módulo que permite realizar operaciones con las imágenes y contenedores de \textit{Docker} de manera sencilla (\hyperref[sec:deploycap6]{sección 6.4}).
+
+En cuanto a la \textit{API} que provee el backend cada módulo implementa una serie de \textit{endpoints}. Para garantizar que no se producen accesos no deseados a estos se ha propuesto un módulo de autenticación a partir del módulo de almacenamiento y de \textit{tokens JWT} (\hyperref[sec:authcap6]{sección 6.7}). También se explica la estructura de los servicios usados para conocer el estado del backend (\hyperref[sec:statuscap6]{sección 6.8}).
+
+Finalmente se desarrolla la propuesta de las diferentes variables de entorno a utilizar y el \textit{CLI} para realizar algunas operaciones básicas desde una línea de comandos (secciones \hyperref[sec:variablescap6]{6.9} y \hyperref[sec:clicap6]{6.10}).
+
+\smallskip
+El \textbf{frontend} se compondría de diferentes páginas, cada una dedicada a uno de los principales módulos del backend: aprovisionado, despliegue de servicios y administración de máquinas y usuarios (\hyperref[sec:frontcap6]{sección 6.11}).
 
 
 \section{Almacenamiento}
 
-La principal idea en cuanto al almacenamiento es tener algún tipo de clase que sirva de conector de cualquier tipo de dato que se quiera almacenar con el almacén de datos y que a su vez permita agregar nuevos elementos de forma sencilla.
+La principal idea en cuanto al almacenamiento es tener algún tipo de clase que sirva de conector de cualquier tipo de dato que se quiera almacenar y que a su vez permita administrar estos elementos de forma sencilla.
 
 Desarrollar una estructura de herencia es el camino a seguir en este caso, el siguiente sería intentar lograr la mayor versatilidad posible.
 
 Para facilitar el desarrollo de los diferentes módulos se propone desarrollar una base común que sirva como puente para realizar operaciones en las diferentes colecciones de la base de datos.
 
-Esta podría llamarse \textit{Item} e implementaría las cuatro operaciones básicas necesarias para manejar cualquier tipo de dato: crear, modificar, obtener y eliminar. Una vez implementados esos métodos básicos el resto de módulos que se desarrollen sólo tienen que sobreescribir las operaciones necesarias para adecuarlas a cada uso concreto.
+Esta podría llamarse \textit{Item} e implementaría las cuatro operaciones básicas necesarias para manejar cualquier tipo de dato: crear, modificar, obtener y eliminar. Una vez implementados esos métodos básicos el resto de módulos que se desarrollen sólo tienen que sobrescribir las operaciones necesarias para adecuarlas a cada uso concreto.
 
 Por otro lado, para manejar el cliente de \textit{MongoDB} se propone crear una clase, llamada \textit{MongoEngine}, que permita realizar diferentes operaciones en las colecciones y bases de datos. Además, podría obtenerse también algún tipo de estadísticos de este servicio. Ambos módulos funcionarían conjuntamente para ofrecer un conector a la base de datos sencillo y capaz de adaptarse a cualquier tipo de uso.
 
@@ -28,29 +39,9 @@ En conclusión, se propone:
 \end{itemize}
 
 
-\section{Autenticación}
-
-El objetivo de este módulo es agregar una capa de seguridad al backend evitando que puedan acceder a él usuarios que no se encuentran registrados. Esta capa se aplicaría a todos los \textit{endpoints} que se quieran proteger de accesos indeseados.
-
-Se propone por tanto un módulo que permita la autenticación de usuarios en el sistema. Este haría uso de \textit{JWT} (\textit{JSON Web Token}) para encriptar la información. Debido a que el backend es una \textit{API REST} el método de enviar este \textit{token} en cada una de las peticiones será la inclusión de este en cabeceras de las peticiones que se realicen. La cabecera a usar podría ser: \textit{x-access-token}.
-
-En cada petición este \textit{token} deberá ser decodificado, se comprobará al usuario al que pertenece y finalmente se permitirá el acceso o no. Todos los \textit{endpoints} del backend estarían protegidos por esta autenticación, salvo:
-\begin{itemize}
-	\item \textit{GET /login}
-	\item \textit{GET /api/heartbeat}
-\end{itemize}
-
-
-\bigskip
-El servicio de autenticación a implementar debería implementar:
-\begin{itemize}
-	\item \textit{GET /login}
-	\item \textit{GET /logout}
-\end{itemize}
-
-
 
 \section{Clientes}
+\label{sec:clientcap6}
 
 Los clientes son aquella unidad que permite diferenciar un conjunto de datos de otro ya que cada uno de ellos cuenta con su propia base de datos. 
 
@@ -63,8 +54,9 @@ Para almacenar la información de estos clientes se propone también tener un ``
 
 
 \section{Usuarios}
+\label{sec:usercap6}
 
-Éste módulo es el encargado de la gestión de los usuarios asociados a un cliente y sus funcionalidades serían las siguientes:
+Este módulo es el encargado de la gestión de los usuarios asociados a un cliente y sus funcionalidades serían las siguientes:
 \begin{itemize}
 	\item Crear usuarios
 	\item Modificar usuarios
@@ -85,7 +77,7 @@ Para satisfacer los requisitos del software se propone lo siguiente:
 
 
 \bigskip
-Debido a que partimos del módulo \textit{Item} para desarrollar el de usuarios solo es necesario heredar de éste y hacer algunas modificaciones. En cuanto al borrado y obtención de usuarios no sería necesario hacer ningún tipo de modificación. Por otro lado, en las operaciones de inserción y modificación sólo habría que añadir el código necesario para el encriptado de la contraseña y para la comprobación del tipo de usuario y del email único.
+Debido a que partimos del módulo \textit{Item} para desarrollar el de usuarios solo es necesario heredar de este y hacer algunas modificaciones. En cuanto al borrado y obtención de usuarios no sería necesario hacer ningún tipo de modificación. Por otro lado, en las operaciones de inserción y modificación sólo habría que añadir el código necesario para el encriptado de la contraseña y para la comprobación del tipo de usuario y del email único.
 
 \bigskip
 Este módulo contaría con los siguientes \textit{endpoints}:
@@ -102,8 +94,9 @@ Este módulo contaría con los siguientes \textit{endpoints}:
 
 
 \section{Despliegues}
+\label{sec:deploycap6}
 
-Éste módulo sería el encargado de realizar los despliegues de los servicios mediante contenedores \textit{Docker}. Para llevar a cabo esto el módulo se conectaría a un servidor de \textit{Docker} y contendría los métodos necesarios para ejecutar contenedores, imágenes y operaciones en ambos.
+Este módulo sería el encargado de realizar los despliegues de los servicios mediante contenedores \textit{Docker}. Para llevar a cabo esto el módulo se conectaría a un servidor de \textit{Docker} y contendría los métodos necesarios para ejecutar contenedores, imágenes y operaciones en ambos.
 
 En el caso de los despliegues no es necesario el almacenamiento de datos de ningún tipo por lo que tampoco sería necesario crear clases que hereden de \textit{Item}. En cambio, se propone la creación de una clase, llamada \textit{DockerEngine}, que permita conectarse al cliente de \textit{Docker} e implemente los métodos necesarios para hacer las operaciones deseadas.
 
@@ -134,9 +127,11 @@ Además, del mismo modo que se propone en el módulo de almacenamiento, podrían
 
 
 \section{Aprovisionamiento}
-Sería el encargado de aprovisionar sistemas mediante el uso de Ansible y se centraría exclusivamente en la ejecución de \textit{playbooks}. Por el funcionamiento de \textit{Ansible} debería establecer una conexión \textit{SSH} con los hosts indicados y ejecutaría las órdenes que se encuentran en el playbook.
+\label{sec:provisioncap6}
 
-En el caso de este módulo son necesarias dos clases extra, una para almacenar los \textit{playbooks} y otra para almacenar los grupos de hosts donde se van a ejecutar esos \textit{playbooks}. Las clases serían:
+Sería el encargado de aprovisionar sistemas mediante el uso de Ansible y se centraría exclusivamente en la ejecución de \textit{Playbooks}. Por el funcionamiento de \textit{Ansible} debería establecer una conexión \textit{SSH} con los hosts indicados y ejecutaría las órdenes que se encuentran en el \textit{Playbook}.
+
+En el caso de este módulo son necesarias dos clases extra, una para almacenar los \textit{Playbooks} y otra para almacenar los grupos de hosts donde se van a ejecutar esos \textit{Playbooks}. Las clases serían:
 \begin{itemize}
 	\item \textit{Hosts}
 	\item \textit{Playbooks}
@@ -155,18 +150,18 @@ Los \textit{endpoints} que se proponen para manejar ambas clases son:
 	\item \textit{POST /provision/playbook} - Crear un \textit{Playbook}.
 	\item \textit{PUT /provision/playbook} - Modificar un \textit{Playbook}.
 	\item \textit{DELETE /provision/playbook} - Eliminar un \textit{Playbook}.
-	\item \textit{POST /provision/playbook/query} - Listar \textit{playbooks}.
+	\item \textit{POST /provision/playbook/query} - Listar \textit{Playbooks}.
 \end{itemize}
 
 \bigskip
 Siguiendo los requisitos del software, las restricciones son:
 \begin{itemize}
 	\item Se almacenará para cada \textit{Playbook} un identificador único, un nombre y el \textit{Playbook} en sí.
-	\item Se almacenará para cada grupo de \textit{playbooks} un identificador único, un nombre y el conjunto de direcciones IP asociadas.
+	\item Se almacenará para cada grupo de \textit{Playbooks} un identificador único, un nombre y el conjunto de direcciones IP asociadas.
 \end{itemize}
 
 \bigskip
-Por otro lado, para ejecutar los playbooks se propone la creación de una clase \textit{AnsibleEngine}, que sería la encargada de implementar aquellos métodos necesarios para ejecutarlos. También se propone el siguiente \textit{endpoint}:
+Por otro lado, para ejecutar los \textit{Playbooks} se propone la creación de una clase \textit{AnsibleEngine}, que sería la encargada de implementar aquellos métodos necesarios para ejecutarlos. También se propone el siguiente \textit{endpoint}:
 \begin{itemize}
 	\item \textit{POST /provision}
 \end{itemize}
@@ -175,6 +170,7 @@ Por otro lado, para ejecutar los playbooks se propone la creación de una clase 
 
 
 \section{Máquinas}
+\label{sec:machinescap6}
 
 Módulo encargado del almacenamiento y gestión de máquinas y dispositivos. Tendría estructura similar a las clases \textit{Host} o \textit{Playbook}, ya que heredaría las funcionalidades que ofrece la clase base \textit{Item}.
 
@@ -197,10 +193,31 @@ Requisitos del software:
 \end{itemize}
 
 
+\section{Autenticación}
+\label{sec:authcap6}
+
+El objetivo de este módulo es agregar una capa de seguridad al backend evitando que puedan acceder a él usuarios que no se encuentran registrados. Esta capa se aplicaría a todos los \textit{endpoints} que se quieran proteger de accesos indeseados.
+
+Se propone por tanto un módulo que permita la autenticación de usuarios en el sistema. Este haría uso de \textit{JWT} (\textit{JSON Web Token}) para encriptar la información. Debido a que el backend es una \textit{API REST} el método de enviar este \textit{token} en cada una de las peticiones será la inclusión de este en cabeceras de las peticiones que se realicen. La cabecera a usar podría ser: \textit{x-access-token}.
+
+En cada petición este \textit{token} deberá ser decodificado, se comprobará al usuario al que pertenece y finalmente se permitirá el acceso o no. Todos los \textit{endpoints} del backend estarían protegidos por esta autenticación, salvo:
+\begin{itemize}
+	\item \textit{GET /login}
+	\item \textit{GET /api/heartbeat}
+\end{itemize}
+
+
+\bigskip
+El servicio de autenticación a implementar debería implementar:
+\begin{itemize}
+	\item \textit{GET /login}
+	\item \textit{GET /logout}
+\end{itemize}
 
 
 
 \section{Estado del backend y \textit{heartbeat}}
+\label{sec:statuscap6}
 
 
 Para comprobar el estado del backend se propone la creación de un servicio que devuelva información asociada al modulo de despliegues y al de almacenamiento. Para ello se propone agregar métodos a las clases \textit{MongoEngine} y \textit{DockerEngine} que devuelvan esta información asociada.
@@ -212,7 +229,7 @@ El \textit{endpoint} sería el siguiente:
 \end{itemize}
 
 \bigskip
-Debido a que este \textit{endpoint} devolvería información relevante, éste deberia estar también protegido por la autenticación comentada en secciones anteriores.
+Debido a que este \textit{endpoint} devolvería información relevante, este debería estar también protegido por la autenticación comentada en secciones anteriores.
 
 \bigskip
 Anexo a este estado se propone el siguiente \textit{endpoint}:
@@ -227,7 +244,7 @@ En este caso solo devolvería si los diferentes módulos del backend se encuentr
 
 
 \section{Variables de entorno}
-
+\label{sec:variablescap6}
 
 Para el funcionamiento del backend y el frontend sería necesaria la definición de variables de entorno que permitan configurar ciertos aspectos de estos. Serían:
 \begin{itemize}
@@ -238,11 +255,15 @@ Para el funcionamiento del backend y el frontend sería necesaria la definición
 	\item URL y puerto del backend.
 \end{itemize}
 
+\smallskip
+En el \hyperref[sec:variables]{apéndice B} se encuentra un listado con todas las variables de entorno que se utilizan en el backend y en el frontend, junto a sus valores por defecto.
+
 
 
 
 
 \section{\textit{CLI}}
+\label{sec:clicap6}
 
 Módulo propuesto para poder realizar ciertas operaciones desde la terminal, sin necesidad de ejecutar el backend. Podría ser usado en la primera instalación de este y/o para crear unos primeros usuarios o clientes.
 
@@ -258,6 +279,7 @@ Funcionalidad propuesta:
 
 
 \section{Frontend}
+\label{sec:frontcap6}
 
 El desarrollo de un backend que ofrezca una \textit{API REST} permite que se pueda desarrollar cualquier tipo de frontend, ya sea web, una aplicación móvil o incluso acceso mediante línea de comandos. En este caso, para satisfacer los requisitos del software, se propone crear un frontend que permita realizar todas las operaciones anteriormente mencionadas.
 
@@ -267,7 +289,7 @@ Este podría tener las siguientes páginas:
 	\item \textit{/}: Donde mostrar el estado general del sistema.
 	\item \textit{/admin}: Administración de usuarios.
 	\item \textit{/deploy}: Administración de los despliegues, contenedores e imágenes.
-	\item \textit{/provision}: Administración del aprovisionamiento, grupos de hosts y playbooks.
+	\item \textit{/provision}: Administración del aprovisionamiento, grupos de \textit{hosts} y \textit{Playbooks}.
 	\item \textit{/machines}: Administración de las máquinas.
 \end{itemize}
 

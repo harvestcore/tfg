@@ -1,8 +1,8 @@
 \chapter{Herramientas y tecnologías utilizadas}
 
-Este capítulo desarrolla en profundidad todas las decisiones tomadas respeto a las herramientas y tecnologías que se han utilizado en \textbf{IPManager}. En cada una de las secciones se hace un breve repaso de las diferentes soluciones que existen actualmente y se exponen los motivos por los que se sigue un rumbo u otro.
+Este capítulo desarrolla en profundidad todas las decisiones tomadas respecto a las herramientas y tecnologías que se han utilizado en \textbf{IPManager}. En cada una de las secciones se hace un breve repaso de las diferentes soluciones que existen actualmente y se exponen los motivos por los que se sigue un rumbo u otro.
 
-Se comienza por el aspecto más básico, la arquitectura de microservicios seleccionada, y se continúa con la integración continua, \textit{GitHub Actions}; y el despliegue en contenedores, \textit{Docker}. Tras esto se elige la herramienta a utilizar en al aprovisionado de sistemas, \textit{Ansible}; y el sistema de gestión de base de datos, \textit{MongoDB}. Finalmente se desarrollan las decisiones tomadas en cuanto a \textit{frameworks} y lenguajes de programación usados tanto en el backend, \textit{Python} y \textit{Flask}, como en el frontend, \textit{Angular}.
+Se comienza por el aspecto más básico, la arquitectura de microservicios seleccionada, y se continúa con la integración continua, \textit{GitHub Actions}, y el despliegue en contenedores, \textit{Docker}. Tras esto se elige la herramienta a utilizar en al aprovisionado de sistemas, \textit{Ansible}, y el sistema de gestión de base de datos, \textit{MongoDB}. Finalmente se desarrollan las decisiones tomadas en cuanto a \textit{frameworks} y lenguajes de programación usados tanto en el backend, \textit{Python} y \textit{Flask}, como en el frontend, \textit{Angular}.
 
 \section{Arquitectura}
 
@@ -14,10 +14,10 @@ Tradicionalmente el software ha tenido una arquitectura monolítica en la que to
 
 Las principales ventajas de los microservicios sobre la arquitectura monolítica son:
 \begin{itemize}
-	\item Agilidad. No es necesario desarrollar todas las funcionalidades completas, por lo que se pueden reutilizar otros microservicios ya desarrollados para suplir las necesidades actuales.
-	\item Modularidad. Cada microservicio es independiente del resto, lo que facilita el desarrollo y el despliegue de estos.
-	\item Escalabilidad. Debido a la modularidad de estos la escalabilidad horizontal es asequible y muy beneficiosa.
-	\item Seguridad y aislamiento. Cada uno de estos servicios encapsula toda su funcionalidad, quedando aislados del resto. Cualquier tipo de vulnerabilidad de la seguridad queda reducido a una parte del sistema general, evitando así pérdidas de información y posibles fallos a otros microservicios.
+	\item \textbf{Agilidad}. No es necesario desarrollar todas las funcionalidades completas, por lo que se pueden reutilizar otros microservicios ya desarrollados para suplir las necesidades actuales.
+	\item \textbf{Modularidad}. Cada microservicio es independiente del resto, lo que facilita el desarrollo y el despliegue de estos.
+	\item \textbf{Escalabilidad}. Debido a la modularidad de estos la escalabilidad horizontal es asequible y muy beneficiosa.
+	\item \textbf{Seguridad y aislamiento}. Cada uno de estos servicios encapsula toda su funcionalidad, quedando aislados del resto. Cualquier tipo de vulnerabilidad de la seguridad queda reducido a una parte del sistema general, evitando así pérdidas de información y posibles fallos a otros microservicios.
 \end{itemize}
 
 En cambio este sistema también tiene desventajas. Tener multitud de servicios en ejecución conlleva una configuración y un coste de implantación más alto de lo habitual, además de que no hay una uniformidad a la hora de desempeñar un despliegue. Esto conlleva una complejidad añadida ya que aunque los servicios son mas ligeros y sencillos el sistema que conforman es mucho más complejo. La administración también es más compleja ya que se requieren conocimientos específicos de cada microservicio para este cometido.
