@@ -1,2 +1,30 @@
 \chapter{Estado del arte}
 
+En este capítulo repasan de las diferentes soluciones que existen actualmente al problema expuesto. Cada una de ellas destaca sobre las demás en un aspecto u otro, pero ninguna llega a aunar todas las características deseadas. Tras eso se hace una crítica a las soluciones vistas y se comenta por qué no son ideales.
+
+\section{Soluciones actuales}
+
+En el ámbito de los despliegues y automatización hay una gran cantidad de software que en mayor o menor medida permiten realizar estas tareas. Con características similares a las de este proyecto destacan tres y son las siguientes:
+
+\begin{itemize}
+	\item \textbf{GECOS}. \textit{Guadalinex Escritorio Corporativo Estándar} es un proyecto de la Junta de Andalucía que ofrece una distribución de \textit{GNU Linux} centrada en la administración de sistemas. Este ecosistema, que está basado totalmente en software libre, actúa como centro de control, que permite el despliegue de equipos, su soporte y administración. Además cuenta con un repositorio de software para proveer a las máquinas que se aprovisionan. Utiliza herramientas y tecnologías como \textit{MongoDB} para la gestión de los datos, \textit{Chef} para el aprovisionamiento o \textit{Celery} para el manejo de las colas de tareas.
+	
+	Aunque no se trata de un sistema altamente intrusivo para las máquinas que gestiona, este sí requiere que se instale una imagen en la máquina que se vaya a utilizar como maestra. De este modo sólo un equipo es el que tiene acceso a la administración del resto. La gestión de los sistemas se hace desde una interfaz web y permite organizar los equipos según los criterios que se desee e identifica a cada uno de ellos mediante certificados digitales únicos.
+		
+	\item \textbf{Ansible Tower}. Es una solución de \textit{Red Hat} para la administración de ecosistemas de ámbito empresarial ya que se centra en multitud de sistemas operativos, servidores, infraestructuras virtuales y redes. Esta gestión se realiza desde una interfaz web o se puede integrar con cualquier otro sistema mediante una \textit{API REST}.
+	
+	La principal característica es que todos los procesos se pueden realizar de forma muy visual y con poca configuración por parte del administrador. Se centra principalmente en el aprovisionado de sistemas mediante \textit{Ansible}, aunque también permite monitorizar estas máquinas y gestionar permisos a los diferentes usuarios.
+		
+	\item \textbf{Portainer}. Se trata de una herramienta de gestión y administración de contenedores que amplía las funcionalidades que ofrece \textit{Kinematic}, la \textit{GUI} oficial a la que \textit{Docker} da soporte. Al igual que las anteriores soluciones \textit{Portainer} ofrece sus capacidades a través de una interfaz web y es la más liviana de todas ya que se puede ejecutar fácilmente en un contenedor.
+	
+	Permite administrar todos los aspectos de \textit{Docker} como son las imágenes, contenedores, redes y volúmenes entre otros. Además la interacción con todos estos aspectos es muy sencilla. Se trata también de un proyecto \textit{open source}, por lo que es gratuíto.
+\end{itemize}
+
+
+\section{Crítica}
+
+Si bien todas estas herramientas mencionadas permiten realizar las funcionalidades que se desean ninguna de ellas las aúna todas. En primer lugar \textit{GECOS} ofrece una herramienta de administración de sistemas y de aprovisionado, pero no ofrece ningún tipo de despliegue de servicios. \textit{Red Hat} hace uso de su herramienta estrella en el aprovisionado de sistemas y la lleva al siguiente nivel con \textit{Ansible Tower}, pero al igual que con \textit{GECOS} no ofrece nada relevante en cuando a servicios en contenedores. Por último \textit{Portainer} provee de una excelente solución para este problema, pero no para el aprovisionado y gestión de configuraciones.
+
+Otro aspecto importante es el económico. \textit{GECOS} y \textit{Portainer} son sistemas completamente gratuítos, por lo que serían una opción ideal. En el caso del segundo, \textit{Portainer} ofrece planes superiores con mayor soporte y funcionalidades avanzadas, pero la versión principal es gratuíta. En cambio \textit{Ansible Tower} es de pago, teniendo la suscripción más básica un coste aproximado anual de 5000 dólares anuales y la más avanzada de unos 14000 dólares. Si bien estos precios pueden ser asequibles para una gran organización, para una pequeña o mediana empresa pueden ser inasumibles.
+
+\pagebreak

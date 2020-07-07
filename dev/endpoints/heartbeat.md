@@ -9,3 +9,4 @@ Respuesta:
 | Parámetro | Tipo | Descripción                                                |
 | --------- | ---- | ---------------------------------------------------------- |
 | ok        | bool | Si los servicios del sistema funcionan correctamente o no. |
+

@@ -21,7 +21,7 @@
 
 
 
-## GET /api/machine/{name}
+## GET /machine/{name}
 
 Devuelve toda la información asociada a una máquina.
 
@@ -47,7 +47,7 @@ Respuesta:
 
 
 
-## POST /api/machine/query
+## POST /machine/query
 
 Devuelve los usuarios que cumplen los criterios de búsqueda.
 
@@ -79,7 +79,7 @@ ReRespuesta (más de una máquina):
 
 
 
-## POST /api/machine
+## POST /machine
 
 Crea una nueva máquina.
 
@@ -102,7 +102,7 @@ Respuesta:
 
 
 
-## PUT /api/machine
+## PUT /machine
 
 Modifica los datos de una máquina.
 
@@ -128,7 +128,7 @@ Respuesta:
 
 
 
-## DELETE /api/machine
+## DELETE /machine
 
 Elimina una máquina.
 

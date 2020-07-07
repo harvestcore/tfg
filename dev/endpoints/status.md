@@ -1,6 +1,6 @@
 # Status
 
-## GET /api/status
+## GET /status
 
 Devuelve el estado actual de los dos servicios principales del backend, MongoDB y Docker.
 

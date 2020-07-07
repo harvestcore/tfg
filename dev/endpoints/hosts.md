@@ -9,7 +9,7 @@
 
 
 
-## GET /api/provision/hosts/{name}
+## GET /provision/hosts/{name}
 
 Devuelve toda la información asociada a un grupo de hosts.
 
@@ -33,7 +33,7 @@ Respuesta:
 
 
 
-## POST /api/provision/hosts/query
+## POST /provision/hosts/query
 
 Devuelve los grupos de hosts que cumplen los criterios de búsqueda.
 
@@ -65,7 +65,7 @@ Respuesta (más de un grupo de hosts):
 
 
 
-## POST /api/provision/hosts
+## POST /provision/hosts
 
 Crea un nuevo grupo de hosts.
 
@@ -88,7 +88,7 @@ Respuesta:
 
 
 
-## PUT /api/provision/hosts
+## PUT /provision/hosts
 
 Modifica los datos de un grupo de hosts.
 
@@ -114,7 +114,7 @@ Respuesta:
 
 
 
-## DELETE /api/provision/hosts
+## DELETE /provision/hosts
 
 Elimina un grupo de hosts.
 

@@ -1,2 +1,131 @@
-\chapter{Descripción del problema}
+\chapter{Análisis}
 
+En este capítulo se hace un análisis del sistema, describiendo los diferentes actores y los requisitos de este. Finalmente se expone el modelo de negocio y el presupuesto del primer año de vida del proyecto.
+
+\section{Descripción de los actores}
+
+En este sistema hay dos actores:
+
+\textbf{Usuario regular}. Este actor puede realizar todas las acciones disponibles en el frontend y en el backend. Aun teniendo conocimientos en la administración de sistemas, no se le permite realizar acciones de este tipo sobre los clientes y usuarios del sistema.
+
+\textbf{Administrador}. Este actor puede realizar todas las acciones que se le permiten a un usuario regular y además puede realizar tareas de administración en los clientes y usuarios del sistema.
+
+\section{Requisitos del sistema}
+
+\subsection{Requisitos funcionales}
+\begin{itemize}
+	\item \textbf{R.F. 1} Se distinguirán los clientes por medio de un subdominio en la \textit{URL}.
+	\item \textbf{R.F. 2} El sistema tendrá un sistema de autenticación.
+	\item \textbf{R.F. 3} La visualización de datos en el frontend deberá ser en forma de listados.
+	\item \textbf{R.F. 4} El backend proveerá una \textit{API} capaz de funcionar sin la necesidad de un frontend.
+	\item \textbf{R.F. 5} El sistema permitirá aprovisionar máquinas.
+	\item \textbf{R.F. 6} En el sistema podrá haber distintos clientes.
+	\item \textbf{R.F. 7} El sistema permitirá la administración de clientes.
+	\item \textbf{R.F. 8} En cada cliente podrá haber diferentes usuarios.
+	\item \textbf{R.F. 9} El sistema permitirá la administración de usuarios.
+	\item \textbf{R.F. 10} Los usuarios podrán ser de tipo administrador o usuario común.
+	\item \textbf{R.F. 11} Un usuario administrador podrá crear usuarios comunes.
+\end{itemize}
+
+
+\subsection{Requisitos no funcionales}
+\begin{itemize}
+	\item \textbf{R.N.F. 1} La autenticación del usuario será mediante \textit{JWT}.
+	\item \textbf{R.N.F. 2} El puesto centralizado estará compuesto por un backend y un frontend.
+	\item \textbf{R.N.F. 3} El despliegue de servicios se hará mediante contenedores Docker.
+	\item \textbf{R.N.F. 4} El frontend tendrá una interfaz sencilla.
+	\item \textbf{R.N.F. 5} El sistema funcionará para sistemas basados en \textit{GNU Linux}.
+	\item \textbf{R.N.F. 6} El sistema deberá ser escalable.
+	\item \textbf{R.N.F. 7} La interfaz de usuario del sistema será mediante una aplicación web.
+\end{itemize}
+
+\subsection{Requisitos de información}
+\begin{itemize}
+	\item \textbf{R.I. 1} Se almacenarán las diferentes configuraciones de aprovisionamiento.
+	\item \textbf{R.I. 2} El sistema almacenará los detalles de los sistemas que aprovisiona.
+	\item \textbf{R.I. 3} El sistema almacenará para cada cliente un identificador único, un dominio y el nombre de la base de datos correspondiente a ese cliente.
+	\item \textbf{R.I. 4} El sistema almacenará para cualquier tipo de elemento si ha sido eliminado o no. En el caso de borrar el elemento lo marcará como borrado pero no borrará sus datos.
+	\item \textbf{R.I. 5} El sistema almacenará para todo usuario registrado un identificador único, el tipo de usuario (administrador o regular), el nombre y apellido del usuario, un email, un nombre de usuario y una contraseña almacenada en un formato seguro.
+	\item \textbf{R.I. 6} El sistema almacenará para cada máquina un identificador único, un nombre de la máquina, una descripción de la máquina, su dirección IPv4 y un conjunto de identificadores de scripts asociados a esa máquina.
+	\item \textbf{R.I. 7} El sistema almacenará para cada script de aprovisionamiento un identificador único, un nombre y el script en sí.
+	\item \textbf{R.I. 8} El sistema almacenará para cada grupo de hosts un identificador único, un nombre y el conjunto de direcciones IP asociadas.
+	\item \textbf{R.I. 9} El sistema almacenará para cada máquina un identificador único, un nombre, una descripción, un tipo de máquina, dirección IPv4 e IPv6, dirección MAC, máscara de red, dirección broadcast y dirección de red.
+\end{itemize}
+
+
+
+\section{Modelo de negocio y presupuesto}
+
+Aunque la solución propuesta se caracteriza por ser software libre el coste de desarrollo y de implantación nunca es cero.
+
+En el momento de comenzar el desarrollo los fondos son escasos, por lo que el modelo de negocio inicial estaría centrado en obtener los ingresos mínimos que permitan continuar con el proyecto. Una vez superado este primer obstáculo y el software se encuentre más asentado se cambiaría el modelo de financiación para poder obtener mayores beneficios y valor de mercado.
+
+Por tanto se crearía una \textit{Sociedad Limitada de Nueva Empresa}, la cual permite crear una pequeña empresa con pocos recursos iniciales y ofrece ciertas ventajas en este tipo de proyectos:
+
+\begin{itemize}
+	\item Rápida constitución.
+	\item No es necesario un registro de socios.
+	\item Se pueden aplazar deudas del impuesto de sociedades y no existe obligación de realizar pagos fraccionados de este.
+	\item El cambio de denominación social es gratuito temporalmente.
+	\item Se permite el aplazamiento y fraccionado de retenciones del \textit{IRPF}.
+\end{itemize}
+
+El salario medio (datos de 2020) en el sector de la Información y Telecomunicaciones se sitúa en torno a los 34000 euros brutos anuales, lo que supondría aproximadamente unos 2800 euros brutos mensuales, una cifra que en el momento de creación de la empresa es inviable. Una consulta al Instituto Nacional de Estadística nos revela que el gasto medio anual por persona (datos de 2018) es de 12000 euros, lo que se traduce en unos 1000 euros mensuales. A fin de reducir los gastos al máximo y haciendo un promedio a la baja de las dos cifras manejadas anteriormente supondremos un sueldo bruto por trabajador de 1500 euros mensuales (18000 euros anuales).
+
+\bigskip
+Otros gastos importantes a tener en cuenta son:
+\begin{itemize}
+	\item El capital inicial a aportar en el momento de creación de la empresa (el mínimo son 3000 euros).
+	\item La cuota de autónomos, que en 2020 es de 286,15 euros y que debe pagarse mensualmente, lo que asciende a 3433,80 euros al año.
+	\item Los gastos burocráticos, que ascienden aproximadamente a 250 euros.
+	\item Local en el que desarrollar la actividad laboral y gastos derivados, aproximadamente 600 euros. 
+\end{itemize}
+
+En cuanto a gastos relacionados con el propio desarrollo del software se encuentran algunos bienes y servicios como podrían ser repositorios para el almacenamiento del código, integración continua, \textit{Cloud Computing}, adquisición de equipos informáticos y de telecomunicaciones, etc. Muchos de estos servicios tienen versiones gratuitas, lo que ayudaría en el desarrollo inicial del negocio, pero en el momento que se integren nuevos componentes en el equipo puede ser necesario adquirir planes que ofrezcan mejores características.
+
+En el caso de este presupuesto se ha hecho una estimación de los diferentes servicios que serían necesarios para un equipo de tamaño reducido. Además se han tenido en cuenta los diferentes gastos en material informático y otros consumibles necesarios para realizar la actividad laboral.
+
+
+\pagebreak
+Las siguientes tablas resumen los gastos iniciales y anuales a afrontar:
+\bigskip
+
+
+\begin{table}[!h]
+	\centering
+	\begin{adjustbox}{width=1\textwidth}
+	\begin{tabular}{|l|r|r|r|}
+		\hline
+		\textbf{Concepto} & \textbf{Euros/Ud.} & \textbf{Cantidad} & \textbf{Total (en Euros)} \\ \hline
+		Capital inicial SLNE & 3000 & 1 & 3000 \\ \hline
+		Trámites & 250 & 1 & 250 \\ \hline
+		Salario & 1500 & 12 & 18000 \\ \hline
+		Cuota autónomos & 286,15 & 12 & 3433,80 \\ \hline
+		Local y derivados & 600 & 12 & 7200 \\ \hline
+		&  &  &  \\
+		&  & \textbf{Total} & \textbf{31883,8} \\ \hline
+	\end{tabular}
+	\end{adjustbox}
+\end{table}
+
+
+\begin{table}[!h]
+	\centering
+	\begin{adjustbox}{width=1\textwidth}
+		\begin{tabular}{|l|r|r|r|}
+			\hline
+			\textbf{Concepto} & \textbf{Euros/Ud} & \textbf{Cantidad} & \textbf{Total (Euros)} \\ \hline
+			GitHub Team & 3,5 & 12 & 42 \\ \hline
+			Atlassian Jira & 9 & 12 & 108 \\ \hline
+			DockerHub & 8 & 12 & 96 \\ \hline
+			Equipos informáticos & 3500 & 1 & 3500 \\ \hline
+			&  &  &  \\
+			&  & \textbf{Total} & \textbf{3746} \\ \hline
+		\end{tabular}
+	\end{adjustbox}
+\end{table}
+
+Como se puede observar, el primer año de vida de la empresa costaría aproximadamente 36000 euros, esto teniendo en cuenta que solo tendría un empleado inicial, ya que en el momento de ampliar el equipo cada nuevo integrante implicaría unos 25000 euros al año más.
+
+\smallskip
+Aunque se quiere ofrecer una solución de software libre, para sufragar estos gastos se implementaría un sistema de suscripciones mensuales o anuales, en las que se ofrezca soporte personalizado y funcionalidades adicionales o personalizadas.

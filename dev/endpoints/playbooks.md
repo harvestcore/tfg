@@ -13,7 +13,7 @@
 
 
 
-## GET /api/provision/playbook/{name}
+## GET /provision/playbook/{name}
 
 Devuelve toda la información asociada a un playbook.
 
@@ -37,7 +37,7 @@ Respuesta:
 
 
 
-## POST /api/provision/playbook/query
+## POST /provision/playbook/query
 
 Devuelve los playbooks que cumplen los criterios de búsqueda.
 
@@ -71,7 +71,7 @@ Respuesta (más de una máquina):
 
 
 
-## POST /api/provision/playbook
+## POST /provision/playbook
 
 Crea un nuevo playbook.
 
@@ -94,7 +94,7 @@ Respuesta:
 
 
 
-## PUT /api/provision/playbook
+## PUT /provision/playbook
 
 Modifica los datos de un playbook.
 
@@ -120,7 +120,7 @@ Respuesta:
 
 
 
-## DELETE /api/provision/playbook
+## DELETE /provision/playbook
 
 Elimina un playbook.
 

@@ -1,16 +1,11 @@
-# Usuarios
+# Clientes
 
-### Usuario
+### Cliente
 
-| Parámetro  | Tipo   | Opcional | E/S  | Descripción             |
-| ---------- | ------ | :------: | :--: | ----------------------- |
-| type       | string |   :x:    | E/S  | Tipo de usuario.        |
-| public_id  | string |    -     |  S   | UUID del usuario.       |
-| first_name | string |   :x:    | E/S  | Nombre del usuario.     |
-| last_name  | string |   :x:    | E/S  | Apellido del usuario.   |
-| username   | string |   :x:    | E/S  | Nickname del usuario.   |
-| email      | string |   :x:    | E/S  | Email del usuario.      |
-| password   | string |   :x:    |  E   | Contraseña del usuario. |
+| Parámetro | Tipo   | Opcional | E/S  | Descripción                |
+| --------- | ------ | :------: | :--: | -------------------------- |
+| domain    | string |   :x:    | E/S  | Subdominio del cliente.    |
+| db_name   | string |   :x:    | E/S  | Base de datos del cliente. |
 
 
 
@@ -18,33 +13,9 @@
 
 
 
-## GET /user/{username}
+## POST /customer/query
 
-Devuelve toda la información asociada a un usuario.
-
-Cabeceras necesarias:
-
-| Nombre         | Opcional | Descripción      |
-| -------------- | :------: | ---------------- |
-| x-access-token |   :x:    | Token de acceso. |
-
-Parámetros de la URL:
-
-| Nombre   | Opcional | Descripción                     |
-| -------- | :------: | ------------------------------- |
-| username |   :x:    | Nombre del usuario a consultar. |
-
-Respuesta:
-
-| Parámetro | Tipo                | Descripción                                                 |
-| --------- | ------------------- | ----------------------------------------------------------- |
-| data      | [Usuario](#usuario) | Diccionario con toda la información del usuario consultado. |
-
-
-
-## POST /user/query
-
-Devuelve los usuarios que cumplen los criterios de búsqueda.
+Devuelve los clientes que cumplen los criterios de búsqueda.
 
 Cabeceras necesarias:
 
@@ -63,20 +34,20 @@ Respuesta (un solo usuario):
 
 | Parámetro | Tipo                | Descripción                                 |
 | --------- | ------------------- | ------------------------------------------- |
-| data      | [Usuario](#usuario) | Usuario que cumple el criterio de búsqueda. |
+| data      | [Cliente](#cliente) | Cliente que cumple el criterio de búsqueda. |
 
 Respuesta (más de un usuario):
 
 | Parámetro | Tipo                      | Descripción                                             |
 | --------- | ------------------------- | ------------------------------------------------------- |
-| total     | int                       | Número de usuarios que cumplen el criterio de búsqueda. |
-| items     | list[[Usuario](#usuario)] | Usuarios que cumplen el criterio de búsqueda.           |
+| total     | int                       | Número de clientes que cumplen el criterio de búsqueda. |
+| items     | list[[Cliente](#cliente)] | Clientes que cumplen el criterio de búsqueda.           |
 
 
 
-## POST /user
+## POST /customer
 
-Crea un nuevo usuario.
+Crea un nuevo cliente.
 
 Cabeceras necesarias:
 
@@ -86,7 +57,7 @@ Cabeceras necesarias:
 
 Cuerpo de la petición (JSON):
 
-- [Usuario](#usuario)
+- [Cliente](#cliente)
 
 Respuesta:
 
@@ -97,9 +68,9 @@ Respuesta:
 
 
 
-## PUT /user
+## PUT /customer
 
-Modifica los datos de un usuario.
+Modifica los datos de un cliente.
 
 Cabeceras necesarias:
 
@@ -109,10 +80,10 @@ Cabeceras necesarias:
 
 Cuerpo de la petición (JSON):
 
-| Parámetro | Tipo                | Opcional | Descripción                                |
-| --------- | ------------------- | :------: | ------------------------------------------ |
-| email     | string              |   :x:    | Email del usuario que se quiere modificar. |
-| data      | [Usuario](#usuario) |   :x:    | Nuevos datos del usuario.                  |
+| Parámetro | Tipo                | Opcional | Descripción                                    |
+| --------- | ------------------- | :------: | ---------------------------------------------- |
+| domain    | string              |   :x:    | Subominio del cliente que se quiere modificar. |
+| data      | [Cliente](#cliente) |   :x:    | Nuevos datos del cliente.                      |
 
 Respuesta:
 
@@ -123,9 +94,9 @@ Respuesta:
 
 
 
-## DELETE /user
+## DELETE /customer
 
-Elimina un usuario.
+Elimina un cliente.
 
 Cabeceras necesarias:
 
@@ -135,9 +106,9 @@ Cabeceras necesarias:
 
 Cuerpo de la petición (JSON):
 
-| Parámetro | Tipo   | Opcional | Descripción                               |
-| --------- | ------ | :------: | ----------------------------------------- |
-| email     | string |   :x:    | Email del usuario que se quiere eliminar. |
+| Parámetro | Tipo   | Opcional | Descripción                                    |
+| --------- | ------ | :------: | ---------------------------------------------- |
+| domain    | string |   :x:    | Subdominio del cliente que se quiere eliminar. |
 
 Respuesta:
 

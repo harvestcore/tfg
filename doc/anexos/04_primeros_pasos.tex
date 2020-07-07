@@ -1,0 +1,29 @@
+\chapter{Primeros pasos y \textit{CLI}}
+
+\section{Inicialización de la base de datos}
+Tras instalar el backend se debe ejecutar un script llamado \textsf{init\_database.py} (se encuentra en la raíz del proyecto), el cual creará un usuario en el cliente base. Este usuario es administrador y sus credenciales deben ser cambiadas una vez haya sido creado.
+
+El cliente base viene denominado por el nombre de la base de datos principal, el cual se toma de la variable de entorno \textsf{BASE\_DATABASE} (toma valor \textsf{ipm\_root} en caso de no encontrarse configurada).
+
+Tras crear este primer usuario administrador, este puede comenzar a crear otros usuarios o clientes usando la \textit{API} o el \textit{CLI}.
+
+\section{\textit{CLI}}
+
+El \textit{CLI} que se incluye en el directorio raíz del backend permite realizar algunas operaciones con clientes (o \textit{customers}) y usuarios. Se puede ejecutar de la siguiente manera:
+
+\begin{lstlisting}
+cd backend
+
+python3 cli.py
+\end{lstlisting}
+
+Es interactivo y permite:
+
+\begin{itemize}
+	\item Crear un cliente.
+	\item Activar un cliente.
+	\item Desactivar un cliente.
+	\item Agregar un usuario a un cliente.
+\end{itemize}
+
+Internamente utiliza la configuración de las \hyperref[sec:variables]{variables de entorno} que se encuentre establecida en el momento de utilizar el \textit{CLI}.

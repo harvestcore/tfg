@@ -6,6 +6,8 @@
 
 ## [Autenticación](endpoints/authentication.md)
 
+## [Clientes](endpoints/customers.md)
+
 ## [Usuarios](endpoints/users.md)
 
 ## [Máquinas](endpoints/machines.md)
