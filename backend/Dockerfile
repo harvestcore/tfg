@@ -7,6 +7,7 @@ COPY ./src ./src
 COPY ./wsgi.py .
 COPY ./Makefile .
 COPY ./requirements.txt .
+COPY ./init_database.py .
 COPY ./LICENSE .
 
 RUN apk update && \

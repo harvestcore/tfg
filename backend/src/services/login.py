@@ -16,18 +16,18 @@ api_logout = Namespace(name='logout', description='Logout')
 def token_required(f):
     @wraps(f)
     def decorated(*args, **kwargs):
-        token = None
+        # token = None
 
-        if 'x-access-token' in request.headers:
-            token = request.headers['x-access-token']
+        # if 'x-access-token' in request.headers:
+        #     token = request.headers['x-access-token']
 
-        if not token:
-            return response_with_message(message="Token is missing", code=401)
+        # if not token:
+        #     return response_with_message(message="Token is missing", code=401)
 
-        current_user = Login().token_access(str(token))
+        # current_user = Login().token_access(str(token))
 
-        if current_user.data is None:
-            return response_with_message(message="Invalid token", code=401)
+        # if current_user.data is None:
+        #     return response_with_message(message="Invalid token", code=401)
 
         return f(*args, **kwargs)
 

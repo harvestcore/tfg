@@ -3,6 +3,7 @@ from flask_restplus import Api
 import tldextract
 
 from config.server_environment import DOCKER_ENABLED
+from config.server_environment import BASE_DATABASE
 from src.classes.customer import Customer
 from src.services.customer import api as customer
 from src.services.deploy import api as deploy
@@ -32,8 +33,9 @@ if DOCKER_ENABLED:
 
 @app.before_request
 def before_request():
-    data = tldextract.extract(request.host)
-    if Customer().is_customer(data.subdomain):
-        Customer().set_customer(data.subdomain)
-    else:
-        abort(404, "Not found")
+    Customer().set_customer(BASE_DATABASE)
+    # data = tldextract.extract(request.host)
+    # if Customer().is_customer(data.subdomain):
+    #     Customer().set_customer(data.subdomain)
+    # else:
+    #     abort(404, "Not found")

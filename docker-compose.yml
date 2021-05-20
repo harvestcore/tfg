@@ -1,4 +1,4 @@
-version: '3'
+version: '3.4'
 services:
   ipmanager-backend:
     container_name: ipmanager-backend
@@ -9,37 +9,37 @@ services:
       - MONGO_HOSTNAME=mongo
       - BASE_DATABASE=ipm_root
     healthcheck:
-      test: curl --fail -s http:localhost:5000/api/healthcheck || exit 1
+      test: curl --fail -s http://localhost:5000/api/healthcheck || exit 1
       interval: 30s
       timeout: 10s
       retries: 3
     networks:
       ipm:
-        ipv4_address: 172.20.0.3
+        ipv4_address: 172.55.0.3
     depends_on:
       - mongo
 
-  ipmanager-frontend:
-    container_name: ipmanager-frontend
-    build: ./frontend
-    ports:
-      - 80:80
-      - 4200:80
-    networks:
-      ipm:
-        ipv4_address: 172.20.0.4
-    depends_on:
-      - ipmanager-backend
+  # ipmanager-frontend:
+  #   container_name: ipmanager-frontend
+  #   build: ./frontend
+  #   ports:
+  #     - 80:80
+  #     - 4200:80
+  #   networks:
+  #     ipm:
+  #       ipv4_address: 172.20.0.4
+  #   depends_on:
+  #     - ipmanager-backend
 
   mongo:
     image: mongo:4.2.3
     networks:
       ipm:
-        ipv4_address: 172.20.0.2
+        ipv4_address: 172.55.0.2
 
 networks:
   ipm:
     driver: bridge
     ipam:
       config:
-        - subnet: 172.20.0.0/16
+        - subnet: 172.55.0.0/16

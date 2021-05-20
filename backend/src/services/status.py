@@ -18,7 +18,7 @@ class StatusService(Resource):
     @staticmethod
     @token_required
     def get():
-        user = Login().get_username(request.headers['x-access-token'])
+        user = 'admin'
         is_admin = User().is_admin(user)
 
         return {
