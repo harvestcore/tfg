@@ -14,6 +14,8 @@ def parse_data(model, data):
     else:
         class AuxSchema(Schema):
             data = fields.Dict()
+            
+    data = [data]
 
     if type(data) is list:
         return AuxSchema().dump({'items': data, 'total': len(data)})
