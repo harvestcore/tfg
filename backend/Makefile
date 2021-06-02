@@ -7,3 +7,6 @@ build:
 
 run:
 	gunicorn -b ${GUNICORN_HOST}:${GUNICORN_PORT} wsgi:app ${GUNICORN_PARAMS}
+
+runssl:
+	gunicorn -b ${GUNICORN_HOST}:${GUNICORN_PORT} wsgi:app --certfile=certs/server.crt --keyfile=certs/server.key
