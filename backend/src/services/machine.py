@@ -19,8 +19,15 @@ class MachineServiceGet(Resource):
     @staticmethod
     @token_required
     def get(name):
-        user = Machine().find(criteria={'name': name})
-        return parse_data(MachineSchema, user.data)
+        machine = Machine().find(criteria={'name': name})
+        
+        if machine.data is None:
+            machine.data = {}
+            
+        if machine.data is not list and len(machine.data.keys()) > 0:
+                machine.data = [machine.data]
+
+        return parse_data(MachineSchema, machine.data)
 
 
 @api.route('/query')
@@ -29,12 +36,18 @@ class MachineServiceGetWithQuery(Resource):
     @token_required
     def post():
         data = validate_or_abort(QuerySchema, request.get_json())
-        user = Machine().find(
+        machine = Machine().find(
             criteria=data['query'],
             projection=data['filter'] if 'filter' in data.keys() else {}
         )
+        
+        if machine.data is None:
+            machine.data = {}
+        
+        if machine.data is not list and len(machine.data.keys()) > 0:
+                machine.data = [machine.data]
 
-        return parse_data(MachineSchema, user.data)
+        return parse_data(MachineSchema, machine.data)
 
 
 @api.route('')
