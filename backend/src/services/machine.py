@@ -24,7 +24,10 @@ class MachineServiceGet(Resource):
         if machine.data is None:
             machine.data = {}
             
-        if type(machine.data) is not list and len(machine.data.keys()) > 0:
+        if type(machine.data) is not list:
+            if len(machine.data.keys()) == 0:
+                machine.data = []
+            else:
                 machine.data = [machine.data]
 
         return parse_data(MachineSchema, machine.data)
@@ -44,7 +47,10 @@ class MachineServiceGetWithQuery(Resource):
         if machine.data is None:
             machine.data = {}
         
-        if type(machine.data) is not list and len(machine.data.keys()) > 0:
+        if type(machine.data) is not list:
+            if len(machine.data.keys()) == 0:
+                machine.data = []
+            else:
                 machine.data = [machine.data]
 
         return parse_data(MachineSchema, machine.data)
